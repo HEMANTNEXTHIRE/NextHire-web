@@ -142,6 +142,13 @@ main {
 #candidates-hero h1 span {
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
 }
+#candidates-how h2,
+#candidates-how h3,
+#candidates-tools h2,
+#candidates-compare h2,
+#candidates-faq h2 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
 
 #pricing-hero h1,
 #pricing-hero h1 span {
@@ -1286,19 +1293,18 @@ dialog::backdrop {
 }
 /* ── candidates page ──────────────────────────────────────── */
 .tool-card:hover {
-  box-shadow: 0 6px 24px rgba(95,168,158,0.1) !important;
-  transform: translateY(-2px);
-  border-color: rgba(95,168,158,0.3) !important;
-}
-
-@keyframes toolSlide {
-  from { transform: translateX(-100%); }
-  to   { transform: translateX(0); }
+  box-shadow:
+    0 4px 14px rgba(37, 62, 66, 0.07),
+    0 22px 60px rgba(37, 62, 66, 0.13) !important;
+  transform: translateY(-5px);
 }
 
 @media (max-width: 900px) {
-  .tools-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+  .tools-hero-row {
+    grid-template-columns: 1fr !important;
+  }
+  .tools-grid-3 {
+    grid-template-columns: 1fr !important;
   }
   .comparison-grid {
     grid-template-columns: 1fr !important;
@@ -1306,12 +1312,6 @@ dialog::backdrop {
   .how-step-row {
     grid-template-columns: 50px 1fr !important;
     gap: 0 24px !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .tools-grid {
-    grid-template-columns: 1fr 1fr !important;
   }
 }
 /* ── end candidates ───────────────────────────────────────── */

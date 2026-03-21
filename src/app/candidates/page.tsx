@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type React from 'react'
 import Link from 'next/link'
 import DualActionCTA from '@/components/ui/DualActionCTA'
 import { FONT, WEIGHT } from '@/constants/typography'
@@ -53,15 +54,157 @@ const HOW_STEPS = [
 ]
 
 const TOOLS = [
-  { color: '#5fa89e', icon: '⚡', label: 'AI Auto Apply',         desc: 'Applies to hundreds of matched roles with a tailored resume per application.' },
-  { color: '#3d7a72', icon: '📨', label: 'AI Outreach Agent',     desc: 'Personalised emails to hiring managers from your own Gmail. Auto-deleted after send.' },
-  { color: '#5fa89e', icon: '📄', label: 'Resume Builder',        desc: 'ATS-optimised resume drafted by AI, reviewed by experts, tuned to each role.' },
-  { color: '#5fa89e', icon: '🎧', label: 'AI Interview Coach',    desc: 'Real-time coaching on live calls. Surface answers and flag gaps as they happen.' },
-  { color: '#22c55e', icon: '🤖', label: 'AI Interviewer',        desc: 'Mock interviews calibrated to your target company. Scored feedback on every answer.' },
-  { color: '#8aada8', icon: '📊', label: 'Job Tracker',           desc: 'Every application, reply, and interview stage in one dashboard with reminders.' },
-  { color: '#3d7a72', icon: '🔍', label: 'Portal Optimization',   desc: 'Ranks your profile across major job portals so recruiters find you first.' },
-  { color: '#5fa89e', icon: '✉️', label: 'Direct Recruiter InMail', desc: 'Targeted InMail to recruiters in your space, personalised and privacy-safe.' },
+  { color: '#5fa89e', label: 'AI Auto Apply',           desc: 'Applies to hundreds of matched roles with a tailored resume per application.' },
+  { color: '#3d7a72', label: 'AI Outreach Agent',       desc: 'Personalised emails to hiring managers from your own Gmail. Auto-deleted after send.' },
+  { color: '#5fa89e', label: 'Resume Builder',          desc: 'ATS-optimised resume drafted by AI, reviewed by experts, tuned to each role.' },
+  { color: '#5fa89e', label: 'AI Interview Coach',      desc: 'Real-time coaching on live calls. Surface answers and flag gaps as they happen.' },
+  { color: '#22c55e', label: 'AI Interviewer',          desc: 'Mock interviews calibrated to your target company. Scored feedback on every answer.' },
+  { color: '#8aada8', label: 'Job Tracker',             desc: 'Every application, reply, and interview stage in one dashboard with reminders.' },
+  { color: '#3d7a72', label: 'Portal Optimization',     desc: 'Ranks your profile across major job portals so recruiters find you first.' },
+  { color: '#5fa89e', label: 'Direct Recruiter InMail', desc: 'Targeted InMail to recruiters in your space, personalised and privacy-safe.' },
 ]
+
+/* ── Mini-mockup visuals for each tool card ──────────────────── */
+function ToolMockup({ label, color }: { label: string; color: string }) {
+  const box: React.CSSProperties = {
+    background: '#ffffff',
+    borderRadius: 14,
+    padding: '16px 18px',
+    boxShadow: '0 2px 12px rgba(37,62,66,0.07)',
+  }
+  const row: React.CSSProperties = {
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    paddingBottom: 9, marginBottom: 9,
+    borderBottom: '1px solid rgba(200,223,214,0.4)',
+  }
+  const bar = (pct: number, c: string) => (
+    <div style={{ flex: 1, height: 5, background: 'rgba(200,223,214,0.45)', borderRadius: 999, overflow: 'hidden' }}>
+      <div style={{ height: '100%', width: `${pct}%`, background: c, borderRadius: 999 }} />
+    </div>
+  )
+  const chip = (txt: string, c: string) => (
+    <span key={txt} style={{ fontSize: 10, fontWeight: 700, color: c, background: `${c}18`, padding: '2px 8px', borderRadius: 100 }}>{txt}</span>
+  )
+
+  if (label === 'AI Auto Apply') return (
+    <div style={box}>
+      {[
+        { co: 'Stripe', role: 'Senior PM' },
+        { co: 'Razorpay', role: 'Product Lead' },
+        { co: 'CRED', role: 'PM II' },
+      ].map((r, i) => (
+        <div key={r.co} style={{ ...row, ...(i === 2 ? { paddingBottom: 0, marginBottom: 0, borderBottom: 'none' } : {}) }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#1a3338' }}>{r.co} · {r.role}</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '2px 9px', borderRadius: 100 }}>Sent ✓</span>
+        </div>
+      ))}
+      <div style={{ marginTop: 10, fontSize: 11, fontWeight: 600, color: color }}>+38 applied today</div>
+    </div>
+  )
+
+  if (label === 'AI Outreach Agent') return (
+    <div style={box}>
+      <div style={{ fontSize: 11, color: '#8aada8', marginBottom: 7 }}>To: priya@razorpay.com</div>
+      <div style={{ fontSize: 12, color: '#1a3338', lineHeight: 1.55, marginBottom: 12, fontStyle: 'italic' }}>
+        &ldquo;Hi Priya, noticed Razorpay&apos;s team expanded 22% this quarter…&rdquo;
+      </div>
+      <div style={{ display: 'flex', gap: 10 }}>
+        {chip('64% Open', '#3d7a72')}
+        {chip('31% Reply', '#22c55e')}
+      </div>
+    </div>
+  )
+
+  if (label === 'Resume Builder') return (
+    <div style={box}>
+      <div style={{ fontSize: 12, fontWeight: 700, color: '#1a3338', marginBottom: 8 }}>Alex Chen · Product Manager</div>
+      <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' as const, marginBottom: 12 }}>
+        {['Agile', 'Data', 'Growth'].map(s => chip(s, color))}
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {bar(94, color)}
+        <span style={{ fontSize: 11, fontWeight: 700, color, flexShrink: 0 }}>94 ATS</span>
+      </div>
+    </div>
+  )
+
+  if (label === 'AI Interview Coach') return (
+    <div style={box}>
+      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '1.2px', color: color, textTransform: 'uppercase' as const, marginBottom: 10 }}>Live coaching</div>
+      {[
+        { type: 'IMPACT', tip: 'Mention your $2M revenue impact' },
+        { type: 'TIP',    tip: 'Ask about their Q3 OKRs' },
+      ].map((c, i) => (
+        <div key={c.type} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', ...(i === 0 ? { marginBottom: 9, paddingBottom: 9, borderBottom: '1px solid rgba(200,223,214,0.4)' } : {}) }}>
+          <span style={{ fontSize: 10, fontWeight: 700, color, background: `${color}18`, padding: '2px 6px', borderRadius: 5, flexShrink: 0, marginTop: 1 }}>{c.type}</span>
+          <span style={{ fontSize: 11, color: '#3d5a56', lineHeight: 1.5 }}>{c.tip}</span>
+        </div>
+      ))}
+    </div>
+  )
+
+  if (label === 'AI Interviewer') return (
+    <div style={box}>
+      <div style={{ fontSize: 11, color: '#8aada8', marginBottom: 7 }}>Mock interview · Q3 of 5</div>
+      <div style={{ fontSize: 12, color: '#1a3338', lineHeight: 1.5, marginBottom: 12 }}>
+        &ldquo;Tell me about your most impactful product launch.&rdquo;
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {bar(87, '#22c55e')}
+        <span style={{ fontSize: 11, fontWeight: 700, color: '#22c55e', flexShrink: 0 }}>87 Strong</span>
+      </div>
+    </div>
+  )
+
+  if (label === 'Job Tracker') return (
+    <div style={box}>
+      {[
+        { stage: 'Applied',    count: 24, pct: 100, c: '#8aada8' },
+        { stage: 'Screening',  count: 7,  pct: 29,  c: color },
+        { stage: 'Interviews', count: 3,  pct: 13,  c: '#22c55e' },
+      ].map(s => (
+        <div key={s.stage} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <span style={{ fontSize: 11, color: '#8aada8', width: 62, flexShrink: 0 }}>{s.stage}</span>
+          {bar(s.pct, s.c)}
+          <span style={{ fontSize: 11, fontWeight: 700, color: s.c, width: 18, textAlign: 'right' as const, flexShrink: 0 }}>{s.count}</span>
+        </div>
+      ))}
+    </div>
+  )
+
+  if (label === 'Portal Optimization') return (
+    <div style={box}>
+      {[
+        { portal: 'LinkedIn', rank: 'Top 8%',  pct: 92 },
+        { portal: 'Indeed',   rank: 'Top 14%', pct: 86 },
+        { portal: 'Naukri',   rank: 'Top 6%',  pct: 94 },
+      ].map(p => (
+        <div key={p.portal} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <span style={{ fontSize: 11, color: '#8aada8', width: 50, flexShrink: 0 }}>{p.portal}</span>
+          {bar(p.pct, color)}
+          <span style={{ fontSize: 11, fontWeight: 700, color, width: 46, textAlign: 'right' as const, flexShrink: 0 }}>{p.rank}</span>
+        </div>
+      ))}
+    </div>
+  )
+
+  /* Direct Recruiter InMail */
+  return (
+    <div style={box}>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 12 }}>
+        <div style={{ width: 30, height: 30, borderRadius: '50%', background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color, flexShrink: 0 }}>P</div>
+        <div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#1a3338' }}>Priya Mehta · Stripe</div>
+          <div style={{ fontSize: 11, color: '#6b7280', marginTop: 3, lineHeight: 1.5 }}>&ldquo;This is exactly what I was looking for…&rdquo;</div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: 8 }}>
+        {chip('Sent via Gmail', color)}
+        {chip('Reply received', '#22c55e')}
+      </div>
+    </div>
+  )
+}
 
 const PROOF = [
   { n: '1M+',  l: 'professionals onboarded' },
@@ -156,16 +299,16 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────── */}
-      <section style={{ background: '#ffffff', padding: '110px 40px 110px' }}>
+      <section id="candidates-how" style={{ background: '#ffffff', padding: '110px 40px 110px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 72 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(95,168,158,0.08)', color: '#3d7a72', padding: '4px 14px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 16 }}>
+            <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
               The 4-step loop
             </div>
-            <h2 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 16px', lineHeight: 1.1, letterSpacing: '-0.6px' }}>
+            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
               What the agent does while you sleep
             </h2>
-            <p style={{ fontSize: FONT.base, color: '#3d5a56', maxWidth: 500, margin: '0 auto', lineHeight: 1.65 }}>
+            <p style={{ fontSize: 17, color: '#6b7280', maxWidth: 520, margin: '0 auto', lineHeight: 1.72, fontWeight: 400 }}>
               A continuous loop that finds, applies, reaches out, and prepares — without you lifting a finger.
             </p>
           </div>
@@ -193,7 +336,7 @@ export default function CandidatesPage() {
 
                 {/* right: content */}
                 <div style={{ paddingBottom: 8 }}>
-                  <h3 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 12px', letterSpacing: '-0.3px' }}>
+                  <h3 style={{ fontFamily: SERIF, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 12px', letterSpacing: '-0.3px', lineHeight: 1.25, fontSynthesis: 'none' }}>
                     {step.title}
                   </h3>
                   <p style={{ fontSize: FONT.base, color: '#3d5a56', lineHeight: 1.75, margin: '0 0 20px', maxWidth: 620 }}>
@@ -224,56 +367,196 @@ export default function CandidatesPage() {
         </div>
       </section>
 
-      {/* ── TOOL SUITE ───────────────────────────────────────────── */}
-      <section style={{ background: '#f7faf9', padding: '100px 40px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ marginBottom: 56, maxWidth: 500 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(95,168,158,0.1)', color: '#3d7a72', padding: '4px 14px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 16 }}>
-              8 AI tools
-            </div>
-            <h2 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 14px', lineHeight: 1.15, letterSpacing: '-0.5px' }}>
-              Every tool you need,<br />under one roof.
+      {/* ── TOOL SUITE ─────────────────────────────────────────────── */}
+      <section
+        id="candidates-tools"
+        style={{
+          background: '#ffffff',
+          padding: 'clamp(80px, 10vw, 120px) clamp(20px, 5vw, 40px)',
+        }}
+      >
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+          {/* heading */}
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(52px, 7vw, 72px)' }}>
+            <h2 style={{
+              fontFamily: SERIF,
+              fontSize: 'clamp(36px, 6vw, 76px)',
+              fontWeight: 400,
+              fontStyle: 'normal',
+              color: '#111827',
+              margin: '0 0 20px',
+              lineHeight: 1.22,
+              letterSpacing: '-0.5px',
+              fontSynthesis: 'none',
+            }}>
+              Every tool you need,
+              <br />
+              under one roof.
             </h2>
-            <p style={{ fontSize: FONT.base, color: '#3d5a56', lineHeight: 1.65, margin: 0 }}>
+            <p style={{
+              fontSize: 17,
+              color: '#6b7280',
+              lineHeight: 1.75,
+              margin: '0 auto',
+              maxWidth: 500,
+              fontWeight: WEIGHT.normal,
+            }}>
               No separate subscriptions. No stitching tools together. One platform does it all.
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 14,
-          }} className="tools-grid">
-            {TOOLS.map((t) => (
-              <div key={t.label} style={{
-                background: '#fff', border: '1px solid #c8dfd6',
-                borderRadius: 16, padding: '24px 20px',
-                display: 'flex', flexDirection: 'column', gap: 10,
-                boxShadow: '0 2px 12px rgba(37,62,66,0.04)',
-                transition: 'box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease',
-              }} className="tool-card">
-                <div style={{ width: 40, height: 40, borderRadius: 10, background: `${t.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.md }}>
-                  {t.icon}
+          {/* ─── Row 1: 2 large hero cards ─── */}
+          <div style={{ display: 'grid', gridTemplateColumns: '5fr 7fr', gap: 18, marginBottom: 18 }} className="tools-hero-row">
+
+            {/* Left — text-only hero card */}
+            <div className="tool-card" style={{
+              background: '#f0f7f4',
+              borderRadius: 24,
+              padding: '48px 40px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              minHeight: 420,
+              border: 'none',
+              boxShadow: '0 1px 4px rgba(37,62,66,0.04)',
+              transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
+            }}>
+              <div style={{ fontSize: 'clamp(22px, 2.4vw, 30px)', fontWeight: WEIGHT.extra, color: '#111827', lineHeight: 1.28, letterSpacing: '-0.4px', marginBottom: 16 }}>
+                {TOOLS[0].label}
+              </div>
+              <div style={{ fontSize: FONT.base, color: '#4b5563', lineHeight: 1.72, marginBottom: 24, maxWidth: 300 }}>
+                {TOOLS[0].desc}
+              </div>
+              <Link href="/pricing" style={{ color: '#2e7d4f', fontSize: FONT.sm, fontWeight: WEIGHT.semi, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                See how it works <span style={{ fontSize: 16 }}>→</span>
+              </Link>
+            </div>
+
+            {/* Right — big mockup card */}
+            <div className="tool-card" style={{
+              background: '#f0f7f4',
+              borderRadius: 24,
+              padding: '32px 32px 0',
+              minHeight: 420,
+              display: 'flex',
+              flexDirection: 'column',
+              border: 'none',
+              boxShadow: '0 1px 4px rgba(37,62,66,0.04)',
+              overflow: 'hidden',
+              transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
+            }}>
+              <div style={{ flex: 1 }} />
+              {/* Floating white UI */}
+              <div style={{
+                background: '#fff',
+                borderRadius: '18px 18px 0 0',
+                padding: '28px 28px 0',
+                boxShadow: '0 -4px 32px rgba(37,62,66,0.08)',
+              }}>
+                <div style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: 18, marginBottom: 18 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: '#111827' }}>AI Outreach Agent</div>
+                      <div style={{ fontSize: FONT.xs, color: '#9ca3af', marginTop: 3 }}>Personalised emails from your Gmail</div>
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '4px 12px', borderRadius: 100 }}>Live</span>
+                  </div>
                 </div>
-                <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: '#1a3338' }}>{t.label}</div>
-                <div style={{ fontSize: FONT.sm, color: '#3d5a56', lineHeight: 1.6 }}>{t.desc}</div>
-                <div style={{ marginTop: 'auto', width: '100%', height: 2, background: '#ddeae4', borderRadius: 2, overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: '100%', background: `linear-gradient(90deg,${t.color},${t.color}40)`, borderRadius: 2, transform: 'translateX(-100%)', animation: 'toolSlide 3s ease forwards 0.5s' }} />
+                {[
+                  { co: 'Stripe', role: 'Senior PM', status: 'Opened', sc: '#3d7a72' },
+                  { co: 'Razorpay', role: 'Product Lead', status: 'Replied', sc: '#22c55e' },
+                ].map(r => (
+                  <div key={r.co} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', borderBottom: '1px solid #f3f4f6' }}>
+                    <div>
+                      <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#111827' }}>{r.co} · {r.role}</div>
+                      <div style={{ fontSize: FONT.xs, color: '#9ca3af', marginTop: 2 }}>priya@{r.co.toLowerCase()}.com</div>
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: r.sc, background: `${r.sc}14`, padding: '3px 10px', borderRadius: 100 }}>{r.status}</span>
+                  </div>
+                ))}
+                <div style={{ display: 'flex', gap: 16, padding: '18px 0 24px' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#3d7a72' }}>64%</div>
+                    <div style={{ fontSize: FONT.xs, color: '#9ca3af', marginTop: 2 }}>Open rate</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#22c55e' }}>31%</div>
+                    <div style={{ fontSize: FONT.xs, color: '#9ca3af', marginTop: 2 }}>Reply rate</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Row 2: 3 feature cards ─── */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, marginBottom: 18 }} className="tools-grid-3">
+            {[TOOLS[2], TOOLS[3], TOOLS[4]].map(t => (
+              <div key={t.label} className="tool-card" style={{
+                background: '#ffffff',
+                borderRadius: 22,
+                padding: '36px 32px 0',
+                display: 'flex',
+                flexDirection: 'column',
+                border: '1px solid #f0f0f0',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                overflow: 'hidden',
+                transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
+              }}>
+                <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#111827', lineHeight: 1.28, letterSpacing: '-0.3px', marginBottom: 10 }}>
+                  {t.label}
+                </div>
+                <div style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, marginBottom: 28 }}>
+                  {t.desc}
+                </div>
+                <div style={{ marginTop: 'auto', background: '#fafbfc', borderRadius: '16px 16px 0 0', padding: '20px 20px 0', marginLeft: -32, marginRight: -32, boxShadow: '0 -2px 16px rgba(37,62,66,0.04)' }}>
+                  <ToolMockup label={t.label} color={t.color} />
                 </div>
               </div>
             ))}
           </div>
+
+          {/* ─── Row 3: 3 feature cards ─── */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }} className="tools-grid-3">
+            {[TOOLS[5], TOOLS[6], TOOLS[7]].map(t => (
+              <div key={t.label} className="tool-card" style={{
+                background: '#ffffff',
+                borderRadius: 22,
+                padding: '36px 32px 0',
+                display: 'flex',
+                flexDirection: 'column',
+                border: '1px solid #f0f0f0',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                overflow: 'hidden',
+                transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
+              }}>
+                <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#111827', lineHeight: 1.28, letterSpacing: '-0.3px', marginBottom: 10 }}>
+                  {t.label}
+                </div>
+                <div style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, marginBottom: 28 }}>
+                  {t.desc}
+                </div>
+                <div style={{ marginTop: 'auto', background: '#fafbfc', borderRadius: '16px 16px 0 0', padding: '20px 20px 0', marginLeft: -32, marginRight: -32, boxShadow: '0 -2px 16px rgba(37,62,66,0.04)' }}>
+                  <ToolMockup label={t.label} color={t.color} />
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
       {/* ── COMPARISON ───────────────────────────────────────────── */}
-      <section style={{ background: '#edf5f1', padding: '100px 40px' }}>
+      <section id="candidates-compare" style={{ background: '#edf5f1', padding: '100px 40px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <h2 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 14px', letterSpacing: '-0.5px' }}>
+          <div style={{ textAlign: 'center', marginBottom: 64 }}>
+            <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
+              The comparison
+            </div>
+            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
               Old way vs. NextHire way
             </h2>
-            <p style={{ fontSize: FONT.base, color: '#7a9e99', margin: 0 }}>Same goal. Completely different experience.</p>
+            <p style={{ fontSize: 17, color: '#6b7280', margin: 0, fontWeight: 400, lineHeight: 1.72 }}>Same goal. Completely different experience.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }} className="comparison-grid">
@@ -317,13 +600,16 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '100px 40px' }}>
+      <section id="candidates-faq" style={{ background: '#fff', padding: '100px 40px' }}>
         <div style={{ maxWidth: 740, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <h2 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 12px', letterSpacing: '-0.4px' }}>
+          <div style={{ textAlign: 'center', marginBottom: 60 }}>
+            <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
+              FAQ
+            </div>
+            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
               Frequently asked questions
             </h2>
-            <p style={{ fontSize: FONT.base, color: '#3d5a56', margin: 0 }}>Everything you need to know before you start.</p>
+            <p style={{ fontSize: 17, color: '#6b7280', margin: 0, fontWeight: 400, lineHeight: 1.72 }}>Everything you need to know before you start.</p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
