@@ -1,0 +1,1387 @@
+/* Nexthire Global Styles
+ * Imports the original Webflow base CSS and the custom style.css verbatim.
+ * All original class names are preserved so JSX className matches work 1:1.
+ */
+
+/* Webflow base/reset CSS (e25-algotale) — loaded via <link> in layout to avoid PostCSS parse issues */
+
+/* Main site styles — copied directly from the static site */
+@import './style.css';
+
+/* Root CSS custom properties (used by sprite-based icon animations) */
+:root {
+  --sprite-url: url('/Image/sprite_file-v17.svg');
+  --notification-bg-pattern-large: url('https://cdn.prod.website-files.com/660dcc7f45ad8881324199b5/6662cc938843109182e2cd39_notification-pattern-12.png');
+  --notification-bg-pattern-small: url('https://cdn.prod.website-files.com/660dcc7f45ad8881324199b5/6662cc93ebd10eda404afe3e_notification-pattern-13.png');
+  --notification-logo-small: url('/Image/Nexthire.png');
+
+  /* Typography scale — 6 sizes only. Use everywhere. */
+  --font-xs: 11px;
+  --font-sm: 13px;
+  --font-base: 15px;
+  --font-md: 18px;
+  --font-lg: 24px;
+  --font-xl: 40px;
+  --font-hero: clamp(38px, 5vw, 52px);
+  --font-section: clamp(30px, 3.5vw, 42px);
+  --font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Next.js global resets */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-family);
+}
+
+body {
+  font-size: var(--font-base);
+  font-weight: 400;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force Noto Sans everywhere — overrides Webflow base */
+*, *::before, *::after {
+  font-family: inherit;
+}
+
+/* ─── Page-level centering ─────────────────────────────────── */
+/* overflow-x: clip prevents horizontal scroll without breaking position:sticky
+   (unlike overflow-x:hidden which kills sticky on all descendants) */
+body {
+  overflow-x: clip;
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Swiper CSS — loaded globally so all slider pages have styles available */
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+/* ---- HeroSection keyframes & responsive ---- */
+@keyframes hero-float1 {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(40px, -60px); }
+}
+
+/* ---- Product pills marquee ticker ---- */
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.products-marquee-track {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.products-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+  gap: 10px;
+}
+.products-marquee-inner:hover {
+  animation-play-state: paused;
+}
+
+/* Neutralise the Webflow dark overlay that was bleeding black over the hero left side */
+#home-s1 .hero-bg-video-overlay-horizontal {
+  display: none !important;
+}
+
+/* Force Playfair Display on the hero headline — overrides Webflow h1 font-family */
+#home-s1 h1,
+#home-s1 h1 span,
+#home-s1 h1 em {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#how-it-works h2,
+#how-it-works h2 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#full-platform h2,
+#full-platform h2 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#features h2,
+#features h2 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#product-showcase h2,
+#product-showcase h2 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#dual-action-cta .dual-action-button-cta-tag-left,
+#dual-action-cta .dual-action-button-cta-tag-right,
+#dual-action-cta .dual-action-button-cta-left-div-heading,
+#dual-action-cta .dual-action-button-cta-right-div-heading {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#success-story-hero h1,
+#success-story-hero h1 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#candidates-hero h1,
+#candidates-hero h1 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#pricing-hero h1,
+#pricing-hero h1 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#pricing-numbers h2,
+#pricing-included h2,
+#pricing-faq h2 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#why-nexthire-hero h1,
+#why-nexthire-hero h1 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+#why-nexthire-platform h2,
+#why-nexthire-compare h2,
+#why-nexthire-integrations h2,
+#why-nexthire-cta h2,
+#why-nexthire-cta h2 span,
+#about-hero h1,
+#about-hero h1 span {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+}
+
+/* Why Nexthire closing CTA: headline is exactly two lines (no mid-phrase wrap) */
+.why-nexthire-cta-headline span {
+  display: block !important;
+  white-space: nowrap !important;
+}
+@media (max-width: 520px) {
+  .why-nexthire-cta-headline span {
+    white-space: normal !important;
+  }
+}
+
+/* On mobile the two-column grid collapses → uniform mint bg */
+@media (max-width: 767px) {
+  #home-s1 { background: #edf5f1 !important; }
+  #home-s1 > div:last-of-type > div { padding: 110px 24px 80px !important; }
+}
+
+/* ════════════════════════════════════════════════
+   HowItWorksSection — redesigned animated panel
+   ════════════════════════════════════════════════ */
+
+/* Card entrance */
+@keyframes hiwCardIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);      }
+}
+
+/* Row / element stagger slide-in */
+@keyframes hiwRowIn {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+/* Pulse for live dot */
+@keyframes hiwPulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(34,197,94,0.55); }
+  60%       { box-shadow: 0 0 0 7px rgba(34,197,94,0);    }
+}
+
+/* ── Layout ─────────────────────────────────── */
+.hiw-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* ── Left accordion nav ──────────────────────── */
+.hiw-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hiw-nav-item {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  padding: 22px 26px 22px 24px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 0 14px 14px 0;
+  transition: background 0.18s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.18s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.hiw-nav-item--active {
+  border-left-color: #5fa89e;
+  background: rgba(95, 168, 158, 0.06);
+}
+
+.hiw-nav-label {
+  font-size: clamp(18px, 1.6vw, 23px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: #c8dfd6;
+  margin-bottom: 5px;
+  transition: color 0.18s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.hiw-nav-item--active .hiw-nav-label {
+  color: #1a3338;
+}
+
+.hiw-nav-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d3e5e0;
+  transition: color 0.18s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.hiw-nav-item--active .hiw-nav-subtitle {
+  color: #5fa89e;
+}
+
+.hiw-nav-body {
+  margin-top: 18px;
+  animation: hiwRowIn 0.3s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+.hiw-nav-desc {
+  font-size: 15px;
+  color: #4b5563;
+  line-height: 1.75;
+  margin: 0 0 16px;
+}
+
+.hiw-nav-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a3338;
+  background: rgba(95, 168, 158, 0.08);
+  border-radius: 10px;
+  padding: 11px 15px;
+}
+
+/* ── Right sticky wrap ───────────────────────── */
+.hiw-visual-wrap {
+  position: sticky;
+  top: 100px;
+}
+
+/* Card entrance animation (triggers on key change) */
+.hiw-card-enter {
+  animation: hiwCardIn 0.44s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+/* ── Panel (the white rounded card) ─────────── */
+.hiw-panel {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 36px 36px 30px;
+  box-shadow:
+    0 16px 56px rgba(37, 62, 66, 0.10),
+    0 2px  10px rgba(37, 62, 66, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 380px;
+}
+
+/* Panel header row */
+.hiw-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 4px;
+}
+
+.hiw-panel-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8aada8;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.hiw-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  animation: hiwPulse 1.8s ease-in-out infinite;
+}
+
+.hiw-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #5fa89e;
+  background: rgba(95, 168, 158, 0.12);
+  border-radius: 6px;
+  padding: 3px 9px;
+  letter-spacing: 0.4px;
+}
+
+/* ── Discover rows ───────────────────────────── */
+.hiw-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.hiw-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: #f3f8f6;
+  border-radius: 14px;
+  padding: 14px 18px;
+  opacity: 0;
+  animation: hiwRowIn 0.36s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.hiw-row-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5fa89e;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(95, 168, 158, 0.18);
+}
+
+.hiw-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.hiw-row-action {
+  font-size: 12px;
+  color: #8aada8;
+  margin-bottom: 3px;
+}
+
+.hiw-row-company {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a3338;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hiw-row-signal {
+  font-size: 11px;
+  color: #5fa89e;
+  text-align: right;
+  flex-shrink: 0;
+  max-width: 130px;
+  line-height: 1.4;
+}
+
+/* ── Panel footer ────────────────────────────── */
+.hiw-panel-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #8aada8;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #edf5f1;
+}
+
+/* ── Generic delayed animation class ────────── */
+.hiw-anim {
+  opacity: 0;
+  animation: hiwRowIn 0.36s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+/* ── Outreach: email block ───────────────────── */
+.hiw-email {
+  background: #f3f8f6;
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.hiw-email-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #8aada8;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hiw-tag {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(95, 168, 158, 0.12);
+  color: #5fa89e;
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+.hiw-email-to {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5fa89e;
+}
+
+.hiw-email-body {
+  font-size: 14px;
+  color: #1a3338;
+  line-height: 1.68;
+}
+
+/* ── Outreach: stat pair ─────────────────────── */
+.hiw-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hiw-stat {
+  background: #f3f8f6;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.hiw-stat-value {
+  font-size: 30px;
+  font-weight: 800;
+  color: #5fa89e;
+  line-height: 1;
+}
+
+.hiw-stat-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a3338;
+  margin: 7px 0 3px;
+}
+
+.hiw-stat-sub {
+  font-size: 11px;
+  color: #8aada8;
+}
+
+/* ── Land: counters ──────────────────────────── */
+.hiw-counters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.hiw-counter {
+  background: #f3f8f6;
+  border-radius: 14px;
+  padding: 16px 10px;
+  text-align: center;
+}
+
+.hiw-counter-n {
+  font-size: 28px;
+  font-weight: 800;
+  color: #5fa89e;
+  line-height: 1;
+}
+
+.hiw-counter-l {
+  font-size: 11px;
+  color: #8aada8;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ── Land: pipeline rows ─────────────────────── */
+.hiw-pipeline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f3f8f6;
+  border-radius: 14px;
+  padding: 14px 18px;
+  gap: 12px;
+}
+
+.hiw-pipeline-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.hiw-pipeline-company {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a3338;
+}
+
+.hiw-pipeline-role {
+  font-size: 12px;
+  color: #8aada8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hiw-status {
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hiw-status-interview {
+  background: rgba(95, 168, 158, 0.12);
+  color: #5fa89e;
+}
+
+.hiw-status-awaiting {
+  background: rgba(138, 173, 168, 0.12);
+  color: #8aada8;
+}
+
+.hiw-status-offer {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1020px) {
+  .hiw-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .hiw-visual-wrap {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  #how-it-works { padding: 80px 24px !important; }
+  .hiw-nav-item { padding: 18px 20px !important; }
+  .hiw-panel    { padding: 28px 22px 24px !important; }
+}
+
+/* ---- HireSection: responsive ---- */
+@media (max-width: 991px) {
+  #features > div > div:last-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 767px) {
+  #features { padding: 80px 24px !important; }
+  #features > div > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---- VerticalAccordionSection: fully inline-styled in the component; no CSS overrides needed here ---- */
+
+/* ---- Video dialog backdrop (::backdrop can only be styled via CSS, not inline) ---- */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+
+/* ---- Testimonials grid ---- */
+/*
+ * 5-column grid. Card 2 in every row uses col "2/4" (spans 2 of 5 cols) → wider breadth, same height.
+ * Row 1: [1×] [VIDEO 2×] [1×] [1×]
+ * Row 2: [1×] [QUOTE 2×] [1×] [1×]
+ * Row 3: [1×] [VIDEO 2×] [1×] [1×]
+ */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 260px 260px 260px;
+  gap: 12px;
+  align-items: stretch;
+}
+@media (max-width: 1100px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+  .testimonials-grid > * {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    min-height: 210px;
+  }
+}
+@media (max-width: 767px) {
+  .testimonials-grid-section { padding: 60px 20px 80px !important; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* ---- Hero: centered layout mobile ---- */
+@media (max-width: 640px) {
+  #home-s1 > div {
+    padding: 80px 24px 72px !important;
+  }
+}
+
+/* ── Sticky stacked cards (HireSection) ── */
+.nh-sticky-card {
+  will-change: transform;
+}
+.nh-card-moveup {
+  opacity: 0.6;
+}
+.nh-sticky-remove {
+  position: static !important;
+}
+
+/* Responsive: collapse right panel on small screens */
+@media (max-width: 860px) {
+  .nh-sticky-card {
+    flex-direction: column !important;
+    gap: 28px !important;
+  }
+  .nh-sticky-card > div:last-child {
+    flex: none !important;
+    width: 100% !important;
+  }
+}
+@media (max-width: 540px) {
+  .nh-sticky-card {
+    padding: 24px !important;
+  }
+  .nh-sticky-card > div:first-child > div:last-child > div {
+    flex: 0 0 100% !important;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   VerticalAccordionSection — clean accordion nav
+   ════════════════════════════════════════════════ */
+
+/* Two-column grid — stretch so row height is stable (no page jump when accordion opens) */
+.vas-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  gap: 72px;
+  align-items: stretch;
+}
+
+/* Left column: fixed height = right column (card + tabs) → no vertical layout shift */
+.vas-nav-column {
+  display: flex;
+  flex-direction: column;
+  height: 564px;
+  min-height: 564px;
+  max-height: 564px;
+  overflow: hidden;
+}
+
+/* Left accordion */
+.vas-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding: 4px 0 8px;
+}
+
+.vas-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0; /* don’t shrink below content — prevents overlap when column scrolls */
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  padding: 20px 8px 20px 20px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 0 14px 14px 0;
+  box-sizing: border-box;
+  transition:
+    background 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    padding 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Taller inactive rows + gap → left column visually fills fixed 564px column */
+.vas-nav-item:not(.vas-nav-item--active) {
+  min-height: 82px;
+}
+
+.vas-nav-item--active {
+  justify-content: flex-start;
+  /* min-height must stay content-based; 0 let flexbox collapse this row and caused desc + next item to overlap */
+  padding: 24px 8px 26px 20px;
+  border-left-color: #5fa89e;
+  background: rgba(95, 168, 158, 0.05);
+}
+
+.vas-nav-label {
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 600;
+  color: #b8d4cc;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  transition: color 0.18s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.vas-nav-item--active .vas-nav-label {
+  color: #1a3338;
+  font-weight: 700;
+  font-size: clamp(18px, 1.65vw, 23px);
+}
+
+.vas-nav-desc {
+  font-size: clamp(15px, 1.22vw, 18px);
+  color: #4b5563;
+  line-height: 1.72;
+  margin: 14px 0 0;
+}
+
+/* Right card */
+.vas-visual {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 564px;
+  min-height: 564px;
+  max-height: 564px;
+}
+
+/* Same outer shell as .hiw-panel (#how-it-works right column) */
+.vas-card {
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow:
+    0 16px 56px rgba(37, 62, 66, 0.10),
+    0 2px  10px rgba(37, 62, 66, 0.05);
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* Same entrance motion as .hiw-card-enter */
+.vas-card-enter {
+  animation: hiwCardIn 0.36s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+/* Inner layout — fixed height so every tool mockup uses the same frame */
+.vas-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 36px 36px 30px;
+  box-sizing: border-box;
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+#full-platform .vas-panel-inner .hiw-panel-header {
+  flex-shrink: 0;
+}
+
+.vas-panel-mockup {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vas-panel-mockup > * {
+  min-height: 0;
+}
+
+/* Tab strip — flex-shrink 0; horizontal scroll on narrow widths avoids extra row jump */
+.vas-tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.vas-tab {
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid #ddeae4;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8aada8;
+  cursor: pointer;
+  transition: border-color 0.2s cubic-bezier(0.33, 1, 0.68, 1), background 0.2s cubic-bezier(0.33, 1, 0.68, 1), color 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.vas-tab--active {
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1020px) {
+  .vas-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .vas-visual {
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+  .vas-nav-column {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .vas-nav {
+    overflow-y: visible !important;
+    gap: 6px !important;
+    padding: 0 !important;
+  }
+  .vas-nav-item:not(.vas-nav-item--active) {
+    min-height: 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #full-platform { padding: 80px 24px !important; }
+  .vas-nav-item  { padding: 12px 8px 12px 16px !important; }
+  .vas-nav-item--active { padding: 16px 8px 18px 16px !important; }
+  .vas-nav-column,
+  .vas-visual {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .vas-panel-inner {
+    padding: 24px 20px 20px !important;
+    height: auto !important;
+    min-height: 360px !important;
+    max-height: none !important;
+  }
+  .vas-tabs {
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+  }
+}
+
+/* ---- Feature tabs responsive ---- */
+@media (max-width: 768px) {
+  .feature-tabs-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .feature-tabs-grid > div:first-child {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+}
+
+/* ---- Footer styles ---- */
+.footer .w-dropdown-list {
+  display: block !important;
+  position: static !important;
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+.footer .w-dropdown-toggle .w-icon-dropdown-toggle {
+  display: none;
+}
+.footer-titles-level-2-item-link {
+  transition: padding 0.3s ease-in-out;
+}
+.footer-titles-level-2-item-link::before {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 11px;
+  height: 2px;
+  background: linear-gradient(to left, rgb(23, 59, 63), rgba(23, 59, 63, 0));
+  content: "";
+  opacity: 0.5;
+  transition: width 0.3s ease-in-out;
+}
+@media (min-width: 991px) {
+  .footer-titles-level-2-item-link:hover {
+    padding-left: 23px;
+  }
+  .footer-titles-level-2-item-link:hover::before {
+    width: 14px;
+    background: linear-gradient(to left, rgb(10, 150, 138), rgba(23, 59, 63, 0));
+  }
+  .footer-social-link-wrapper:hover {
+    opacity: 0.7;
+  }
+}
+.footer-lower-left-content { display: none; }
+
+/* ---- Header: solid bar when scrolled (body.fixed-menu from Header.tsx) ---- */
+.page-header,
+.main-nav,
+.main-nav .main-nav-container,
+.main-nav .main-nav-container-wrapper {
+  overflow: visible;
+}
+.main-nav .nav-menu {
+  overflow: visible;
+}
+.main-nav .main-nav-container-wrapper {
+  position: relative;
+}
+.fixed-menu .main-nav,
+.mobile-menu-open .main-nav {
+  background-color: #edf5f1;
+  box-shadow: 0 0 20px 0 rgba(37, 62, 66, 0.08);
+}
+
+/* Always-on: nav text dark so it reads on the mint hero background */
+.main-nav-menu-dropdown-text {
+  color: #1a3338 !important;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+/* When bar is solid (scrolled or mobile open): full-opacity text */
+.fixed-menu .main-nav-menu-dropdown-text,
+.mobile-menu-open .main-nav-menu-dropdown-text {
+  color: #1a3338 !important;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+/* Hovered or open item: full opacity + teal colour to stand out */
+.main-nav-menu-dropdown:hover .main-nav-menu-dropdown-text,
+.main-nav-menu-dropdown.w--open .main-nav-menu-dropdown-text,
+.fixed-menu .main-nav-menu-dropdown:hover .main-nav-menu-dropdown-text,
+.fixed-menu .main-nav-menu-dropdown.w--open .main-nav-menu-dropdown-text,
+.mobile-menu-open .main-nav-menu-dropdown:hover .main-nav-menu-dropdown-text,
+.mobile-menu-open .main-nav-menu-dropdown.w--open .main-nav-menu-dropdown-text {
+  color: #5fa89e !important;
+  opacity: 1;
+}
+.fixed-menu .main-nav-vertical-line,
+.mobile-menu-open .main-nav-vertical-line,
+.main-nav-vertical-line {
+  background: #1a3338;
+  opacity: 0.2;
+}
+/* Always show the active (dark) logo since background is always light */
+.brand-logo {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+.brand-logo-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.fixed-menu .brand-logo,
+.mobile-menu-open .brand-logo {
+  opacity: 0;
+  visibility: hidden;
+}
+.fixed-menu .brand-logo-active,
+.mobile-menu-open .brand-logo-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Try for free button: keep on the right, smaller size */
+@media (min-width: 992px) {
+  /* ── Centered header layout: logo | centred nav links | CTA ── */
+  .main-nav .main-nav-container {
+    max-width: 1320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+  .main-nav .main-nav-container-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+  /* Nav fills the space between logo and CTA; links are centred within it */
+  .main-nav .nav-menu.w-nav-menu {
+    flex: 1 !important;
+    justify-content: center !important;
+  }
+  /* Desktop CTA: visible as a sibling of <nav> */
+  .main-nav .nh-cta-desktop {
+    display: flex;
+    flex-shrink: 0;
+  }
+  /* Mobile-only CTA (inside <nav>): hidden on desktop */
+  .main-nav .nh-cta-mobile {
+    display: none !important;
+  }
+}
+
+/* Desktop CTA: hidden on mobile (CTA is accessible via the nav menu instead) */
+@media (max-width: 991px) {
+  .main-nav .nh-cta-desktop {
+    display: none !important;
+  }
+}
+.main-nav .main-nav-cta-try.button-primary {
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-radius: 9999px !important; /* pill-shaped: left/right circular, top/bottom straight */
+}
+
+/* ---- Nav dropdown (mega-menu): anchor to full nav bar width ---- */
+/* The .w-nav is already position:relative (from Webflow). Use it as the containing block. */
+.main-nav .w-dropdown {
+  position: static;
+}
+.main-nav .nav-menu.w-nav-menu {
+  position: static;   /* don't let the float shrink-wrap the dropdown context */
+  overflow: visible;
+}
+/* The .main-nav (w-nav) is position:relative by Webflow — dropdown hangs off it */
+.main-nav .dropdown-list.w-dropdown-list,
+.main-nav .dropdown-list.w-dropdown-list.w--open {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: #fff;
+  width: min(1170px, calc(100vw - 40px));
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  pointer-events: all;
+}
+.main-nav .dropdown-list.w-dropdown-list .submenu__wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ---- Nav dropdown arrow: hide all chevrons — no arrow indicator wanted ---- */
+.main-nav .w-icon-dropdown-toggle {
+  display: none !important;
+}
+.main-nav .main-nav-dropdown-toggle::after,
+.main-nav .main-nav-dropdown-toggle:after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Ensure nav dropdown toggle is clickable (button reset + pointer) */
+.main-nav .main-nav-dropdown-toggle {
+  pointer-events: auto;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+/* ---- For Companies dropdown: right-side "Book a demo" card (tapered corners, standard spacing) ---- */
+.submenu-for-companies-demo {
+  border-radius: 20px !important;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.submenu-for-companies-demo a:hover {
+  color: #1e5f52 !important;
+  opacity: 0.85;
+}
+.submenu-for-companies-demo img {
+  display: block;
+}
+
+/* ---- Submenu column dividers: gradient lines (not simple 1px) - About, For Companies, Career, Success Stories ---- */
+.submenu-level2__item-inner,
+.submenu-level2__item-inner.submenu-level2__item-inner-about {
+  position: relative;
+}
+.submenu-level2__item-inner:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, #1a3338 35.23%, rgba(26, 51, 56, 0) 100%);
+  content: "";
+}
+.submenu-level2__item-inner::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 2px;
+  height: 100%;
+  background: #5fa89e;
+  content: "";
+  transition: height 0.3s ease-in-out;
+}
+.submenu-level2__item:hover .submenu-level2__item-inner:after {
+  display: none;
+}
+.submenu-level2__item:hover .submenu-level2__item-inner::before {
+  display: block;
+}
+
+/* ---- Dual CTA: alignment fix ---- */
+/* Webflow applies margin-left:23px to .cta-tag-left and padding-left:23px to .cta-tag-right.
+   With the star removed the right tag has an extra 23px shift vs the left.
+   Zero it out so both labels and headings start at the same horizontal edge. */
+.dual-action-button-cta-tag-right {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+.dual-action-button-cta-right-div-heading {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.dual-action-button-cta-right-div-aligned.dual-action-button-cta-right-div {
+  text-align: left;
+}
+.dual-action-button-cta-right-div-aligned .dual-action-button-cta-tag-wrapper {
+  gap: 0;
+}
+
+.dual-action-button-cta-tag-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  min-width: 0;
+  position: relative;
+}
+.dual-action-button-cta-tag-wrapper p {
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+  order: 1;
+}
+/* Override Webflow's position:absolute on the icon — keep it in flex flow */
+.dual-action-button-cta-left-div-img,
+.dual-action-button-cta-right-div-img,
+.dual-action-button-cta-tag-wrapper .w-embed,
+.dual-action-button-cta-left-div-img.w-embed,
+.dual-action-button-cta-right-div-img.w-embed {
+  position: static !important;
+  flex-shrink: 0;
+  order: 2;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Dual CTA: palette override to match homepage colour scheme ---- */
+/* Left panel: dark teal (our dark token) */
+.dual-action-button-cta-left-div {
+  background-color: #1a3338 !important;
+}
+.dual-action-button-cta-tag-left {
+  color: #5fa89e !important;   /* teal accent instead of plain white */
+}
+.dual-action-button-cta-left-div-heading {
+  color: #ffffff !important;
+}
+.dual-action-button-cta-left-div-para {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+/* Right panel: light mint (matches hero) */
+.dual-action-button-cta-right-div {
+  background-color: #edf5f1 !important;
+}
+.dual-action-button-cta-tag-right {
+  color: #5fa89e !important;   /* teal accent label */
+}
+.dual-action-button-cta-right-div-heading {
+  color: #1a3338 !important;
+}
+.dual-action-button-cta-right-div-para {
+  color: #3d5a56 !important;
+}
+
+/* Right panel "Schedule Now" button: outline style on mint bg */
+.dual-action-button-cta-right-div-inner-button {
+  background-color: #ffffff !important;
+  color: #1a3338 !important;
+  border: 1.5px solid #c8dfd6 !important;
+  box-shadow: 0 2px 8px rgba(37,62,66,0.06) !important;
+}
+.dual-action-button-cta-right-div-inner-button:hover {
+  background-color: #1a3338 !important;
+  color: #ffffff !important;
+  border-color: #1a3338 !important;
+}
+/* ── candidates page ──────────────────────────────────────── */
+.tool-card:hover {
+  box-shadow: 0 6px 24px rgba(95,168,158,0.1) !important;
+  transform: translateY(-2px);
+  border-color: rgba(95,168,158,0.3) !important;
+}
+
+@keyframes toolSlide {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+@media (max-width: 900px) {
+  .tools-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .comparison-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .how-step-row {
+    grid-template-columns: 50px 1fr !important;
+    gap: 0 24px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .tools-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+/* ── end candidates ───────────────────────────────────────── */
+
+/* ── for-companies page ──────────────────────────────────────── */
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── why-nexthire feature rows ───────────────────────────────── */
+@media (max-width: 860px) {
+  .feature-row-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .feature-row-grid > div {
+    order: unset !important;
+  }
+}
+/* ── end why-nexthire ────────────────────────────────────────── */
+
+/* ── pricing page ────────────────────────────────────────────── */
+.pricing-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(37,62,66,0.1) !important;
+}
+
+@media (max-width: 1100px) {
+  .pricing-grid-candidates {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-grid-candidates {
+    grid-template-columns: 1fr !important;
+  }
+  .pricing-grid-companies {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* ── end pricing page ────────────────────────────────────────── */
+
+/* ── success story page ──────────────────────────────────────── */
+.ss-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2) !important;
+}
+
+@media (max-width: 900px) {
+  .ss-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .ss-cards-grid > div {
+    grid-column: span 1 !important;
+  }
+  .ss-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ss-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* ── end success story ───────────────────────────────────────── */
+
+.dual-action-button-cta-tag-wrapper .w-embed svg,
+.dual-action-button-cta-left-div-img.w-embed svg,
+.dual-action-button-cta-right-div-img.w-embed svg {
+  width: 12px;
+  height: 12px;
+  max-width: 12px;
+  max-height: 12px;
+}
+
+/* ─── Noto Sans override — replaces all Inter / system-ui from Webflow CSS ─── */
+*,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button, input, textarea, select, label,
+.w-richtext, .w-form, .w-button,
+body.andl-body, body.andl-body * {
+  font-family: 'Noto Sans', system-ui, -apple-system, sans-serif !important;
+}

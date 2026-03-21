@@ -1,0 +1,29 @@
+{
+  "name": "nexthire-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "kill-ports": "lsof -ti :3000,:3001 | xargs kill -9 2>/dev/null || echo 'Ports 3000 and 3001 are free'",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.29",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@reduxjs/toolkit": "^2.5.1",
+    "react-redux": "^9.2.0",
+    "swiper": "^11.2.6",
+    "gsap": "^3.12.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/node": "^22.13.14",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.29"
+  }
+}
