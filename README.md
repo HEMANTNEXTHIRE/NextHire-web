@@ -29,7 +29,7 @@ src/
     about-nexthire/      # /about-nexthire
     talent-assist/       # /talent-assist
     pricing/             # /pricing
-    why-nexthire/        # /why-nexthire
+    companies/           # /companies (For Companies; /why-nexthire redirects here)
     why-join-nexthire/   # /why-join-nexthire
     success-story/       # /success-story
     contact-us/          # /contact-us

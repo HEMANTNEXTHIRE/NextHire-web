@@ -142,11 +142,10 @@ export default function CandidatesPage() {
           </div>
 
           {/* stat strip */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 0, borderTop: '1px solid #c8dfd6', paddingTop: 40, flexWrap: 'wrap' }}>
-            {PROOF.map((p, i) => (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginTop: 40, paddingTop: 16, flexWrap: 'wrap' }}>
+            {PROOF.map((p) => (
               <div key={p.l} style={{
-                padding: '0 32px', textAlign: 'center', flex: '1 1 120px', minWidth: 100,
-                borderRight: i < PROOF.length - 1 ? '1px solid #c8dfd6' : 'none',
+                padding: '0 20px', textAlign: 'center', flex: '1 1 120px', minWidth: 100,
               }}>
                 <div style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#5fa89e', lineHeight: 1, marginBottom: 6 }}>{p.n}</div>
                 <div style={{ fontSize: FONT.xs, color: '#7a9e99', fontWeight: WEIGHT.medium, letterSpacing: '0.3px', lineHeight: 1.4 }}>{p.l}</div>

@@ -154,29 +154,42 @@ main {
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
 }
 
-#why-nexthire-hero h1,
-#why-nexthire-hero h1 span {
+#companies-hero h1,
+#companies-hero h1 span {
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
 }
 
-#why-nexthire-platform h2,
-#why-nexthire-compare h2,
-#why-nexthire-integrations h2,
-#why-nexthire-cta h2,
-#why-nexthire-cta h2 span,
+#companies-platform h2,
+#companies-compare h2,
+#companies-integrations h2,
+#companies-cta h2,
+#companies-cta h2 span,
 #about-hero h1,
 #about-hero h1 span {
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
 }
 
-/* Why Nexthire closing CTA: headline is exactly two lines (no mid-phrase wrap) */
-.why-nexthire-cta-headline span {
+/* Companies page closing CTA: headline two lines on desktop */
+.companies-cta-headline span {
   display: block !important;
   white-space: nowrap !important;
 }
 @media (max-width: 520px) {
-  .why-nexthire-cta-headline span {
+  .companies-cta-headline span {
     white-space: normal !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .companies-hero-stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .companies-platform-panel {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
   }
 }
 
@@ -1309,7 +1322,7 @@ dialog::backdrop {
   to   { transform: translateX(-50%); }
 }
 
-/* ── why-nexthire feature rows ───────────────────────────────── */
+/* ── companies page (legacy .feature-row-grid unused) ──────── */
 @media (max-width: 860px) {
   .feature-row-grid {
     grid-template-columns: 1fr !important;
@@ -1319,7 +1332,7 @@ dialog::backdrop {
     order: unset !important;
   }
 }
-/* ── end why-nexthire ────────────────────────────────────────── */
+/* ── end companies ───────────────────────────────────────────── */
 
 /* ── pricing page ────────────────────────────────────────────── */
 .pricing-card-hover:hover {
@@ -1339,6 +1352,15 @@ dialog::backdrop {
   }
   .pricing-grid-companies {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* Pricing: audience pills on small screens */
+@media (max-width: 520px) {
+  #pricing-hero .pricing-audience-tabs .p-tab-btn {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    font-size: 13px !important;
   }
 }
 /* ── end pricing page ────────────────────────────────────────── */

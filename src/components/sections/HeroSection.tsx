@@ -175,7 +175,7 @@ export default function HeroSection() {
         </div>
 
         {/* What's inside — same style as "Find jobs at companies like" */}
-        <div style={{ borderTop: `1px solid #e5e7eb`, paddingTop: '28px', width: '100%' }}>
+        <div style={{ marginTop: '36px', paddingTop: '8px', width: '100%' }}>
           <p style={{ fontSize: '11px', color: C.muted, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px', fontWeight: WEIGHT.semi, fontFamily: 'inherit', textAlign: 'center' }}>
             What&apos;s inside
           </p>

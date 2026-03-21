@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { FONT, WEIGHT } from '@/constants/typography'
 
@@ -138,40 +138,33 @@ function priceFmt(monthly: number, cycle: BillingCycle) {
   return { display: `$${monthly}`, sub: '/mo · billed monthly' }
 }
 
-/* ── Animated counter ──────────────────────────────────────────── */
-function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const [val, setVal] = useState(0)
-  const ref = useRef<HTMLSpanElement>(null)
-  useEffect(() => {
-    const obs = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return
-      obs.disconnect()
-      let start = 0
-      const duration = 1400
-      const step = Math.ceil(target / (duration / 16))
-      const id = setInterval(() => {
-        start = Math.min(start + step, target)
-        setVal(start)
-        if (start >= target) clearInterval(id)
-      }, 16)
-    }, { threshold: 0.3 })
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [target])
-  return <span ref={ref}>{val.toLocaleString()}{suffix}</span>
+/* ── CSS injected once ─────────────────────────────────────────── */
+/* Homepage-aligned tokens (HeroSection) */
+const HOME = {
+  bg: '#ffffff',
+  dark: '#111827',
+  accent: '#2e7d4f',
+  subtext: '#6b7280',
+  muted: '#9ca3af',
+  hairline: '#e5e7eb',
 }
 
-/* ── CSS injected once ─────────────────────────────────────────── */
-const STYLES = `
-@keyframes pFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-@keyframes pPulse  { 0%,100%{opacity:1} 50%{opacity:0.4} }
-@keyframes pSlideUp{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-@keyframes pOrb    { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(20px,-15px) scale(1.05)} }
-@keyframes pSpin   { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-@keyframes pShimmer{ 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+/** Matches homepage `.hiw-panel` / `.vas-card` — tapered, shadow-only shell */
+const NH_PANEL = {
+  r: 28,
+  shadow: '0 16px 56px rgba(37, 62, 66, 0.10), 0 2px 10px rgba(37, 62, 66, 0.05)' as const,
+  shadowPopular: '0 18px 58px rgba(95, 168, 158, 0.12), 0 2px 10px rgba(37, 62, 66, 0.05), 0 0 0 1px rgba(95, 168, 158, 0.18)' as const,
+  shadowEnterprise: '0 18px 58px rgba(61, 122, 114, 0.12), 0 2px 10px rgba(37, 62, 66, 0.05), 0 0 0 1px rgba(61, 122, 114, 0.2)' as const,
+  inner: '#f3f8f6',
+  innerR: 16,
+  rowR: 14,
+}
 
-.pricing-card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease !important; }
-.pricing-card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(37,62,66,0.12) !important; }
+const STYLES = `
+@keyframes pSlideUp{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.pricing-card-hover { transition: transform 0.28s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.28s ease !important; }
+.pricing-card-hover:hover { transform: translateY(-5px); box-shadow: 0 22px 64px rgba(37, 62, 66, 0.12), 0 4px 14px rgba(37, 62, 66, 0.06) !important; }
 
 .p-tab-btn { transition: all 0.2s ease; }
 .p-tab-btn:hover { opacity: 1 !important; }
@@ -182,7 +175,6 @@ const STYLES = `
 .faq-item { transition: background 0.15s ease; }
 .faq-item:hover { background: #f7faf9; border-radius: 12px; }
 
-@keyframes pBarFill { from{width:0} to{width:var(--bar-w)} }
 `
 
 /* ════════════════════════════════════════════════════════════════
@@ -194,54 +186,110 @@ export default function PricingPageClient() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
-    <div style={{ background: P.white, minHeight: '100vh', fontFamily: "'Noto Sans', system-ui, sans-serif" }}>
+    <div style={{ background: HOME.bg, minHeight: '100vh', fontFamily: "'Noto Sans', system-ui, sans-serif" }}>
       <style suppressHydrationWarning>{STYLES}</style>
 
       {/* ══════════════════════════════════════════════════════
-          HERO — full-width mint with floating infographic
+          HERO + TOGGLES + PLANS — same thesis as homepage HeroSection
       ══════════════════════════════════════════════════════ */}
-      <section id="pricing-hero" style={{ background: P.bg, padding: '110px 40px 110px', position: 'relative', overflow: 'hidden' }}>
+      <section id="pricing-hero" style={{ background: HOME.bg, position: 'relative', overflow: 'hidden' }}>
 
-        {/* Animated decorative orbs */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-          <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${P.sage}90 0%, transparent 65%)`, top: -150, right: '5%', animation: 'pOrb 12s ease-in-out infinite' }} />
-          <div style={{ position: 'absolute', width: 340, height: 340, borderRadius: '50%', background: `radial-gradient(circle, ${P.mint} 0%, transparent 65%)`, bottom: 0, left: '8%', animation: 'pOrb 16s ease-in-out infinite reverse' }} />
-          {/* dot grid */}
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: `radial-gradient(${P.sage} 1.2px, transparent 1.2px)`, backgroundSize: '30px 30px', opacity: 0.55 }} />
-        </div>
+        {/* Intro — mirrors HeroSection padding & max-width */}
+        <div style={{
+          maxWidth: 900,
+          margin: '0 auto',
+          padding: '120px clamp(20px, 5vw, 40px) 0',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+        }}>
 
-        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'flex-end' }} className="hero-grid">
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            background: HOME.bg,
+            border: `1px solid ${HOME.hairline}`,
+            borderRadius: 100,
+            padding: '8px 20px',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+            marginBottom: 16,
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: HOME.accent, display: 'inline-block', flexShrink: 0 }} />
+            <span style={{ color: '#374151', fontSize: 13, fontWeight: WEIGHT.medium, letterSpacing: '0.01em', lineHeight: 1.4 }}>
+              Simple, transparent pricing
+            </span>
+          </div>
 
-            {/* Left: headline — centered, Playfair like first page */}
-            <div style={{ paddingBottom: 72, textAlign: 'center' }}>
-              {/* pill */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(95,168,158,0.12)', border: `1px solid ${P.sage}`, borderRadius: 100, padding: '6px 16px', marginBottom: 28 }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: P.accent, display: 'inline-block', animation: 'pPulse 1.6s ease-in-out infinite', boxShadow: `0 0 8px ${P.accent}` }} />
-                <span style={{ color: P.accentD, fontSize: FONT.sm, fontWeight: WEIGHT.bold, letterSpacing: '0.5px' }}>Simple, transparent pricing</span>
-              </div>
+          <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
+            <h1 style={{
+              fontFamily: SERIF,
+              margin: 0,
+              letterSpacing: '-0.5px',
+              lineHeight: 1.22,
+              fontSynthesis: 'none',
+            }}>
+              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, fontFamily: SERIF }}>
+                Pick your plan
+              </span>
+              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.accent, fontFamily: SERIF }}>
+                Start in minutes
+              </span>
+            </h1>
+          </div>
 
-              <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
-                <span style={{ display: 'block', color: '#111827', fontFamily: SERIF }}>Pick your plan.</span>
-                <span style={{ display: 'block', color: '#2e7d4f', fontFamily: SERIF }}>Start in minutes.</span>
-              </h1>
-              <p style={{ fontSize: FONT.md, color: P.mid, lineHeight: 1.72, margin: '0 auto 40px', maxWidth: 460 }}>
-                Whether you&apos;re a professional landing your next role or a company building your next team — there&apos;s a plan built for you.
-              </p>
+          <p style={{
+            color: HOME.subtext,
+            fontSize: 17,
+            lineHeight: 1.72,
+            margin: '0 0 0',
+            maxWidth: 560,
+            fontWeight: WEIGHT.normal,
+          }}>
+            Whether you&apos;re a professional landing your next role or a company building your next team — there&apos;s a plan built for you.
+          </p>
 
-              {/* Audience toggle */}
-              <div style={{ display: 'inline-flex', background: P.white, border: `1px solid ${P.border}`, borderRadius: 14, padding: 4, boxShadow: '0 2px 12px rgba(37,62,66,0.08)', margin: '0 auto' }}>
+          {/* Same pattern as homepage “What’s inside” — breathing room before controls */}
+          <div style={{ marginTop: 56, paddingTop: 8, width: '100%' }}>
+            <p style={{
+              fontSize: 11,
+              color: HOME.muted,
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              marginBottom: 28,
+              fontWeight: WEIGHT.semi,
+              textAlign: 'center',
+            }}>
+              Plans &amp; billing
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 28 }}>
+              <div
+                className="pricing-audience-tabs"
+                style={{
+                  display: 'inline-flex',
+                  background: HOME.bg,
+                  border: `1px solid ${HOME.hairline}`,
+                  borderRadius: 14,
+                  padding: 4,
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                }}
+              >
                 {(['candidates', 'companies'] as PricingTab[]).map(t => (
                   <button
                     key={t}
+                    type="button"
                     onClick={() => setTab(t)}
                     className="p-tab-btn"
                     style={{
-                      padding: '10px 28px', borderRadius: 10, border: 'none', cursor: 'pointer',
-                      fontSize: FONT.base, fontWeight: WEIGHT.bold,
-                      background: tab === t ? P.dark : 'transparent',
-                      color: tab === t ? P.white : P.muted,
-                      boxShadow: tab === t ? '0 2px 12px rgba(26,51,56,0.18)' : 'none',
+                      padding: '12px 26px',
+                      borderRadius: 10,
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: FONT.base,
+                      fontWeight: WEIGHT.bold,
+                      background: tab === t ? HOME.dark : 'transparent',
+                      color: tab === t ? '#ffffff' : HOME.muted,
                       transition: 'all 0.22s ease',
                     }}
                   >
@@ -249,99 +297,45 @@ export default function PricingPageClient() {
                   </button>
                 ))}
               </div>
-            </div>
-
-            {/* Right: animated infographic panel */}
-            <div style={{ position: 'relative', paddingBottom: 0, animation: 'pSlideUp 0.6s ease 0.1s both' }}>
-              {/* Main stats card */}
-              <div style={{ background: P.white, border: `1px solid ${P.border}`, borderRadius: 24, padding: 32, boxShadow: '0 8px 48px rgba(37,62,66,0.10)' }}>
-                <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.muted, letterSpacing: 1.4, textTransform: 'uppercase', marginBottom: 20 }}>Platform overview</div>
-
-                {/* Stat rows */}
-                {[
-                  { label: 'Professionals onboarded', value: 1000000, suffix: '+', color: P.accent, pct: 100 },
-                  { label: 'Jobs scanned daily', value: 14000000, suffix: '', color: P.accentD, pct: 88 },
-                  { label: 'Avg email open rate', value: 64, suffix: '%', color: P.green, pct: 64 },
-                  { label: 'Offer rate with Copilot', value: 75, suffix: '%', color: P.accent, pct: 75 },
-                ].map((s, i) => (
-                  <div key={s.label} style={{ marginBottom: i < 3 ? 18 : 0 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                      <span style={{ fontSize: FONT.sm, color: P.mid, fontWeight: WEIGHT.medium }}>{s.label}</span>
-                      <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: s.color }}>
-                        <Counter target={s.value} suffix={s.suffix} />
-                      </span>
-                    </div>
-                    <div style={{ height: 5, background: P.mint, borderRadius: 4, overflow: 'hidden' }}>
-                      <div style={{
-                        height: '100%', background: s.color, borderRadius: 4,
-                        // @ts-expect-error CSS variable
-                        '--bar-w': `${s.pct}%`,
-                        width: `${s.pct}%`,
-                        animation: 'pBarFill 1.4s ease forwards',
-                      }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Floating trust badge */}
-              <div style={{ position: 'absolute', bottom: -24, left: -24, background: P.dark, borderRadius: 16, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: '0 8px 32px rgba(26,51,56,0.2)', animation: 'pFloat 4s ease-in-out infinite' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: `${P.accent}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.base }}>🔒</div>
-                <div>
-                  <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: P.white, lineHeight: 1.2 }}>CASA Level 3</div>
-                  <div style={{ fontSize: FONT.xs, color: `rgba(255,255,255,0.5)` }}>Privacy certified</div>
+              {tab === 'candidates' && (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: cycle === 'monthly' ? HOME.dark : HOME.muted, transition: 'color 0.2s' }}>Monthly</span>
+                  <button
+                    type="button"
+                    onClick={() => setCycle(c => c === 'monthly' ? 'quarterly' : 'monthly')}
+                    style={{
+                      width: 52,
+                      height: 28,
+                      borderRadius: 100,
+                      border: 'none',
+                      cursor: 'pointer',
+                      background: cycle === 'quarterly' ? HOME.accent : HOME.hairline,
+                      position: 'relative',
+                      transition: 'background 0.25s ease',
+                      padding: 0,
+                    }}
+                    aria-label="Toggle billing cycle"
+                  >
+                    <span style={{ position: 'absolute', top: 4, left: cycle === 'quarterly' ? 28 : 4, width: 20, height: 20, borderRadius: '50%', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.2)', transition: 'left 0.25s ease', display: 'block' }} />
+                  </button>
+                  <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: cycle === 'quarterly' ? HOME.dark : HOME.muted, transition: 'color 0.2s' }}>
+                    Quarterly
+                    <span style={{ display: 'inline-block', marginLeft: 10, background: '#f0fdf4', color: '#166534', border: '1px solid #86efac', fontSize: FONT.sm, fontWeight: WEIGHT.extra, padding: '4px 12px', borderRadius: 100, verticalAlign: 'middle' }}>
+                      Save 20%
+                    </span>
+                  </span>
                 </div>
-              </div>
-
-              {/* Floating review badge */}
-              <div style={{ position: 'absolute', top: -20, right: -16, background: P.white, border: `1px solid ${P.border}`, borderRadius: 14, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 20px rgba(37,62,66,0.08)', animation: 'pFloat 5s ease-in-out 1s infinite' }}>
-                <span style={{ fontSize: FONT.base }}>⭐</span>
-                <div>
-                  <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.dark }}>4.8 / 5</div>
-                  <div style={{ fontSize: FONT.xs, color: P.muted }}>from 2,400+ reviews</div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Wave into white */}
-        <div style={{ position: 'relative', zIndex: 1, marginTop: 48, lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 64" fill="none" style={{ width: '100%', display: 'block' }} preserveAspectRatio="none">
-            <path d="M0 32 Q240 0 480 32 Q720 64 960 32 Q1200 0 1440 32 L1440 64 L0 64 Z" fill={P.white} />
-          </svg>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          PLAN CARDS
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ background: P.white, padding: '0 40px 80px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-
-          {/* Billing toggle — candidates */}
-          {tab === 'candidates' && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 48, paddingTop: 4 }}>
-              <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: cycle === 'monthly' ? P.dark : P.muted, transition: 'color 0.2s' }}>Monthly</span>
-              <button
-                onClick={() => setCycle(c => c === 'monthly' ? 'quarterly' : 'monthly')}
-                style={{ width: 52, height: 28, borderRadius: 100, border: 'none', cursor: 'pointer', background: cycle === 'quarterly' ? P.accent : P.border, position: 'relative', transition: 'background 0.25s ease', padding: 0 }}
-                aria-label="Toggle billing cycle"
-              >
-                <span style={{ position: 'absolute', top: 4, left: cycle === 'quarterly' ? 28 : 4, width: 20, height: 20, borderRadius: '50%', background: P.white, boxShadow: '0 1px 4px rgba(0,0,0,0.2)', transition: 'left 0.25s ease', display: 'block' }} />
-              </button>
-              <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: cycle === 'quarterly' ? P.dark : P.muted, transition: 'color 0.2s' }}>
-                Quarterly
-                <span style={{ display: 'inline-block', marginLeft: 8, background: '#e4f0eb', color: '#3d7a72', fontSize: FONT.sm, fontWeight: WEIGHT.extra, padding: '3px 10px', borderRadius: 100, verticalAlign: 'middle' }}>
-                  Save 20%
-                </span>
-              </span>
-            </div>
-          )}
+        {/* Plan cards — continued white field, homepage-like bottom padding */}
+        <div id="pricing-plans" style={{ maxWidth: 1200, margin: '0 auto', padding: '56px clamp(20px, 5vw, 40px) 100px' }}>
 
           {/* ── Candidate plan grid ── */}
           {tab === 'candidates' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }} className="pricing-grid-candidates">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }} className="pricing-grid-candidates">
               {CANDIDATE_PLANS.map((plan, idx) => {
                 const p = priceFmt(plan.monthly, cycle)
                 return (
@@ -349,13 +343,13 @@ export default function PricingPageClient() {
                     key={plan.id}
                     className="pricing-card-hover"
                     style={{
-                      borderRadius: 20,
-                      border: plan.popular ? `2px solid ${plan.color}` : `1px solid ${P.border}`,
-                      background: plan.popular ? `linear-gradient(160deg,${plan.color}08 0%,${P.white} 55%)` : P.white,
-                      padding: '28px 22px 22px',
+                      borderRadius: NH_PANEL.r,
+                      border: 'none',
+                      background: plan.popular ? `linear-gradient(165deg, rgba(95,168,158,0.06) 0%, ${P.white} 50%)` : P.white,
+                      padding: '30px 26px 26px',
                       display: 'flex', flexDirection: 'column',
                       position: 'relative', overflow: 'hidden',
-                      boxShadow: plan.popular ? `0 8px 40px ${plan.color}22` : '0 2px 12px rgba(37,62,66,0.04)',
+                      boxShadow: plan.popular ? NH_PANEL.shadowPopular : NH_PANEL.shadow,
                       animation: `pSlideUp 0.5s ease ${idx * 0.07}s both`,
                     }}
                   >
@@ -373,7 +367,7 @@ export default function PricingPageClient() {
 
                     {/* Icon + name */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, background: `${plan.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.md }}>
+                      <div style={{ width: 36, height: 36, borderRadius: NH_PANEL.rowR, background: `${plan.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.md }}>
                         {plan.icon}
                       </div>
                       <span style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: P.dark, letterSpacing: '-0.3px' }}>{plan.name}</span>
@@ -382,7 +376,7 @@ export default function PricingPageClient() {
                     <p style={{ fontSize: FONT.base, color: P.mid, lineHeight: 1.6, margin: '0 0 18px', minHeight: 36 }}>{plan.description}</p>
 
                     {/* Price */}
-                    <div style={{ marginBottom: 22, padding: '14px 0', borderTop: `1px solid ${P.border}`, borderBottom: `1px solid ${P.border}` }}>
+                    <div style={{ marginBottom: 22, padding: '16px 18px', borderRadius: NH_PANEL.innerR, background: NH_PANEL.inner }}>
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
                         <span style={{ fontSize: FONT.xl, fontWeight: WEIGHT.extra, color: plan.monthly === 0 ? P.dark : plan.color, lineHeight: 1, letterSpacing: '-1px' }}>{p.display}</span>
                       </div>
@@ -397,8 +391,8 @@ export default function PricingPageClient() {
                     {/* Features */}
                     <div style={{ flex: 1, marginBottom: 20 }}>
                       {plan.features.map(f => (
-                        <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginBottom: 9 }}>
-                          <div style={{ width: 17, height: 17, borderRadius: '50%', flexShrink: 0, marginTop: 1, background: f.included ? `${plan.color}18` : P.mint, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.xs, color: f.included ? plan.color : P.muted, fontWeight: WEIGHT.extra }}>
+                        <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginBottom: 10 }}>
+                          <div style={{ width: 17, height: 17, borderRadius: '50%', flexShrink: 0, marginTop: 1, background: f.included ? `${plan.color}18` : NH_PANEL.inner, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.xs, color: f.included ? plan.color : P.muted, fontWeight: WEIGHT.extra }}>
                             {f.included ? '✓' : '–'}
                           </div>
                           <span style={{ fontSize: FONT.base, color: f.included ? P.mid : P.muted, lineHeight: 1.5, fontWeight: f.included ? WEIGHT.medium : WEIGHT.normal }}>{f.label}</span>
@@ -414,7 +408,7 @@ export default function PricingPageClient() {
                       className={plan.popular ? 'p-cta-solid' : 'p-cta-outline'}
                       style={{
                         display: 'block', textAlign: 'center', textDecoration: 'none',
-                        padding: '12px 20px', borderRadius: 10, fontWeight: WEIGHT.bold, fontSize: FONT.sm,
+                        padding: '12px 20px', borderRadius: NH_PANEL.rowR, fontWeight: WEIGHT.bold, fontSize: FONT.sm,
                         background: plan.popular ? plan.color : 'transparent',
                         color: plan.popular ? P.white : plan.color,
                         border: `2px solid ${plan.popular ? 'transparent' : plan.color}`,
@@ -434,17 +428,17 @@ export default function PricingPageClient() {
           {/* ── Company plans ── */}
           {tab === 'companies' && (
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, maxWidth: 860, margin: '8px auto 0' }} className="pricing-grid-companies">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, maxWidth: 860, margin: '0 auto' }} className="pricing-grid-companies">
                 {COMPANY_PLANS.map((plan, idx) => (
                   <div
                     key={plan.id}
                     className="pricing-card-hover"
                     style={{
-                      borderRadius: 24, padding: '32px 28px',
-                      border: plan.id === 'enterprise' ? `2px solid ${plan.color}` : `1px solid ${P.border}`,
-                      background: plan.id === 'enterprise' ? `linear-gradient(160deg,${plan.color}07 0%,${P.white} 60%)` : P.white,
+                      borderRadius: NH_PANEL.r, padding: '34px 30px',
+                      border: 'none',
+                      background: plan.id === 'enterprise' ? `linear-gradient(165deg, rgba(61,122,114,0.06) 0%, ${P.white} 55%)` : P.white,
                       display: 'flex', flexDirection: 'column',
-                      boxShadow: plan.id === 'enterprise' ? `0 8px 48px ${plan.color}18` : '0 2px 20px rgba(37,62,66,0.04)',
+                      boxShadow: plan.id === 'enterprise' ? NH_PANEL.shadowEnterprise : NH_PANEL.shadow,
                       position: 'relative', overflow: 'hidden',
                       animation: `pSlideUp 0.5s ease ${idx * 0.1}s both`,
                     }}
@@ -457,7 +451,7 @@ export default function PricingPageClient() {
                     {/* Icon + badge */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div style={{ width: 40, height: 40, borderRadius: 12, background: `${plan.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.lg }}>{plan.icon}</div>
+                        <div style={{ width: 40, height: 40, borderRadius: NH_PANEL.rowR, background: `${plan.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.lg }}>{plan.icon}</div>
                         <span style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.dark }}>{plan.name}</span>
                       </div>
                       <div style={{ background: `${plan.color}15`, color: plan.color, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '0.8px', padding: '3px 12px', borderRadius: 100, textTransform: 'uppercase' }}>
@@ -468,7 +462,7 @@ export default function PricingPageClient() {
                     <p style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.65, margin: '0 0 20px' }}>{plan.description}</p>
 
                     {/* Price */}
-                    <div style={{ marginBottom: 24, padding: '16px 0', borderTop: `1px solid ${P.border}`, borderBottom: `1px solid ${P.border}` }}>
+                    <div style={{ marginBottom: 24, padding: '18px 18px', borderRadius: NH_PANEL.innerR, background: NH_PANEL.inner }}>
                       <div style={{ fontSize: FONT.xl, fontWeight: WEIGHT.extra, color: plan.id === 'enterprise' ? plan.color : P.dark, lineHeight: 1, letterSpacing: '-2px' }}>{plan.priceLine}</div>
                       <div style={{ fontSize: FONT.sm, color: P.muted, marginTop: 5, fontWeight: WEIGHT.medium }}>{plan.priceSub}</div>
                     </div>
@@ -497,7 +491,7 @@ export default function PricingPageClient() {
                       <Link
                         href={plan.ctaHref}
                         className="p-cta-solid"
-                        style={{ display: 'block', textAlign: 'center', textDecoration: 'none', padding: '14px 20px', borderRadius: 10, fontWeight: WEIGHT.bold, fontSize: FONT.base, background: plan.color, color: P.white, transition: 'all 0.2s ease' }}
+                        style={{ display: 'block', textAlign: 'center', textDecoration: 'none', padding: '14px 20px', borderRadius: NH_PANEL.rowR, fontWeight: WEIGHT.bold, fontSize: FONT.base, background: plan.color, color: P.white, transition: 'all 0.2s ease' }}
                       >
                         {plan.cta} →
                       </Link>
@@ -509,7 +503,7 @@ export default function PricingPageClient() {
                         className="p-cta-outline"
                         style={{
                           display: 'block', textAlign: 'center', textDecoration: 'none',
-                          padding: '14px 20px', borderRadius: 10, fontWeight: WEIGHT.bold, fontSize: FONT.base,
+                          padding: '14px 20px', borderRadius: NH_PANEL.rowR, fontWeight: WEIGHT.bold, fontSize: FONT.base,
                           background: 'transparent', color: plan.color, border: `2px solid ${plan.color}`,
                           transition: 'all 0.2s ease',
                           // @ts-expect-error CSS variable
@@ -545,7 +539,7 @@ export default function PricingPageClient() {
           VISUAL INFOGRAPHIC — "Why pay for NextHire?"
           Andela-style metrics + visual comparisons
       ══════════════════════════════════════════════════════ */}
-      <section id="pricing-numbers" style={{ background: P.surface, padding: '110px 40px 110px' }}>
+      <section id="pricing-numbers" style={{ background: P.surface, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <div style={{ display: 'inline-block', background: `${P.accent}12`, color: P.accentD, padding: '6px 16px', borderRadius: 100, fontSize: FONT.sm, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 14 }}>
@@ -560,10 +554,10 @@ export default function PricingPageClient() {
           </div>
 
           {/* Infographic grid — 3 columns */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }} className="pricing-infographic-grid">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }} className="pricing-infographic-grid">
 
             {/* Card 1 — Time saved */}
-            <div style={{ background: P.white, border: `1px solid ${P.border}`, borderRadius: 20, padding: 28, overflow: 'hidden', position: 'relative' }}>
+            <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, overflow: 'hidden', position: 'relative', boxShadow: NH_PANEL.shadow }}>
               <div style={{ position: 'absolute', width: 120, height: 120, borderRadius: '50%', background: `${P.accent}08`, top: -30, right: -30 }} />
               <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accent, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>Time saved</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, marginBottom: 20 }}>
@@ -587,7 +581,7 @@ export default function PricingPageClient() {
             </div>
 
             {/* Card 2 — Application reach */}
-            <div style={{ background: P.dark, border: 'none', borderRadius: 20, padding: 28, overflow: 'hidden', position: 'relative' }}>
+            <div style={{ background: P.dark, border: 'none', borderRadius: NH_PANEL.r, padding: 32, overflow: 'hidden', position: 'relative', boxShadow: NH_PANEL.shadow }}>
               <div style={{ position: 'absolute', width: 140, height: 140, borderRadius: '50%', background: `${P.accent}15`, top: -40, right: -40 }} />
               <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accent, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>Application reach</div>
               <div style={{ marginBottom: 20 }}>
@@ -612,7 +606,7 @@ export default function PricingPageClient() {
             </div>
 
             {/* Card 3 — Reply rate */}
-            <div style={{ background: P.white, border: `1px solid ${P.border}`, borderRadius: 20, padding: 28, overflow: 'hidden', position: 'relative' }}>
+            <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, overflow: 'hidden', position: 'relative', boxShadow: NH_PANEL.shadow }}>
               <div style={{ position: 'absolute', width: 100, height: 100, borderRadius: '50%', background: `${P.green}10`, bottom: -20, right: -20 }} />
               <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.green, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>Reply rate</div>
               <div style={{ display: 'flex', gap: 16, marginBottom: 20, alignItems: 'center' }}>
@@ -637,10 +631,10 @@ export default function PricingPageClient() {
           </div>
 
           {/* Second row — 2 wide cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginTop: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }}>
 
             {/* Cost comparison */}
-            <div style={{ background: P.white, border: `1px solid ${P.border}`, borderRadius: 20, padding: 28 }}>
+            <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, boxShadow: NH_PANEL.shadow }}>
               <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accentD, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 16 }}>Cost comparison</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {[
@@ -649,7 +643,7 @@ export default function PricingPageClient() {
                   { label: 'Resume writing service', cost: '$300–800', note: 'one-time', color: P.muted },
                   { label: 'NextHire Lite plan', cost: '$19.90', note: '/month — all tools included', color: P.accent },
                 ].map(r => (
-                  <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: r.label.includes('NextHire') ? `${P.accent}08` : P.surface, border: `1px solid ${r.label.includes('NextHire') ? P.sage : P.border}`, borderRadius: 10 }}>
+                  <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: r.label.includes('NextHire') ? `${P.accent}10` : NH_PANEL.inner, border: 'none', borderRadius: NH_PANEL.rowR }}>
                     <span style={{ fontSize: FONT.base, color: P.mid, fontWeight: WEIGHT.medium }}>{r.label}</span>
                     <div style={{ textAlign: 'right' }}>
                       <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.extra, color: r.color }}>{r.cost}</span>
@@ -661,7 +655,7 @@ export default function PricingPageClient() {
             </div>
 
             {/* Timeline to first offer */}
-            <div style={{ background: P.mint, border: `1px solid ${P.sage}`, borderRadius: 20, padding: 28 }}>
+            <div style={{ background: `linear-gradient(165deg, ${P.mint} 0%, #f3f8f6 100%)`, border: 'none', borderRadius: NH_PANEL.r, padding: 32, boxShadow: NH_PANEL.shadow }}>
               <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accentD, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 16 }}>Timeline to offer</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
                 <div style={{ position: 'absolute', left: 19, top: 24, bottom: 24, width: 2, background: P.sage }} />
@@ -691,14 +685,14 @@ export default function PricingPageClient() {
           COMPARISON TABLE — candidates
       ══════════════════════════════════════════════════════ */}
       {tab === 'candidates' && (
-        <section id="pricing-included" style={{ background: P.white, padding: '110px 40px 110px' }}>
+        <section id="pricing-included" style={{ background: HOME.bg, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 32px', textAlign: 'center', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
               What&apos;s included at a glance
             </h2>
-            <div style={{ borderRadius: 18, overflow: 'hidden', border: `1px solid ${P.border}` }}>
+            <div style={{ borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow, background: P.white }}>
               {/* header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: P.surface, borderBottom: `1px solid ${P.border}`, padding: '14px 20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 22px' }}>
                 <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.muted, textTransform: 'uppercase', letterSpacing: '1px' }}>Feature</div>
                 {CANDIDATE_PLANS.map(p => (
                   <div key={p.id} style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: p.popular ? p.color : P.dark, textAlign: 'center' }}>{p.icon} {p.name}</div>
@@ -712,7 +706,7 @@ export default function PricingPageClient() {
                 { label: 'Direct Recruiter InMail', vals: [false, '50/mo', '200/mo', 'Unlimited'] },
                 { label: 'AI Outreach Agent credits', vals: [false, false, false, '3,000/mo'] },
               ].map((row, i) => (
-                <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '13px 20px', alignItems: 'center', background: i % 2 === 1 ? P.surface : P.white, borderBottom: `1px solid ${P.border}` }}>
+                <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '14px 22px', alignItems: 'center', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : P.white }}>
                   <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: P.mid }}>{row.label}</div>
                   {row.vals.map((v, j) => (
                     <div key={j} style={{ textAlign: 'center', fontSize: FONT.sm, fontWeight: WEIGHT.semi }}>
@@ -734,12 +728,12 @@ export default function PricingPageClient() {
       {/* ══════════════════════════════════════════════════════
           FAQ — accordion with animations
       ══════════════════════════════════════════════════════ */}
-      <section id="pricing-faq" style={{ background: P.surface, padding: '110px 40px 110px' }}>
+      <section id="pricing-faq" style={{ background: P.surface, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
         <div style={{ maxWidth: 700, margin: '0 auto' }}>
           <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', textAlign: 'center', margin: '0 0 44px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
             Pricing questions
           </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {(tab === 'candidates' ? [
               { q: 'Can I upgrade or downgrade anytime?', a: 'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; downgrades apply at the next billing cycle.' },
               { q: 'What happens when I hit my InMail or Apply limit?', a: "On Free you'll be prompted to upgrade. On Lite and Pro, you can purchase additional credits as add-ons at any time." },
@@ -755,7 +749,7 @@ export default function PricingPageClient() {
               <div
                 key={faq.q}
                 className="faq-item"
-                style={{ padding: '18px 16px', borderBottom: `1px solid ${P.border}`, cursor: 'pointer' }}
+                style={{ padding: '18px 16px', borderRadius: 14, cursor: 'pointer' }}
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>

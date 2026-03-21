@@ -19,24 +19,24 @@ export default function Footer() {
               <article className="footer-dropdown__accordion-content w-dropdown-list">
                 <ul className="footer-title__level-1" role="list">
                   <li className="footer-title__level-1-item">
-                    <Link href="/why-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">For Companies</Link>
+                    <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">For Companies</Link>
                     <ul className="footer-titles-level-2" role="list">
                       <li className="footer-titles-level-2-item">
-                        <Link href="/why-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Mission Focused</Link>
+                        <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Mission Focused</Link>
                       </li>
                     </ul>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/why-nexthire" className="footer-title__level-1-item-link">Untapped Talent Markets</Link>
+                    <Link href="/companies" className="footer-title__level-1-item-link">Untapped Talent Markets</Link>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/why-nexthire" className="footer-title__level-1-item-link">Our Talent Community</Link>
+                    <Link href="/companies" className="footer-title__level-1-item-link">Our Talent Community</Link>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/why-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Impact</Link>
+                    <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Impact</Link>
                     <ul className="footer-titles-level-2" role="list">
                       <li className="footer-titles-level-2-item">
-                        <Link href="/why-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Customer Stories</Link>
+                        <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Customer Stories</Link>
                       </li>
                     </ul>
                   </li>
@@ -56,7 +56,7 @@ export default function Footer() {
                     <Link href="/candidates" className="footer-title__level-1-item-link">Nexthire For Candidates</Link>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/why-nexthire" className="footer-title__level-1-item-link">Nexthire For Companies</Link>
+                    <Link href="/companies" className="footer-title__level-1-item-link">Nexthire For Companies</Link>
                   </li>
                 </ul>
               </article>

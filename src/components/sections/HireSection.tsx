@@ -603,7 +603,7 @@ export default function HireSection() {
                 </div>
 
                 {/* Stats */}
-                <div style={{ display: 'flex', gap: 32, marginTop: 22, paddingTop: 22, borderTop: `1px solid ${P.border}` }}>
+                <div style={{ display: 'flex', gap: 32, marginTop: 22, paddingTop: 16 }}>
                   {[card.stat1, card.stat2].map(s => (
                     <div key={s.l}>
                       <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.dark, lineHeight: 1 }}>{s.n}</div>

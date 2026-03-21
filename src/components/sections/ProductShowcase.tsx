@@ -107,7 +107,6 @@ function FeatureCard({ item }: { item: FeatureItem }) {
       {item.stat && (
         <div style={{
           marginTop: 'auto', paddingTop: 12,
-          borderTop: '1px solid #e8f0ed',
           display: 'flex', alignItems: 'baseline', gap: 6,
         }}>
           <span style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: '#5fa89e', lineHeight: 1, flexShrink: 0 }}>{item.stat}</span>

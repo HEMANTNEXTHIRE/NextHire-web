@@ -427,7 +427,7 @@ function DropdownContent({ item }: { item: (typeof NAV_ITEMS)[number] }) {
           <div className="submenu-sub-column">
             <div className="submenu-level1">
               <div className="submenu-level1__item submenu-level1__item-why">
-                <Link href="/why-nexthire" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
+                <Link href="/companies" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
                   <div className="submenu-level1__item-title">For Companies</div>
                   <p className="submenu-level1__item-desc submenu-level1__item-desc-why">Nexthire offers comprehensive hiring solutions for businesses. Nexthire FTE connects companies with top talent for full-time roles.</p>
                   <div className="submenu-level1__item-cta">Learn More</div>
@@ -438,7 +438,7 @@ function DropdownContent({ item }: { item: (typeof NAV_ITEMS)[number] }) {
           <div className="submenu-sub-column">
             <div className="submenu-level2">
               <div className="submenu-level2__item">
-                <Link href="/why-nexthire" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
+                <Link href="/companies" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
                   <div className="submenu-level2__item-inner">
                     <div className="submenu-level2__item-title">Our Talent Community</div>
                     <p className="submenu-level2__item-desc">We don&apos;t just find the best talent — we cultivate it.</p>
@@ -446,7 +446,7 @@ function DropdownContent({ item }: { item: (typeof NAV_ITEMS)[number] }) {
                 </Link>
               </div>
               <div className="submenu-level2__item">
-                <Link href="/why-nexthire" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
+                <Link href="/companies" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
                   <div className="submenu-level2__item-inner">
                     <div className="submenu-level2__item-title">Untapped Talent Markets</div>
                     <p className="submenu-level2__item-desc">The talent you need is in untapped emerging markets.</p>
@@ -454,7 +454,7 @@ function DropdownContent({ item }: { item: (typeof NAV_ITEMS)[number] }) {
                 </Link>
               </div>
               <div className="submenu-level2__item">
-                <Link href="/why-nexthire" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
+                <Link href="/companies" className="submenu-link w-inline-block" onClick={() => dispatch(setActiveDropdown(null))}>
                   <div className="submenu-level2__item-inner">
                     <div className="submenu-level2__item-title">Mission Focused</div>
                     <p className="submenu-level2__item-desc">Algotale talent improves their career trajectories and quality of life.</p>
