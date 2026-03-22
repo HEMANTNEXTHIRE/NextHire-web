@@ -139,7 +139,7 @@ export default function WhyJoinNexthirePage() {
       {/* ════════════════════════════════════════════════════════
           HERO — split with orbiting elements + typewriter
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: P.bg, padding: '120px 40px 0', position: 'relative', overflow: 'hidden', minHeight: '92vh', display: 'flex', alignItems: 'center' }}>
+      <section style={{ background: P.bg, padding: 'clamp(80px,10vw,120px) clamp(20px,5vw,40px) 0', position: 'relative', overflow: 'hidden', minHeight: '92vh', display: 'flex', alignItems: 'center' }}>
 
         {/* Animated marching dots background */}
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `radial-gradient(${P.sage} 1.2px, transparent 1.2px)`, backgroundSize: '30px 30px', animation: 'wjMarch 8s linear infinite', opacity: 0.5, zIndex: 0 }} />
@@ -148,8 +148,8 @@ export default function WhyJoinNexthirePage() {
         <div style={{ position: 'absolute', width: 560, height: 560, borderRadius: '50%', background: `radial-gradient(circle, ${P.sage}80 0%, transparent 65%)`, top: -160, right: -80, animation: 'wjDrift 14s ease-in-out infinite', zIndex: 0 }} />
         <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', background: `radial-gradient(circle, ${P.mint} 0%, transparent 65%)`, bottom: 80, left: -60, animation: 'wjDrift 18s ease-in-out infinite reverse', zIndex: 0 }} />
 
-        <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
+          <div className="wj-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
 
             {/* Left — text */}
             <div style={{ paddingBottom: 80 }}>
@@ -291,7 +291,7 @@ export default function WhyJoinNexthirePage() {
       {/* ════════════════════════════════════════════════════════
           BENEFITS — Staggered card grid with glow on hover
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: P.white, padding: '96px 40px' }}>
+      <section style={{ background: P.white, padding: 'clamp(60px,8vw,96px) clamp(20px,5vw,40px)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 60 }}>
@@ -304,7 +304,7 @@ export default function WhyJoinNexthirePage() {
             </div>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }} className="benefits-grid">
+          <div className="wj-benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
             {BENEFITS.map((b, i) => (
               <Reveal key={b.title} delay={i * 0.07} direction="scale">
                 <div
@@ -332,7 +332,7 @@ export default function WhyJoinNexthirePage() {
       {/* ════════════════════════════════════════════════════════
           PROCESS — Animated connected timeline with progress
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: P.bg, padding: '96px 40px', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: P.bg, padding: 'clamp(60px,8vw,96px) clamp(20px,5vw,40px)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `radial-gradient(${P.sage} 1px, transparent 1px)`, backgroundSize: '28px 28px', opacity: 0.4 }} />
 
         <div style={{ maxWidth: 1000, margin: '0 auto', position: 'relative', zIndex: 1 }}>
@@ -355,7 +355,7 @@ export default function WhyJoinNexthirePage() {
             {/* Connector line */}
             <div style={{ position: 'absolute', top: 52, left: '12.5%', right: '12.5%', height: 2, background: `linear-gradient(90deg, ${P.accent}, ${P.accentD}, ${P.muted}, ${P.green})`, zIndex: 0, borderRadius: 1 }} />
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20, position: 'relative', zIndex: 1 }}>
+            <div className="wj-process-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20, position: 'relative', zIndex: 1 }}>
               {PROCESS_STEPS.map((s, i) => (
                 <Reveal key={s.num} delay={i * 0.1} direction="scale">
                   <div className="wj-process-step" style={{ background: P.white, borderRadius: 20, padding: '28px 22px', boxShadow: '0 4px 24px rgba(37,62,66,0.06)', border: `1px solid ${P.border}`, textAlign: 'center', cursor: 'default' }}>
@@ -378,7 +378,7 @@ export default function WhyJoinNexthirePage() {
       {/* ════════════════════════════════════════════════════════
           VALUES / CULTURE INFOGRAPHIC — full-width dark band
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: P.dark, padding: '88px 40px', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: P.dark, padding: 'clamp(60px,8vw,88px) clamp(20px,5vw,40px)', position: 'relative', overflow: 'hidden' }}>
         {/* Animated grid */}
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(200,223,214,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,223,214,0.04) 1px,transparent 1px)`, backgroundSize: '48px 48px', animation: 'wjMarch 12s linear infinite' }} />
 
@@ -386,7 +386,7 @@ export default function WhyJoinNexthirePage() {
         <div style={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, ${P.accent}18 0%, transparent 65%)`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div className="wj-culture-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
 
             <Reveal direction="left">
               <div>
@@ -442,7 +442,7 @@ export default function WhyJoinNexthirePage() {
       {/* ════════════════════════════════════════════════════════
           OPEN ROLES — interactive department grid
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: P.white, padding: '96px 40px' }}>
+      <section style={{ background: P.white, padding: 'clamp(60px,8vw,96px) clamp(20px,5vw,40px)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 56 }}>
@@ -455,7 +455,7 @@ export default function WhyJoinNexthirePage() {
             </div>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
+          <div className="wj-roles-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
             {ROLES.map((dept, i) => (
               <Reveal key={dept.dept} delay={i * 0.08} direction="scale">
                 <div

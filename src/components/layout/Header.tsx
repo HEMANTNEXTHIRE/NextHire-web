@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   toggleMobileMenu,
@@ -11,17 +12,25 @@ import {
 } from '@/store/slices/navSlice'
 
 const NAV_ITEMS = [
-  { key: 'candidates',      label: 'Candidates',      dropdown: true },
-  { key: 'for-clients',     label: 'Companies',       dropdown: true },
-  { key: 'pricing',         label: 'Pricing',         dropdown: true },
-  { key: 'success-stories', label: 'Jobs',            dropdown: true },
-  { key: 'about',           label: 'About',           dropdown: true },
+  { key: 'candidates',      label: 'Candidates',      dropdown: true, href: '/candidates' },
+  { key: 'for-clients',     label: 'Companies',       dropdown: true, href: '/companies' },
+  { key: 'pricing',         label: 'Pricing',         dropdown: true, href: '/pricing' },
+  { key: 'success-stories', label: 'Jobs',            dropdown: true, href: '/success-story' },
+  { key: 'about',           label: 'About',           dropdown: true, href: '/about-nexthire' },
 ]
 
 export default function Header() {
   const dispatch = useAppDispatch()
   const { isOpen, activeDropdown, isScrolled } = useAppSelector((s) => s.nav)
   const headerRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+  const router = useRouter()
+
+  // Close mobile menu and dropdown whenever route changes
+  useEffect(() => {
+    dispatch(closeMobileMenu())
+    dispatch(setActiveDropdown(null))
+  }, [pathname, dispatch])
 
   // Scroll listener → fixed-menu class (on body so .fixed-menu .main-nav gets solid background)
   useEffect(() => {
@@ -94,9 +103,20 @@ export default function Header() {
         <div
           className={navClasses}
           role="banner"
+          data-collapse="medium"
         >
           <div className="main-nav-container w-container">
             <div className="main-nav-container-wrapper">
+              {/* Hamburger — FIRST in DOM so mobile layout [≡ | Logo | CTA] needs no CSS order tricks */}
+              <div
+                className={`main-nav-menu-btn w-nav-button${isOpen ? ' w--open' : ''}`}
+                role="button"
+                aria-label="Toggle mobile menu"
+                onClick={() => dispatch(toggleMobileMenu())}
+              >
+                <div className="main-nav-menu-toggle-animated icon-4 w-icon-nav-menu" />
+              </div>
+
               {/* Logo */}
               <Link href="/" className="brand w-nav-brand" onClick={() => dispatch(closeMobileMenu())}>
                 <img
@@ -113,7 +133,14 @@ export default function Header() {
                 />
               </Link>
 
-              {/* Desktop nav */}
+              {/* Mobile CTA — THIRD in DOM so it appears right of logo on mobile */}
+              <div className="nh-cta-header-mobile">
+                <Link href="https://app.nexthireconsulting.com" target="_blank" rel="noopener noreferrer" className="button-primary w-button main-nav-cta-try">
+                  Try for free
+                </Link>
+              </div>
+
+              {/* Desktop nav — hidden on mobile via CSS */}
               <nav className="nav-menu w-nav-menu" role="navigation">
                 <div className="main-nav-vertical-line" />
 
@@ -133,6 +160,12 @@ export default function Header() {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
+                          // On mobile: navigate directly to the section page
+                          if (typeof window !== 'undefined' && window.innerWidth <= 991 && item.href) {
+                            dispatch(closeMobileMenu())
+                            router.push(item.href)
+                            return
+                          }
                           dispatch(
                             setActiveDropdown(activeDropdown === item.key ? null : item.key)
                           )
@@ -182,15 +215,6 @@ export default function Header() {
                 </Link>
               </div>
 
-              {/* Mobile hamburger */}
-              <div
-                className={`main-nav-menu-btn w-nav-button${isOpen ? ' w--open' : ''}`}
-                role="button"
-                aria-label="Toggle mobile menu"
-                onClick={() => dispatch(toggleMobileMenu())}
-              >
-                <div className="main-nav-menu-toggle-animated icon-4 w-icon-nav-menu" />
-              </div>
             </div>
           </div>
         </div>

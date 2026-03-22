@@ -203,7 +203,8 @@ main {
 /* On mobile the two-column grid collapses → uniform mint bg */
 @media (max-width: 767px) {
   #home-s1 { background: #edf5f1 !important; }
-  #home-s1 > div:last-of-type > div { padding: 110px 24px 80px !important; }
+  /* Remove the 110px padding that was pushing badges far down */
+  #home-s1 > div:last-of-type > div { padding: 0 !important; }
 }
 
 /* ════════════════════════════════════════════════
@@ -670,7 +671,7 @@ dialog::backdrop {
 /* ---- Hero: centered layout mobile ---- */
 @media (max-width: 640px) {
   #home-s1 > div {
-    padding: 80px 24px 72px !important;
+    padding: 72px 20px 60px !important;
   }
 }
 
@@ -685,23 +686,49 @@ dialog::backdrop {
   position: static !important;
 }
 
-/* Responsive: collapse right panel on small screens */
+/* ═══ HIRE SECTION — mobile card layout ═══════════════════════════════
+   position:sticky is set in JSX inline style for all screen sizes.
+   Mobile top values override the desktop inline-style values via !important.
+   Cards are compact on mobile (features hidden) so stacking is visible.
+   ══════════════════════════════════════════════════════════════════════ */
 @media (max-width: 860px) {
-  .nh-sticky-card {
+  /* Override desktop top values (88*i+100) with mobile values (68 + 44*i) */
+  html body .nh-sticky-card:nth-child(1) { top: 68px  !important; }
+  html body .nh-sticky-card:nth-child(2) { top: 112px !important; }
+  html body .nh-sticky-card:nth-child(3) { top: 156px !important; }
+  html body .nh-sticky-card:nth-child(4) { top: 200px !important; }
+  html body .nh-sticky-card:nth-child(5) { top: 244px !important; }
+  html body .nh-sticky-card:nth-child(6) { top: 288px !important; }
+
+  html body .nh-sticky-card {
     flex-direction: column !important;
-    gap: 28px !important;
+    gap: 16px !important;
+    padding: 24px 20px !important;
+    min-height: unset !important;
   }
-  .nh-sticky-card > div:last-child {
+  /* Hide the 4-bullet features grid — biggest height culprit on mobile */
+  html body .nh-card-features {
+    display: none !important;
+  }
+  /* Remove bottom margin on description since features are gone */
+  html body .nh-sticky-card p {
+    margin-bottom: 0 !important;
+  }
+  /* Limit mockup panel height on mobile so card stays compact */
+  html body .nh-card-mockup {
+    min-height: unset !important;
+    max-height: 220px !important;
+    overflow: hidden !important;
+  }
+  /* Right panel: full width in column layout */
+  html body .nh-sticky-card > div:last-child {
     flex: none !important;
     width: 100% !important;
   }
 }
 @media (max-width: 540px) {
-  .nh-sticky-card {
-    padding: 24px !important;
-  }
-  .nh-sticky-card > div:first-child > div:last-child > div {
-    flex: 0 0 100% !important;
+  html body .nh-sticky-card {
+    padding: 20px 16px !important;
   }
 }
 
@@ -1086,19 +1113,175 @@ dialog::backdrop {
   .main-nav .nh-cta-mobile {
     display: none !important;
   }
-}
-
-/* Desktop CTA: hidden on mobile (CTA is accessible via the nav menu instead) */
-@media (max-width: 991px) {
-  .main-nav .nh-cta-desktop {
+  /* Header-bar mobile CTA: hidden on desktop */
+  .main-nav .nh-cta-header-mobile {
     display: none !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   MOBILE HEADER — absolute positioning, immune to flex/float wars
+   [≡ Hamburger — abs left] [Logo — abs center] [Try for free — abs right]
+   ══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+
+  /* 1. Nav bar: fixed height, hide desktop nav + CTA */
+  .main-nav.w-nav {
+    min-height: 64px !important;
+  }
+  .main-nav .main-nav-container.w-container {
+    height: 64px !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Wrapper becomes the absolute positioning context */
+  .main-nav .main-nav-container-wrapper {
+    position: relative !important;
+    display: block !important;         /* block — NOT flex — avoids float/flex wars */
+    height: 64px !important;
+    width: 100% !important;
+  }
+
+  /* 3. Hamburger: pinned to left center */
+  .main-nav .main-nav-menu-btn.w-nav-button {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    float: none !important;
+    box-sizing: border-box !important;
+    z-index: 2 !important;
+  }
+
+  /* 4. Logo: positioned immediately right of the hamburger */
+  .main-nav .brand.w-nav-brand {
+    position: absolute !important;
+    left: 64px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    float: none !important;
+    display: flex !important;
+    align-items: center !important;
+    z-index: 2 !important;
+  }
+
+  /* 5. Mobile CTA: pinned to right center */
+  .main-nav .nh-cta-header-mobile {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    float: none !important;
+    z-index: 2 !important;
+  }
+  .main-nav .nh-cta-header-mobile .button-primary {
+    padding: 11px 22px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 9999px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* 6. Hide desktop nav + CTA */
+  .main-nav .nh-cta-desktop,
+  .main-nav .nav-menu.w-nav-menu {
+    display: none !important;
+  }
+}
+
+/* 7. Hide hamburger on desktop — belt-and-suspenders */
+@media (min-width: 992px) {
+  .main-nav .main-nav-menu-btn.w-nav-button,
+  .main-nav .main-nav-menu-toggle-animated.w-icon-nav-menu {
+    display: none !important;
+  }
+  .main-nav .nh-cta-header-mobile {
+    display: none !important;
+  }
+}
+
+/* ── Hamburger icon: CSS-drawn 3-line bars (Webflow icon is empty) ── */
+.main-nav .main-nav-menu-toggle-animated.w-icon-nav-menu {
+  display: block !important;
+  width: 22px !important;
+  height: 2.5px !important;
+  background: #1a3338 !important;
+  border-radius: 2px !important;
+  position: relative !important;
+  transition: background 0.2s ease !important;
+}
+.main-nav .main-nav-menu-toggle-animated.w-icon-nav-menu::before {
+  content: '' !important;
+  display: block !important;
+  width: 22px !important;
+  height: 2.5px !important;
+  background: #1a3338 !important;
+  border-radius: 2px !important;
+  position: absolute !important;
+  top: -7px !important;
+  left: 0 !important;
+  transition: transform 0.25s ease, top 0.25s ease !important;
+}
+.main-nav .main-nav-menu-toggle-animated.w-icon-nav-menu::after {
+  content: '' !important;
+  display: block !important;
+  width: 22px !important;
+  height: 2.5px !important;
+  background: #1a3338 !important;
+  border-radius: 2px !important;
+  position: absolute !important;
+  bottom: -7px !important;
+  left: 0 !important;
+  transition: transform 0.25s ease, bottom 0.25s ease !important;
+}
+
+/* ── X state when menu is open ────────────────────────────────── */
+.main-nav .w-nav-button.w--open {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+.main-nav .w-nav-button.w--open .main-nav-menu-toggle-animated.w-icon-nav-menu {
+  background: transparent !important;
+}
+.main-nav .w-nav-button.w--open .main-nav-menu-toggle-animated.w-icon-nav-menu::before {
+  top: 0 !important;
+  transform: rotate(45deg) !important;
+}
+.main-nav .w-nav-button.w--open .main-nav-menu-toggle-animated.w-icon-nav-menu::after {
+  bottom: 0 !important;
+  transform: rotate(-45deg) !important;
+}
+
+/* Desktop CTA sizing (unchanged) */
 .main-nav .main-nav-cta-try.button-primary {
   padding: 8px 18px !important;
   font-size: 13px !important;
   font-weight: 600 !important;
-  border-radius: 9999px !important; /* pill-shaped: left/right circular, top/bottom straight */
+  border-radius: 9999px !important;
+  white-space: nowrap !important;
+}
+
+/* Global: prevent any .button-primary text from wrapping */
+.button-primary {
+  white-space: nowrap !important;
 }
 
 /* ---- Nav dropdown (mega-menu): anchor to full nav bar width ---- */
@@ -1266,8 +1449,59 @@ dialog::backdrop {
 }
 
 /* Right panel: light mint (matches hero) */
-.dual-action-button-cta-right-div {
+/* Webflow's mobile CSS sets display:none on the right div — override it */
+.dual-action-button-cta-right-div,
+.dual-action-button-cta-right-div.js-dual-action-button-cta-right-div {
+  display: flex !important;
   background-color: #edf5f1 !important;
+}
+
+/* Stack panels vertically on mobile */
+@media (max-width: 767px) {
+  .dual-action-button-cta-wrapper {
+    flex-direction: column !important;
+    display: flex !important;
+  }
+  .dual-action-button-cta-left-div,
+  .dual-action-button-cta-right-div {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding: 40px 28px !important;
+    box-sizing: border-box !important;
+    position: relative !important;   /* contain abs-positioned pattern image */
+  }
+  /* Tag, heading, button: all stacked vertically */
+  .dual-action-button-cta-tag-wrapper {
+    flex-direction: row !important;
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+  .dual-action-button-cta-right-div-heading,
+  .dual-action-button-cta-left-div-heading {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    font-size: clamp(26px, 6vw, 40px) !important;
+    margin-bottom: 24px !important;
+    width: 100% !important;
+  }
+  .dual-action-button-cta-left-div-inner,
+  .dual-action-button-cta-right-div-inner {
+    position: static !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+  .dual-action-button-cta-left-div-inner-button,
+  .dual-action-button-cta-right-div-inner-button {
+    width: auto !important;
+  }
+  /* Pattern image: keep it inside the left panel, don't let it overflow */
+  .dual-action-button-cta-left-div-pattern-mobile {
+    width: 140px !important;
+    height: auto !important;
+    opacity: 0.3 !important;
+  }
 }
 .dual-action-button-cta-tag-right {
   color: #5fa89e !important;   /* teal accent label */
@@ -1285,6 +1519,7 @@ dialog::backdrop {
   color: #1a3338 !important;
   border: 1.5px solid #c8dfd6 !important;
   box-shadow: 0 2px 8px rgba(37,62,66,0.06) !important;
+  white-space: nowrap !important;
 }
 .dual-action-button-cta-right-div-inner-button:hover {
   background-color: #1a3338 !important;
@@ -1406,4 +1641,484 @@ p, span, a, button, input, textarea, select, label,
 .w-richtext, .w-form, .w-button,
 body.andl-body, body.andl-body * {
   font-family: 'Noto Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Pricing: 3-col infographic grid → 1-col on mobile ──────── */
+@media (max-width: 760px) {
+  .pricing-infographic-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Pricing: 2-col bottom row (cost comparison + timeline) ── */
+@media (max-width: 640px) {
+  .pricing-roi-bottom {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Pricing: 5-col comparison table — horizontal scroll on mobile ── */
+@media (max-width: 700px) {
+  #pricing-included .pricing-table-header,
+  #pricing-included .pricing-table-row {
+    grid-template-columns: 2fr 1fr 1fr !important;
+    font-size: 12px;
+    padding: 12px 14px !important;
+  }
+  #pricing-included .pricing-table-header > *:nth-child(n+4),
+  #pricing-included .pricing-table-row > *:nth-child(n+4) {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  #pricing-included .pricing-table-header,
+  #pricing-included .pricing-table-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  #pricing-included .pricing-table-header > *:nth-child(n+3),
+  #pricing-included .pricing-table-row > *:nth-child(n+3) {
+    display: none;
+  }
+}
+
+/* ── Pricing: enterprise features 2-col → 1-col on narrow cards ── */
+@media (max-width: 400px) {
+  .pricing-grid-candidates [style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Companies: 4-col dark metrics → 2-col → 1-col ─────────── */
+@media (max-width: 860px) {
+  .companies-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .companies-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Companies: 3-col compare table → 1-col on mobile ───────── */
+@media (max-width: 640px) {
+  .companies-compare-header,
+  .companies-compare-row {
+    grid-template-columns: 1fr !important;
+    gap: 4px;
+  }
+  .companies-compare-header > *:nth-child(n+2),
+  .companies-compare-row > *:nth-child(n+2) {
+    display: none;
+  }
+}
+
+/* ── VAS kanban mockup: 4-col → 2-col inside mockup card ─────── */
+@media (max-width: 480px) {
+  .vas-kanban-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Candidates: hero section padding ─────────────────────────── */
+/* (hero padding uses clamp() now, rule below is a safety fallback) */
+@media (max-width: 767px) {
+  #candidates-hero {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* ── Tool cards: prevent negative margin overflow on mobile ───── */
+@media (max-width: 600px) {
+  .tool-mockup-tray {
+    margin-left: -20px !important;
+    margin-right: -20px !important;
+  }
+}
+
+/* ── Success story: stats bar 4-col → 1-col on very small ────── */
+@media (max-width: 480px) {
+  .ss-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAVIGATION — slide-down panel (≤ 991px)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 991px) {
+
+  /* ── 1. Z-index stack: header bar always on top ─────────────── */
+  .page-header {
+    position: relative;
+    z-index: 9999;
+  }
+  .main-nav.w-nav {
+    position: relative;
+    z-index: 9999;
+  }
+  .main-nav .main-nav-menu-btn.w-nav-button {
+    position: relative !important;
+    z-index: 9999 !important;
+  }
+
+  /* ── 2. Nav panel: always in DOM, hidden above viewport ─────── */
+  .main-nav .nav-menu.w-nav-menu {
+    display: block !important;
+    visibility: visible !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 100dvh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    background: #ffffff !important;
+    z-index: 9998 !important;
+    /* above the header height (~68px), room for content below */
+    padding: 74px 0 48px !important;
+    transform: translateY(-100%) !important;
+    transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    flex-direction: column !important;
+  }
+
+  /* ── 3. Open state: slide panel down ────────────────────────── */
+  body.mobile-menu-open .main-nav .nav-menu.w-nav-menu {
+    transform: translateY(0) !important;
+    pointer-events: all !important;
+    box-shadow: 0 20px 60px rgba(37, 62, 66, 0.18) !important;
+  }
+
+  /* ── 4. Backdrop overlay behind panel ───────────────────────── */
+  body.mobile-menu-open::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 51, 56, 0.35);
+    z-index: 9996;
+    pointer-events: none;
+    animation: mobileBackdropIn 0.3s ease forwards;
+  }
+  @keyframes mobileBackdropIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── 5. Nav items: full-width, large tap targets ────────────── */
+  .main-nav .nav-menu.w-nav-menu .main-nav-menu-dropdown {
+    width: 100% !important;
+    position: static !important;
+    border-bottom: 1px solid rgba(26, 51, 56, 0.07) !important;
+  }
+
+  .main-nav .main-nav-dropdown-toggle {
+    width: 100% !important;
+    padding: 16px 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+  }
+
+  .main-nav .main-nav-menu-dropdown-text {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.2px !important;
+    color: #1a3338 !important;
+    opacity: 1 !important;
+  }
+
+  /* ── 6. Chevron indicator: right-arrow on mobile (direct link, not expand) */
+  .main-nav .main-nav-dropdown-toggle::after,
+  .main-nav .main-nav-dropdown-toggle:after {
+    content: '' !important;
+    display: inline-block !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-right: 2px solid #5fa89e !important;
+    border-bottom: 2px solid #5fa89e !important;
+    transform: rotate(-45deg) !important;   /* points right → */
+    transition: none !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    opacity: 0.85 !important;
+  }
+  .main-nav .main-nav-menu-dropdown.w--open .main-nav-dropdown-toggle::after,
+  .main-nav .main-nav-menu-dropdown.w--open .main-nav-dropdown-toggle:after {
+    transform: rotate(-45deg) !important;   /* stays right → on mobile */
+  }
+
+  /* ── 7. Inline dropdown (not absolute-positioned) ───────────── */
+  .main-nav .dropdown-list.w-dropdown-list,
+  .main-nav .dropdown-list.w-dropdown-list.w--open {
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #f7faf9 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+
+  .main-nav .dropdown-list.w-dropdown-list .submenu__wrapper {
+    border-radius: 0 !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 4px 0 12px !important;
+    background: #f7faf9 !important;
+  }
+
+  /* ── 8. Simplify submenu content for mobile ─────────────────── */
+
+  /* Hide right-side blog/demo column */
+  .submenu-column__two,
+  .submenu-for-companies-demo,
+  .highlighted-link {
+    display: none !important;
+  }
+
+  /* Stack first column vertically */
+  .submenu-column,
+  .submenu-column__one {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+  }
+  .submenu-sub-column {
+    padding: 0 !important;
+  }
+
+  /* Level 1: main section title → readable link */
+  .submenu-level1,
+  .submenu-level1-adaptive,
+  .submenu-level1-platform,
+  .submenu-level1-platform2,
+  .submenu-level1-solution {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .submenu-level1__item {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .submenu-level1__item-title {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #1a3338 !important;
+    padding: 12px 24px !important;
+    display: block !important;
+  }
+  /* Hide description and CTA text — links are enough */
+  .submenu-level1__item-desc,
+  .submenu-level1__item-cta,
+  .submenu-level1__item-cta-adaptive,
+  .submenu-level1__item-cta-solution,
+  .submenu-level1__item-cta-platform {
+    display: none !important;
+  }
+
+  /* Level 2: sub-links */
+  .submenu-level2,
+  .submenu-level2-platform,
+  .submenu-level2-about,
+  .submenu-level2-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .submenu-level2-title,
+  .submenu-level2-title-platform {
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+    text-transform: uppercase !important;
+    color: #8aada8 !important;
+    padding: 6px 24px 2px !important;
+    font-weight: 600 !important;
+    display: block !important;
+  }
+  .submenu-level2__item {
+    padding: 0 !important;
+  }
+  .submenu-level2__item-inner,
+  .submenu-level2__item-inner.submenu-level2__item-inner-about {
+    padding: 0 !important;
+  }
+  /* Remove the decorative gradient lines */
+  .submenu-level2__item-inner:after,
+  .submenu-level2__item-inner::before {
+    display: none !important;
+  }
+  .submenu-level2__item-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #3d5a56 !important;
+    padding: 10px 24px !important;
+    display: block !important;
+  }
+  .submenu-level2__item-desc {
+    display: none !important;
+  }
+
+  /* Level 3: category labels + links */
+  .submenu-level3,
+  .submenu-level3__title {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .submenu-level-3-label,
+  .submenu-level3__title {
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+    text-transform: uppercase !important;
+    color: #8aada8 !important;
+    padding: 6px 24px 2px !important;
+    font-weight: 600 !important;
+    display: block !important;
+  }
+  .submenu-level3__item {
+    padding: 0 !important;
+  }
+  .submenu-level3__item-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #3d5a56 !important;
+    padding: 10px 24px !important;
+    display: block !important;
+  }
+
+  /* Tap highlight feedback on all submenu links */
+  .submenu-link:active .submenu-level1__item-title,
+  .submenu-link:active .submenu-level2__item-title,
+  .submenu-link:active .submenu-level3__item-title {
+    color: #5fa89e !important;
+  }
+
+  /* ── 9. CTA button: auto-width pill at bottom of panel ─────── */
+  .main-nav .main-manu-btn.nh-cta-mobile {
+    display: flex !important;
+    padding: 20px 24px 8px !important;
+    margin-top: 4px !important;
+    justify-content: center !important;
+  }
+  .main-nav .main-manu-btn.nh-cta-mobile .button-primary {
+    width: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 14px 32px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    border-radius: 9999px !important;
+  }
+
+  /* ── Misc cleanup ────────────────────────────────────────────── */
+  /* Hide the decorative vertical line — useless on mobile */
+  .main-nav .main-nav-vertical-line {
+    display: none !important;
+  }
+  /* Ensure header embed placeholder takes no space */
+  .main-nav .header-navigation-html-embed {
+    display: none !important;
+  }
+  /* mobile-only nav items (e.g. in pricing dropdown) */
+  .mobile-only {
+    display: block !important;
+  }
+  /* Lock page scroll when menu is open */
+  body.mobile-menu-open {
+    overflow: hidden !important;
+  }
+}
+/* ── end mobile navigation ──────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   PAGE-LEVEL RESPONSIVE GRIDS — about, contact, why-join
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── About page ─────────────────────────────────────────────── */
+  .about-mission-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  /* ── Contact page ────────────────────────────────────────────── */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+
+  /* ── Why-Join page — hero ────────────────────────────────────── */
+  .wj-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  /* Hide the right decorative panel (animated culture visual) on mobile */
+  .wj-hero-grid > *:last-child {
+    display: none !important;
+  }
+
+  /* ── Why-Join — benefits (3-col → 1-col) ────────────────────── */
+  .wj-benefits-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* ── Why-Join — process steps (4-col → 2-col) ───────────────── */
+  .wj-process-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+  /* Hide horizontal connector line that only looks good at 4-col */
+  .wj-process-grid + * [style*="position: absolute"] {
+    display: none !important;
+  }
+
+  /* ── Why-Join — culture (2-col dark section) → 1-col ────────── */
+  .wj-culture-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  /* ── Why-Join — open roles (2-col → 1-col) ──────────────────── */
+  .wj-roles-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* ── Why-Join hero — prevent floating badges from overflowing ── */
+  .wj-hero-grid [style*="position: absolute"][style*="bottom:"],
+  .wj-hero-grid [style*="position: absolute"][style*="top:"] {
+    display: none !important;
+  }
+}
+
+/* ── Why-Join — process: on very small screens, single column ── */
+@media (max-width: 479px) {
+  .wj-process-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

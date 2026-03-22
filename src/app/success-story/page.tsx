@@ -207,7 +207,7 @@ export default function SuccessStoryPage() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section id="success-story-hero" style={{
         background: '#edf5f1',
-        padding: '110px 40px 110px', textAlign: 'center',
+        padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)', textAlign: 'center',
         position: 'relative', overflow: 'hidden',
       }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
@@ -234,7 +234,7 @@ export default function SuccessStoryPage() {
       </section>
 
       {/* ── STATS ────────────────────────────────────────────── */}
-      <section style={{ background: '#ffffff', borderBottom: '1px solid #ddeae4', padding: '48px 40px' }}>
+      <section style={{ background: '#ffffff', borderBottom: '1px solid #ddeae4', padding: 'clamp(32px, 5vw, 48px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 1160, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0 }} className="ss-stats-grid">
           {STATS.map((s, i) => (
             <div key={s.label} style={{
@@ -249,7 +249,7 @@ export default function SuccessStoryPage() {
       </section>
 
       {/* ── TESTIMONIAL CARD GRID ─────────────────────────────── */}
-      <section style={{ background: '#f7faf9', padding: '80px 40px 100px' }}>
+      <section style={{ background: '#f7faf9', padding: 'clamp(60px, 8vw, 80px) clamp(20px, 5vw, 40px) clamp(72px, 10vw, 100px)' }}>
         <div style={{ maxWidth: 1160, margin: '0 auto' }}>
           <div style={{ marginBottom: 52, textAlign: 'center' }}>
             <h2 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 12px', letterSpacing: '-0.5px' }}>

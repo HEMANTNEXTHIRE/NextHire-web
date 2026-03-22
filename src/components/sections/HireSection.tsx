@@ -445,22 +445,46 @@ export default function HireSection() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
+    // Helper: strip only GSAP-managed styles (height, transform) — NOT position/top (those are in JSX/CSS)
+    const resetCardStyles = () => {
+      cardRefs.current.forEach(card => {
+        if (!card) return
+        card.style.removeProperty('height')
+        card.style.removeProperty('transform')
+      })
+      const wrapper = wrapperRef.current
+      if (wrapper) {
+        wrapper.style.removeProperty('transform')
+        wrapper.style.removeProperty('height')
+      }
+    }
+
     const init = () => {
       const wrapper = wrapperRef.current
       if (!wrapper) return
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
       if (cards.length === 0) return
 
-      // Kill any existing triggers before re-init
+      // GSAP only handles desktop height normalisation
+      // position:sticky and top values are in JSX (desktop) and CSS (mobile override)
+      const isMobileView = window.matchMedia('(max-width: 860px)').matches
+      // These match the JSX top values (desktop) and CSS overrides (mobile)
+      const topBase = isMobileView ? 68 : 100
+      const topGap  = isMobileView ? 44 : 88
+
       ScrollTrigger.getAll().forEach(t => t.kill())
 
-      const maxH = Math.max(...cards.map(c => c.offsetHeight))
-      cards.forEach(c => { c.style.height = `${maxH}px` })
+      // Desktop only: normalise all card heights to the tallest card
+      if (!isMobileView) {
+        const maxH = Math.max(...cards.map(c => c.offsetHeight))
+        cards.forEach(c => { c.style.height = `${maxH}px` })
+      }
+
       const wrapperH = wrapper.offsetHeight
       wrapper.setAttribute('data-height', String(wrapperH))
 
       cards.forEach((card, i) => {
-        const topOffset   = 88 * i + 100
+        const topOffset   = topGap * i + topBase
         const endDistance = i === cards.length - 1 ? 0 : card.offsetHeight
         gsap.to(card, {
           duration: 1,
@@ -483,7 +507,7 @@ export default function HireSection() {
             },
             onEnter: () => {
               if (i > 2) {
-                const shift = 88 * (i - 2)
+                const shift = topGap * (i - 2)
                 wrapper.style.transform = `translateY(-${shift}px)`
                 if (nextSiblingRef.current) nextSiblingRef.current.style.marginTop = `-${shift}px`
                 if (cards[i - 3]) cards[i - 3].classList.add('nh-card-moveup')
@@ -491,7 +515,7 @@ export default function HireSection() {
             },
             onLeaveBack: () => {
               if (i > 2) {
-                const shift = 88 * (i - 3)
+                const shift = topGap * (i - 3)
                 wrapper.style.transform = `translateY(-${shift}px)`
                 if (nextSiblingRef.current) nextSiblingRef.current.style.marginTop = `-${shift}px`
                 if (cards[i - 3]) cards[i - 3].classList.remove('nh-card-moveup')
@@ -504,21 +528,23 @@ export default function HireSection() {
       ScrollTrigger.refresh()
     }
 
-    // Wait for fonts + layout to settle before measuring card heights
+    // Initial run: wait for fonts + paint
     if (document.fonts?.ready) {
       document.fonts.ready.then(() => {
-        // Small rAF delay ensures paint has completed
         requestAnimationFrame(() => requestAnimationFrame(init))
       })
     } else {
       requestAnimationFrame(() => requestAnimationFrame(init))
     }
 
-    return () => { ScrollTrigger.getAll().forEach(t => t.kill()) }
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill())
+      resetCardStyles()
+    }
   }, [])
 
   return (
-    <section id="features" style={{ background: P.bg, padding: '110px 40px 110px' }}>
+    <section id="features" style={{ background: P.bg, padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
 
         {/* Section header */}
@@ -543,7 +569,7 @@ export default function HireSection() {
         </div>
 
         {/* Sticky stacked cards */}
-        <div ref={wrapperRef} style={{ transition: 'transform 1s, height 1s' }}>
+        <div ref={wrapperRef} className="nh-hire-wrapper" style={{ transition: 'transform 1s, height 1s' }}>
           {CARDS.map((card, i) => (
             <div
               key={card.tag}
@@ -560,7 +586,7 @@ export default function HireSection() {
                 gap: 56,
                 alignItems: 'flex-start',
                 position: 'sticky',
-                top: `${88 * i + 100}px`,
+                top: `${88 * i + 100}px`,   /* desktop; CSS overrides for mobile */
                 boxShadow: '0 4px 32px rgba(37,62,66,0.07)',
                 transition: 'opacity 1s',
               }}
@@ -576,7 +602,7 @@ export default function HireSection() {
                 <p style={{ fontSize: FONT.base, color: P.mid, lineHeight: 1.72, margin: '0 0 28px' }}>
                   {card.desc}
                 </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18 }}>
+                <div className="nh-card-features" style={{ display: 'flex', flexWrap: 'wrap', gap: 18 }}>
                   {card.features.map(f => (
                     <div key={f.title} style={{ flex: '0 0 calc(50% - 9px)', borderLeft: `2px solid ${P.sage}`, paddingLeft: 16, paddingTop: 2 }}>
                       <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.dark, marginBottom: 5, lineHeight: 1.3 }}>{f.title}</div>
@@ -589,7 +615,7 @@ export default function HireSection() {
               {/* ── Right: mockup + stats ── */}
               <div style={{ flex: '0 0 360px', display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {/* Mockup panel — always white */}
-                <div style={{
+                <div className="nh-card-mockup" style={{
                   background: P.surface,
                   borderRadius: 16,
                   padding: 24,

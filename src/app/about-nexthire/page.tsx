@@ -34,7 +34,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section id="about-hero" style={{ background: '#edf5f1', padding: '110px 40px 110px', textAlign: 'center' }}>
+      <section id="about-hero" style={{ background: '#edf5f1', padding: 'clamp(80px,10vw,110px) clamp(20px,5vw,40px)', textAlign: 'center' }}>
         <div className="w-layout-blockcontainer container-large-e25 w-container">
           <div style={{ display: 'inline-block', background: 'rgba(95,168,158,0.12)', color: '#3d7a72', padding: '8px 20px', borderRadius: '20px', fontSize: FONT.sm, fontWeight: WEIGHT.bold, marginBottom: '24px', letterSpacing: '1px' }}>
             ABOUT NEXTHIRE
@@ -50,9 +50,9 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section style={{ padding: '100px 40px', background: '#ffffff' }}>
+      <section style={{ padding: 'clamp(60px,8vw,100px) clamp(20px,5vw,40px)', background: '#ffffff' }}>
         <div className="w-layout-blockcontainer container-large-e25 w-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+          <div className="about-mission-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
             <div>
               <h2 style={{ fontSize: FONT.lg, fontWeight: WEIGHT.bold, color: '#1a3338', margin: '0 0 24px', lineHeight: 1.2 }}>
                 Our Mission
@@ -77,7 +77,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section style={{ padding: '100px 40px', background: '#f7faf9' }}>
+      <section style={{ padding: 'clamp(60px,8vw,100px) clamp(20px,5vw,40px)', background: '#f7faf9' }}>
         <div className="w-layout-blockcontainer container-large-e25 w-container">
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <h2 style={{ fontSize: FONT.lg, fontWeight: WEIGHT.bold, color: '#1a3338', margin: 0 }}>Our Values</h2>
@@ -95,7 +95,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section style={{ padding: '100px 40px', background: '#ffffff' }}>
+      <section style={{ padding: 'clamp(60px,8vw,100px) clamp(20px,5vw,40px)', background: '#ffffff' }}>
         <div className="w-layout-blockcontainer container-large-e25 w-container">
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <h2 style={{ fontSize: FONT.lg, fontWeight: WEIGHT.bold, color: '#1a3338', margin: 0 }}>Our Journey</h2>

@@ -34,7 +34,7 @@ export default function HeroSection() {
       <div style={{
         position: 'relative', zIndex: 1,
         maxWidth: '900px', margin: '0 auto',
-        padding: '120px 40px 100px',
+        padding: 'clamp(72px, 12vw, 120px) clamp(20px, 5vw, 40px) clamp(60px, 10vw, 100px)',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         textAlign: 'center',
       }}>
@@ -179,7 +179,7 @@ export default function HeroSection() {
           <p style={{ fontSize: '11px', color: C.muted, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px', fontWeight: WEIGHT.semi, fontFamily: 'inherit', textAlign: 'center' }}>
             What&apos;s inside
           </p>
-          <div style={{ display: 'flex', gap: '36px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: 'clamp(16px, 3vw, 36px)', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
             {PRODUCTS.map((name) => (
               <span key={name} style={{ fontSize: '17px', fontWeight: WEIGHT.bold, color: '#9ca3af', letterSpacing: '-0.3px', fontFamily: SERIF }}>
                 {name}

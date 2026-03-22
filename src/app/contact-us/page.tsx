@@ -39,7 +39,7 @@ export default function ContactUsPage() {
     <>
       {/* Hero */}
       <section
-        style={{ background: '#edf5f1', padding: '140px 40px 80px', textAlign: 'center' }}
+        style={{ background: '#edf5f1', padding: 'clamp(100px,12vw,140px) clamp(20px,5vw,40px) clamp(50px,6vw,80px)', textAlign: 'center' }}
       >
         <div className="w-layout-blockcontainer container-large-e25 w-container">
           <h1 style={{ fontSize: FONT.xl, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 20px', lineHeight: 1.1 }}>
@@ -52,9 +52,9 @@ export default function ContactUsPage() {
       </section>
 
       {/* Form + Info */}
-      <section style={{ padding: '80px 40px', background: '#ffffff' }}>
+      <section style={{ padding: 'clamp(50px,6vw,80px) clamp(20px,5vw,40px)', background: '#ffffff' }}>
         <div
-          className="w-layout-blockcontainer container-large-e25 w-container"
+          className="w-layout-blockcontainer container-large-e25 w-container contact-grid"
           style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start', maxWidth: '1100px' }}
         >
           {/* Contact form */}

@@ -631,7 +631,7 @@ export default function PricingPageClient() {
           </div>
 
           {/* Second row — 2 wide cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }} className="pricing-roi-bottom">
 
             {/* Cost comparison */}
             <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, boxShadow: NH_PANEL.shadow }}>
@@ -692,7 +692,7 @@ export default function PricingPageClient() {
             </h2>
             <div style={{ borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow, background: P.white }}>
               {/* header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 22px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 22px' }} className="pricing-table-header">
                 <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.muted, textTransform: 'uppercase', letterSpacing: '1px' }}>Feature</div>
                 {CANDIDATE_PLANS.map(p => (
                   <div key={p.id} style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: p.popular ? p.color : P.dark, textAlign: 'center' }}>{p.icon} {p.name}</div>
@@ -706,7 +706,7 @@ export default function PricingPageClient() {
                 { label: 'Direct Recruiter InMail', vals: [false, '50/mo', '200/mo', 'Unlimited'] },
                 { label: 'AI Outreach Agent credits', vals: [false, false, false, '3,000/mo'] },
               ].map((row, i) => (
-                <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '14px 22px', alignItems: 'center', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : P.white }}>
+                <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '14px 22px', alignItems: 'center', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : P.white }} className="pricing-table-row">
                   <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: P.mid }}>{row.label}</div>
                   {row.vals.map((v, j) => (
                     <div key={j} style={{ textAlign: 'center', fontSize: FONT.sm, fontWeight: WEIGHT.semi }}>

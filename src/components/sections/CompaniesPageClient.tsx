@@ -568,13 +568,13 @@ export default function CompaniesPageClient() {
           <Reveal delay={0.1}>
             <div style={{ borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow, background: C.white }}>
               {/* Header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 24px' }} className="companies-compare-header">
                 <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: C.muted, letterSpacing: '1px', textTransform: 'uppercase' }}>Metric</div>
                 <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: C.muted, letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>Traditional</div>
                 <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accent, letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>NextHire ✓</div>
               </div>
               {COMPARE_ROWS.map((row, i) => (
-                <div key={row.feature} className="fc-compare-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '15px 24px', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : C.white, alignItems: 'center' }}>
+                <div key={row.feature} className="fc-compare-row companies-compare-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '15px 24px', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : C.white, alignItems: 'center' }}>
                   <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: C.dark }}>{row.feature}</div>
                   <div style={{ fontSize: FONT.sm, color: C.muted, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                     <span style={{ color: C.muted, fontSize: FONT.xs, fontWeight: WEIGHT.extra }}>✕</span> {row.old}
@@ -597,7 +597,7 @@ export default function CompaniesPageClient() {
         <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${C.accent}15 0%, transparent 65%)`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
 
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }} className="companies-metrics-grid">
             {[
               { target: 800, suffix: 'M+', label: 'Profiles in talent graph', icon: '🌐', color: C.accent },
               { target: 70, suffix: '%', label: 'Reduction in recruiter hours', icon: '⏱️', color: C.green },

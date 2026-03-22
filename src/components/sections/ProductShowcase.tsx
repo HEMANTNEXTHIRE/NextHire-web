@@ -194,7 +194,7 @@ export default function ProductShowcase({ heading, headingLine2, cells }: Props)
   }, [handleClose])
 
   return (
-    <section id="product-showcase" className="testimonials-grid-section" style={{ padding: '110px 40px 110px', background: '#edf5f1' }}>
+    <section id="product-showcase" className="testimonials-grid-section" style={{ padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)', background: '#edf5f1' }}>
       <div style={{ maxWidth: '1340px', margin: '0 auto' }}>
         {(heading || headingLine2) && (
           <h2 style={{

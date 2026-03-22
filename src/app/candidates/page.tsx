@@ -243,7 +243,7 @@ export default function CandidatesPage() {
       {/* ── HERO ──────────────────────────────────────────────────── */}
       <section id="candidates-hero" style={{
         background: '#edf5f1',
-        padding: '110px 40px 110px', position: 'relative', overflow: 'hidden',
+        padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)', position: 'relative', overflow: 'hidden',
       }}>
         {/* bg orbs */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
@@ -299,7 +299,7 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────── */}
-      <section id="candidates-how" style={{ background: '#ffffff', padding: '110px 40px 110px' }}>
+      <section id="candidates-how" style={{ background: '#ffffff', padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 72 }}>
             <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
@@ -509,7 +509,7 @@ export default function CandidatesPage() {
                 <div style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, marginBottom: 28 }}>
                   {t.desc}
                 </div>
-                <div style={{ marginTop: 'auto', background: '#fafbfc', borderRadius: '16px 16px 0 0', padding: '20px 20px 0', marginLeft: -32, marginRight: -32, boxShadow: '0 -2px 16px rgba(37,62,66,0.04)' }}>
+                <div className="tool-mockup-tray" style={{ marginTop: 'auto', background: '#fafbfc', borderRadius: '16px 16px 0 0', padding: '20px 20px 0', marginLeft: -32, marginRight: -32, boxShadow: '0 -2px 16px rgba(37,62,66,0.04)' }}>
                   <ToolMockup label={t.label} color={t.color} />
                 </div>
               </div>
@@ -536,7 +536,7 @@ export default function CandidatesPage() {
                 <div style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, marginBottom: 28 }}>
                   {t.desc}
                 </div>
-                <div style={{ marginTop: 'auto', background: '#fafbfc', borderRadius: '16px 16px 0 0', padding: '20px 20px 0', marginLeft: -32, marginRight: -32, boxShadow: '0 -2px 16px rgba(37,62,66,0.04)' }}>
+                <div className="tool-mockup-tray" style={{ marginTop: 'auto', background: '#fafbfc', borderRadius: '16px 16px 0 0', padding: '20px 20px 0', marginLeft: -32, marginRight: -32, boxShadow: '0 -2px 16px rgba(37,62,66,0.04)' }}>
                   <ToolMockup label={t.label} color={t.color} />
                 </div>
               </div>
@@ -547,7 +547,7 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── COMPARISON ───────────────────────────────────────────── */}
-      <section id="candidates-compare" style={{ background: '#edf5f1', padding: '100px 40px' }}>
+      <section id="candidates-compare" style={{ background: '#edf5f1', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 64 }}>
             <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
@@ -600,7 +600,7 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────── */}
-      <section id="candidates-faq" style={{ background: '#fff', padding: '100px 40px' }}>
+      <section id="candidates-faq" style={{ background: '#fff', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 740, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 60 }}>
             <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>

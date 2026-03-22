@@ -425,7 +425,7 @@ function JobTrackerMockup() {
       </Row>
 
       {/* Kanban */}
-      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, alignItems: 'start' }}>
+      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, alignItems: 'start' }} className="vas-kanban-grid">
         {columns.map((col, ci) => (
           <div key={col.label} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <Row style={{ gap: 5, marginBottom: 4 }}>
@@ -525,7 +525,7 @@ export default function VerticalAccordionSection() {
   const Mockup = MOCKUPS[active]
 
   return (
-    <section id="full-platform" style={{ background: '#ffffff', padding: '110px 40px 110px' }}>
+    <section id="full-platform" style={{ background: '#ffffff', padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
       <style suppressHydrationWarning>{STYLES}</style>
 
       <div style={{ maxWidth: 1160, margin: '0 auto' }}>
