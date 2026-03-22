@@ -56,6 +56,7 @@ const SHOWCASE_CELLS: ShowcaseCell[] = [
     caption: 'AI Auto Apply in action',
     sub: 'Targeting · Applying · Tracking',
   },
+  /* Stat: top = company, bottom = metric */
   {
     type: 'stat', col: '4', row: '1',
     company: 'AI Outreach',

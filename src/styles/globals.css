@@ -187,16 +187,44 @@ main {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 720px) {
+  /* Stats: 4-col → 2×2 */
+  .companies-hero-stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* Remove right border on every 2nd cell (new column boundary) */
+  .companies-hero-stats > *:nth-child(2) {
+    border-right: none !important;
+  }
+  .companies-hero-stats > *:nth-child(3) {
+    border-top: 1px solid rgba(200,223,214,0.5) !important;
+  }
+  .companies-hero-stats > *:nth-child(4) {
+    border-top: 1px solid rgba(200,223,214,0.5) !important;
+    border-right: none !important;
+  }
+}
+@media (max-width: 400px) {
   .companies-hero-stats {
     grid-template-columns: 1fr !important;
   }
+  .companies-hero-stats > * {
+    border-right: none !important;
+    border-top: 1px solid rgba(200,223,214,0.4) !important;
+  }
+  .companies-hero-stats > *:first-child {
+    border-top: none !important;
+  }
 }
 
-@media (max-width: 900px) {
-  .companies-platform-panel {
+/* Feature cards: 2-col → single column on mobile */
+@media (max-width: 860px) {
+  .fc-feature-card-row {
     grid-template-columns: 1fr !important;
-    gap: 40px !important;
+    min-height: auto !important;
+  }
+  .fc-feature-card-row > * {
+    order: unset !important;
   }
 }
 
@@ -650,6 +678,11 @@ dialog::backdrop {
   grid-template-rows: 260px 260px 260px;
   gap: 12px;
   align-items: stretch;
+}
+/* Stat tiles: title on top, subtitle below (never bottom-aligned by legacy CSS) */
+.product-showcase-stat-card {
+  justify-content: flex-start !important;
+  flex-direction: column !important;
 }
 @media (max-width: 1100px) {
   .testimonials-grid {
@@ -1394,6 +1427,127 @@ dialog::backdrop {
   padding-left: 0 !important;
 }
 
+/* ── Dual CTA: kill Webflow absolute CTAs + fix “TALK TO AN EXPERT” overlap ──
+   Webflow uses position:absolute; bottom:82px on *-inner — headings then collide with labels. */
+#dual-action-cta .dual-action-button-cta-left-div,
+#dual-action-cta .dual-action-button-cta-right-div {
+  display: flex !important;
+  flex-direction: column !important;
+  /* stretch so button row can be full-width; desktop resets to flex-start below */
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  box-sizing: border-box !important;
+}
+#dual-action-cta .dual-action-button-cta-left-div-inner,
+#dual-action-cta .dual-action-button-cta-right-div-inner {
+  position: static !important;
+  inset: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  display: flex !important;
+  /* Laptop: left-align with headings; mobile overrides to center */
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 0 !important;
+  z-index: auto !important;
+}
+#dual-action-cta .dual-action-button-cta-left-div-heading,
+#dual-action-cta .dual-action-button-cta-right-div-heading {
+  position: relative !important;
+  z-index: 1 !important;
+  /* Space below title before CTA (mobile + laptop; beats stray margin:0 overrides) */
+  margin: 0 0 clamp(24px, 5vw, 40px) 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  line-height: 1.22 !important;
+}
+#dual-action-cta .dual-action-button-cta-tag-wrapper {
+  margin-bottom: 12px !important;
+  width: 100% !important;
+  flex-wrap: wrap !important;
+}
+#dual-action-cta .dual-action-button-cta-tag-wrapper p {
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* Desktop / tablet: same top line for labels, same baseline for both CTAs */
+@media (min-width: 768px) {
+  #dual-action-cta .dual-action-button-cta-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+  /*
+   * Webflow legacy padding (calc) shifts content — use matching padding both sides.
+   */
+  #dual-action-cta .dual-action-button-cta-left-div,
+  #dual-action-cta .dual-action-button-cta-right-div {
+    flex: 1 1 50% !important;
+    min-width: 0 !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+    padding: clamp(56px, 7vw, 88px) clamp(40px, 5vw, 72px) !important;
+    position: relative !important;
+  }
+  /* Decorative shape only on left — out of flex flow so it doesn’t make the column taller */
+  #dual-action-cta .dual-action-button-cta-left-div-pattern-mobile {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    width: min(200px, 42%) !important;
+    height: auto !important;
+    opacity: 0.22 !important;
+    margin: 0 !important;
+  }
+  #dual-action-cta .dual-action-button-cta-tag-wrapper,
+  #dual-action-cta .dual-action-button-cta-left-div-heading,
+  #dual-action-cta .dual-action-button-cta-right-div-heading {
+    position: relative !important;
+    z-index: 1 !important;
+    justify-content: flex-start !important;
+    align-self: stretch !important;
+    text-align: left !important;
+  }
+  /* Push both buttons to the same horizontal line (bottom of the shorter column) */
+  #dual-action-cta .dual-action-button-cta-left-div-inner,
+  #dual-action-cta .dual-action-button-cta-right-div-inner {
+    align-self: stretch !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    margin-top: auto !important;
+  }
+}
+
+/* Mobile: center whole column (needs #id to beat base #dual-action-cta align-items: stretch) */
+@media (max-width: 767px) {
+  #dual-action-cta .dual-action-button-cta-left-div,
+  #dual-action-cta .dual-action-button-cta-right-div {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  #dual-action-cta .dual-action-button-cta-tag-wrapper {
+    justify-content: center !important;
+  }
+  #dual-action-cta .dual-action-button-cta-left-div-heading,
+  #dual-action-cta .dual-action-button-cta-right-div-heading {
+    text-align: center !important;
+  }
+  #dual-action-cta .dual-action-button-cta-left-div-inner,
+  #dual-action-cta .dual-action-button-cta-right-div-inner {
+    margin-top: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
 .dual-action-button-cta-right-div-aligned.dual-action-button-cta-right-div {
   text-align: left;
 }
@@ -1466,22 +1620,23 @@ dialog::backdrop {
   .dual-action-button-cta-right-div {
     width: 100% !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
+    align-items: center !important;
+    text-align: center !important;
     padding: 40px 28px !important;
     box-sizing: border-box !important;
     position: relative !important;   /* contain abs-positioned pattern image */
   }
-  /* Tag, heading, button: all stacked vertically */
+  /* Tag, heading, button: stacked + centered */
   .dual-action-button-cta-tag-wrapper {
     flex-direction: row !important;
+    justify-content: center !important;
     margin-bottom: 12px !important;
     width: 100% !important;
   }
   .dual-action-button-cta-right-div-heading,
   .dual-action-button-cta-left-div-heading {
-    text-align: left !important;
-    justify-content: flex-start !important;
+    text-align: center !important;
+    justify-content: center !important;
     font-size: clamp(26px, 6vw, 40px) !important;
     margin-bottom: 24px !important;
     width: 100% !important;
@@ -1490,7 +1645,8 @@ dialog::backdrop {
   .dual-action-button-cta-right-div-inner {
     position: static !important;
     width: 100% !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
+    display: flex !important;
   }
   .dual-action-button-cta-left-div-inner-button,
   .dual-action-button-cta-right-div-inner-button {

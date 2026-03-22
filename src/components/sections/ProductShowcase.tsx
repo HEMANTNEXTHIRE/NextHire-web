@@ -17,7 +17,11 @@ interface VideoItem extends BaseCell {
   brand?: string; caption: string; sub: string
 }
 interface StatItem extends BaseCell {
-  type: 'stat'; company: string; metric: string
+  type: 'stat'
+  /** Shown on top — large, black (e.g. "1M+", "AI Outreach") */
+  company: string
+  /** Shown below — smaller, muted (e.g. reply-rate line) */
+  metric: string
 }
 interface FeatureHighlightItem extends BaseCell {
   type: 'highlight'; accent?: string; heading: string; bullets: string[]
@@ -122,16 +126,29 @@ function FeatureCard({ item }: { item: FeatureItem }) {
 /* ─── StatCard ────────────────────────────────────────────────── */
 function StatCard({ item }: { item: StatItem }) {
   return (
-    <div style={{
-      gridColumn: item.col, gridRow: item.row,
-      background: '#e4f0eb', border: '1px solid #c8dfd6',
-      borderRadius: '14px', padding: '24px 22px',
-      display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-    }}>
-      <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: '#253e42', lineHeight: 1.1, marginBottom: 10, letterSpacing: '-0.5px' }}>
+    <div
+      className="product-showcase-stat-card"
+      style={{
+        gridColumn: item.col, gridRow: item.row,
+        background: '#e4f0eb', border: '1px solid #c8dfd6',
+        borderRadius: '14px', padding: '24px 22px',
+        display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start',
+        gap: 12,
+        textAlign: 'left',
+      }}
+    >
+      {/* Top: headline (1M+ / AI Outreach / Interview Copilot) */}
+      <div style={{
+        fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: '#000000', lineHeight: 1.12,
+        letterSpacing: '-0.5px',
+      }}>
         {item.company}
       </div>
-      <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.semi, letterSpacing: '1.4px', textTransform: 'uppercase', color: '#8aada8', lineHeight: 1.5 }}>
+      {/* Bottom: supporting copy — sentence case, not forced uppercase */}
+      <div style={{
+        fontSize: FONT.sm, fontWeight: WEIGHT.medium, letterSpacing: '0.02em',
+        color: '#5c7a74', lineHeight: 1.55, maxWidth: '100%',
+      }}>
         {item.metric}
       </div>
     </div>

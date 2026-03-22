@@ -184,7 +184,6 @@ function Typewriter({ texts }: { texts: string[] }) {
    MAIN COMPONENT
 ════════════════════════════════════════════════════════════════ */
 export default function CompaniesPageClient() {
-  const [activeFeature, setActiveFeature] = useState(0)
 
   const PLATFORM_FEATURES = [
     {
@@ -433,38 +432,40 @@ export default function CompaniesPageClient() {
             </div>
           </Reveal>
 
-          <div style={{ marginTop: 56, paddingTop: 8, paddingBottom: 56, width: '100%' }}>
+          <div style={{ marginTop: 72, paddingBottom: 72, width: '100%' }}>
             <p style={{
               fontSize: 11,
               color: HOME.muted,
-              letterSpacing: '2px',
+              letterSpacing: '2.5px',
               textTransform: 'uppercase',
-              marginBottom: 28,
+              marginBottom: 36,
               fontWeight: WEIGHT.semi,
               textAlign: 'center',
             }}>
               By the numbers
             </p>
+            {/* Full-width 4-col stat tiles — premium editorial layout */}
             <div
               className="companies-hero-stats"
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, maxWidth: 560, margin: '0 auto' }}
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, maxWidth: 900, margin: '0 auto', border: '1px solid rgba(200,223,214,0.5)', borderRadius: 24, overflow: 'hidden', background: C.white, boxShadow: '0 20px 60px rgba(37,62,66,0.08), 0 2px 10px rgba(37,62,66,0.04)' }}
             >
               {STATS.map((s, i) => (
                 <div
                   key={s.l}
                   style={{
                     textAlign: 'center',
-                    padding: '22px 18px',
-                    background: C.white,
-                    borderRadius: NH_PANEL.innerR,
-                    border: 'none',
-                    boxShadow: '0 10px 36px rgba(37,62,66,0.07), 0 2px 8px rgba(37,62,66,0.04)',
+                    padding: 'clamp(28px, 4vw, 44px) clamp(16px, 2.5vw, 28px)',
+                    borderRight: i < STATS.length - 1 ? '1px solid rgba(200,223,214,0.5)' : 'none',
+                    background: i % 2 === 0 ? C.white : '#fafcfb',
                     animation: `fcCountUp 0.5s ease ${0.12 + i * 0.08}s both`,
+                    position: 'relative',
+                    overflow: 'hidden',
                   }}
                 >
-                  <div style={{ fontSize: FONT.md, marginBottom: 8 }}>{s.icon}</div>
-                  <div style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: WEIGHT.extra, color: C.accent, lineHeight: 1 }}>{s.n}</div>
-                  <div style={{ fontSize: FONT.xs, color: C.mid, marginTop: 8, lineHeight: 1.45, fontWeight: WEIGHT.medium }}>{s.l}</div>
+                  {/* Top accent bar */}
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.accent}, ${C.accentD})`, opacity: 0.7 }} />
+                  <div style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: WEIGHT.extra, color: C.dark, lineHeight: 1, letterSpacing: '-1.5px', marginBottom: 10, fontFamily: SERIF }}>{s.n}</div>
+                  <div style={{ fontSize: FONT.sm, color: C.muted, lineHeight: 1.5, fontWeight: WEIGHT.medium }}>{s.l}</div>
                 </div>
               ))}
             </div>
@@ -473,78 +474,104 @@ export default function CompaniesPageClient() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          PLATFORM TABS — Sticky selector + content
+          PLATFORM FEATURES — Structured numbered cards (CEO-grade)
       ════════════════════════════════════════════════════════ */}
-      <section id="companies-platform" style={{ background: HOME.bg, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
+      <section id="companies-platform" style={{ background: '#f7faf9', padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
 
           <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <div style={{ textAlign: 'center', marginBottom: 72 }}>
               <div style={{ display: 'inline-block', background: `${C.accent}12`, color: C.accentD, padding: '4px 14px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 14 }}>
                 The Platform
               </div>
-              <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+              <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
                 Five agents. One pipeline.
               </h2>
             </div>
           </Reveal>
 
-          {/* Tab selector */}
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 52, flexWrap: 'wrap' }}>
-            {PLATFORM_FEATURES.map((f, i) => (
-              <button
-                key={f.tag}
-                onClick={() => setActiveFeature(i)}
-                style={{
-                  padding: '12px 22px', borderRadius: NH_PANEL.rowR, border: 'none',
-                  background: activeFeature === i ? `${f.color}12` : C.white,
-                  color: activeFeature === i ? f.color : C.muted,
-                  fontWeight: WEIGHT.bold, fontSize: FONT.sm, cursor: 'pointer', transition: 'all 0.22s ease',
-                  display: 'flex', alignItems: 'center', gap: 7,
-                  boxShadow: activeFeature === i
-                    ? '0 12px 40px rgba(37,62,66,0.1), 0 0 0 1px rgba(95,168,158,0.22)'
-                    : '0 8px 28px rgba(37,62,66,0.05), 0 1px 4px rgba(37,62,66,0.04)',
-                }}
-              >
-                <span>{f.icon}</span>
-                <span>{f.tag}</span>
-              </button>
+          {/* Numbered feature cards — big, spacious, structured */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+            {PLATFORM_FEATURES.map((feat, idx) => (
+              <Reveal key={feat.tag} delay={idx * 0.06} dir={idx % 2 === 0 ? 'left' : 'right'}>
+                <div
+                  className="fc-card fc-feature-card-row"
+                  style={{
+                    background: C.white,
+                    borderRadius: 28,
+                    boxShadow: '0 8px 40px rgba(37,62,66,0.07), 0 2px 10px rgba(37,62,66,0.04)',
+                    overflow: 'hidden',
+                    display: 'grid',
+                    gridTemplateColumns: idx % 2 === 0 ? '1fr 420px' : '420px 1fr',
+                    minHeight: 360,
+                  }}
+                >
+                  {/* Text side */}
+                  <div
+                    style={{
+                      padding: 'clamp(36px, 5vw, 60px)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      order: idx % 2 === 0 ? 0 : 1,
+                    }}
+                  >
+                    {/* Number + tag */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+                      <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.muted, background: C.surface, border: `1px solid ${C.sage}`, borderRadius: 8, padding: '4px 10px', letterSpacing: '0.5px' }}>
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: feat.color, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+                        {feat.tag}
+                      </span>
+                    </div>
+                    {/* Heading */}
+                    <h3 style={{ fontFamily: SERIF, fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: 400, color: '#111827', margin: '0 0 16px', lineHeight: 1.28, letterSpacing: '-0.3px', fontSynthesis: 'none' }}>
+                      {feat.heading}
+                    </h3>
+                    {/* Body */}
+                    <p style={{ fontSize: FONT.base, color: C.mid, lineHeight: 1.78, margin: '0 0 28px', maxWidth: 440 }}>
+                      {feat.body}
+                    </p>
+                    {/* Feature bullets — 2-col grid */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                      {feat.features.map(f => (
+                        <div key={f.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                          <div style={{ width: 18, height: 18, borderRadius: 6, background: `${feat.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                            <div style={{ width: 5, height: 5, borderRadius: '50%', background: feat.color }} />
+                          </div>
+                          <div>
+                            <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: C.dark, marginBottom: 2 }}>{f.title}</div>
+                            <div style={{ fontSize: FONT.xs, color: C.muted, lineHeight: 1.55 }}>{f.desc}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Mockup side */}
+                  <div
+                    style={{
+                      background: `linear-gradient(145deg, ${C.light} 0%, ${C.mint} 100%)`,
+                      padding: 'clamp(24px, 4vw, 40px)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      order: idx % 2 === 0 ? 1 : 0,
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {/* Decorative orb */}
+                    <div style={{ position: 'absolute', width: 240, height: 240, borderRadius: '50%', background: `radial-gradient(circle, ${feat.color}20 0%, transparent 65%)`, top: -60, right: -40, pointerEvents: 'none' }} />
+                    <div style={{ width: '100%', maxWidth: 340, position: 'relative', zIndex: 1 }}>
+                      {feat.mockup}
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
             ))}
           </div>
-
-          {/* Content panel */}
-          {PLATFORM_FEATURES.map((feat, idx) => idx === activeFeature && (
-            <div key={feat.tag} className="companies-platform-panel" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center', animation: 'fcSlideUp 0.35s ease' }}>
-              {/* Text */}
-              <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: feat.color, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 14 }}>
-                  <div style={{ width: 20, height: 20, borderRadius: 6, background: `${feat.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.sm }}>{feat.icon}</div>
-                  {feat.tag}
-                </div>
-                <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 18px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
-                  {feat.heading}
-                </h2>
-                <p style={{ fontSize: FONT.base, color: C.mid, lineHeight: 1.78, margin: '0 0 36px', maxWidth: 460 }}>
-                  {feat.body}
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
-                  {feat.features.map(f => (
-                    <div key={f.title} className="fc-feature-card" style={{ padding: '18px 18px', background: C.white, borderRadius: NH_PANEL.innerR, border: 'none', boxShadow: '0 10px 32px rgba(37,62,66,0.06), 0 2px 8px rgba(37,62,66,0.04)', cursor: 'default' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: feat.color, flexShrink: 0 }} />
-                        <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: C.dark }}>{f.title}</div>
-                      </div>
-                      <div style={{ fontSize: FONT.xs, color: C.mid, lineHeight: 1.6 }}>{f.desc}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {/* Mockup */}
-              <div style={{ animation: 'fcSlideR 0.4s ease' }}>
-                {feat.mockup}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
