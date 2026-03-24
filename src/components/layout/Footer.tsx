@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { FOOTER_CANDIDATE_TOOLS, FOOTER_COMPANY_TOOLS } from '@/constants/footerLinks'
 
 export default function Footer() {
   return (
@@ -21,24 +22,24 @@ export default function Footer() {
                   <li className="footer-title__level-1-item">
                     <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">For Companies</Link>
                     <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item">
-                        <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Mission Focused</Link>
-                      </li>
+                      {FOOTER_COMPANY_TOOLS.map(({ label, href }) => (
+                        <li key={label} className="footer-titles-level-2-item">
+                          <Link href={href} className="footer-title__level-1-item-link footer-titles-level-2-item-link">
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/companies" className="footer-title__level-1-item-link">Untapped Talent Markets</Link>
+                    <Link href="/companies#companies-compare" className="footer-title__level-1-item-link">
+                      Traditional recruiting vs. NextHire
+                    </Link>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/companies" className="footer-title__level-1-item-link">Our Talent Community</Link>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Impact</Link>
-                    <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item">
-                        <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Customer Stories</Link>
-                      </li>
-                    </ul>
+                    <Link href="/companies#companies-integrations" className="footer-title__level-1-item-link">
+                      Integrations
+                    </Link>
                   </li>
                 </ul>
               </article>
@@ -76,24 +77,25 @@ export default function Footer() {
                     <Link href="/candidates" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">For Candidates</Link>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Function</Link>
+                    <Link href="/candidates#candidates-tools" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Tools</Link>
                     <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Software Developers</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">QA Testers</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Product Manager</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">DevOps</Link></li>
+                      {FOOTER_CANDIDATE_TOOLS.map(({ label, href }) => (
+                        <li key={label} className="footer-titles-level-2-item">
+                          <Link href={href} className="footer-title__level-1-item-link footer-titles-level-2-item-link">
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Products</Link>
-                    <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Resume Building</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">AI Outreach Agent</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">AI Auto Apply</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">AI Interview Coach</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Recruiter InMail</Link></li>
-                      <li className="footer-titles-level-2-item"><Link href="/success-story" className="footer-title__level-1-item-link footer-titles-level-2-item-link">AI Interviewer</Link></li>
-                    </ul>
+                    <Link href="/candidates#candidates-how" className="footer-title__level-1-item-link">How it works</Link>
+                  </li>
+                  <li className="footer-title__level-1-item">
+                    <Link href="/candidates#candidates-compare" className="footer-title__level-1-item-link">Compare plans</Link>
+                  </li>
+                  <li className="footer-title__level-1-item">
+                    <Link href="/candidates#candidates-faq" className="footer-title__level-1-item-link">FAQ</Link>
                   </li>
                 </ul>
               </article>
@@ -110,15 +112,29 @@ export default function Footer() {
               <article className="footer-dropdown__accordion-content w-dropdown-list">
                 <ul className="footer-title__level-1" role="list">
                   <li className="footer-title__level-1-item">
-                    <Link href="/candidates" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Nexthire For Candidates</Link>
+                    <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">NextHire for Companies</Link>
                     <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item"><Link href="/candidates" className="footer-title__level-1-item-link footer-titles-level-2-item-link">For Candidates</Link></li>
+                      <li className="footer-titles-level-2-item">
+                        <Link href="/contact-us" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Book a demo</Link>
+                      </li>
+                      <li className="footer-titles-level-2-item">
+                        <Link href="/talk-to-an-expert" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Talk to an expert</Link>
+                      </li>
                     </ul>
                   </li>
                   <li className="footer-title__level-1-item">
-                    <Link href="/candidates" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Product</Link>
+                    <Link href="/companies#companies-platform" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Platform</Link>
                     <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item"><Link href="/candidates" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Qualified by Algotale</Link></li>
+                      <li className="footer-titles-level-2-item">
+                        <Link href="/companies#companies-platform" className="footer-title__level-1-item-link footer-titles-level-2-item-link">
+                          Five agents. One pipeline.
+                        </Link>
+                      </li>
+                      <li className="footer-titles-level-2-item">
+                        <Link href="/companies#companies-integrations" className="footer-title__level-1-item-link footer-titles-level-2-item-link">
+                          ATS & integrations
+                        </Link>
+                      </li>
                     </ul>
                   </li>
                 </ul>
@@ -185,7 +201,7 @@ export default function Footer() {
             <div className="footer-lower__social-icons">
               <a
                 className="footer-social-link-wrapper w-inline-block"
-                href="https://www.linkedin.com/company/algotale/"
+                href="https://www.linkedin.com/company/nexthire-technologies/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

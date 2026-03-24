@@ -184,6 +184,13 @@ main {
   font-style: normal !important;
 }
 
+/* Legal pages (Privacy, Terms, DPA, Marketing Disclosure) — Playfair title */
+#nh-legal-hero .nh-legal-page__title {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+  font-synthesis: none !important;
+  font-style: normal !important;
+}
+
 /* Jobs board — same as home hero: global Noto inherit must not flatten Playfair */
 #jobs-board .jobs-board-headline,
 #jobs-board .jobs-board-headline span,
@@ -3442,5 +3449,162 @@ body.andl-body, body.andl-body * {
     text-align: center;
     padding: 8px;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Legal pages — Privacy, Terms, DPA, Marketing Disclosure
+   (aligned with contact / candidates: mint hero, Playfair title, neutral prose)
+   ═══════════════════════════════════════════════════════════════ */
+.nh-legal-page {
+  background: #ffffff;
+  min-height: 60vh;
+}
+
+.nh-legal-page__hero {
+  position: relative;
+  overflow: hidden;
+  background: #edf5f1;
+  padding: clamp(72px, 10vw, 120px) clamp(20px, 5vw, 40px) clamp(48px, 7vw, 72px);
+  border-bottom: 1px solid rgba(200, 223, 214, 0.6);
+  scroll-margin-top: 88px;
+}
+
+.nh-legal-page__hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nh-legal-page__hero-bg::before {
+  content: '';
+  position: absolute;
+  width: min(720px, 90vw);
+  height: min(720px, 90vw);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(95, 168, 158, 0.16) 0%, transparent 65%);
+  top: -35%;
+  right: -15%;
+}
+
+.nh-legal-page__hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#c8dfd6 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.45;
+}
+
+.nh-legal-page__hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nh-legal-page__title {
+  margin: 0 0 clamp(14px, 2vw, 20px);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.45px;
+  line-height: 1.18;
+  color: #111827;
+}
+
+.nh-legal-page__lead {
+  margin: 0 auto clamp(16px, 2.5vw, 22px);
+  max-width: 36rem;
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  color: #6b7280;
+}
+
+.nh-legal-page__updated {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #9ca3af;
+  letter-spacing: 0.02em;
+}
+
+.nh-legal-page__article {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 40px) clamp(72px, 10vw, 120px);
+}
+
+/* Prose — overrides Webflow/global inherit where needed */
+.nh-legal-prose {
+  font-family: var(--font-family);
+  color: #374151;
+}
+
+.nh-legal-prose h2 {
+  font-family: var(--font-family);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #111827;
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.nh-legal-prose h2:first-child {
+  margin-top: 0;
+}
+
+.nh-legal-prose h3 {
+  font-family: var(--font-family);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 1.75rem 0 0.625rem;
+  line-height: 1.4;
+}
+
+.nh-legal-prose p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #4b5563;
+  margin: 0 0 1rem;
+}
+
+.nh-legal-prose ul,
+.nh-legal-prose ol {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #4b5563;
+  padding-left: 1.35rem;
+  margin: 0 0 1.25rem;
+}
+
+.nh-legal-prose li {
+  margin-bottom: 0.5rem;
+}
+
+.nh-legal-prose li::marker {
+  color: #9ca3af;
+}
+
+.nh-legal-prose strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+.nh-legal-prose a {
+  color: #2e7d4f;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.nh-legal-prose a:hover {
+  color: #1e5a3a;
 }
 

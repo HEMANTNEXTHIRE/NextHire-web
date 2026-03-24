@@ -75,7 +75,7 @@ const CONTACT_ROWS: {
   {
     title: 'LinkedIn',
     detail: 'Company updates & open roles',
-    href: 'https://www.linkedin.com/company/algotale/',
+    href: 'https://www.linkedin.com/company/nexthire-technologies/',
     external: true,
     icon: <IconLinkedIn />,
   },
