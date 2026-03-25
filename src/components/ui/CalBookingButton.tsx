@@ -2,6 +2,19 @@
 
 import { useEffect } from 'react'
 
+/** Minimal type for the Cal.com embed global */
+interface CalEmbed {
+  (action: string, namespace: string, options?: Record<string, unknown>): void
+  ns: Record<string, (action: string, options?: Record<string, unknown>) => void>
+  loaded?: boolean
+}
+
+declare global {
+  interface Window {
+    Cal?: CalEmbed
+  }
+}
+
 interface CalBookingButtonProps {
   /** Cal.com link e.g. "shubham-4pkegy/30min" */
   calLink?: string
@@ -19,35 +32,42 @@ export default function CalBookingButton({
   brandColor = '#173b3f',
 }: CalBookingButtonProps) {
   useEffect(() => {
-    // Load Cal.com embed script dynamically
-    const script = document.createElement('script')
-    script.src = 'https://app.cal.com/embed/embed.js'
-    script.async = true
-    document.head.appendChild(script)
-
-    script.onload = () => {
-      const Cal = (window as any).Cal
+    const initCal = () => {
+      const Cal = window.Cal
       if (!Cal) return
 
       Cal('init', namespace, { origin: 'https://app.cal.com' })
-      Cal.ns[namespace]('floatingButton', {
+      Cal.ns[namespace]?.('floatingButton', {
         calLink,
         config: { layout },
         buttonText,
       })
-      Cal.ns[namespace]('ui', {
+      Cal.ns[namespace]?.('ui', {
         cssVarsPerTheme: { light: { 'cal-brand': brandColor } },
         hideEventTypeDetails: false,
         layout,
       })
     }
 
+    // Guard: only inject script once
+    if (document.querySelector('script[data-cal-embed]')) {
+      initCal()
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://app.cal.com/embed/embed.js'
+    script.async = true
+    script.setAttribute('data-cal-embed', 'true')
+    script.onload = initCal
+    document.head.appendChild(script)
+
     return () => {
-      // Cleanup the floating button if component unmounts
       try {
-        const btn = document.querySelector('.cal-floating-button')
-        if (btn) btn.remove()
-      } catch {}
+        document.querySelector('.cal-floating-button')?.remove()
+      } catch {
+        // ignore cleanup errors
+      }
     }
   }, [calLink, namespace, buttonText, layout, brandColor])
 

@@ -3,6 +3,19 @@
  * All original class names are preserved so JSX className matches work 1:1.
  */
 
+/* ── Accessibility utility ──────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* Webflow base/reset CSS (e25-algotale) — loaded via <link> in layout to avoid PostCSS parse issues */
 
 /* Main site styles — copied directly from the static site */
@@ -1034,7 +1047,189 @@ dialog::backdrop {
   }
 }
 
-/* ---- Footer styles ---- */
+/* ---- Footer: column grid ---- */
+
+/* Core link and text styles */
+.nh-footer-heading {
+  color: #173b3f;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 14px;
+}
+
+.nh-footer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nh-footer-list li {
+  margin-bottom: 7px;
+}
+
+.nh-footer-gap {
+  margin-top: 12px !important;
+}
+
+.nh-footer-link {
+  color: #475653;
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s ease;
+}
+
+.nh-footer-link:hover {
+  color: #173b3f;
+}
+
+.nh-footer-link--section {
+  font-weight: 600;
+  color: #2d5256;
+}
+
+.nh-footer-link--sub {
+  padding-left: 14px;
+  font-size: 12.5px;
+  position: relative;
+  color: #5a7370;
+}
+
+.nh-footer-link--sub::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9px;
+  height: 1.5px;
+  background: linear-gradient(to left, #173b3f, rgba(23,59,63,0));
+  opacity: 0.4;
+}
+
+/* Dot separator in lower bar */
+.nh-footer-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #8aada8;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* ── Desktop: 4 equal columns ─────────────────────────────────── */
+.nh-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 48px;
+  padding-bottom: 56px;
+}
+
+/* ── Tablet (≤ 991px): 2×2 balanced grid ─────────────────────── */
+@media (max-width: 991px) {
+  .nh-footer-cols {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 40px;
+    padding-bottom: 40px;
+  }
+
+  .nh-footer-heading {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+}
+
+/* ── Mobile (≤ 767px): compact 2 columns ─────────────────────── */
+@media (max-width: 767px) {
+  .footer {
+    padding-top: 48px !important;
+    padding-bottom: 36px !important;
+  }
+
+  .nh-footer-cols {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 16px;
+    padding-bottom: 28px;
+  }
+
+  .nh-footer-heading {
+    font-size: 12px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .nh-footer-link {
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  .nh-footer-link--sub {
+    font-size: 11px !important;
+    padding-left: 11px !important;
+  }
+
+  .nh-footer-list li {
+    margin-bottom: 5px !important;
+  }
+
+  .nh-footer-gap {
+    margin-top: 8px !important;
+  }
+
+  /* Footer lower: clean stack */
+  .footer-lower-wrapper {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-top: 20px !important;
+    gap: 16px !important;
+  }
+
+  .footer-lower-left {
+    max-width: 100% !important;
+  }
+
+  .footer-logo {
+    margin-bottom: 10px !important;
+    max-height: 30px !important;
+  }
+
+  .footer-lower-left-content {
+    display: block !important;
+    font-size: 12px !important;
+  }
+
+  .footer-lower-right {
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .footer-all-right-text {
+    display: none !important;
+  }
+
+  .footer-lower__social-icons {
+    margin-bottom: 8px !important;
+  }
+
+  .footer-lower__bottom-link-wrapper {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 4px 6px !important;
+  }
+
+  .footer-lower__bottom-link {
+    font-size: 11px !important;
+  }
+
+  .nh-footer-dot {
+    display: none !important;
+  }
+}
+
+/* Keep Webflow dropdown list always visible (accordion off) */
 .footer .w-dropdown-list {
   display: block !important;
   position: static !important;
@@ -1045,33 +1240,14 @@ dialog::backdrop {
 .footer .w-dropdown-toggle .w-icon-dropdown-toggle {
   display: none;
 }
-.footer-titles-level-2-item-link {
-  transition: padding 0.3s ease-in-out;
-}
-.footer-titles-level-2-item-link::before {
-  position: absolute;
-  left: 0;
-  display: block;
-  width: 11px;
-  height: 2px;
-  background: linear-gradient(to left, rgb(23, 59, 63), rgba(23, 59, 63, 0));
-  content: "";
-  opacity: 0.5;
-  transition: width 0.3s ease-in-out;
-}
+
 @media (min-width: 991px) {
-  .footer-titles-level-2-item-link:hover {
-    padding-left: 23px;
-  }
-  .footer-titles-level-2-item-link:hover::before {
-    width: 14px;
-    background: linear-gradient(to left, rgb(10, 150, 138), rgba(23, 59, 63, 0));
-  }
   .footer-social-link-wrapper:hover {
     opacity: 0.7;
   }
 }
 .footer-lower-left-content { display: none; }
+
 
 /* ---- Header: solid bar when scrolled (body.fixed-menu from Header.tsx) ---- */
 .page-header,

@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import DualActionCTA from '@/components/ui/DualActionCTA'
-import { FONT, WEIGHT } from '@/constants/typography'
+import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 export const metadata: Metadata = {
   title: 'About NextHire | Career Growth & Job Placement Platform',

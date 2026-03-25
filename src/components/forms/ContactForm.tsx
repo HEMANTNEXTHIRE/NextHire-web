@@ -79,53 +79,77 @@ export default function ContactForm() {
   }
 
   return (
-    <form id="contactForm" className="contact-form-modern" onSubmit={handleSubmit}>
+    <form id="contactForm" className="contact-form-modern" onSubmit={handleSubmit} noValidate>
+      <p style={{ fontSize: FONT.sm, color: '#6b7280', marginBottom: 16 }}>
+        Fields marked <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        <span className="sr-only">with an asterisk</span> are required.
+      </p>
+
       <div className="form-field-group">
-        <label style={labelStyle}>Full Name <span style={{ color: '#ff0000' }}>*</span></label>
+        <label htmlFor="cf-name" style={labelStyle}>
+          Full Name <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <input
+          id="cf-name"
           type="text"
           required
+          aria-required="true"
           placeholder="Enter your full name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           style={inputStyle}
+          autoComplete="name"
         />
       </div>
 
       <div className="form-field-group">
-        <label style={labelStyle}>Email Address <span style={{ color: '#ff0000' }}>*</span></label>
+        <label htmlFor="cf-email" style={labelStyle}>
+          Email Address <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <input
+          id="cf-email"
           type="email"
           required
+          aria-required="true"
           placeholder="your.email@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={inputStyle}
+          autoComplete="email"
         />
       </div>
 
       <div className="form-field-group">
-        <label style={labelStyle}>Phone Number <span style={{ color: '#ff0000' }}>*</span></label>
+        <label htmlFor="cf-phone" style={labelStyle}>
+          Phone Number <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <input
+          id="cf-phone"
           type="tel"
           required
+          aria-required="true"
           placeholder="10-digit number"
           pattern="[0-9]{10}"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           style={inputStyle}
+          autoComplete="tel"
         />
       </div>
 
       <div className="form-field-group">
-        <label style={labelStyle}>Purpose <span style={{ color: '#ff0000' }}>*</span></label>
+        <label htmlFor="cf-purpose" style={labelStyle}>
+          Purpose <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <select
+          id="cf-purpose"
           required
+          aria-required="true"
           value={purpose}
           onChange={(e) => setPurpose(e.target.value)}
           style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
         >
-          <option value="">Select a purpose...</option>
+          <option value="">Select a purpose…</option>
           {PURPOSE_OPTIONS.map((o) => (
             <option key={o.value} value={o.value}>{o.label}</option>
           ))}
@@ -133,9 +157,10 @@ export default function ContactForm() {
       </div>
 
       <div className="form-field-group">
-        <label style={labelStyle}>Message (Optional)</label>
+        <label htmlFor="cf-message" style={labelStyle}>Message (optional)</label>
         <textarea
-          placeholder="Tell us more about your needs..."
+          id="cf-message"
+          placeholder="Tell us more about your needs…"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={4}
@@ -147,9 +172,10 @@ export default function ContactForm() {
         type="submit"
         className="submit-button-modern"
         disabled={isSubmitting}
+        aria-busy={isSubmitting}
         style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
       >
-        {isSubmitting ? 'Sending...' : 'Submit'}
+        {isSubmitting ? 'Sending…' : 'Submit'}
       </button>
     </form>
   )

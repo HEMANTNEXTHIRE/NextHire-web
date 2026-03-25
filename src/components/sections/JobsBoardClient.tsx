@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FONT_FAMILY, WEIGHT } from '@/constants/typography'
-import type { EmploymentType, JobLevel, JobListing, WorkType } from './jobsMockData'
+import type { EmploymentType, JobLevel, JobListing } from './jobsMockData'
 import { MOCK_JOBS } from './jobsMockData'
 
 const POSTED_OPTIONS = [

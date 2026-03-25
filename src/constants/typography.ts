@@ -31,3 +31,6 @@ export const WEIGHT = {
 } as const
 
 export const FONT_FAMILY = "'Noto Sans', system-ui, -apple-system, sans-serif"
+
+/** Playfair Display serif stack — use for all hero/display headings */
+export const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"

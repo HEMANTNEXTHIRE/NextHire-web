@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { FONT, WEIGHT } from '@/constants/typography'
+import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
 /* Homepage-aligned tokens (HeroSection / pricing) */
 const HOME = {
@@ -13,7 +13,6 @@ const HOME = {
   ctaMint: '#1de9b6',
 }
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 /* ── Palette ──────────────────────────────────────────────────── */
 const C = {

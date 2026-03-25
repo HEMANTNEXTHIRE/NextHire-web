@@ -24,6 +24,7 @@ function NotificationItem({ id, title, message, details }: {
       <button
         className="notification-close"
         onClick={() => dispatch(removeNotification(id))}
+        aria-label="Dismiss notification"
       >
         ×
       </button>

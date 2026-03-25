@@ -2,9 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { FONT, WEIGHT } from '@/constants/typography'
+import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 /* ── Palette ──────────────────────────────────────────────────── */
 const P = {

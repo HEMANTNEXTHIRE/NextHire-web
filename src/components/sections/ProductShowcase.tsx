@@ -1,9 +1,8 @@
 'use client'
 
 import { useRef, useCallback, useEffect } from 'react'
-import { FONT, WEIGHT } from '@/constants/typography'
+import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 /* ─── Types ─────────────────────────────────────────────────────── */
 interface BaseCell { col?: string; row?: string }

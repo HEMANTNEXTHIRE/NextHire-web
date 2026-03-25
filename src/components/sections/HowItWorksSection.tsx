@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { WEIGHT } from '@/constants/typography'
+import { WEIGHT, SERIF } from '@/constants/typography'
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 type StepKey = 'discover' | 'outreach' | 'land'
 

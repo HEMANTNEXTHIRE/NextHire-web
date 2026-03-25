@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { FONT, WEIGHT } from '@/constants/typography'
+import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
 /* ─── CSS keyframes ───────────────────────────────────────────── */
 const EASE_OUT = 'cubic-bezier(0.33, 1, 0.68, 1)'
@@ -15,7 +15,6 @@ const STYLES = `
 @keyframes nhWave   { 0%,100%{transform:scaleY(0.4)} 50%{transform:scaleY(1)} }
 `
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 /* ─── Design tokens ───────────────────────────────────────────── */
 const T = {

@@ -1,6 +1,6 @@
 import Link from 'next/link'
+import { SERIF } from '@/constants/typography'
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 interface DualActionCTAProps {
   leftTitle?: string

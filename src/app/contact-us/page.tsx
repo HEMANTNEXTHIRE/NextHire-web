@@ -3,9 +3,8 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import ContactForm from '@/components/forms/ContactForm'
 import DualActionCTA from '@/components/ui/DualActionCTA'
-import { FONT, WEIGHT } from '@/constants/typography'
+import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 const HOME = {
   bg: '#ffffff',

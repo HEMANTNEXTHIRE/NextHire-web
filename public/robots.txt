@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block staging/dev files
+Disallow: /_next/
+Disallow: /api/
+
+Sitemap: https://www.nexthireconsulting.com/sitemap.xml

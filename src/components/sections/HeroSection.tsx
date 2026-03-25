@@ -1,6 +1,6 @@
 'use client'
 
-import { FONT, WEIGHT } from '@/constants/typography'
+import { WEIGHT, SERIF } from '@/constants/typography'
 
 /* ─── Colour tokens ──────────────────────────────────────── */
 const C = {
@@ -22,7 +22,6 @@ const PRODUCTS = [
   'Recruiter InMail', 'Portal Optimization',
 ]
 
-const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
 export default function HeroSection() {
   return (

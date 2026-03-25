@@ -7,185 +7,95 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="w-layout-blockcontainer footer-container w-container">
-        <div className="footer-upper-wrapper">
 
-          {/* Row 1: For Companies + Nexthire (FTE/For Candidates) */}
-          <div className="footer-row-1">
-            {/* For Companies */}
-            <div className="footer-dropdown w-dropdown">
-              <div className="footer-dropdown__accordion-toggle w-dropdown-toggle">
-                <div className="footer-dropdown__icon w-icon-dropdown-toggle" />
-                <div className="footer-main-title">For Companies</div>
-              </div>
-              <article className="footer-dropdown__accordion-content w-dropdown-list">
-                <ul className="footer-title__level-1" role="list">
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">For Companies</Link>
-                    <ul className="footer-titles-level-2" role="list">
-                      {FOOTER_COMPANY_TOOLS.map(({ label, href }) => (
-                        <li key={label} className="footer-titles-level-2-item">
-                          <Link href={href} className="footer-title__level-1-item-link footer-titles-level-2-item-link">
-                            {label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies#companies-compare" className="footer-title__level-1-item-link">
-                      Traditional recruiting vs. NextHire
-                    </Link>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies#companies-integrations" className="footer-title__level-1-item-link">
-                      Integrations
-                    </Link>
-                  </li>
-                </ul>
-              </article>
-            </div>
+        {/* ── Navigation columns ──────────────────────────────────── */}
+        <div className="nh-footer-cols">
 
-            {/* Nexthire (FTE + For Candidates top-level) */}
-            <div className="footer-dropdown w-dropdown">
-              <div className="footer-dropdown__accordion-toggle w-dropdown-toggle">
-                <div className="footer-dropdown__icon w-icon-dropdown-toggle" />
-                <div className="footer-main-title">Nexthire</div>
-              </div>
-              <article className="footer-dropdown__accordion-content w-dropdown-list">
-                <ul className="footer-title__level-1" role="list">
-                  <li className="footer-title__level-1-item">
-                    <Link href="/candidates" className="footer-title__level-1-item-link">Nexthire For Candidates</Link>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies" className="footer-title__level-1-item-link">Nexthire For Companies</Link>
-                  </li>
-                </ul>
-              </article>
-            </div>
+          {/* Col 1: For Companies */}
+          <div className="nh-footer-col">
+            <p className="nh-footer-heading">For Companies</p>
+            <ul className="nh-footer-list" role="list">
+              <li><Link href="/companies" className="nh-footer-link nh-footer-link--section">For Companies</Link></li>
+              {FOOTER_COMPANY_TOOLS.map(({ label, href }) => (
+                <li key={label}><Link href={href} className="nh-footer-link nh-footer-link--sub">{label}</Link></li>
+              ))}
+              <li className="nh-footer-gap">
+                <Link href="/companies#companies-compare" className="nh-footer-link">Traditional recruiting vs. NextHire</Link>
+              </li>
+              <li><Link href="/companies#companies-integrations" className="nh-footer-link">Integrations</Link></li>
+            </ul>
           </div>
 
-          {/* Row 2: Nexthire with Function + Use Cases */}
-          <div className="footer-row-2">
-            <div className="footer-dropdown w-dropdown">
-              <div className="footer-dropdown__accordion-toggle w-dropdown-toggle">
-                <div className="footer-dropdown__icon w-icon-dropdown-toggle" />
-                <div className="footer-main-title">For Candidates</div>
-              </div>
-              <article className="footer-dropdown__accordion-content w-dropdown-list">
-                <ul className="footer-title__level-1" role="list">
-                  <li className="footer-title__level-1-item">
-                    <Link href="/candidates" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">For Candidates</Link>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/candidates#candidates-tools" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Tools</Link>
-                    <ul className="footer-titles-level-2" role="list">
-                      {FOOTER_CANDIDATE_TOOLS.map(({ label, href }) => (
-                        <li key={label} className="footer-titles-level-2-item">
-                          <Link href={href} className="footer-title__level-1-item-link footer-titles-level-2-item-link">
-                            {label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/candidates#candidates-how" className="footer-title__level-1-item-link">How it works</Link>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/candidates#candidates-compare" className="footer-title__level-1-item-link">Compare plans</Link>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/candidates#candidates-faq" className="footer-title__level-1-item-link">FAQ</Link>
-                  </li>
-                </ul>
-              </article>
-            </div>
+          {/* Col 2: For Candidates */}
+          <div className="nh-footer-col">
+            <p className="nh-footer-heading">For Candidates</p>
+            <ul className="nh-footer-list" role="list">
+              <li><Link href="/candidates" className="nh-footer-link nh-footer-link--section">For Candidates</Link></li>
+              <li className="nh-footer-gap">
+                <Link href="/candidates#candidates-tools" className="nh-footer-link nh-footer-link--section">Tools</Link>
+              </li>
+              {FOOTER_CANDIDATE_TOOLS.map(({ label, href }) => (
+                <li key={label}><Link href={href} className="nh-footer-link nh-footer-link--sub">{label}</Link></li>
+              ))}
+              <li className="nh-footer-gap">
+                <Link href="/candidates#candidates-how" className="nh-footer-link">How it works</Link>
+              </li>
+              <li><Link href="/candidates#candidates-compare" className="nh-footer-link">Compare plans</Link></li>
+              <li><Link href="/candidates#candidates-faq" className="nh-footer-link">FAQ</Link></li>
+            </ul>
           </div>
 
-          {/* Row 3: For Candidates */}
-          <div className="footer-row-3">
-            <div className="footer-dropdown w-dropdown">
-              <div className="footer-dropdown__accordion-toggle w-dropdown-toggle">
-                <div className="footer-dropdown__icon w-icon-dropdown-toggle" />
-                <div className="footer-main-title">Hire Through Us</div>
-              </div>
-              <article className="footer-dropdown__accordion-content w-dropdown-list">
-                <ul className="footer-title__level-1" role="list">
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">NextHire for Companies</Link>
-                    <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item">
-                        <Link href="/contact-us" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Book a demo</Link>
-                      </li>
-                      <li className="footer-titles-level-2-item">
-                        <Link href="/talk-to-an-expert" className="footer-title__level-1-item-link footer-titles-level-2-item-link">Talk to an expert</Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="footer-title__level-1-item">
-                    <Link href="/companies#companies-platform" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Platform</Link>
-                    <ul className="footer-titles-level-2" role="list">
-                      <li className="footer-titles-level-2-item">
-                        <Link href="/companies#companies-platform" className="footer-title__level-1-item-link footer-titles-level-2-item-link">
-                          Five agents. One pipeline.
-                        </Link>
-                      </li>
-                      <li className="footer-titles-level-2-item">
-                        <Link href="/companies#companies-integrations" className="footer-title__level-1-item-link footer-titles-level-2-item-link">
-                          ATS & integrations
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </article>
-            </div>
+          {/* Col 3: Hire Through Us */}
+          <div className="nh-footer-col">
+            <p className="nh-footer-heading">Hire Through Us</p>
+            <ul className="nh-footer-list" role="list">
+              <li><Link href="/companies" className="nh-footer-link nh-footer-link--section">NextHire for Companies</Link></li>
+              <li><Link href="/contact-us" className="nh-footer-link nh-footer-link--sub">Book a demo</Link></li>
+              <li><Link href="/talk-to-an-expert" className="nh-footer-link nh-footer-link--sub">Talk to an expert</Link></li>
+              <li className="nh-footer-gap">
+                <Link href="/companies#companies-platform" className="nh-footer-link nh-footer-link--section">Platform</Link>
+              </li>
+              <li><Link href="/companies#companies-platform" className="nh-footer-link nh-footer-link--sub">Five agents. One pipeline.</Link></li>
+              <li><Link href="/companies#companies-integrations" className="nh-footer-link nh-footer-link--sub">ATS &amp; integrations</Link></li>
+            </ul>
+
+            {/* Nexthire brand links — grouped here since it's short */}
+            <p className="nh-footer-heading" style={{ marginTop: 28 }}>Nexthire</p>
+            <ul className="nh-footer-list" role="list">
+              <li><Link href="/candidates" className="nh-footer-link">Nexthire For Candidates</Link></li>
+              <li><Link href="/companies" className="nh-footer-link">Nexthire For Companies</Link></li>
+            </ul>
           </div>
 
-          {/* Row 4: Career + About */}
-          <div className="footer-row-4">
-            <div className="footer-dropdown w-dropdown">
-              <div className="footer-dropdown__accordion-toggle w-dropdown-toggle">
-                <div className="footer-dropdown__icon w-icon-dropdown-toggle" />
-                <div className="footer-main-title">Career</div>
-              </div>
-              <article className="footer-dropdown__accordion-content w-dropdown-list">
-                <ul className="footer-title__level-1" role="list">
-                  <li className="footer-title__level-1-item"><Link href="/why-join-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Why Join Nexthire</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/why-join-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Our Process</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/why-join-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Find Opportunities</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/why-join-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Talent Experience</Link></li>
-                </ul>
-              </article>
-            </div>
+          {/* Col 4: Career + About */}
+          <div className="nh-footer-col">
+            <p className="nh-footer-heading">Career</p>
+            <ul className="nh-footer-list" role="list">
+              <li><Link href="/why-join-nexthire" className="nh-footer-link">Why Join Nexthire</Link></li>
+              <li><Link href="/why-join-nexthire" className="nh-footer-link">Our Process</Link></li>
+              <li><Link href="/why-join-nexthire" className="nh-footer-link">Find Opportunities</Link></li>
+              <li><Link href="/why-join-nexthire" className="nh-footer-link">Talent Experience</Link></li>
+            </ul>
 
-            <div className="footer-dropdown w-dropdown">
-              <div className="footer-dropdown__accordion-toggle w-dropdown-toggle">
-                <div className="footer-dropdown__icon w-icon-dropdown-toggle" />
-                <div className="footer-main-title">About</div>
-              </div>
-              <article className="footer-dropdown__accordion-content w-dropdown-list">
-                <ul className="footer-title__level-1" role="list">
-                  <li className="footer-title__level-1-item"><Link href="/about-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">About Nexthire</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/about-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Leadership</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/about-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Sustainability</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/why-join-nexthire" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Careers</Link></li>
-                  <li className="footer-title__level-1-item"><Link href="/contact-us" className="footer-title__level-1-item-link footer-titles-level-2-wrapper">Contact Us</Link></li>
-                </ul>
-              </article>
-            </div>
+            <p className="nh-footer-heading" style={{ marginTop: 28 }}>About</p>
+            <ul className="nh-footer-list" role="list">
+              <li><Link href="/about-nexthire" className="nh-footer-link">About Nexthire</Link></li>
+              <li><Link href="/about-nexthire" className="nh-footer-link">Leadership</Link></li>
+              <li><Link href="/about-nexthire" className="nh-footer-link">Sustainability</Link></li>
+              <li><Link href="/why-join-nexthire" className="nh-footer-link">Careers</Link></li>
+              <li><Link href="/contact-us" className="nh-footer-link">Contact Us</Link></li>
+            </ul>
           </div>
 
-        </div>{/* end footer-upper-wrapper */}
+        </div>{/* end nh-footer-cols */}
 
-        {/* Footer lower: logo + social + copyright + legal links */}
+        {/* ── Footer lower: logo + social + legal ─────────────────── */}
         <div className="footer-lower-wrapper">
           <div className="footer-lower-left">
             <div className="footer-logo-wrapper">
               <Link href="/" className="footer-logo-link w-inline-block">
                 <img
                   alt="Nexthire logo"
-                  aria-label="Nexthire logo"
                   className="footer-logo"
                   loading="lazy"
                   src="/Image/Nexthire_green.svg"
@@ -204,10 +114,10 @@ export default function Footer() {
                 href="https://www.linkedin.com/company/nexthire-technologies/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="NextHire on LinkedIn"
               >
                 <img
                   alt="LinkedIn"
-                  aria-label="linkedin"
                   className="footer-social-in"
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/660dcc7f45ad8881324199b5/66267e336ed9c5185c3daf54_Vector%20(2).svg"
@@ -218,24 +128,17 @@ export default function Footer() {
             <div className="footer-all-right-text">&copy; 2026 NextHire, All Rights Reserved.</div>
 
             <div className="footer-lower__bottom-link-wrapper">
-              <div className="footer-lower__bottom-link-item">
-                <Link href="/privacy-policy" className="footer-lower__bottom-link w-inline-block">Privacy Policy</Link>
-              </div>
-              <span className="footer-bottom-link-dot" style={{ width: 4, height: 4, borderRadius: '50%', background: '#8aada8', display: 'inline-block', margin: '0 4px' }} />
-              <div className="footer-lower__bottom-link-item">
-                <Link href="/terms-of-service" className="footer-lower__bottom-link w-inline-block">Terms</Link>
-              </div>
-              <span className="footer-bottom-link-dot" style={{ width: 4, height: 4, borderRadius: '50%', background: '#8aada8', display: 'inline-block', margin: '0 4px' }} />
-              <div className="footer-lower__bottom-link-item">
-                <Link href="/data-processing-agreement" className="footer-lower__bottom-link w-inline-block">Data Processing Agreement</Link>
-              </div>
-              <span className="footer-bottom-link-dot" style={{ width: 4, height: 4, borderRadius: '50%', background: '#8aada8', display: 'inline-block', margin: '0 4px' }} />
-              <div className="footer-lower__bottom-link-item">
-                <Link href="/marketing-disclosure" className="footer-lower__bottom-link w-inline-block">Marketing Disclosure</Link>
-              </div>
+              <Link href="/privacy-policy" className="footer-lower__bottom-link w-inline-block">Privacy Policy</Link>
+              <span className="nh-footer-dot" aria-hidden="true" />
+              <Link href="/terms-of-service" className="footer-lower__bottom-link w-inline-block">Terms</Link>
+              <span className="nh-footer-dot" aria-hidden="true" />
+              <Link href="/data-processing-agreement" className="footer-lower__bottom-link w-inline-block">Data Processing</Link>
+              <span className="nh-footer-dot" aria-hidden="true" />
+              <Link href="/marketing-disclosure" className="footer-lower__bottom-link w-inline-block">Marketing Disclosure</Link>
             </div>
           </div>
         </div>
+
       </div>
     </footer>
   )

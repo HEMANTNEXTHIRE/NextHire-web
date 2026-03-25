@@ -93,22 +93,6 @@ const CSS = `
 }
 `
 
-/* ── Animated counter ─────────────────────────────────────────── */
-function AnimCounter({ value, suffix = '' }: { value: string; suffix?: string }) {
-  const [visible, setVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } }, { threshold: 0.4 })
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [])
-  return (
-    <div ref={ref} style={{ animation: visible ? 'wjCountUp 0.5s ease forwards' : 'none', opacity: visible ? 1 : 0 }}>
-      {value}
-    </div>
-  )
-}
-
 /* ── Scroll reveal wrapper ────────────────────────────────────── */
 function Reveal({ children, delay = 0, direction = 'up' }: { children: React.ReactNode; delay?: number; direction?: 'up' | 'left' | 'right' | 'scale' }) {
   const [vis, setVis] = useState(false)
@@ -479,12 +463,12 @@ export default function WhyJoinNexthirePage() {
                       <div
                         key={role}
                         className="wj-role-row"
-                        style={{ padding: '14px 24px', borderBottom: j < dept.roles.length - 1 ? `1px solid ${P.border}` : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.18s ease' }}
+                        style={{ padding: '14px 24px', borderBottom: j < dept.roles.length - 1 ? `1px solid ${P.border}` : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.18s ease', background: activeRole === role ? P.surface : 'transparent' }}
                         onMouseEnter={() => setActiveRole(role)}
                         onMouseLeave={() => setActiveRole(null)}
                       >
                         <div>
-                          <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: P.dark }}>{role}</div>
+                          <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: activeRole === role ? dept.color : P.dark }}>{role}</div>
                           <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 2 }}>Full-time · Remote</div>
                         </div>
                         <Link

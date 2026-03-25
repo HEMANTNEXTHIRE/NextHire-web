@@ -32,7 +32,7 @@ export default function ExpertForm() {
 
       dispatch(setFormSuccess({ key: 'expertForm', message: 'Request sent! We will contact you soon.' }))
       dispatch(addNotification({
-        title: "Request Received!",
+        title: 'Request Received!',
         message: "One of our experts will reach out to you shortly. We're excited to help with your career journey.",
         details: `Name: ${name} • Contact: ${contact}`,
       }))
@@ -63,41 +63,69 @@ export default function ExpertForm() {
     marginBottom: '20px',
   }
 
+  const labelStyle: React.CSSProperties = {
+    display: 'block',
+    color: '#1a3338',
+    fontSize: FONT.sm,
+    fontWeight: WEIGHT.semi,
+    marginBottom: '6px',
+  }
+
   return (
-    <form id="expertForm" className="custom-form" onSubmit={handleSubmit}>
+    <form id="expertForm" className="custom-form" onSubmit={handleSubmit} noValidate>
       <div>
+        <label htmlFor="ef-email" style={labelStyle}>
+          Email Address <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <input
+          id="ef-email"
           type="email"
           required
-          placeholder="Email Address *"
+          aria-required="true"
+          placeholder="your.email@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={inputStyle}
+          autoComplete="email"
         />
       </div>
       <div>
+        <label htmlFor="ef-name" style={labelStyle}>
+          Your Name <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <input
+          id="ef-name"
           type="text"
           required
-          placeholder="Your Name *"
+          aria-required="true"
+          placeholder="Full name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           style={inputStyle}
+          autoComplete="name"
         />
       </div>
       <div>
+        <label htmlFor="ef-contact" style={labelStyle}>
+          Contact Number <span aria-hidden="true" style={{ color: '#c0392b' }}>*</span>
+        </label>
         <input
+          id="ef-contact"
           type="tel"
           required
-          placeholder="Contact Number *"
+          aria-required="true"
+          placeholder="Phone number"
           value={contact}
           onChange={(e) => setContact(e.target.value)}
           style={inputStyle}
+          autoComplete="tel"
         />
       </div>
       <div>
+        <label htmlFor="ef-message" style={labelStyle}>Message (optional)</label>
         <textarea
-          placeholder="Message (optional)"
+          id="ef-message"
+          placeholder="Tell us more about your needs…"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={4}
@@ -108,6 +136,7 @@ export default function ExpertForm() {
       <button
         type="submit"
         disabled={isSubmitting}
+        aria-busy={isSubmitting}
         className="button-primary w-button"
         style={{
           width: '100%',
@@ -118,7 +147,7 @@ export default function ExpertForm() {
           opacity: isSubmitting ? 0.7 : 1,
         }}
       >
-        {isSubmitting ? 'Submitting...' : 'Talk to an Expert'}
+        {isSubmitting ? 'Submitting…' : 'Talk to an Expert'}
       </button>
     </form>
   )
