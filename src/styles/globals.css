@@ -3390,21 +3390,6 @@ body.andl-body, body.andl-body * {
   background: #fff;
 }
 
-.jobs-board-back {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 18px;
-  border: none;
-  border-bottom: 1px solid var(--jb-line);
-  background: var(--jb-surface);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--jb-ink);
-  cursor: pointer;
-  text-align: left;
-}
-
 .jobs-board-preview {
   padding: clamp(22px, 3vw, 32px) clamp(20px, 3vw, 36px);
   overflow-y: auto;
@@ -3597,16 +3582,13 @@ body.andl-body, body.andl-body * {
 
   .jobs-board-list-col {
     border-right: none;
-    border-bottom: 1px solid var(--jb-line);
-    max-height: min(42vh, 380px);
+    border-bottom: none;
+    max-height: none;
   }
 
-  .jobs-board-layout--preview .jobs-board-list-col {
-    display: none;
-  }
-
-  .jobs-board-layout--preview .jobs-board-back {
-    display: flex;
+  /* Desktop preview panel: hidden on mobile (use bottom sheet instead) */
+  .jobs-board-preview-col {
+    display: none !important;
   }
 
   .jobs-board-insights__grid {
@@ -3624,6 +3606,98 @@ body.andl-body, body.andl-body * {
     margin-left: 0;
     text-align: center;
     padding: 8px;
+  }
+}
+
+/* ── Bottom sheet — mobile job detail drawer ─────────────────── */
+
+/* Backdrop */
+.jbs-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 20, 0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s ease;
+}
+
+.jbs-backdrop--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Sheet container */
+.jbs-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1300;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 48px rgba(10, 14, 20, 0.18);
+  /* Start off-screen */
+  transform: translateY(100%);
+  will-change: transform;
+  touch-action: none;
+}
+
+/* Drag handle zone — full-width tap/drag target */
+.jbs-sheet__handle-zone {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0 8px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.jbs-sheet__handle-zone:active {
+  cursor: grabbing;
+}
+
+/* Visual pill */
+.jbs-sheet__handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #d0d5dd;
+}
+
+/* Scrollable body */
+.jbs-sheet__body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 4px 0 env(safe-area-inset-bottom, 20px);
+}
+
+/* Inside the sheet, remove the preview's own scroll — sheet handles it */
+.jbs-sheet__body .jobs-board-preview {
+  overflow-y: visible;
+  padding: 12px 20px 32px;
+}
+
+/* Larger apply button touch targets in sheet */
+.jbs-sheet__body .jobs-board-btn {
+  min-height: 48px;
+  font-size: 15px;
+}
+
+/* Only show bottom sheet on mobile; backdrop/sheet hidden on desktop */
+@media (min-width: 901px) {
+  .jbs-backdrop,
+  .jbs-sheet {
+    display: none !important;
   }
 }
 
