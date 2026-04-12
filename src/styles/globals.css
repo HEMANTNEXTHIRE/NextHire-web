@@ -3858,3 +3858,14 @@ body.andl-body, body.andl-body * {
   color: #1e5a3a;
 }
 
+.nh-legal-summary {
+  background: #edf5f1;
+  border-left: 4px solid #2e7d4f;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #1a3338;
+}
+

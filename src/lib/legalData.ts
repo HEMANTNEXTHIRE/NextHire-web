@@ -209,6 +209,88 @@ export const legalPages: LegalPage[] = [
     `,
   },
   {
+    slug: 'extension-privacy-policy',
+    title: 'Extension Privacy Policy',
+    subtitle: 'How the NextHire Profile Optimizer Chrome extension collects and uses your data',
+    lastUpdated: 'April 12, 2026',
+    content: `
+      <div class="nh-legal-summary">
+        <strong>Summary:</strong> The NextHire Profile Optimizer extension scrapes your public profile data from Naukri.com and LinkedIn only when you are on those pages. This data is sent solely to your NextHire account for AI-powered optimization. We do not sell, share, or use your data for any other purpose.
+      </div>
+
+      <h2>1. Who We Are</h2>
+      <p>NextHire Profile Optimizer ("the Extension") is developed and operated by NextHire Consulting. Our web application is available at <a href="https://app.nexthireconsulting.com">https://app.nexthireconsulting.com</a>.</p>
+
+      <h2>2. What Data We Collect</h2>
+      <p>The Extension collects the following data from your browser, only when you are actively on the specified pages:</p>
+      <ul>
+        <li><strong>Naukri.com profile data:</strong> Name, headline, current designation, company, location, work experience, education, skills, certifications, and projects — scraped from your Naukri profile page (naukri.com/mnjuser/profile).</li>
+        <li><strong>LinkedIn profile data:</strong> Name, headline, location, about section, experience, education, skills, certifications, recommendations, and languages — scraped from your LinkedIn public profile page (linkedin.com/in/).</li>
+        <li><strong>Authentication token:</strong> A temporary session token from your NextHire account to securely sync data.</li>
+      </ul>
+      <p><strong>We do not collect:</strong></p>
+      <ul>
+        <li>Browsing history or activity on other websites</li>
+        <li>Personally identifiable information beyond what is on your profile pages</li>
+        <li>Cookies, passwords, or financial information</li>
+        <li>Data from any website other than Naukri.com, LinkedIn, and app.nexthireconsulting.com</li>
+      </ul>
+
+      <h2>3. How We Use Your Data</h2>
+      <p>Your profile data is used exclusively to:</p>
+      <ul>
+        <li>Sync your profile information to your NextHire account</li>
+        <li>Provide AI-powered suggestions to optimize your profile for better job opportunities</li>
+      </ul>
+      <p>We do not use your data for advertising, analytics, marketing, or any purpose other than providing the NextHire service to you.</p>
+
+      <h2>4. Data Storage and Transmission</h2>
+      <ul>
+        <li><strong>Local storage:</strong> Scraped profile data and your authentication token are temporarily stored in Chrome's local extension storage (chrome.storage.local) on your device.</li>
+        <li><strong>Data transmission:</strong> Profile data is transmitted over HTTPS to the NextHire API at app.nexthireconsulting.com only when you explicitly click "Sync to NextHire".</li>
+        <li><strong>Server storage:</strong> Once synced, your profile data is stored securely in your NextHire account. Refer to the <a href="/terms-of-service">NextHire Terms of Service</a> for server-side data handling.</li>
+      </ul>
+
+      <h2>5. Data Sharing</h2>
+      <p>We do not sell, rent, or share your personal data with any third parties. Your data is only transmitted to the NextHire servers under your authenticated account.</p>
+
+      <h2>6. Permissions Explained</h2>
+      <p>The Extension requests the following Chrome permissions:</p>
+      <ul>
+        <li><strong>activeTab:</strong> To access the content of the currently active tab (only Naukri.com and LinkedIn profile pages) for scraping your profile data.</li>
+        <li><strong>storage:</strong> To temporarily cache your scraped profile data and authentication token locally on your device.</li>
+        <li><strong>tabs:</strong> To detect if you have a NextHire tab open and retrieve your authentication session.</li>
+        <li><strong>scripting:</strong> To inject the profile scraping scripts into Naukri.com and LinkedIn pages, and to read authentication state from the NextHire app.</li>
+      </ul>
+
+      <h2>7. Host Permissions</h2>
+      <ul>
+        <li><strong>naukri.com:</strong> Required to scrape your profile data from your Naukri profile page.</li>
+        <li><strong>linkedin.com:</strong> Required to scrape your profile data from your LinkedIn profile page.</li>
+        <li><strong>app.nexthireconsulting.com:</strong> Required to authenticate with and sync data to the NextHire service.</li>
+      </ul>
+
+      <h2>8. Your Rights</h2>
+      <p>You can at any time:</p>
+      <ul>
+        <li>Uninstall the Extension, which removes all locally stored data</li>
+        <li>Clear the extension's local storage via Chrome settings</li>
+        <li>Request deletion of your data from NextHire servers by contacting us</li>
+      </ul>
+
+      <h2>9. Security</h2>
+      <p>All data transmission between the Extension and NextHire servers uses HTTPS encryption. Authentication tokens are stored securely in Chrome's extension storage, which is sandboxed from other extensions and websites.</p>
+
+      <h2>10. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Material changes will be communicated through the Extension update notes on the Chrome Web Store.</p>
+
+      <h2>11. Contact Us</h2>
+      <p>If you have questions about this Privacy Policy or your data, contact us at:<br />
+      <a href="mailto:support@nexthireconsulting.com">support@nexthireconsulting.com</a></p>
+      <p>NextHire Consulting<br />Bengaluru, Karnataka, India</p>
+    `,
+  },
+  {
     slug: 'marketing-disclosure',
     title: 'Marketing Disclosure',
     subtitle: 'Transparency in our marketing practices',

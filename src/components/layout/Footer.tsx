@@ -135,6 +135,12 @@ export default function Footer() {
               <Link href="/data-processing-agreement" className="footer-lower__bottom-link w-inline-block">Data Processing</Link>
               <span className="nh-footer-dot" aria-hidden="true" />
               <Link href="/marketing-disclosure" className="footer-lower__bottom-link w-inline-block">Marketing Disclosure</Link>
+              <span className="nh-footer-dot" aria-hidden="true" />
+              <Link href="/cancellation-policy" className="footer-lower__bottom-link w-inline-block">Cancellation</Link>
+              <span className="nh-footer-dot" aria-hidden="true" />
+              <Link href="/refund-policy" className="footer-lower__bottom-link w-inline-block">Refund</Link>
+              <span className="nh-footer-dot" aria-hidden="true" />
+              <Link href="/extension-privacy-policy" className="footer-lower__bottom-link w-inline-block">Extension Policy</Link>
             </div>
           </div>
         </div>
