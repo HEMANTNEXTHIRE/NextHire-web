@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
+import { useEffect, useRef, useCallback } from 'react'
+import { useScroll, useMotionValueEvent } from 'motion/react'
 import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
 
@@ -435,112 +434,153 @@ const MOCKUPS: Record<string, React.ReactNode> = {
   jobtracker:   <JobTrackerMockup />,
 }
 
+/* ─── Scroll state (all DOM-imperative, no React re-renders on scroll) ── */
+interface ScrollState {
+  thresholds: Array<{ enterY: number; leaveY: number }>
+  topGap: number
+  wrapperH: number
+}
+
+/* Walk offsetParent chain to get absolute document top (unaffected by sticky) */
+function absoluteTop(el: HTMLElement): number {
+  let top = 0
+  let curr: HTMLElement | null = el
+  while (curr) {
+    top += curr.offsetTop
+    curr = curr.offsetParent as HTMLElement | null
+  }
+  return top
+}
+
 /* ─── Component ─────────────────────────────────────────────── */
 export default function HireSection() {
   const wrapperRef     = useRef<HTMLDivElement>(null)
   const cardRefs       = useRef<(HTMLDivElement | null)[]>([])
   const nextSiblingRef = useRef<HTMLDivElement>(null)
+  const stateRef       = useRef<ScrollState>({ thresholds: [], topGap: 88, wrapperH: 0 })
+
+  const { scrollY } = useScroll()
+
+  const init = useCallback(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+    const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+    if (!cards.length) return
+
+    const isMobileView = window.matchMedia('(max-width: 860px)').matches
+    const topBase = isMobileView ? 68 : 100
+    const topGap  = isMobileView ? 44 : 88
+
+    // Reset heights before measuring
+    cards.forEach(c => c.style.removeProperty('height'))
+
+    // Desktop: normalise all cards to tallest
+    if (!isMobileView) {
+      const maxH = Math.max(...cards.map(c => c.offsetHeight))
+      cards.forEach(c => { c.style.height = `${maxH}px` })
+    }
+
+    const wrapperH = wrapper.offsetHeight
+
+    const thresholds = cards.map((card, i) => {
+      const topOffset   = topGap * i + topBase
+      // absoluteTop uses offsetParent chain — correct for sticky elements
+      const cardAbsTop  = absoluteTop(card)
+      const enterY      = cardAbsTop - topOffset
+      const endDistance = i === cards.length - 1 ? 0 : card.offsetHeight
+      return { enterY, leaveY: enterY + endDistance }
+    })
+
+    stateRef.current = { thresholds, topGap, wrapperH }
+  }, [])
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
+    const run = () => {
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(init)))
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(init))
+      }
+    }
 
-    // Helper: strip only GSAP-managed styles (height, transform) — NOT position/top (those are in JSX/CSS)
-    const resetCardStyles = () => {
-      cardRefs.current.forEach(card => {
-        if (!card) return
-        card.style.removeProperty('height')
-        card.style.removeProperty('transform')
-      })
+    run()
+
+    const onResize = () => {
+      // Reset all imperative styles before re-init
       const wrapper = wrapperRef.current
+      const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+      cards.forEach(c => {
+        c.style.removeProperty('height')
+        c.classList.remove('nh-card-moveup')
+      })
       if (wrapper) {
         wrapper.style.removeProperty('transform')
         wrapper.style.removeProperty('height')
+        wrapper.classList.remove('nh-sticky-remove')
       }
+      if (nextSiblingRef.current) nextSiblingRef.current.style.marginTop = '0px'
+      run()
     }
 
-    const init = () => {
-      const wrapper = wrapperRef.current
-      if (!wrapper) return
-      const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
-      if (cards.length === 0) return
-
-      // GSAP only handles desktop height normalisation
-      // position:sticky and top values are in JSX (desktop) and CSS (mobile override)
-      const isMobileView = window.matchMedia('(max-width: 860px)').matches
-      // These match the JSX top values (desktop) and CSS overrides (mobile)
-      const topBase = isMobileView ? 68 : 100
-      const topGap  = isMobileView ? 44 : 88
-
-      ScrollTrigger.getAll().forEach(t => t.kill())
-
-      // Desktop only: normalise all card heights to the tallest card
-      if (!isMobileView) {
-        const maxH = Math.max(...cards.map(c => c.offsetHeight))
-        cards.forEach(c => { c.style.height = `${maxH}px` })
-      }
-
-      const wrapperH = wrapper.offsetHeight
-      wrapper.setAttribute('data-height', String(wrapperH))
-
-      cards.forEach((card, i) => {
-        const topOffset   = topGap * i + topBase
-        const endDistance = i === cards.length - 1 ? 0 : card.offsetHeight
-        gsap.to(card, {
-          duration: 1,
-          scrollTrigger: {
-            trigger: card,
-            start: `top ${topOffset}`,
-            end: `+=${endDistance}`,
-            scrub: 0.8,
-            onLeave: () => {
-              if (i === cards.length - 1) {
-                wrapper.classList.add('nh-sticky-remove')
-                wrapper.style.height = `${wrapperH}px`
-              }
-            },
-            onEnterBack: () => {
-              if (i === cards.length - 1) {
-                wrapper.classList.remove('nh-sticky-remove')
-                wrapper.style.height = 'auto'
-              }
-            },
-            onEnter: () => {
-              if (i > 2) {
-                const shift = topGap * (i - 2)
-                wrapper.style.transform = `translateY(-${shift}px)`
-                if (nextSiblingRef.current) nextSiblingRef.current.style.marginTop = `-${shift}px`
-                if (cards[i - 3]) cards[i - 3].classList.add('nh-card-moveup')
-              }
-            },
-            onLeaveBack: () => {
-              if (i > 2) {
-                const shift = topGap * (i - 3)
-                wrapper.style.transform = `translateY(-${shift}px)`
-                if (nextSiblingRef.current) nextSiblingRef.current.style.marginTop = `-${shift}px`
-                if (cards[i - 3]) cards[i - 3].classList.remove('nh-card-moveup')
-              }
-            },
-          },
-        })
-      })
-
-      ScrollTrigger.refresh()
-    }
-
-    // Initial run: wait for fonts + paint
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(() => {
-        requestAnimationFrame(() => requestAnimationFrame(init))
-      })
-    } else {
-      requestAnimationFrame(() => requestAnimationFrame(init))
-    }
-
+    window.addEventListener('resize', onResize)
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill())
-      resetCardStyles()
+      window.removeEventListener('resize', onResize)
+      // Cleanup on unmount
+      const wrapper = wrapperRef.current
+      const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+      cards.forEach(c => {
+        c.style.removeProperty('height')
+        c.classList.remove('nh-card-moveup')
+      })
+      if (wrapper) {
+        wrapper.style.removeProperty('transform')
+        wrapper.style.removeProperty('height')
+        wrapper.classList.remove('nh-sticky-remove')
+      }
     }
-  }, [])
+  }, [init])
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const { thresholds, topGap, wrapperH } = stateRef.current
+    if (!thresholds.length) return
+
+    const wrapper = wrapperRef.current
+    const cards   = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+
+    // Highest-index card whose enterY has been crossed
+    let maxActive = -1
+    thresholds.forEach(({ enterY }, i) => { if (latest >= enterY) maxActive = i })
+
+    // Wrapper translateY shift
+    const shift = maxActive > 2 ? topGap * (maxActive - 2) : 0
+    if (wrapper) {
+      wrapper.style.transform = shift > 0 ? `translateY(-${shift}px)` : ''
+    }
+    if (nextSiblingRef.current) {
+      nextSiblingRef.current.style.marginTop = shift > 0 ? `-${shift}px` : '0px'
+    }
+
+    // Dim cards that are 3+ positions behind the frontmost active card
+    cards.forEach((card, i) => {
+      if (i <= maxActive - 3) {
+        card.classList.add('nh-card-moveup')
+      } else {
+        card.classList.remove('nh-card-moveup')
+      }
+    })
+
+    // Unpin wrapper when user scrolls past the last card's enter point
+    const last = thresholds[thresholds.length - 1]
+    if (wrapper && last) {
+      if (latest >= last.leaveY) {
+        wrapper.classList.add('nh-sticky-remove')
+        wrapper.style.height = `${wrapperH}px`
+      } else {
+        wrapper.classList.remove('nh-sticky-remove')
+        wrapper.style.height = 'auto'
+      }
+    }
+  })
 
   return (
     <section id="features" style={{ background: P.bg, padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>

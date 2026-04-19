@@ -1,0 +1,37 @@
+# NextHire
+
+NextHire is an AI-powered career growth and job placement platform headquartered in Faridabad, Haryana, India. It helps job seekers get hired faster through automated AI job applications, ATS-optimized resume building, direct recruiter outreach via Gmail, real-time interview coaching, and expert career advisory. For companies and recruiters, NextHire offers an AI sourcing and recruiting platform with candidate pipeline management.
+
+Website: https://www.nexthireconsulting.com
+App: https://app.nexthireconsulting.com
+Contact: support@nexthireconsulting.com
+
+## Core Pages
+
+- [Home](https://www.nexthireconsulting.com/) — Platform overview, AI job search agent, key features and social proof
+- [For Candidates](https://www.nexthireconsulting.com/candidates/) — AI tools for job seekers: auto-apply, resume builder, interview coaching
+- [For Companies](https://www.nexthireconsulting.com/companies/) — AI recruiting and sourcing platform for hiring teams
+- [Pricing](https://www.nexthireconsulting.com/pricing/) — Candidate plans (Free, Lite $19.9/mo, Pro $49/mo, Max $135/mo); Company plans (Starter free, Growth, Enterprise)
+- [About NextHire](https://www.nexthireconsulting.com/about-nexthire/) — Mission, values, company milestones, 200K+ careers served
+- [Why NextHire](https://www.nexthireconsulting.com/why-nexthire/) — Differentiators vs. traditional job boards and recruiters
+- [Why Join NextHire](https://www.nexthireconsulting.com/why-join-nexthire/) — For professionals considering the platform
+- [Success Stories](https://www.nexthireconsulting.com/success-story/) — Customer placement outcomes and testimonials
+- [Blog](https://www.nexthireconsulting.com/blog/) — Career tips, AI in hiring, interview guides, LinkedIn optimization
+- [Jobs](https://www.nexthireconsulting.com/jobs/) — Curated job listings across IT, tech, and professional roles
+- [Talk to an Expert](https://www.nexthireconsulting.com/talk-to-an-expert/) — Book a 1:1 session with a NextHire career advisor
+- [Contact](https://www.nexthireconsulting.com/contact-us/) — Support and general enquiries
+
+## Legal & Policy
+
+- [Privacy Policy](https://www.nexthireconsulting.com/privacy-policy/)
+- [Terms of Service](https://www.nexthireconsulting.com/terms-of-service/)
+- [Refund Policy](https://www.nexthireconsulting.com/refund-policy/)
+- [Cancellation Policy](https://www.nexthireconsulting.com/cancellation-policy/)
+- [Data Processing Agreement](https://www.nexthireconsulting.com/data-processing-agreement/)
+
+## Excluded from AI Indexing
+
+- /app/ — Authenticated user dashboard (requires login)
+- /admin/ — Internal admin panel
+- /api/ — Backend API endpoints
+- /dashboard/ — User dashboard routes

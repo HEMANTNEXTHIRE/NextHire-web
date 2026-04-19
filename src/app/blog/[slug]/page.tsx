@@ -102,7 +102,7 @@ export default function BlogPostPage({ params }: Props) {
               {related.map((r) => (
                 <article key={r.slug} style={{ border: '2px solid #b8d4ce', borderRadius: '16px', overflow: 'hidden', background: '#fff' }}>
                   <div style={{ height: '160px', overflow: 'hidden', background: '#b8d4ce' }}>
-                    <img src={r.heroImage} alt={r.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                    <img src={r.heroImage} alt={r.title} width={560} height={160} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
                   </div>
                   <div style={{ padding: '24px 20px' }}>
                     <div style={{ fontSize: '11px', fontWeight: 700, color: '#5fa89e', letterSpacing: '1px', marginBottom: '8px' }}>{r.category}</div>

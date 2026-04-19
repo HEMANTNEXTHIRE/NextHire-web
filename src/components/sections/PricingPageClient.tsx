@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import AccordionFaq from '@/components/ui/AccordionFaq'
+// SERIF is used in the ROI / table sections below
 
 
 /* ── Palette ──────────────────────────────────────────────────── */
@@ -137,8 +139,7 @@ function priceFmt(monthly: number, cycle: BillingCycle) {
   return { display: `$${monthly}`, sub: '/mo · billed monthly' }
 }
 
-/* ── CSS injected once ─────────────────────────────────────────── */
-/* Homepage-aligned tokens (HeroSection) */
+/* ── Hero palette ──────────────────────────────────────────────── */
 const HOME = {
   bg: '#ffffff',
   dark: '#111827',
@@ -148,7 +149,7 @@ const HOME = {
   hairline: '#e5e7eb',
 }
 
-/** Matches homepage `.hiw-panel` / `.vas-card` — tapered, shadow-only shell */
+/* ── Panel constants — used by ROI / table sections below ─────── */
 const NH_PANEL = {
   r: 28,
   shadow: '0 16px 56px rgba(37, 62, 66, 0.10), 0 2px 10px rgba(37, 62, 66, 0.05)' as const,
@@ -160,21 +161,52 @@ const NH_PANEL = {
 }
 
 const STYLES = `
-@keyframes pSlideUp{ from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-.pricing-card-hover { transition: transform 0.28s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.28s ease !important; }
-.pricing-card-hover:hover { transform: translateY(-5px); box-shadow: 0 22px 64px rgba(37, 62, 66, 0.12), 0 4px 14px rgba(37, 62, 66, 0.06) !important; }
-
-.p-tab-btn { transition: all 0.2s ease; }
-.p-tab-btn:hover { opacity: 1 !important; }
-
-.p-cta-solid:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.p-cta-outline:hover { background: var(--plan-color) !important; color: #fff !important; }
-
+.nh-plans-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .nh-plans-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+@media (min-width: 1024px) {
+  .nh-plans-grid-4 { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+}
+.nh-plans-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .nh-plans-grid-2 { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+.nh-plans-section-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #6b7280;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  margin: 0 0 20px;
+  text-align: center;
+}
+@media (min-width: 1280px) {
+  .nh-plans-section-label { text-align: left; font-size: 24px; margin-bottom: 40px; }
+}
+.nh-plan-cta:hover { opacity: 0.88; }
 .faq-item { transition: background 0.15s ease; }
-.faq-item:hover { background: #f7faf9; border-radius: 12px; }
-
+.faq-item:hover { background: #f9fafb; }
+@keyframes pSlideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 `
+
+/* ── Luma-style check icon ─────────────────────────────────────── */
+function PlanCheckIcon({ dark }: { dark: boolean }) {
+  return (
+    <svg width="16" viewBox="0 0 16 16" style={{ height: 16, fill: 'none', flexShrink: 0, marginTop: 2 }}>
+      <circle cx="8" cy="8" r="8" fill={dark ? '#ffffff' : '#000000'} />
+      <path d="M5 8L7 10L11 6" stroke={dark ? '#000000' : '#ffffff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 /* ════════════════════════════════════════════════════════════════
    MAIN COMPONENT
@@ -182,348 +214,385 @@ const STYLES = `
 export default function PricingPageClient() {
   const [tab, setTab] = useState<PricingTab>('candidates')
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
-    <div style={{ background: HOME.bg, minHeight: '100vh', fontFamily: "'Noto Sans', system-ui, sans-serif" }}>
+    <div style={{ background: '#ffffff', minHeight: '100vh', fontFamily: "'Noto Sans', system-ui, sans-serif" }}>
       <style suppressHydrationWarning>{STYLES}</style>
 
-      {/* ══════════════════════════════════════════════════════
-          HERO + TOGGLES + PLANS — same thesis as homepage HeroSection
-      ══════════════════════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════════════════
+          PRICING HERO + PLANS & BILLING
+      ════════════════════════════════════════════════════════ */}
       <section id="pricing-hero" style={{ background: HOME.bg, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', padding: '120px clamp(20px, 5vw, 40px) 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
 
-        {/* Intro — mirrors HeroSection padding & max-width */}
-        <div style={{
-          maxWidth: 900,
-          margin: '0 auto',
-          padding: '120px clamp(20px, 5vw, 40px) 0',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-        }}>
-
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            background: HOME.bg,
-            border: `1px solid ${HOME.hairline}`,
-            borderRadius: 100,
-            padding: '8px 20px',
-            boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-            marginBottom: 16,
-          }}>
+          {/* Badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: HOME.bg, border: `1px solid ${HOME.hairline}`, borderRadius: 100, padding: '8px 20px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)', marginBottom: 16 }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: HOME.accent, display: 'inline-block', flexShrink: 0 }} />
-            <span style={{ color: '#374151', fontSize: 13, fontWeight: WEIGHT.medium, letterSpacing: '0.01em', lineHeight: 1.4 }}>
-              Simple, transparent pricing
-            </span>
+            <span style={{ color: '#374151', fontSize: 13, fontWeight: WEIGHT.medium, letterSpacing: '0.01em', lineHeight: 1.4 }}>Simple, transparent pricing</span>
           </div>
 
+          {/* H1 */}
           <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
-            <h1 style={{
-              fontFamily: SERIF,
-              margin: 0,
-              letterSpacing: '-0.5px',
-              lineHeight: 1.22,
-              fontSynthesis: 'none',
-            }}>
-              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, fontFamily: SERIF }}>
-                Pick your plan
-              </span>
-              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.accent, fontFamily: SERIF }}>
-                Start in minutes
-              </span>
+            <h1 style={{ fontFamily: SERIF, margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, fontFamily: SERIF }}>Pick your plan</span>
+              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.accent, fontFamily: SERIF }}>Start in minutes</span>
             </h1>
           </div>
 
-          <p style={{
-            color: HOME.subtext,
-            fontSize: 17,
-            lineHeight: 1.72,
-            margin: '0 0 0',
-            maxWidth: 560,
-            fontWeight: WEIGHT.normal,
-          }}>
-            Whether you&apos;re a professional landing your next role or a company building your next team — there&apos;s a plan built for you.
+          {/* Description */}
+          <p style={{ color: HOME.subtext, fontSize: 17, lineHeight: 1.72, margin: '0 0 0', maxWidth: 560, fontWeight: WEIGHT.normal }}>
+            Whether you&apos;re a professional landing your next role or a company building your next team &mdash; there&apos;s a plan built for you.
           </p>
 
-          {/* Same pattern as homepage “What’s inside” — breathing room before controls */}
+          {/* Plans & billing label + toggles */}
           <div style={{ marginTop: 56, paddingTop: 8, width: '100%' }}>
-            <p style={{
-              fontSize: 11,
-              color: HOME.muted,
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              marginBottom: 28,
-              fontWeight: WEIGHT.semi,
-              textAlign: 'center',
-            }}>
-              Plans &amp; billing
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 28 }}>
-              <div
-                className="pricing-audience-tabs"
+            <p style={{ fontSize: 11, color: HOME.muted, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 28, fontWeight: WEIGHT.semi, textAlign: 'center' }}>Plans &amp; billing</p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+
+          {/* Tab toggle: For Candidates / For Companies */}
+          <div style={{
+            display: 'inline-flex',
+            borderRadius: 9999,
+            border: '1px solid #e5e7eb',
+            background: '#ffffff',
+            padding: 4,
+          }}>
+            {(['candidates', 'companies'] as PricingTab[]).map(t => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTab(t)}
                 style={{
-                  display: 'inline-flex',
-                  background: HOME.bg,
-                  border: `1px solid ${HOME.hairline}`,
-                  borderRadius: 14,
-                  padding: 4,
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                  position: 'relative',
+                  borderRadius: 9999,
+                  padding: '8px 20px',
+                  fontSize: FONT.base,
+                  fontWeight: WEIGHT.medium,
+                  border: 'none',
+                  cursor: 'pointer',
+                  background: 'transparent',
+                  outline: 'none',
+                  transition: 'all 0.15s ease',
+                  letterSpacing: '-0.4px',
                 }}
               >
-                {(['candidates', 'companies'] as PricingTab[]).map(t => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setTab(t)}
-                    className="p-tab-btn"
-                    style={{
-                      padding: '12px 26px',
-                      borderRadius: 10,
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: FONT.base,
-                      fontWeight: WEIGHT.bold,
-                      background: tab === t ? HOME.dark : 'transparent',
-                      color: tab === t ? '#ffffff' : HOME.muted,
-                      transition: 'all 0.22s ease',
-                    }}
-                  >
-                    {t === 'candidates' ? '👤 For Candidates' : '🏢 For Companies'}
-                  </button>
-                ))}
-              </div>
-              {tab === 'candidates' && (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: cycle === 'monthly' ? HOME.dark : HOME.muted, transition: 'color 0.2s' }}>Monthly</span>
-                  <button
-                    type="button"
-                    onClick={() => setCycle(c => c === 'monthly' ? 'quarterly' : 'monthly')}
-                    style={{
-                      width: 52,
-                      height: 28,
-                      borderRadius: 100,
-                      border: 'none',
-                      cursor: 'pointer',
-                      background: cycle === 'quarterly' ? HOME.accent : HOME.hairline,
-                      position: 'relative',
-                      transition: 'background 0.25s ease',
-                      padding: 0,
-                    }}
-                    aria-label="Toggle billing cycle"
-                  >
-                    <span style={{ position: 'absolute', top: 4, left: cycle === 'quarterly' ? 28 : 4, width: 20, height: 20, borderRadius: '50%', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.2)', transition: 'left 0.25s ease', display: 'block' }} />
-                  </button>
-                  <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: cycle === 'quarterly' ? HOME.dark : HOME.muted, transition: 'color 0.2s' }}>
-                    Quarterly
-                    <span style={{ display: 'inline-block', marginLeft: 10, background: '#f0fdf4', color: '#166534', border: '1px solid #86efac', fontSize: FONT.sm, fontWeight: WEIGHT.extra, padding: '4px 12px', borderRadius: 100, verticalAlign: 'middle' }}>
-                      Save 20%
-                    </span>
-                  </span>
-                </div>
-              )}
-            </div>
+                {tab === t && (
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 9999,
+                    background: '#000000',
+                  }} />
+                )}
+                <span style={{ position: 'relative', color: tab === t ? '#ffffff' : '#6b7280' }}>
+                  {t === 'candidates' ? 'For Candidates' : 'For Companies'}
+                </span>
+              </button>
+            ))}
           </div>
-        </div>
 
-        {/* Plan cards — continued white field, homepage-like bottom padding */}
-        <div id="pricing-plans" style={{ maxWidth: 1200, margin: '0 auto', padding: '56px clamp(20px, 5vw, 40px) 100px' }}>
-
-          {/* ── Candidate plan grid ── */}
+          {/* Billing toggle: Monthly / Quarterly — candidates only */}
           {tab === 'candidates' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }} className="pricing-grid-candidates">
-              {CANDIDATE_PLANS.map((plan, idx) => {
-                const p = priceFmt(plan.monthly, cycle)
-                return (
-                  <div
-                    key={plan.id}
-                    className="pricing-card-hover"
-                    style={{
-                      borderRadius: NH_PANEL.r,
-                      border: 'none',
-                      background: plan.popular ? `linear-gradient(165deg, rgba(95,168,158,0.06) 0%, ${P.white} 50%)` : P.white,
-                      padding: '30px 26px 26px',
-                      display: 'flex', flexDirection: 'column',
-                      position: 'relative', overflow: 'hidden',
-                      boxShadow: plan.popular ? NH_PANEL.shadowPopular : NH_PANEL.shadow,
-                      animation: `pSlideUp 0.5s ease ${idx * 0.07}s both`,
-                    }}
-                  >
-                    {/* Decorative circle bg on popular */}
-                    {plan.popular && (
-                      <div style={{ position: 'absolute', width: 180, height: 180, borderRadius: '50%', background: `${plan.color}06`, top: -60, right: -40, pointerEvents: 'none' }} />
+            <div style={{
+              display: 'inline-flex',
+              borderRadius: 9999,
+              border: '1px solid #e5e7eb',
+              background: '#ffffff',
+              padding: 4,
+            }}>
+              {(['monthly', 'quarterly'] as BillingCycle[]).map(c => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setCycle(c)}
+                  style={{
+                    position: 'relative',
+                    borderRadius: 9999,
+                    padding: '8px 20px',
+                    fontSize: FONT.base,
+                    fontWeight: WEIGHT.medium,
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: 'transparent',
+                    outline: 'none',
+                    transition: 'all 0.15s ease',
+                    letterSpacing: '-0.4px',
+                  }}
+                >
+                  {cycle === c && (
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      borderRadius: 9999,
+                      background: '#000000',
+                    }} />
+                  )}
+                  <span style={{ position: 'relative', color: cycle === c ? '#ffffff' : '#6b7280' }}>
+                    {c === 'monthly' ? 'Monthly' : 'Quarterly'}
+                    {c === 'quarterly' && cycle !== 'quarterly' && (
+                      <span style={{ marginLeft: 6, fontSize: FONT.sm, color: '#6b7280' }}>Save 20%</span>
                     )}
-
-                    {/* Badge */}
-                    {plan.badge && (
-                      <div style={{ position: 'absolute', top: 14, right: 14, background: plan.popular ? plan.color : `${plan.color}15`, color: plan.popular ? P.white : plan.color, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '0.8px', padding: '3px 10px', borderRadius: 100, textTransform: 'uppercase' }}>
-                        {plan.badge}
-                      </div>
-                    )}
-
-                    {/* Icon + name */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: NH_PANEL.rowR, background: `${plan.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.md }}>
-                        {plan.icon}
-                      </div>
-                      <span style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: P.dark, letterSpacing: '-0.3px' }}>{plan.name}</span>
-                    </div>
-
-                    <p style={{ fontSize: FONT.base, color: P.mid, lineHeight: 1.6, margin: '0 0 18px', minHeight: 36 }}>{plan.description}</p>
-
-                    {/* Price */}
-                    <div style={{ marginBottom: 22, padding: '16px 18px', borderRadius: NH_PANEL.innerR, background: NH_PANEL.inner }}>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-                        <span style={{ fontSize: FONT.xl, fontWeight: WEIGHT.extra, color: plan.monthly === 0 ? P.dark : plan.color, lineHeight: 1, letterSpacing: '-1px' }}>{p.display}</span>
-                      </div>
-                      <div style={{ fontSize: FONT.sm, color: P.muted, marginTop: 3, fontWeight: WEIGHT.medium }}>{p.sub}</div>
-                      {cycle === 'quarterly' && plan.monthly > 0 && (
-                        <div style={{ fontSize: FONT.sm, color: '#22c55e', marginTop: 4, fontWeight: WEIGHT.bold }}>
-                          Save ${(plan.monthly * 3 * 0.2).toFixed(0)} this quarter
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Features */}
-                    <div style={{ flex: 1, marginBottom: 20 }}>
-                      {plan.features.map(f => (
-                        <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginBottom: 10 }}>
-                          <div style={{ width: 17, height: 17, borderRadius: '50%', flexShrink: 0, marginTop: 1, background: f.included ? `${plan.color}18` : NH_PANEL.inner, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.xs, color: f.included ? plan.color : P.muted, fontWeight: WEIGHT.extra }}>
-                            {f.included ? '✓' : '–'}
-                          </div>
-                          <span style={{ fontSize: FONT.base, color: f.included ? P.mid : P.muted, lineHeight: 1.5, fontWeight: f.included ? WEIGHT.medium : WEIGHT.normal }}>{f.label}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* CTA */}
-                    <a
-                      href={plan.ctaHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={plan.popular ? 'p-cta-solid' : 'p-cta-outline'}
-                      style={{
-                        display: 'block', textAlign: 'center', textDecoration: 'none',
-                        padding: '12px 20px', borderRadius: NH_PANEL.rowR, fontWeight: WEIGHT.bold, fontSize: FONT.sm,
-                        background: plan.popular ? plan.color : 'transparent',
-                        color: plan.popular ? P.white : plan.color,
-                        border: `2px solid ${plan.popular ? 'transparent' : plan.color}`,
-                        transition: 'all 0.2s ease',
-                        // @ts-expect-error CSS variable
-                        '--plan-color': plan.color,
-                      }}
-                    >
-                      {plan.cta} →
-                    </a>
-                  </div>
-                )
-              })}
+                  </span>
+                </button>
+              ))}
             </div>
           )}
 
-          {/* ── Company plans ── */}
-          {tab === 'companies' && (
+            </div>{/* end flex column */}
+          </div>{/* end Plans & billing wrapper */}
+        </div>{/* end maxWidth 900 hero wrapper */}
+
+        {/* ── Plan grids ── */}
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(24px, 5vw, 32px) 80px' }}>
+
+          {/* Candidate plans */}
+          {tab === 'candidates' && (
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, maxWidth: 860, margin: '0 auto' }} className="pricing-grid-companies">
-                {COMPANY_PLANS.map((plan, idx) => (
-                  <div
-                    key={plan.id}
-                    className="pricing-card-hover"
-                    style={{
-                      borderRadius: NH_PANEL.r, padding: '34px 30px',
-                      border: 'none',
-                      background: plan.id === 'enterprise' ? `linear-gradient(165deg, rgba(61,122,114,0.06) 0%, ${P.white} 55%)` : P.white,
-                      display: 'flex', flexDirection: 'column',
-                      boxShadow: plan.id === 'enterprise' ? NH_PANEL.shadowEnterprise : NH_PANEL.shadow,
-                      position: 'relative', overflow: 'hidden',
-                      animation: `pSlideUp 0.5s ease ${idx * 0.1}s both`,
-                    }}
-                  >
-                    {/* Decorative bg arc */}
-                    {plan.id === 'enterprise' && (
-                      <div style={{ position: 'absolute', width: 260, height: 260, borderRadius: '50%', background: `${plan.color}05`, top: -80, right: -60, pointerEvents: 'none' }} />
-                    )}
-
-                    {/* Icon + badge */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div style={{ width: 40, height: 40, borderRadius: NH_PANEL.rowR, background: `${plan.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.lg }}>{plan.icon}</div>
-                        <span style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.dark }}>{plan.name}</span>
+              <h3 className="nh-plans-section-label"></h3>
+              <div className="nh-plans-grid-4">
+                {CANDIDATE_PLANS.map(plan => {
+                  const isDark = plan.popular
+                  const p = priceFmt(plan.monthly, cycle)
+                  const billingNote = (cycle === 'quarterly' && plan.monthly > 0)
+                    ? `$${(plan.monthly * 3 * 0.8).toFixed(0)} billed quarterly`
+                    : '\u00a0'
+                  return (
+                    <div
+                      key={plan.id}
+                      style={{
+                        background: isDark ? '#000000' : '#e5e7eb',
+                        color: isDark ? '#ffffff' : '#000000',
+                        borderRadius: 16,
+                        border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.06)',
+                        padding: '20px 20px 56px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 12,
+                      }}
+                    >
+                      {/* Plan name — no emoji, muted */}
+                      <div style={{
+                        fontSize: FONT.base,
+                        fontWeight: WEIGHT.medium,
+                        color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280',
+                        lineHeight: 1,
+                        letterSpacing: '-0.4px',
+                      }}>
+                        {plan.name}
                       </div>
-                      <div style={{ background: `${plan.color}15`, color: plan.color, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '0.8px', padding: '3px 12px', borderRadius: 100, textTransform: 'uppercase' }}>
-                        {plan.badge}
+
+                      {/* Price block */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                        <p style={{ margin: 0, lineHeight: 1 }}>
+                          <span style={{
+                            fontSize: 28,
+                            fontWeight: WEIGHT.semi,
+                            letterSpacing: '-0.04em',
+                            lineHeight: 1.3,
+                          }}>
+                            {p.display}
+                          </span>
+                          <span style={{
+                            fontSize: FONT.sm,
+                            fontWeight: WEIGHT.medium,
+                            color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280',
+                            lineHeight: 1.4,
+                          }}>
+                            {plan.monthly > 0 ? '/month' : ''}
+                          </span>
+                        </p>
+                        {/* Invisible placeholder preserves height when not needed */}
+                        <p style={{
+                          margin: 0,
+                          fontSize: FONT.sm,
+                          lineHeight: 1.4,
+                          color: isDark ? 'rgba(255,255,255,0.45)' : '#6b7280',
+                          visibility: billingNote === '\u00a0' ? 'hidden' : 'visible',
+                        }}>
+                          {billingNote}
+                        </p>
                       </div>
-                    </div>
 
-                    <p style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.65, margin: '0 0 20px' }}>{plan.description}</p>
-
-                    {/* Price */}
-                    <div style={{ marginBottom: 24, padding: '18px 18px', borderRadius: NH_PANEL.innerR, background: NH_PANEL.inner }}>
-                      <div style={{ fontSize: FONT.xl, fontWeight: WEIGHT.extra, color: plan.id === 'enterprise' ? plan.color : P.dark, lineHeight: 1, letterSpacing: '-2px' }}>{plan.priceLine}</div>
-                      <div style={{ fontSize: FONT.sm, color: P.muted, marginTop: 5, fontWeight: WEIGHT.medium }}>{plan.priceSub}</div>
-                    </div>
-
-                    {/* Features */}
-                    <div style={{ flex: 1, marginBottom: 24 }}>
-                      {plan.id === 'enterprise' && (
-                        <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: plan.color, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 12 }}>
-                          Everything in Starter, plus:
-                        </div>
-                      )}
-                      <div style={{ display: 'grid', gridTemplateColumns: plan.id === 'enterprise' ? '1fr 1fr' : '1fr', gap: '0 12px' }}>
-                        {plan.features.map(f => (
-                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 9 }}>
-                            <div style={{ width: 16, height: 16, borderRadius: '50%', flexShrink: 0, marginTop: 1, background: `${plan.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.xs, color: plan.color, fontWeight: WEIGHT.extra }}>
-                              ✓
-                            </div>
-                            <span style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.5, fontWeight: WEIGHT.medium }}>{f.label}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA */}
-                    {plan.id === 'enterprise' ? (
-                      <Link
-                        href={plan.ctaHref}
-                        className="p-cta-solid"
-                        style={{ display: 'block', textAlign: 'center', textDecoration: 'none', padding: '14px 20px', borderRadius: NH_PANEL.rowR, fontWeight: WEIGHT.bold, fontSize: FONT.base, background: plan.color, color: P.white, transition: 'all 0.2s ease' }}
-                      >
-                        {plan.cta} →
-                      </Link>
-                    ) : (
+                      {/* CTA — white pill on all cards */}
                       <a
                         href={plan.ctaHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-cta-outline"
+                        className="nh-plan-cta"
                         style={{
-                          display: 'block', textAlign: 'center', textDecoration: 'none',
-                          padding: '14px 20px', borderRadius: NH_PANEL.rowR, fontWeight: WEIGHT.bold, fontSize: FONT.base,
-                          background: 'transparent', color: plan.color, border: `2px solid ${plan.color}`,
-                          transition: 'all 0.2s ease',
-                          // @ts-expect-error CSS variable
-                          '--plan-color': plan.color,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: 36,
+                          borderRadius: 9999,
+                          border: '1px solid transparent',
+                          background: '#ffffff',
+                          color: '#000000',
+                          fontSize: FONT.sm,
+                          fontWeight: WEIGHT.medium,
+                          textDecoration: 'none',
+                          transition: 'opacity 0.15s ease',
+                          letterSpacing: '-0.4px',
                         }}
                       >
-                        {plan.cta} →
+                        {plan.cta}
                       </a>
-                    )}
-                  </div>
-                ))}
+
+                      {/* Divider */}
+                      <div style={{
+                        height: 1,
+                        background: isDark ? '#ffffff' : '#000000',
+                        flexShrink: 0,
+                      }} />
+
+                      {/* Feature list */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {plan.features.map(f => (
+                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                            {f.included ? (
+                              <PlanCheckIcon dark={isDark} />
+                            ) : (
+                              <span style={{
+                                color: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.3)',
+                                fontSize: 15,
+                                lineHeight: 1,
+                                flexShrink: 0,
+                                marginTop: 2,
+                              }}>–</span>
+                            )}
+                            <span style={{
+                              fontSize: FONT.sm,
+                              fontWeight: WEIGHT.medium,
+                              lineHeight: 1.4,
+                              letterSpacing: '-0.4px',
+                              color: isDark
+                                ? (f.included ? 'rgba(255,255,255,0.88)' : 'rgba(255,255,255,0.3)')
+                                : (f.included ? '#000000' : 'rgba(0,0,0,0.4)'),
+                            }}>
+                              {f.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Company plans */}
+          {tab === 'companies' && (
+            <div>
+              <h3 className="nh-plans-section-label"></h3>
+              <div className="nh-plans-grid-2" style={{ maxWidth: 860, margin: '0 auto' }}>
+                {COMPANY_PLANS.map(plan => {
+                  const isDark = plan.id === 'enterprise'
+                  return (
+                    <div
+                      key={plan.id}
+                      style={{
+                        background: isDark ? '#000000' : '#e5e7eb',
+                        color: isDark ? '#ffffff' : '#000000',
+                        borderRadius: 16,
+                        border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.06)',
+                        padding: '20px 20px 56px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 12,
+                      }}
+                    >
+                      {/* Plan name */}
+                      <div style={{
+                        fontSize: FONT.base,
+                        fontWeight: WEIGHT.medium,
+                        color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280',
+                        lineHeight: 1,
+                        letterSpacing: '-0.4px',
+                      }}>
+                        {plan.name}
+                      </div>
+
+                      {/* Price */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                        <p style={{ margin: 0, lineHeight: 1 }}>
+                          <span style={{ fontSize: 28, fontWeight: WEIGHT.semi, letterSpacing: '-0.04em', lineHeight: 1.3 }}>
+                            {plan.priceLine}
+                          </span>
+                        </p>
+                        <p style={{ margin: 0, fontSize: FONT.sm, lineHeight: 1.4, color: isDark ? 'rgba(255,255,255,0.45)' : '#6b7280' }}>
+                          {plan.priceSub}
+                        </p>
+                      </div>
+
+                      {/* CTA */}
+                      {plan.id === 'enterprise' ? (
+                        <Link
+                          href={plan.ctaHref}
+                          className="nh-plan-cta"
+                          style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            height: 36, borderRadius: 9999, border: '1px solid transparent',
+                            background: '#ffffff', color: '#000000',
+                            fontSize: FONT.sm, fontWeight: WEIGHT.medium,
+                            textDecoration: 'none', transition: 'opacity 0.15s ease',
+                            letterSpacing: '-0.4px',
+                          }}
+                        >
+                          {plan.cta}
+                        </Link>
+                      ) : (
+                        <a
+                          href={plan.ctaHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="nh-plan-cta"
+                          style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            height: 36, borderRadius: 9999, border: '1px solid transparent',
+                            background: '#ffffff', color: '#000000',
+                            fontSize: FONT.sm, fontWeight: WEIGHT.medium,
+                            textDecoration: 'none', transition: 'opacity 0.15s ease',
+                            letterSpacing: '-0.4px',
+                          }}
+                        >
+                          {plan.cta}
+                        </a>
+                      )}
+
+                      {/* Divider */}
+                      <div style={{ height: 1, background: isDark ? '#ffffff' : '#000000', flexShrink: 0 }} />
+
+                      {/* Features */}
+                      <div style={{ display: 'grid', gridTemplateColumns: plan.id === 'enterprise' ? '1fr 1fr' : '1fr', gap: '8px 12px' }}>
+                        {plan.features.map(f => (
+                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                            {f.included ? (
+                              <PlanCheckIcon dark={isDark} />
+                            ) : (
+                              <span style={{ color: 'rgba(0,0,0,0.3)', fontSize: 15, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>–</span>
+                            )}
+                            <span style={{
+                              fontSize: FONT.sm, fontWeight: WEIGHT.medium, lineHeight: 1.4,
+                              letterSpacing: '-0.4px',
+                              color: isDark ? 'rgba(255,255,255,0.85)' : '#000000',
+                            }}>
+                              {f.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
 
               {/* Trust badges */}
-              <div style={{ textAlign: 'center', marginTop: 40 }}>
-                <p style={{ fontSize: FONT.sm, color: P.muted, margin: '0 0 16px' }}>
-                  Enterprise includes all agents — sourcing, phone screening, SMS, video interviewer, and outreach sequences.
-                </p>
+              <div style={{ textAlign: 'center', marginTop: 36 }}>
                 <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
                   {['CASA Level 3 certified', 'SOC 2 ready', '50+ ATS integrations', 'Dedicated account manager'].map(t => (
-                    <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: FONT.sm, color: P.mid, fontWeight: 600 }}>
+                    <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: FONT.sm, color: P.mid, fontWeight: WEIGHT.semi }}>
                       <span style={{ color: P.accent, fontSize: FONT.xs }}>✓</span> {t}
                     </span>
                   ))}
@@ -684,7 +753,7 @@ export default function PricingPageClient() {
           COMPARISON TABLE — candidates
       ══════════════════════════════════════════════════════ */}
       {tab === 'candidates' && (
-        <section id="pricing-included" style={{ background: HOME.bg, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
+        <section id="pricing-included" style={{ background: '#ffffff', padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 32px', textAlign: 'center', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
               What&apos;s included at a glance
@@ -725,45 +794,24 @@ export default function PricingPageClient() {
       )}
 
       {/* ══════════════════════════════════════════════════════
-          FAQ — accordion with animations
+          FAQ — AccordionFaq (Luma-style bordered cards)
       ══════════════════════════════════════════════════════ */}
-      <section id="pricing-faq" style={{ background: P.surface, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
-        <div style={{ maxWidth: 700, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', textAlign: 'center', margin: '0 0 44px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-            Pricing questions
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {(tab === 'candidates' ? [
-              { q: 'Can I upgrade or downgrade anytime?', a: 'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; downgrades apply at the next billing cycle.' },
-              { q: 'What happens when I hit my InMail or Apply limit?', a: "On Free you'll be prompted to upgrade. On Lite and Pro, you can purchase additional credits as add-ons at any time." },
-              { q: 'Is the quarterly discount applied automatically?', a: 'Yes — toggle to Quarterly billing at checkout or in account settings. The 20% discount is applied to every month in the quarter.' },
-              { q: 'What is an AI Outreach Agent credit?', a: 'Each credit powers one personalised outreach email sent to a hiring manager or recruiter from your own Gmail, via the AI Outreach Agent. The Max plan includes 3,000 credits per month.' },
-              { q: 'Do I need a credit card for the Free plan?', a: 'No credit card required. Sign up, connect your account, and start using the free tools immediately.' },
-            ] : [
-              { q: "What's included in 1 sourcing credit?", a: 'One sourcing credit runs a full AI search query — scanning 800M+ profiles and returning an enriched, scored shortlist of up to 20 candidates for your role.' },
-              { q: 'Can I try before committing to Enterprise?', a: 'Yes. The Starter plan lets you run one sourcing search and send five outreach emails at no cost. No credit card required.' },
-              { q: 'How is Enterprise pricing structured?', a: 'Enterprise is custom-priced based on your hiring volume, number of seats, and which agents you need. Talk to our sales team for a tailored quote.' },
-              { q: 'Does Enterprise include all agents?', a: 'Yes — AI Talent Sourcing, AI Phone Screening, SMS Agent, AI Video Interviewer, and AI Outreach Sequences, plus 50+ ATS/CRM integrations and a dedicated account manager.' },
-            ]).map((faq, i) => (
-              <div
-                key={faq.q}
-                className="faq-item"
-                style={{ padding: '18px 16px', borderRadius: 14, cursor: 'pointer' }}
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
-                  <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: P.dark, lineHeight: 1.4 }}>{faq.q}</span>
-                  <span style={{ color: P.accent, fontSize: FONT.md, flexShrink: 0, transition: 'transform 0.2s', transform: openFaq === i ? 'rotate(45deg)' : 'none', display: 'inline-block', lineHeight: 1 }}>+</span>
-                </div>
-                {openFaq === i && (
-                  <div style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.75, marginTop: 12, animation: 'pSlideUp 0.2s ease' }}>
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+      <section id="pricing-faq" style={{ background: '#ffffff', padding: '96px 0' }}>
+        <AccordionFaq
+          title="Pricing questions"
+          items={tab === 'candidates' ? [
+            { question: 'Can I upgrade or downgrade anytime?', answer: 'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; downgrades apply at the next billing cycle.' },
+            { question: 'What happens when I hit my InMail or Apply limit?', answer: "On Free you'll be prompted to upgrade. On Lite and Pro, you can purchase additional credits as add-ons at any time." },
+            { question: 'Is the quarterly discount applied automatically?', answer: 'Yes — toggle to Quarterly billing at checkout or in account settings. The 20% discount is applied to every month in the quarter.' },
+            { question: 'What is an AI Outreach Agent credit?', answer: 'Each credit powers one personalised outreach email sent to a hiring manager or recruiter from your own Gmail, via the AI Outreach Agent. The Max plan includes 3,000 credits per month.' },
+            { question: 'Do I need a credit card for the Free plan?', answer: 'No credit card required. Sign up, connect your account, and start using the free tools immediately.' },
+          ] : [
+            { question: "What's included in 1 sourcing credit?", answer: 'One sourcing credit runs a full AI search query — scanning 800M+ profiles and returning an enriched, scored shortlist of up to 20 candidates for your role.' },
+            { question: 'Can I try before committing to Enterprise?', answer: 'Yes. The Starter plan lets you run one sourcing search and send five outreach emails at no cost. No credit card required.' },
+            { question: 'How is Enterprise pricing structured?', answer: 'Enterprise is custom-priced based on your hiring volume, number of seats, and which agents you need. Talk to our sales team for a tailored quote.' },
+            { question: 'Does Enterprise include all agents?', answer: 'Yes — AI Talent Sourcing, AI Phone Screening, SMS Agent, AI Video Interviewer, and AI Outreach Sequences, plus 50+ ATS/CRM integrations and a dedicated account manager.' },
+          ]}
+        />
       </section>
     </div>
   )

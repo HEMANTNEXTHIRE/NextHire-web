@@ -1,0 +1,171 @@
+# NextHire — Full Content Index for AI Inference
+
+Last updated: 2026-04-18
+Source: https://www.nexthireconsulting.com
+
+---
+
+## What is NextHire?
+
+NextHire is an AI-powered career growth and job placement platform. It combines artificial intelligence with human expert guidance to help job seekers get hired faster and help companies hire smarter.
+
+Founded in 2021, NextHire has helped over 200,000 professionals across 50+ countries and 1,000+ companies advance their careers. The platform is headquartered in Faridabad, Haryana, India.
+
+Core belief: Everyone deserves access to the tools, connections, and expert guidance needed to land the job they truly want.
+
+---
+
+## What NextHire Does (For Candidates)
+
+NextHire's candidate platform is an AI job search agent that automates and accelerates the entire job search process. Key capabilities:
+
+### AI Auto Apply
+The AI agent scans millions of job listings and automatically applies on the candidate's behalf. It generates a role-specific, ATS-optimized resume for every single application — not a one-size-fits-all document. Result: 40× more reach vs. manual applications with zero manual effort.
+
+### Hidden Role Discovery
+The AI scans hiring signals — LinkedIn tenure gaps, team growth patterns, skill demand indicators — to identify roles before they are publicly posted on job boards. Candidates get first-mover advantage.
+
+### ATS-Optimized Resume Builder
+AI drafts and optimizes resumes against specific job descriptions. Human career experts then review them. The result is a resume calibrated to keywords, structure, and tone for each target role. Passes the 75% ATS rejection rate that kills most applications.
+
+### Direct Recruiter Outreach (HR Connect)
+Personalized emails sent directly to hiring managers and HR contacts from the candidate's own Gmail account. Built on real signals: role gaps, LinkedIn activity, team growth data. Auto-deleted after delivery. CASA Level 3 certified for Gmail integration security. Network includes 1M+ verified HRs and hiring managers. Achieves 3× reply rate vs cold email average.
+
+### Interview Copilot
+Real-time AI coaching during live interviews. Listens to interview questions and provides instant suggested responses, structured around STAR method. Users report 75% offer rate after using Copilot.
+
+### Mock Interview Coach
+AI-simulated interview sessions calibrated to the candidate's target role. Score-by-score feedback on structure, clarity, and answer quality. Prepares candidates before the real interview.
+
+### Job & Interview Tracker
+Centralized dashboard tracking all outreach, applications, and interviews. Follow-up reminders so no opportunity falls through.
+
+### Expert Career Advisors
+1:1 sessions with ex-FAANG recruiters and career coaches. Resume review, LinkedIn optimization, career strategy, and placement guidance.
+
+---
+
+## Pricing — For Candidates
+
+All plans include access to the web app at https://app.nexthireconsulting.com
+
+### Free Plan — $0/month
+- Resume Builder
+- Job Tracker
+- 30 min Interview Coach per month
+- 5 AI Auto Apply per day
+- No Direct Recruiter InMail
+- No AI Outreach Agent credits
+
+### Lite Plan — $19.90/month (Most Popular)
+- Resume Builder
+- Job Tracker
+- 30 min Interview Coach per month
+- Unlimited AI Auto Apply
+- 50 Direct Recruiter InMails per month
+- No AI Outreach Agent credits
+
+### Pro Plan — $49/month (Best Value)
+- Resume Builder
+- Job Tracker
+- 20 hours Interview Coach per month
+- Unlimited AI Auto Apply
+- 200 Direct Recruiter InMails per month
+- No AI Outreach Agent credits
+
+### Max Plan — $135/month (Full Stack)
+- Resume Builder
+- Job Tracker
+- 20 hours Interview Coach per month
+- Unlimited AI Auto Apply
+- Unlimited Direct Recruiter InMails
+- 3,000 AI Outreach Agent credits per month
+
+Quarterly billing available at a discount. Free trial available on all paid plans.
+
+---
+
+## Pricing — For Companies
+
+### Starter — Free Forever
+- 1 AI Sourcing credit
+- 5 Outreach email credits
+- Basic candidate profiles
+- CSV export
+- No phone screening agent
+
+### Growth and Enterprise plans
+Contact NextHire for custom pricing: support@nexthireconsulting.com
+
+---
+
+## Why NextHire vs. Traditional Job Search
+
+Traditional job search problems NextHire solves:
+- 75% of resumes are rejected by ATS systems before a human ever reads them. NextHire's AI optimizes every resume per application.
+- Most candidates apply to 20-30 jobs manually. NextHire automates hundreds of targeted applications simultaneously.
+- Cold outreach to recruiters rarely works. NextHire's HR Connect achieves 3× reply rates using real hiring signals and personalized messaging.
+- Interview preparation is expensive and inaccessible. NextHire's Interview Copilot brings real-time AI coaching to every candidate.
+- Job boards only show public listings. NextHire discovers hidden roles before they're posted.
+
+---
+
+## Company Information
+
+**NextHire Consulting**
+Website: https://www.nexthireconsulting.com
+Platform: https://app.nexthireconsulting.com
+Email: support@nexthireconsulting.com
+Address: Faridabad, Haryana, India
+Founded: 2021
+
+### Company Milestones
+- 2021: Founded — Born from frustration with outdated recruiting processes
+- 2022: 1,000 successful candidate placements in year one
+- 2023: Launched AI-powered resume optimization and job matching platform
+- 2024: 200,000+ professionals helped across 50+ countries
+
+### Company Values
+- Integrity First: Transparent pricing, no hidden fees, no empty promises
+- Results Driven: Fixed pricing keeps NextHire accountable to candidate outcomes
+- Human + AI: Cutting-edge AI tools combined with empathy of real career advisors
+- Continuous Support: From first application to final offer — and beyond
+
+---
+
+## Blog & Educational Content
+
+NextHire publishes career advice, industry insights, and job search guides on the blog at https://www.nexthireconsulting.com/blog/
+
+Published topics include:
+- AI tools and their impact on job searching
+- Behavioral interview question preparation (25 must-know questions, STAR method)
+- Contract vs full-time employment decisions
+- How AI is reshaping IT services and which skills matter most
+- LinkedIn profile optimization for recruiter visibility
+
+---
+
+## Technical & Security
+
+- Gmail integration is CASA Level 3 certified
+- Outreach emails are auto-deleted from sent box after delivery for user privacy
+- The platform app at https://app.nexthireconsulting.com is separate from the marketing site
+- The marketing site is statically exported for maximum performance
+
+---
+
+## Key Statistics
+
+- 200,000+ professionals helped
+- 50+ countries served
+- 1,000+ company partners
+- 1M+ verified HRs and hiring managers in the outreach network
+- 40× more application reach vs manual job search
+- 3× recruiter reply rate vs cold email average
+- 75% offer rate reported by Interview Copilot users
+- 75% of resumes industry-wide are rejected by ATS before human review
+
+---
+
+*This file is maintained for AI model inference. For the full interactive experience, visit https://www.nexthireconsulting.com*

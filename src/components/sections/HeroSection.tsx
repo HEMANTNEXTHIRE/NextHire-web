@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useState, useRef, useCallback } from 'react'
 import { WEIGHT, SERIF } from '@/constants/typography'
 
 /* ─── Colour tokens ──────────────────────────────────────── */
@@ -16,18 +17,111 @@ const C = {
   logo:    '#9db4af',
 }
 
-const PRODUCTS = [
-  'AI Outreach Agent', 'AI Auto Apply', 'AI Interview Coach',
-  'Resume Builder', 'AI Interviewer', 'Job Tracker',
-  'Recruiter InMail', 'Portal Optimization',
-]
 
+
+function DreamInput() {
+  const [value, setValue] = useState('')
+  const [focused, setFocused] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const handleSubmit = useCallback(() => {
+    window.location.href = 'https://app.nexthireconsulting.com'
+  }, [])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault()
+      handleSubmit()
+    }
+  }
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value)
+    const el = textareaRef.current
+    if (el) {
+      el.style.height = 'auto'
+      el.style.height = `${Math.min(el.scrollHeight, 200)}px`
+    }
+  }
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: '620px',
+        background: '#ffffff',
+        borderRadius: '20px',
+        boxShadow: focused
+          ? '0 0 0 2px #2e7d4f, 0 8px 40px rgba(0,0,0,0.12)'
+          : '0 2px 8px rgba(0,0,0,0.08), 0 8px 40px rgba(0,0,0,0.06)',
+        padding: '20px 64px 20px 20px',
+        transition: 'box-shadow 0.2s ease',
+        border: '1px solid #e5e7eb',
+        cursor: 'text',
+        boxSizing: 'border-box',
+      }}
+      onClick={() => textareaRef.current?.focus()}
+    >
+      <textarea
+        ref={textareaRef}
+        value={value}
+        onChange={handleInput}
+        onKeyDown={handleKeyDown}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholder={`Ghosted after applying? No callbacks?\nTell us your biggest job search struggle...`}
+        rows={3}
+        style={{
+          width: '100%',
+          border: 'none',
+          outline: 'none',
+          resize: 'none',
+          background: 'transparent',
+          fontFamily: 'inherit',
+          fontSize: '15px',
+          lineHeight: 1.6,
+          color: '#111827',
+          display: 'block',
+          overflowY: 'hidden',
+          minHeight: '72px',
+        }}
+      />
+      <button
+        onClick={(e) => { e.stopPropagation(); handleSubmit() }}
+        aria-label="Submit"
+        style={{
+          position: 'absolute',
+          bottom: '14px',
+          right: '14px',
+          width: '38px',
+          height: '38px',
+          borderRadius: '50%',
+          background: '#111827',
+          border: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+          transition: 'background 0.15s ease, transform 0.15s ease',
+        }}
+        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#2e7d4f' }}
+        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#111827' }}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 12V4M4 8l4-4 4 4" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  )
+}
 
 export default function HeroSection() {
   return (
     <section
       id="home-s1"
-      style={{ position: 'relative', overflow: 'hidden', background: '#ffffff' }}
+      style={{ position: 'relative', overflowX: 'hidden', background: '#ffffff' }}
     >
       {/* ── Content ── */}
       <div style={{
@@ -37,42 +131,6 @@ export default function HeroSection() {
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         textAlign: 'center',
       }}>
-
-        {/* Trust badges — tight spacing to headline */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '16px',
-        }}>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            background: '#ffffff',
-            border: '1px solid #e5e7eb',
-            borderRadius: '100px',
-            padding: '8px 20px',
-            boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-          }}>
-            <span style={{
-              width: '6px', height: '6px', borderRadius: '50%', background: '#9ca3af', display: 'inline-block', flexShrink: 0,
-            }} />
-            <span style={{
-              color: '#374151', fontSize: 13, fontWeight: WEIGHT.medium, letterSpacing: '0.01em', lineHeight: 1.4,
-            }}>Join 1 million professionals</span>
-          </div>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            background: '#f0fdf4',
-            border: '1px solid #86efac',
-            borderRadius: '100px',
-            padding: '8px 20px',
-            boxShadow: '0 1px 2px rgba(46, 125, 79, 0.08)',
-          }}>
-            <span style={{
-              width: '6px', height: '6px', borderRadius: '50%', background: C.accent, display: 'inline-block', flexShrink: 0,
-            }} />
-            <span style={{
-              color: '#166534', fontSize: 13, fontWeight: WEIGHT.semi, letterSpacing: '0.01em', lineHeight: 1.4,
-            }}>CASA Level 3 Certified</span>
-          </div>
-        </div>
 
         {/* ── Headline ── */}
         <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
@@ -148,43 +206,54 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* CTA — pill-shaped */}
+        {/* CTA — Dream Machine input */}
         <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '60px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: '100%', marginBottom: '60px',
         }}>
-          <a
-            href="https://app.nexthireconsulting.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              padding: '14px 28px',
-              borderRadius: '9999px',
-              background: '#1de9b6',
-              color: C.dark,
-              fontSize: '16px',
-              fontWeight: WEIGHT.bold,
-              textDecoration: 'none',
-              fontFamily: 'inherit',
-              border: 'none',
-            }}
-          >
-            Get Your AI Agent →
-          </a>
+          <DreamInput />
         </div>
 
-        {/* What's inside — same style as "Find jobs at companies like" */}
-        <div style={{ marginTop: '36px', paddingTop: '8px', width: '100%' }}>
-          <p style={{ fontSize: '11px', color: C.muted, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px', fontWeight: WEIGHT.semi, fontFamily: 'inherit', textAlign: 'center' }}>
-            What&apos;s inside
-          </p>
-          <div style={{ display: 'flex', gap: 'clamp(16px, 3vw, 36px)', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-            {PRODUCTS.map((name) => (
-              <span key={name} style={{ fontSize: '17px', fontWeight: WEIGHT.bold, color: '#9ca3af', letterSpacing: '-0.3px', fontFamily: SERIF }}>
-                {name}
-              </span>
-            ))}
-          </div>
+
+      </div>
+
+      {/* ── Our Product Differentiation — full-width, outside the 900px container ── */}
+      <div style={{
+        padding: '0 clamp(20px, 4vw, 60px) clamp(60px, 10vw, 100px)',
+        textAlign: 'center',
+      }}>
+
+        <h2 style={{
+          fontFamily: SERIF,
+          fontSize: 'clamp(32px, 5vw, 52px)',
+          fontWeight: 500,
+          color: C.dark,
+          letterSpacing: '-0.8px',
+          lineHeight: 1.15,
+          margin: '0 0 40px',
+          fontSynthesis: 'none',
+        }}>
+          Our Product Differentiation
+        </h2>
+
+        <div style={{
+          border: '1px solid #e5e7eb',
+          borderRadius: '24px',
+          overflow: 'hidden',
+          background: '#000000',
+          aspectRatio: '16 / 9',
+          width: '100%',
+        }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center bottom', display: 'block' }}
+          >
+            <source src="/videos/ai-agent-demo.mp4" type="video/mp4" />
+          </video>
         </div>
 
       </div>

@@ -1,3 +1,32 @@
+/* Layer declaration — must remain the very first rule in this file.
+   Establishes cascade order: component < components < all unlayered styles.
+   Unlayered project CSS always wins, so these layers cannot break existing styles. */
+@layer base, component, components;
+
+@layer component {
+  :root {
+    /* ~#e5e7eb in oklch — used as accordion border colour via --color-border */
+    --border: oklch(92.2% 0 0);
+  }
+}
+
+@layer theme {
+  :root {
+    --color-border: var(--border);
+  }
+}
+
+/* Scoped reset inside a layer so it never overrides unlayered project rules */
+@layer base-custom {
+  * {
+    box-sizing: border-box;
+    border: 0 solid;
+    margin: 0;
+    padding: 0;
+    border-color: var(--color-border);
+  }
+}
+
 /* Nexthire Global Styles
  * Imports the original Webflow base CSS and the custom style.css verbatim.
  * All original class names are preserved so JSX className matches work 1:1.
@@ -3867,5 +3896,132 @@ body.andl-body, body.andl-body * {
   font-size: 15px;
   line-height: 1.7;
   color: #1a3338;
+}
+
+/* ── AccordionFaq component — unlayered so Webflow CSS cannot override ────── */
+.nh-accordion-faq {
+  width: 100%;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+  color: #000000;
+  letter-spacing: -0.4px;
+  line-height: 1.5;
+  font-family: var(--font-family);
+}
+@media (min-width: 768px) {
+  .nh-accordion-faq { padding: 0 32px; }
+}
+
+.nh-accordion-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .nh-accordion-header { gap: 20px; margin-bottom: 80px; }
+}
+
+.nh-accordion-title {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0;
+  color: #000000;
+  font-family: var(--font-family);
+}
+@media (min-width: 768px) {
+  .nh-accordion-title { font-size: 48px; }
+}
+
+.nh-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nh-accordion-item {
+  border: 1px solid #e5e7eb !important;
+  border-style: solid !important;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 4px 0;
+  transition: all 150ms ease-in-out;
+  background: #ffffff;
+}
+@media (min-width: 768px) {
+  .nh-accordion-item { border-radius: 24px; padding: 12px 0; }
+}
+
+.nh-accordion-button {
+  display: flex !important;
+  width: 100%;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 500;
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  font-family: var(--font-family);
+  color: #000000;
+  line-height: 1.5;
+  outline-offset: 4px;
+  box-shadow: none !important;
+}
+@media (min-width: 768px) {
+  .nh-accordion-button { gap: 16px; padding: 16px 28px; }
+}
+
+.nh-accordion-question {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  color: #000000;
+}
+@media (min-width: 768px) {
+  .nh-accordion-question { font-size: 20px; }
+}
+
+.nh-accordion-icon {
+  fill: none;
+  stroke: currentColor;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin: 2px;
+  color: #737373;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+@media (min-width: 768px) {
+  .nh-accordion-icon { width: 20px; height: 20px; }
+}
+.nh-accordion-button:hover .nh-accordion-icon { color: #000000; }
+.nh-accordion-icon--open { transform: rotate(45deg); color: #000000; }
+
+.nh-accordion-answer {
+  color: #737373;
+  padding: 4px 16px 12px;
+  font-size: 15px;
+  line-height: 1.65;
+  animation: nh-accordion-slide-down 0.2s ease-in-out;
+}
+@media (min-width: 768px) {
+  .nh-accordion-answer { padding: 4px 28px 16px; }
+}
+
+@keyframes nh-accordion-slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 

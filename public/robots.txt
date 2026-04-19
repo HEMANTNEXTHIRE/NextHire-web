@@ -1,8 +1,31 @@
 User-agent: *
 Allow: /
-
-# Block staging/dev files
-Disallow: /_next/
 Disallow: /api/
+Disallow: /admin/
+Disallow: /app/
+Disallow: /dashboard/
+
+# AI Search & Discovery Crawlers — explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block Common Crawl (bulk training scraper)
+User-agent: CCBot
+Disallow: /
 
 Sitemap: https://www.nexthireconsulting.com/sitemap.xml

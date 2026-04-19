@@ -47,7 +47,7 @@ export default function DualActionCTA({
               </Link>
             )}
           </div>
-          <img alt="" className="dual-action-button-cta-left-div-pattern-mobile" loading="lazy" src="https://cdn.prod.website-files.com/660dcc7f45ad8881324199b5/6626c34d918de4b3cbec4ac4_shapev2.avif" />
+          <img alt="" width={400} height={300} className="dual-action-button-cta-left-div-pattern-mobile" loading="lazy" src="https://cdn.prod.website-files.com/660dcc7f45ad8881324199b5/6626c34d918de4b3cbec4ac4_shapev2.avif" />
         </div>
 
         <div className="dual-action-button-cta-right-div js-dual-action-button-cta-right-div">
