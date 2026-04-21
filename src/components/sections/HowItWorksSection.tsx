@@ -19,7 +19,7 @@ const STEPS: {
     subtitle: 'Hidden roles & live hiring signals',
     description:
       'Your AI agent scans millions of live jobs daily — including hidden, unposted, and unadvertised roles. It builds targeted lists of companies, hiring managers, HRs, and founders, then detects real hiring signals like team growth, skill gaps, and role tenure patterns.',
-    detail: "You don't scroll job boards. The agent does.",
+    detail: "You do not search manually. The agent does it for you",
   },
   {
     key: 'outreach',
