@@ -330,9 +330,6 @@ export default function PricingPageClient() {
                   )}
                   <span style={{ position: 'relative', color: cycle === c ? '#ffffff' : '#6b7280' }}>
                     {c === 'monthly' ? 'Monthly' : 'Quarterly'}
-                    {c === 'quarterly' && cycle !== 'quarterly' && (
-                      <span style={{ marginLeft: 6, fontSize: FONT.sm, color: '#6b7280' }}>Save 20%</span>
-                    )}
                   </span>
                 </button>
               ))}
@@ -750,44 +747,117 @@ export default function PricingPageClient() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          COMPARISON TABLE — candidates
+          COMPARISON TABLE — candidates (Luma-style)
       ══════════════════════════════════════════════════════ */}
       {tab === 'candidates' && (
-        <section id="pricing-included" style={{ background: '#ffffff', padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 32px', textAlign: 'center', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+        <section id="pricing-included" style={{ background: '#ffffff', padding: '80px clamp(20px, 5vw, 40px) 80px' }}>
+          <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+
+            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 400, color: '#111827', margin: '0 0 48px', textAlign: 'center', letterSpacing: '-0.04em', lineHeight: 1.18, fontSynthesis: 'none' }}>
               What&apos;s included at a glance
             </h2>
-            <div style={{ borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow, background: P.white }}>
-              {/* header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 22px' }} className="pricing-table-header">
-                <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.muted, textTransform: 'uppercase', letterSpacing: '1px' }}>Feature</div>
-                {CANDIDATE_PLANS.map(p => (
-                  <div key={p.id} style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: p.popular ? p.color : P.dark, textAlign: 'center' }}>{p.icon} {p.name}</div>
+
+            {/* Table */}
+            <div className="compare-table-grid" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: 14, overflow: 'hidden' }}>
+
+              {/* ── Dark header ── */}
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: '#111827', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
+                {/* Feature col label */}
+                <div className="ct-pad" style={{ borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ fontSize: 10, fontWeight: WEIGHT.medium, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Feature</span>
+                </div>
+                {/* Free */}
+                <div className="ct-pad" style={{ textAlign: 'center', borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.04em' }}>Free</span>
+                  <span className="ct-plan-sub" style={{ color: 'rgba(255,255,255,0.3)', letterSpacing: '-0.02em' }}>Try the tools</span>
+                </div>
+                {/* Lite */}
+                <div className="ct-pad" style={{ textAlign: 'center', borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: '#ffffff', letterSpacing: '-0.04em' }}>Lite</span>
+                  <span className="ct-plan-sub" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '-0.02em' }}>Visibility</span>
+                </div>
+                {/* Pro — accent tint in dark header */}
+                <div className="ct-pad" style={{ textAlign: 'center', borderRight: '1px solid rgba(95,168,158,0.25)', background: 'rgba(95,168,158,0.15)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: '#ffffff', letterSpacing: '-0.04em' }}>Pro</span>
+                  <span className="ct-plan-sub" style={{ color: P.accent, fontWeight: WEIGHT.medium, letterSpacing: '-0.02em' }}>Conversion</span>
+                </div>
+                {/* Max */}
+                <div className="ct-pad" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: '#ffffff', letterSpacing: '-0.04em' }}>Max</span>
+                  <span className="ct-plan-sub" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '-0.02em' }}>Volume + speed</span>
+                </div>
+              </div>
+
+              {/* ── Feature rows ── */}
+              {([
+                { label: 'Resume Builder',          vals: [{ v: true }, { v: true }, { v: true }, { v: true }] },
+                { label: 'Job Tracker',              vals: [{ v: true }, { v: true }, { v: true }, { v: true }] },
+                { label: 'Interview Coach',          vals: [{ v: '30 min' }, { v: '30 min' }, { v: '20 hrs / mo', note: 'AI listens & answers in real time' }, { v: '20 hrs / mo' }] },
+                { label: 'AI Auto Apply',            vals: [{ v: '5 / day' }, { v: 'Unlimited' }, { v: 'Unlimited' }, { v: 'Unlimited' }] },
+                { label: 'Direct Recruiter InMail',  vals: [{ v: false }, { v: '50 / mo' }, { v: '200 / mo' }, { v: 'Unlimited' }] },
+                { label: 'AI Outreach Agent',        vals: [{ v: false }, { v: false }, { v: false }, { v: '3,000 / mo', note: "Don't wait to be found" }] },
+              ] as Array<{ label: string; vals: Array<{ v: boolean | string; note?: string }> }>).map((row, i) => {
+                const isEven = i % 2 === 1
+                const rowBg = isEven ? '#f9fafb' : '#ffffff'
+                const divider = '1px solid rgba(0,0,0,0.06)'
+                return (
+                  <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: rowBg, borderTop: divider }}>
+                    {/* Feature label */}
+                    <div className="ct-pad" style={{ borderRight: divider, display: 'flex', alignItems: 'center' }}>
+                      <span className="ct-label" style={{ fontWeight: WEIGHT.medium, color: '#111827', letterSpacing: '-0.03em', lineHeight: 1.35 }}>{row.label}</span>
+                    </div>
+                    {/* Free */}
+                    <div className="ct-pad" style={{ textAlign: 'center', borderRight: divider, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
+                      {row.vals[0].v === true
+                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill={isEven ? '#e9f0ed' : '#edf5f1'}/><path d="M5 9.5l2.5 2.5 5-5" stroke="#2e7d4f" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        : row.vals[0].v === false
+                        ? <span style={{ color: '#d1d5db', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
+                        : <span className="ct-val" style={{ color: '#6b7280', letterSpacing: '-0.03em' }}>{row.vals[0].v as string}</span>}
+                    </div>
+                    {/* Lite */}
+                    <div className="ct-pad" style={{ textAlign: 'center', borderRight: divider, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
+                      {row.vals[1].v === true
+                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill={isEven ? '#dff0ec' : '#e4f0eb'}/><path d="M5 9.5l2.5 2.5 5-5" stroke="#2e7d4f" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        : row.vals[1].v === false
+                        ? <span style={{ color: '#d1d5db', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
+                        : <span className="ct-val" style={{ color: P.accent, letterSpacing: '-0.03em' }}>{row.vals[1].v as string}</span>}
+                    </div>
+                    {/* Pro — persistent column highlight */}
+                    <div className="ct-pad" style={{ textAlign: 'center', background: isEven ? '#e8f5f1' : '#f0f9f5', borderRight: '1px solid rgba(95,168,158,0.2)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
+                      {row.vals[2].v === true
+                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#c8dfd6"/><path d="M5 9.5l2.5 2.5 5-5" stroke="#166534" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        : row.vals[2].v === false
+                        ? <span style={{ color: '#c8dfd6', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
+                        : <><span className="ct-val" style={{ color: P.accentD, fontWeight: WEIGHT.semi, letterSpacing: '-0.03em' }}>{row.vals[2].v as string}</span>
+                          {row.vals[2].note && <span style={{ fontSize: 10, color: P.accentD, fontWeight: WEIGHT.medium, lineHeight: 1.35, maxWidth: 96, textAlign: 'center', letterSpacing: '-0.01em', opacity: 0.75 }}>{row.vals[2].note}</span>}</>}
+                    </div>
+                    {/* Max */}
+                    <div className="ct-pad" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
+                      {row.vals[3].v === true
+                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill={isEven ? '#e9f0ed' : '#edf5f1'}/><path d="M5 9.5l2.5 2.5 5-5" stroke="#2e7d4f" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        : row.vals[3].v === false
+                        ? <span style={{ color: '#d1d5db', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
+                        : <><span className="ct-val" style={{ color: '#111827', fontWeight: WEIGHT.semi, letterSpacing: '-0.03em' }}>{row.vals[3].v as string}</span>
+                          {row.vals[3].note && <span style={{ fontSize: 10, color: '#374151', fontWeight: WEIGHT.medium, lineHeight: 1.35, maxWidth: 96, textAlign: 'center', letterSpacing: '-0.01em', opacity: 0.6 }}>{row.vals[3].note}</span>}</>}
+                    </div>
+                  </div>
+                )
+              })}
+
+              {/* ── CTA row ── */}
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: '#111827', borderTop: '1px solid rgba(255,255,255,0.09)' }}>
+                <div className="ct-pad" style={{ borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ fontSize: 10, fontWeight: WEIGHT.medium, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Get started</span>
+                </div>
+                {CANDIDATE_PLANS.map((plan, idx) => (
+                  <div key={plan.id} className="ct-pad" style={{ borderRight: idx < CANDIDATE_PLANS.length - 1 ? (idx === 2 ? '1px solid rgba(95,168,158,0.25)' : '1px solid rgba(255,255,255,0.09)') : 'none', background: idx === 2 ? 'rgba(95,168,158,0.15)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <a href={plan.ctaHref} style={{ display: 'inline-block', padding: '7px 13px', borderRadius: 8, fontSize: 11, fontWeight: WEIGHT.medium, textDecoration: 'none', letterSpacing: '-0.02em', whiteSpace: 'nowrap', color: idx === 2 ? '#ffffff' : 'rgba(255,255,255,0.55)', background: idx === 2 ? P.accentD : 'rgba(255,255,255,0.07)', border: idx === 2 ? 'none' : '1px solid rgba(255,255,255,0.12)' }}>
+                      {plan.cta}
+                    </a>
+                  </div>
                 ))}
               </div>
-              {[
-                { label: 'Resume Builder', vals: [true, true, true, true] },
-                { label: 'Job Tracker', vals: [true, true, true, true] },
-                { label: 'Interview Coach', vals: ['30 min', '30 min', '20 hrs/mo', '20 hrs/mo'] },
-                { label: 'AI Auto Apply', vals: ['5/day', 'Unlimited', 'Unlimited', 'Unlimited'] },
-                { label: 'Direct Recruiter InMail', vals: [false, '50/mo', '200/mo', 'Unlimited'] },
-                { label: 'AI Outreach Agent credits', vals: [false, false, false, '3,000/mo'] },
-              ].map((row, i) => (
-                <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '14px 22px', alignItems: 'center', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : P.white }} className="pricing-table-row">
-                  <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: P.mid }}>{row.label}</div>
-                  {row.vals.map((v, j) => (
-                    <div key={j} style={{ textAlign: 'center', fontSize: FONT.sm, fontWeight: WEIGHT.semi }}>
-                      {v === true
-                        ? <span style={{ color: CANDIDATE_PLANS[j].color, fontSize: FONT.base }}>✓</span>
-                        : v === false
-                        ? <span style={{ color: P.border, fontSize: FONT.base }}>—</span>
-                        : <span style={{ color: CANDIDATE_PLANS[j].color, fontSize: FONT.sm, fontWeight: WEIGHT.bold }}>{v}</span>
-                      }
-                    </div>
-                  ))}
-                </div>
-              ))}
+
             </div>
           </div>
         </section>

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useCallback } from 'react'
 import { WEIGHT, SERIF } from '@/constants/typography'
+import OrbitalFeatureMap from '@/components/ui/OrbitalFeatureMap'
 
 /* ─── Colour tokens ──────────────────────────────────────── */
 const C = {
@@ -70,7 +71,7 @@ function DreamInput() {
         onKeyDown={handleKeyDown}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        placeholder={`Ghosted after applying? No callbacks?\nTell us your biggest job search struggle...`}
+        placeholder={`Tell us your biggest job search struggle...`}
         rows={3}
         style={{
           width: '100%',
@@ -217,43 +218,38 @@ export default function HeroSection() {
 
       </div>
 
-      {/* ── Our Product Differentiation — full-width, outside the 900px container ── */}
+      {/* ── Product Features Orbital ── */}
       <div style={{
-        padding: '0 clamp(20px, 4vw, 60px) clamp(60px, 10vw, 100px)',
+        padding: '0 clamp(20px, 4vw, 60px) clamp(48px, 8vw, 80px)',
         textAlign: 'center',
       }}>
 
         <h2 style={{
           fontFamily: SERIF,
-          fontSize: 'clamp(32px, 5vw, 52px)',
+          fontSize: 'clamp(22px, 3vw, 34px)',
           fontWeight: 500,
           color: C.dark,
-          letterSpacing: '-0.8px',
-          lineHeight: 1.15,
-          margin: '0 0 40px',
+          letterSpacing: '-0.5px',
+          lineHeight: 1.2,
+          margin: '0 0 4px',
           fontSynthesis: 'none',
         }}>
           Our Product Differentiation
         </h2>
 
-        <div style={{
-          border: '1px solid #e5e7eb',
-          borderRadius: '24px',
-          overflow: 'hidden',
-          background: '#000000',
-          aspectRatio: '16 / 9',
-          width: '100%',
+        <p style={{
+          fontSize: '14px',
+          color: '#9ca3af',
+          margin: '0 0 0',
+          fontWeight: 400,
+          letterSpacing: '-0.01em',
         }}>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center bottom', display: 'block' }}
-          >
-            <source src="/videos/ai-agent-demo.mp4" type="video/mp4" />
-          </video>
+          Click any feature to learn more
+        </p>
+
+        {/* Orbital — no dark box, seamlessly on white */}
+        <div style={{ maxWidth: 820, margin: '0 auto', position: 'relative' }}>
+          <OrbitalFeatureMap />
         </div>
 
       </div>

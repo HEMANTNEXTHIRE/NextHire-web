@@ -26,7 +26,7 @@ const STEPS: {
     label: 'Agent Reaches Out',
     subtitle: 'Personalised, from your own email',
     description:
-      'The agent sends hyper-personalised emails to hiring managers and founders — from your own email address, not a third-party system. Emails are automatically deleted after delivery via Google APIs. Recruiter contacts are never exposed publicly.',
+      'The agent sends hyper-personalised emails to hiring managers and founders — from your own email address. Recruiter contacts are never exposed publicly.',
     detail: 'Privacy-first. CASA Level 3 certified.',
   },
   {

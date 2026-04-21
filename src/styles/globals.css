@@ -2319,6 +2319,9 @@ dialog::backdrop {
     grid-template-columns: 50px 1fr !important;
     gap: 0 24px !important;
   }
+  .how-steps-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 /* ── end candidates ───────────────────────────────────────── */
 
@@ -2432,28 +2435,70 @@ body.andl-body, body.andl-body * {
   }
 }
 
-/* ── Pricing: 5-col comparison table — horizontal scroll on mobile ── */
-@media (max-width: 700px) {
-  #pricing-included .pricing-table-header,
-  #pricing-included .pricing-table-row {
-    grid-template-columns: 2fr 1fr 1fr !important;
-    font-size: 12px;
-    padding: 12px 14px !important;
-  }
-  #pricing-included .pricing-table-header > *:nth-child(n+4),
-  #pricing-included .pricing-table-row > *:nth-child(n+4) {
-    display: none;
-  }
+/* ── Pricing: Luma-style compare table ── */
+
+/* Responsive cell padding */
+.ct-pad { padding: 10px 12px; }
+@media (min-width: 480px) { .ct-pad { padding: 14px 16px; } }
+@media (min-width: 768px) { .ct-pad { padding: 18px 20px; } }
+
+/* Plan name in dark header */
+.ct-plan-name { font-size: 11px; }
+@media (min-width: 480px) { .ct-plan-name { font-size: 14px; } }
+@media (min-width: 768px) { .ct-plan-name { font-size: 18px; } }
+
+/* Plan subtitle in dark header */
+.ct-plan-sub { font-size: 9px; font-weight: 400; }
+@media (min-width: 480px) { .ct-plan-sub { font-size: 11px; } }
+@media (min-width: 768px) { .ct-plan-sub { font-size: 12px; } }
+
+/* Feature label */
+.ct-label { font-size: 11px; }
+@media (min-width: 480px) { .ct-label { font-size: 13px; } }
+@media (min-width: 768px) { .ct-label { font-size: 15px; } }
+
+/* Value text in data cells */
+.ct-val { font-size: 10px; }
+@media (min-width: 480px) { .ct-val { font-size: 12px; } }
+@media (min-width: 768px) { .ct-val { font-size: 14px; } }
+
+/* Collapse Free column on narrow screens */
+@media (max-width: 520px) {
+  #pricing-included .compare-table-grid > div:nth-child(1) { display: none; }
 }
-@media (max-width: 480px) {
-  #pricing-included .pricing-table-header,
-  #pricing-included .pricing-table-row {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  #pricing-included .pricing-table-header > *:nth-child(n+3),
-  #pricing-included .pricing-table-row > *:nth-child(n+3) {
-    display: none;
-  }
+
+/* ── Orbital Feature Map ────────────────────────────────────── */
+@keyframes nh-orbital-center-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(95,168,158,0); }
+  50% { box-shadow: 0 0 18px 4px rgba(95,168,158,0.18); }
+}
+.nh-orbital-center { animation: nh-orbital-center-pulse 3s ease-in-out infinite; }
+
+/* Expanding sonar ring around each node */
+@keyframes nh-orbital-ring-pulse {
+  0%   { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+.nh-orbital-ring-pulse {
+  animation: nh-orbital-ring-pulse 2.6s ease-out infinite;
+}
+
+/* Pulsing dot inside pill labels */
+@keyframes nh-orbital-dot-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.45); }
+}
+.nh-orbital-dot-pulse {
+  animation: nh-orbital-dot-pulse 2s ease-in-out infinite;
+}
+
+/* Interior particle micro-dots on nodes */
+@keyframes nh-particle {
+  0%, 100% { opacity: 0.18; transform: scale(1); }
+  50%       { opacity: 0.92; transform: scale(1.6); }
+}
+.nh-particle {
+  animation: nh-particle 2.6s ease-in-out infinite;
 }
 
 /* ── Pricing: enterprise features 2-col → 1-col on narrow cards ── */

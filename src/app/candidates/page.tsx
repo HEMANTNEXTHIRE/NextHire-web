@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type React from 'react'
 import Link from 'next/link'
 import DualActionCTA from '@/components/ui/DualActionCTA'
+import AccordionFaq from '@/components/ui/AccordionFaq'
 import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
 
@@ -298,68 +299,54 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────── */}
-      <section id="candidates-how" style={{ background: '#ffffff', padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
+      <section id="candidates-how" style={{ background: '#fafafa', padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 72 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
+          <div style={{ textAlign: 'center', marginBottom: 64 }}>
+            <p style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#5fa89e', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 16, margin: '0 0 16px' }}>
               The 4-step loop
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
+            </p>
+            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(30px, 5vw, 56px)', fontWeight: 400, color: '#111827', margin: '0 0 18px', lineHeight: 1.18, letterSpacing: '-0.8px', fontSynthesis: 'none' }}>
               What the agent does while you sleep
             </h2>
-            <p style={{ fontSize: 17, color: '#6b7280', maxWidth: 520, margin: '0 auto', lineHeight: 1.72, fontWeight: 400 }}>
+            <p style={{ fontSize: FONT.base, color: '#6b7280', maxWidth: 480, margin: '0 auto', lineHeight: 1.7, fontWeight: WEIGHT.normal }}>
               A continuous loop that finds, applies, reaches out, and prepares — without you lifting a finger.
             </p>
           </div>
 
-          {/* steps */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {HOW_STEPS.map((step, i) => (
+          {/* steps grid */}
+          <div className="how-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+            {HOW_STEPS.map((step) => (
               <div key={step.num} style={{
-                display: 'grid', gridTemplateColumns: '80px 1fr',
-                gap: '0 40px', padding: '40px 0',
-                borderBottom: i < HOW_STEPS.length - 1 ? '1px solid #ddeae4' : 'none',
-              }} className="how-step-row">
-                {/* left: number + line */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 4 }}>
-                  <div style={{
-                    width: 52, height: 52, borderRadius: '50%',
-                    background: `${step.color}12`, border: `2px solid ${step.color}40`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: FONT.base, fontWeight: WEIGHT.extra, color: step.color, flexShrink: 0,
-                  }}>{step.num}</div>
-                  {i < HOW_STEPS.length - 1 && (
-                    <div style={{ flex: 1, width: 2, background: '#ddeae4', marginTop: 12, marginBottom: 0, minHeight: 20 }} />
-                  )}
+                background: '#ffffff',
+                border: '1px solid #e5e7eb',
+                borderRadius: 20,
+                padding: '36px 36px 32px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+                  <span style={{
+                    fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: step.color,
+                    background: `${step.color}12`, borderRadius: 8,
+                    padding: '4px 10px', letterSpacing: '0.04em',
+                  }}>{step.num}</span>
                 </div>
-
-                {/* right: content */}
-                <div style={{ paddingBottom: 8 }}>
-                  <h3 style={{ fontFamily: SERIF, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 12px', letterSpacing: '-0.3px', lineHeight: 1.25, fontSynthesis: 'none' }}>
-                    {step.title}
-                  </h3>
-                  <p style={{ fontSize: FONT.base, color: '#3d5a56', lineHeight: 1.75, margin: '0 0 20px', maxWidth: 620 }}>
-                    {step.desc}
-                  </p>
-                  {/* bullets */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 12px', marginBottom: 16 }}>
-                    {step.bullets.map(b => (
-                      <span key={b} style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 6,
-                        fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: step.color,
-                        background: `${step.color}10`, border: `1px solid ${step.color}25`,
-                        borderRadius: 6, padding: '4px 10px',
-                      }}>
-                        <span style={{ width: 4, height: 4, borderRadius: '50%', background: step.color, display: 'inline-block' }} />
-                        {b}
-                      </span>
-                    ))}
-                  </div>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 16px', background: `${step.color}08`, borderRadius: 8, border: `1px solid ${step.color}20` }}>
-                    <span style={{ color: step.color, fontSize: FONT.sm }}>→</span>
-                    <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#1a3338' }}>{step.detail}</span>
-                  </div>
+                <h3 style={{ fontSize: 'clamp(18px, 2vw, 22px)', fontWeight: WEIGHT.bold, color: '#111827', margin: '0 0 10px', letterSpacing: '-0.4px', lineHeight: 1.28 }}>
+                  {step.title}
+                </h3>
+                <p style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, margin: '0 0 20px' }}>
+                  {step.desc}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 8px', marginBottom: 18 }}>
+                  {step.bullets.map(b => (
+                    <span key={b} style={{
+                      fontSize: 11, fontWeight: WEIGHT.semi, color: step.color,
+                      background: `${step.color}10`, border: `1px solid ${step.color}22`,
+                      borderRadius: 6, padding: '3px 9px',
+                    }}>{b}</span>
+                  ))}
                 </div>
+                <p style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#1a3338', margin: 0, borderTop: '1px solid #f3f4f6', paddingTop: 16 }}>
+                  {step.detail}
+                </p>
               </div>
             ))}
           </div>
@@ -546,22 +533,25 @@ export default function CandidatesPage() {
       </section>
 
       {/* ── COMPARISON ───────────────────────────────────────────── */}
-      <section id="candidates-compare" style={{ background: '#edf5f1', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 64 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
+      <section id="candidates-compare" style={{ background: '#ffffff', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <p style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#5fa89e', letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 16px' }}>
               The comparison
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
+            </p>
+            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(30px, 5vw, 56px)', fontWeight: 400, color: '#111827', margin: '0 0 14px', lineHeight: 1.18, letterSpacing: '-0.8px', fontSynthesis: 'none' }}>
               Old way vs. NextHire way
             </h2>
-            <p style={{ fontSize: 17, color: '#6b7280', margin: 0, fontWeight: 400, lineHeight: 1.72 }}>Same goal. Completely different experience.</p>
+            <p style={{ fontSize: FONT.base, color: '#6b7280', margin: 0, fontWeight: WEIGHT.normal, lineHeight: 1.7 }}>Same goal. Completely different experience.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }} className="comparison-grid">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="comparison-grid">
             {/* old */}
-            <div style={{ background: '#ffffff', border: '1px solid #ddeae4', borderRadius: 16, padding: '32px 28px' }}>
-              <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.5px', color: '#8aada8', textTransform: 'uppercase', marginBottom: 20 }}>Without NextHire</div>
+            <div style={{ background: '#fafafa', border: '1px solid #e5e7eb', borderRadius: 20, padding: '32px 28px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 24 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#d1d5db', display: 'inline-block' }} />
+                <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.2px', color: '#9ca3af', textTransform: 'uppercase' }}>Without NextHire</span>
+              </div>
               {[
                 'Spend 3–5 hours a day on job boards',
                 'Send the same resume to every job',
@@ -570,16 +560,19 @@ export default function CandidatesPage() {
                 'Prep for interviews without feedback',
                 'Lose salary negotiation for lack of data',
               ].map(item => (
-                <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 12 }}>
-                  <span style={{ color: '#8aada8', fontSize: FONT.sm, flexShrink: 0, marginTop: 1 }}>✕</span>
-                  <span style={{ fontSize: FONT.sm, color: '#7a9e99', lineHeight: 1.5 }}>{item}</span>
+                <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 14 }}>
+                  <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#f3f4f6', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#9ca3af', flexShrink: 0, marginTop: 1 }}>✕</span>
+                  <span style={{ fontSize: FONT.sm, color: '#9ca3af', lineHeight: 1.6 }}>{item}</span>
                 </div>
               ))}
             </div>
 
             {/* new */}
-            <div style={{ background: '#ffffff', border: '1px solid #c8dfd6', borderRadius: 16, padding: '32px 28px', boxShadow: '0 4px 24px rgba(95,168,158,0.08)' }}>
-              <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.5px', color: '#5fa89e', textTransform: 'uppercase', marginBottom: 20 }}>With NextHire</div>
+            <div style={{ background: '#f0f7f4', border: '1px solid #c8dfd6', borderRadius: 20, padding: '32px 28px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 24 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block', boxShadow: '0 0 6px rgba(34,197,94,0.4)' }} />
+                <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.2px', color: '#2e7d4f', textTransform: 'uppercase' }}>With NextHire</span>
+              </div>
               {[
                 'Agent runs 24/7 — you check results',
                 'Tailored resume per application, auto-built',
@@ -588,9 +581,9 @@ export default function CandidatesPage() {
                 'AI Interview Coach on every call',
                 'Salary data + negotiation script ready',
               ].map(item => (
-                <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 12 }}>
-                  <span style={{ color: '#5fa89e', fontSize: FONT.sm, flexShrink: 0, marginTop: 1 }}>✓</span>
-                  <span style={{ fontSize: FONT.sm, color: '#3d5a56', lineHeight: 1.5 }}>{item}</span>
+                <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 14 }}>
+                  <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#fff', flexShrink: 0, marginTop: 1, fontWeight: WEIGHT.bold }}>✓</span>
+                  <span style={{ fontSize: FONT.sm, color: '#1a3338', lineHeight: 1.6 }}>{item}</span>
                 </div>
               ))}
             </div>
@@ -600,33 +593,15 @@ export default function CandidatesPage() {
 
       {/* ── FAQ ──────────────────────────────────────────────────── */}
       <section id="candidates-faq" style={{ background: '#fff', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
-        <div style={{ maxWidth: 740, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 60 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
-              FAQ
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
-              Frequently asked questions
-            </h2>
-            <p style={{ fontSize: 17, color: '#6b7280', margin: 0, fontWeight: 400, lineHeight: 1.72 }}>Everything you need to know before you start.</p>
+        <div style={{ maxWidth: 740, margin: '0 auto', textAlign: 'center', marginBottom: 60 }}>
+          <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
+            FAQ
           </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {FAQS.map((faq, i) => (
-              <div key={faq.q} style={{
-                padding: '24px 0',
-                borderBottom: i < FAQS.length - 1 ? '1px solid #ddeae4' : 'none',
-              }}>
-                <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: '#1a3338', marginBottom: 10, lineHeight: 1.4 }}>
-                  {faq.q}
-                </div>
-                <div style={{ fontSize: FONT.sm, color: '#3d5a56', lineHeight: 1.75 }}>
-                  {faq.a}
-                </div>
-              </div>
-            ))}
-          </div>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
+            Frequently asked questions
+          </h2>
         </div>
+        <AccordionFaq items={FAQS.map(f => ({ question: f.q, answer: f.a }))} />
       </section>
 
       <DualActionCTA />

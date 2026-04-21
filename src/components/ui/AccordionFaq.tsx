@@ -72,7 +72,7 @@ function AccordionItem({ item, open, onToggle, index }: AccordionItemProps) {
 
 // ── Main component ───────────────────────────────────────────────────────────
 
-export default function AccordionFaq({ title = 'FAQs', items }: AccordionFaqProps) {
+export default function AccordionFaq({ title, items }: AccordionFaqProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   function toggle(i: number) {
