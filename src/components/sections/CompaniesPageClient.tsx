@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FloatingIntegrations } from '@/components/sections/FloatingIntegrations'
 
 /* Homepage-aligned tokens (HeroSection / pricing) */
 const HOME = {
@@ -56,24 +57,6 @@ const COMPARE_ROWS = [
   { feature: 'ATS / CRM sync',               old: 'Manual CSV export',       nh: '50+ native integrations'      },
 ]
 
-/** Bento grid placement (6×4 desktop) — hub top-left, names orbit */
-const INTEGRATION_BENTO: { name: string; gc: string; gr: string; tone: 'w' | 'm' | 's' }[] = [
-  { name: 'Greenhouse', gc: '3', gr: '1', tone: 'w' },
-  { name: 'Lever', gc: '4', gr: '1', tone: 'm' },
-  { name: 'Ashby', gc: '5', gr: '1', tone: 's' },
-  { name: 'Workable', gc: '6', gr: '1', tone: 'w' },
-  { name: 'Workday', gc: '3', gr: '2', tone: 's' },
-  { name: 'Bullhorn', gc: '4', gr: '2', tone: 'w' },
-  { name: 'Recruit CRM', gc: '5', gr: '2', tone: 'm' },
-  { name: 'Zoho Recruit', gc: '6', gr: '2', tone: 'w' },
-  { name: 'SmartRecruiters', gc: '1', gr: '3', tone: 'm' },
-  { name: 'HiBob', gc: '2', gr: '3', tone: 'w' },
-  { name: 'Salesforce', gc: '3', gr: '3', tone: 's' },
-  { name: 'HubSpot', gc: '4', gr: '3', tone: 'w' },
-  { name: 'Gmail', gc: '5', gr: '3', tone: 'm' },
-  { name: 'Outlook', gc: '6', gr: '3', tone: 'w' },
-  { name: 'Slack', gc: '3', gr: '4', tone: 's' },
-]
 
 /* ── Global animation styles ──────────────────────────────────── */
 const STYLES = `
@@ -344,23 +327,6 @@ export default function CompaniesPageClient() {
           textAlign: 'center',
         }}>
 
-          <Reveal>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              background: HOME.bg,
-              borderRadius: 100,
-              padding: '8px 20px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-              marginBottom: 16,
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: HOME.accent, display: 'inline-block', flexShrink: 0 }} />
-              <span style={{ color: '#374151', fontSize: 13, fontWeight: WEIGHT.medium, letterSpacing: '0.01em', lineHeight: 1.4 }}>
-                NextHire for Companies
-              </span>
-            </div>
-          </Reveal>
 
           <Reveal delay={0.06}>
             <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
@@ -480,9 +446,6 @@ export default function CompaniesPageClient() {
 
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 72 }}>
-              <div style={{ display: 'inline-block', background: `${C.accent}12`, color: C.accentD, padding: '4px 14px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 14 }}>
-                The Platform
-              </div>
               <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
                 Five agents. One pipeline.
               </h2>
@@ -581,9 +544,6 @@ export default function CompaniesPageClient() {
         <div style={{ maxWidth: 940, margin: '0 auto' }}>
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 52 }}>
-              <div style={{ display: 'inline-block', background: `${C.accent}12`, color: C.accentD, padding: '4px 14px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 14 }}>
-                The Difference
-              </div>
               <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 12px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
                 Traditional recruiting vs. NextHire
               </h2>
@@ -645,186 +605,8 @@ export default function CompaniesPageClient() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          INTEGRATIONS — bento mosaic + hub (no marquee, no harsh grid)
-      ════════════════════════════════════════════════════════ */}
-      <section
-        id="companies-integrations"
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          padding: '96px clamp(20px, 5vw, 40px) 96px',
-          background: 'linear-gradient(168deg, #f6fbf9 0%, #ffffff 42%, #f3faf7 100%)',
-        }}
-      >
-        {/* Soft aurora orbs — depth without lines */}
-        <div style={{ position: 'absolute', width: 560, height: 560, borderRadius: '50%', background: `radial-gradient(circle, rgba(95,168,158,0.14) 0%, transparent 68%)`, top: '-12%', right: '-8%', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', width: 420, height: 420, borderRadius: '50%', background: `radial-gradient(circle, rgba(61,122,114,0.08) 0%, transparent 65%)`, bottom: '-18%', left: '-6%', pointerEvents: 'none' }} />
+      <FloatingIntegrations />
 
-        <div style={{ maxWidth: 1100, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <Reveal>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', padding: '6px 16px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '2px', textTransform: 'uppercase', color: C.accentD, marginBottom: 18, boxShadow: '0 4px 24px rgba(37,62,66,0.06)' }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.accent, animation: 'fcPulse 2s ease-in-out infinite' }} />
-              Integrations
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, margin: '0 0 14px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-              Works with your existing stack.
-            </h2>
-            <p style={{ fontSize: 17, color: HOME.subtext, margin: '0 auto 48px', maxWidth: 500, lineHeight: 1.65 }}>
-              Shortlists, transcripts, and scores sync directly — no manual data entry.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <div className="companies-int-bento" style={{ textAlign: 'left' as const }}>
-              {/* Hub tile — editorial anchor */}
-              <div
-                className="companies-int-hub companies-int-cell"
-                style={{
-                  gridColumn: '1 / 3',
-                  gridRow: '1 / 3',
-                  borderRadius: NH_PANEL.r,
-                  padding: '28px 24px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                  minHeight: 200,
-                  background: `linear-gradient(155deg, ${C.accentD} 0%, #152a2e 52%, #0f1f22 100%)`,
-                  color: '#fff',
-                  boxShadow: '0 22px 56px rgba(26,51,56,0.28)',
-                  animation: 'fcIntBob 8s ease-in-out infinite',
-                }}
-              >
-                <div style={{ position: 'absolute', top: -30, right: -20, width: 140, height: 140, borderRadius: '50%', background: `${C.accent}28` }} />
-                <div style={{ position: 'absolute', bottom: -40, left: '20%', width: 180, height: 180, borderRadius: '50%', background: 'rgba(95,168,158,0.12)' }} />
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-                    <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.green, boxShadow: `0 0 12px ${C.green}` }} />
-                    <span style={{ fontSize: 10, letterSpacing: '2.5px', opacity: 0.65, fontWeight: WEIGHT.bold }}>LIVE SYNC</span>
-                  </div>
-                  <div style={{ fontFamily: SERIF, fontSize: 'clamp(44px, 7vw, 64px)', fontWeight: 400, lineHeight: 1, marginBottom: 10, letterSpacing: '-1px' }}>50+</div>
-                  <p style={{ margin: 0, fontSize: FONT.sm, lineHeight: 1.55, opacity: 0.88, maxWidth: 220, fontWeight: WEIGHT.medium }}>
-                    Native ATS &amp; CRM links — candidates land where your team already works.
-                  </p>
-                </div>
-              </div>
-
-              {INTEGRATION_BENTO.map((cell, i) => {
-                const toneStyle =
-                  cell.tone === 'm'
-                    ? { background: 'linear-gradient(145deg, #e8f5f0 0%, #ffffff 55%)', boxShadow: '0 4px 20px rgba(95,168,158,0.1)' }
-                    : cell.tone === 's'
-                      ? { background: C.surface, boxShadow: '0 4px 18px rgba(37,62,66,0.05)' }
-                      : { background: '#ffffff', boxShadow: '0 4px 18px rgba(37,62,66,0.06)' }
-                const dur = 4.5 + (i % 4) * 0.6
-                const delay = i * 0.09
-                return (
-                  <div
-                    key={cell.name}
-                    className="companies-int-cell"
-                    style={{
-                      gridColumn: cell.gc,
-                      gridRow: cell.gr,
-                      borderRadius: NH_PANEL.innerR,
-                      padding: '14px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textAlign: 'center' as const,
-                      fontSize: FONT.sm,
-                      fontWeight: WEIGHT.semi,
-                      color: C.dark,
-                      cursor: 'default',
-                      animation: `fcIntBob ${dur}s ease-in-out ${delay}s infinite`,
-                      ...toneStyle,
-                    }}
-                  >
-                    <span style={{ letterSpacing: '-0.02em' }}>{cell.name}</span>
-                  </div>
-                )
-              })}
-
-              <div
-                className="companies-int-cell"
-                style={{
-                  gridColumn: '1 / 3',
-                  gridRow: '4',
-                  borderRadius: NH_PANEL.innerR,
-                  padding: '16px 20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  background: `linear-gradient(90deg, ${C.accent}12, rgba(95,168,158,0.06))`,
-                  color: C.accentD,
-                  fontSize: FONT.md,
-                  fontWeight: WEIGHT.extra,
-                  letterSpacing: '-0.02em',
-                  animation: 'fcIntBob 5.5s ease-in-out 0.2s infinite',
-                  boxShadow: '0 6px 24px rgba(95,168,158,0.12)',
-                }}
-              >
-                + 35 more
-              </div>
-
-              <div
-                className="companies-int-cell"
-                style={{
-                  gridColumn: '4 / 7',
-                  gridRow: '4',
-                  borderRadius: NH_PANEL.innerR,
-                  padding: '14px 20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  background: 'rgba(255,255,255,0.65)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  fontSize: FONT.xs,
-                  fontWeight: WEIGHT.semi,
-                  color: C.mid,
-                  lineHeight: 1.45,
-                  animation: 'fcIntBob 6.2s ease-in-out 0.4s infinite',
-                  boxShadow: '0 4px 20px rgba(37,62,66,0.05)',
-                }}
-              >
-                SAML · SCIM · Webhooks — enterprise routing when you need it.
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          CLOSING CTA — full-width mint with concentric rings
-      ════════════════════════════════════════════════════════ */}
-      <section id="companies-cta" style={{ background: HOME.bg, padding: '96px clamp(20px, 5vw, 40px) 96px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 820, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <Reveal dir="scale">
-            <div style={{ display: 'inline-block', background: '#f0fdf4', color: '#166534', border: '1px solid #86efac', padding: '6px 16px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 18 }}>
-              Get Started
-            </div>
-            <h2 className="companies-cta-headline" style={{ fontFamily: SERIF, fontSize: 'clamp(32px, 5.5vw, 72px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, margin: '0 0 18px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-              <span style={{ display: 'block', fontFamily: SERIF }}>Your next great hire</span>
-              <span style={{ display: 'block', fontFamily: SERIF }}>is already in the pipeline.</span>
-            </h2>
-            <p style={{ fontSize: 17, color: HOME.subtext, lineHeight: 1.72, margin: '0 auto 36px', maxWidth: 480 }}>
-              Set up your AI sourcing agent in under 10 minutes. First shortlist typically ready within 4 hours.
-            </p>
-            <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="https://app.nexthireconsulting.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '14px 28px', borderRadius: 9999, background: HOME.ctaMint, color: HOME.dark, fontWeight: WEIGHT.bold, fontSize: 16, textDecoration: 'none', border: 'none' }}>
-                Start hiring free →
-              </a>
-              <a href="/contact-us" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '14px 28px', borderRadius: 9999, background: '#f9fafb', color: '#374151', fontWeight: WEIGHT.semi, fontSize: 16, textDecoration: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-                Book a demo
-              </a>
-            </div>
-            <p style={{ fontSize: FONT.xs, color: HOME.muted, marginTop: 24, letterSpacing: '0.3px' }}>
-              Fixed pricing · CASA Level 3 certified · 50+ ATS integrations
-            </p>
-          </Reveal>
-        </div>
-      </section>
     </>
   )
 }

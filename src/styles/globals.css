@@ -3005,6 +3005,13 @@ body.andl-body, body.andl-body * {
     grid-template-columns: 1fr !important;
     gap: 40px !important;
   }
+  .nh-about-stats {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .nh-about-mission {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
 
   /* ── Contact page — stack form then sidebar (no diagonal gap) ─ */
   .contact-page .contact-shell {

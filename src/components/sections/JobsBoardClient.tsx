@@ -321,7 +321,6 @@ export function JobsBoardClient() {
         <header className="jobs-board-header">
           <div className="jobs-board-header__top">
             <div className="jobs-board-header__intro">
-              <p className="jobs-board-kicker">Job board</p>
               <h2 className="jobs-board-headline">
                 <span className="jobs-board-headline__line jobs-board-headline__line--primary">Find roles that fit you</span>
                 <span className="jobs-board-headline__line jobs-board-headline__line--accent">Search, filter, and preview together</span>

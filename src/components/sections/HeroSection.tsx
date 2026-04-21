@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useCallback } from 'react'
 import { WEIGHT, SERIF } from '@/constants/typography'
-import OrbitalFeatureMap from '@/components/ui/OrbitalFeatureMap'
+import { MorphingCardStack } from '@/components/ui/MorphingCardStack'
+import { MagicText } from '@/components/ui/MagicText'
 
 /* ─── Colour tokens ──────────────────────────────────────── */
 const C = {
@@ -120,6 +121,7 @@ function DreamInput() {
 
 export default function HeroSection() {
   return (
+    <>
     <section
       id="home-s1"
       style={{ position: 'relative', overflowX: 'hidden', background: '#ffffff' }}
@@ -218,42 +220,51 @@ export default function HeroSection() {
 
       </div>
 
-      {/* ── Product Features Orbital ── */}
-      <div style={{
-        padding: '0 clamp(20px, 4vw, 60px) clamp(48px, 8vw, 80px)',
-        textAlign: 'center',
-      }}>
+    </section>
 
-        <h2 style={{
-          fontFamily: SERIF,
-          fontSize: 'clamp(22px, 3vw, 34px)',
-          fontWeight: 500,
-          color: C.dark,
-          letterSpacing: '-0.5px',
-          lineHeight: 1.2,
-          margin: '0 0 4px',
-          fontSynthesis: 'none',
-        }}>
-          Our Product Differentiation
-        </h2>
-
-        <p style={{
-          fontSize: '14px',
-          color: '#9ca3af',
-          margin: '0 0 0',
-          fontWeight: 400,
-          letterSpacing: '-0.01em',
-        }}>
-          Click any feature to learn more
-        </p>
-
-        {/* Orbital — no dark box, seamlessly on white */}
-        <div style={{ maxWidth: 820, margin: '0 auto', position: 'relative' }}>
-          <OrbitalFeatureMap />
-        </div>
-
+    {/* ── Mission statement — scroll-animated magic text ── */}
+    <section
+      style={{
+        background:      '#ffffff',
+        display:         'flex',
+        alignItems:      'center',
+        justifyContent:  'center',
+        padding:         'clamp(48px, 9vmax, 100px) clamp(24px, 6vw, 100px)',
+        textAlign:       'center',
+      }}
+    >
+      <div style={{ maxWidth: 860, width: '100%' }}>
+        <MagicText text="Our mission is to make getting a job as easy as spending money online, fast, seamless, and powered by intelligence." />
       </div>
     </section>
+
+    {/* ── SECOND: Morphing Card Stack version (A/B comparison) ── */}
+    <section
+      id="home-s1-v2"
+      style={{
+        background: '#ffffff',
+        padding: 'clamp(20px, 3vw, 36px) clamp(20px, 4vw, 60px) clamp(48px, 8vw, 80px)',
+        textAlign: 'center',
+      }}
+    >
+      <h2 style={{
+        fontFamily: SERIF,
+        fontSize: 'clamp(22px, 3vw, 34px)',
+        fontWeight: 500,
+        color: '#111827',
+        letterSpacing: '-0.5px',
+        lineHeight: 1.2,
+        margin: '0 0 4px',
+        fontSynthesis: 'none',
+      }}>
+        Our Product Differentiation
+      </h2>
+
+      <div style={{ maxWidth: 1000, margin: '40px auto 0' }}>
+        <MorphingCardStack />
+      </div>
+    </section>
+    </>
   )
 }
 

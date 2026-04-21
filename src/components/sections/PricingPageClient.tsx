@@ -225,11 +225,6 @@ export default function PricingPageClient() {
       <section id="pricing-hero" style={{ background: HOME.bg, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '120px clamp(20px, 5vw, 40px) 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
 
-          {/* Badge */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: HOME.bg, border: `1px solid ${HOME.hairline}`, borderRadius: 100, padding: '8px 20px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)', marginBottom: 16 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: HOME.accent, display: 'inline-block', flexShrink: 0 }} />
-            <span style={{ color: '#374151', fontSize: 13, fontWeight: WEIGHT.medium, letterSpacing: '0.01em', lineHeight: 1.4 }}>Simple, transparent pricing</span>
-          </div>
 
           {/* H1 */}
           <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>

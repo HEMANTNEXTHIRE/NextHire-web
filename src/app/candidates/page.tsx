@@ -252,11 +252,6 @@ export default function CandidatesPage() {
         </div>
 
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(95,168,158,0.12)', border: '1px solid rgba(95,168,158,0.3)', borderRadius: 100, padding: '6px 16px', marginBottom: 32 }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#5fa89e', display: 'inline-block', boxShadow: '0 0 8px #5fa89e' }} />
-            <span style={{ color: '#3d7a72', fontSize: FONT.sm, fontWeight: WEIGHT.semi, letterSpacing: '0.5px' }}>How It Works</span>
-          </div>
-
           <h1 style={{
             fontFamily: SERIF, color: '#111827', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400,
             lineHeight: 1.22, margin: '0 0 24px', letterSpacing: '-0.5px',
@@ -594,9 +589,6 @@ export default function CandidatesPage() {
       {/* ── FAQ ──────────────────────────────────────────────────── */}
       <section id="candidates-faq" style={{ background: '#fff', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 740, margin: '0 auto', textAlign: 'center', marginBottom: 60 }}>
-          <div style={{ display: 'inline-block', background: 'rgba(46,125,79,0.08)', color: '#2e7d4f', padding: '6px 18px', borderRadius: 100, fontSize: FONT.xs, fontWeight: WEIGHT.extra, letterSpacing: '1.4px', textTransform: 'uppercase', marginBottom: 22 }}>
-            FAQ
-          </div>
           <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
             Frequently asked questions
           </h2>

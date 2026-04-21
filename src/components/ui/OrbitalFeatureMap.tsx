@@ -176,7 +176,7 @@ const BASE_RADII = [88, 172, 268]     // px at scale 1
 const SPEEDS     = [0.30, 0.19, 0.11] // °/tick (50ms)
 const PHASE      = [0, 45, 90]        // initial angle stagger
 
-export default function OrbitalFeatureMap() {
+export default function OrbitalFeatureMap({ activeIds }: { activeIds?: number[] } = {}) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const [scale, setScale]       = useState(1)
   const [angles, setAngles]     = useState<number[]>(PHASE)
@@ -324,8 +324,9 @@ export default function OrbitalFeatureMap() {
         const pos      = getPos(f.orbit, f.posInOrbit)
         const isActive = activeId === f.id
         const dimmed   = paused && !isActive
+        const planHidden = activeIds !== undefined && !activeIds.includes(f.id)
 
-        const opacity    = isActive ? 1 : dimmed ? 0.11 : 0.30 + 0.70 * pos.depth
+        const opacity    = planHidden ? 0.07 : isActive ? 1 : dimmed ? 0.11 : 0.30 + 0.70 * pos.depth
         const blurFilter = dimmed ? 'blur(1.8px)' : 'none'
 
         /* Card: avoid edge clipping */
@@ -350,15 +351,16 @@ export default function OrbitalFeatureMap() {
               position:   'absolute',
               top: '50%', left: '50%',
               transform:  `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
-              zIndex:     isActive ? 200 : Math.round(8 + 28 * pos.depth),
+              zIndex:        isActive ? 200 : Math.round(8 + 28 * pos.depth),
               opacity,
-              filter:     blurFilter,
-              transition: 'opacity 0.3s ease, filter 0.3s ease',
-              cursor:     'pointer',
+              filter:        blurFilter,
+              transition:    'opacity 0.3s ease, filter 0.3s ease',
+              cursor:        planHidden ? 'default' : 'pointer',
+              pointerEvents: planHidden ? 'none' : 'auto',
             }}
           >
             {/* Sonar pulse ring */}
-            {!dimmed && !isActive && (
+            {!dimmed && !isActive && !planHidden && (
               <div
                 className="nh-orbital-ring-pulse"
                 style={{
