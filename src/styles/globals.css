@@ -1348,6 +1348,176 @@ dialog::backdrop {
   visibility: visible;
 }
 
+/* ── Feature card: force exact typography, overriding Webflow global h3 styles ── */
+.nh-feature-card {
+  text-align: left !important;
+}
+.nh-feature-card h3 {
+  font-family: 'Noto Sans', system-ui, sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.03em !important;
+  color: #0a0a0a !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+.nh-feature-card p {
+  font-family: 'Noto Sans', system-ui, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
+  letter-spacing: -0.005em !important;
+  color: #555555 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* ── Auto Apply Animation keyframes ────────────────────────────────── */
+@keyframes nh-aa-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+@keyframes nh-aa-counter {
+  0%, 5%   { opacity: 0.3; }
+  12%, 82% { opacity: 1; }
+  90%, 100% { opacity: 0.3; }
+}
+/* Arrow shoots across — one per row */
+@keyframes nh-aa-arrow-0 {
+  0%   { width: 0; opacity: 0; }
+  2%   { opacity: 1; }
+  7%   { width: 100%; opacity: 0; }
+  100% { opacity: 0; width: 0; }
+}
+@keyframes nh-aa-arrow-1 {
+  0%, 21%  { width: 0; opacity: 0; }
+  23%      { opacity: 1; }
+  28%      { width: 100%; opacity: 0; }
+  100%     { opacity: 0; width: 0; }
+}
+@keyframes nh-aa-arrow-2 {
+  0%, 41%  { width: 0; opacity: 0; }
+  43%      { opacity: 1; }
+  48%      { width: 100%; opacity: 0; }
+  100%     { opacity: 0; width: 0; }
+}
+@keyframes nh-aa-arrow-3 {
+  0%, 62%  { width: 0; opacity: 0; }
+  64%      { opacity: 1; }
+  69%      { width: 100%; opacity: 0; }
+  100%     { opacity: 0; width: 0; }
+}
+/* Applied badge pops in after each arrow */
+@keyframes nh-aa-badge-0 {
+  0%, 5%    { opacity: 0; transform: translateY(-50%) scale(0.7); }
+  9%, 80%   { opacity: 1; transform: translateY(-50%) scale(1); }
+  88%, 100% { opacity: 0; transform: translateY(-50%) scale(0.7); }
+}
+@keyframes nh-aa-badge-1 {
+  0%, 26%   { opacity: 0; transform: translateY(-50%) scale(0.7); }
+  30%, 80%  { opacity: 1; transform: translateY(-50%) scale(1); }
+  88%, 100% { opacity: 0; transform: translateY(-50%) scale(0.7); }
+}
+@keyframes nh-aa-badge-2 {
+  0%, 47%   { opacity: 0; transform: translateY(-50%) scale(0.7); }
+  51%, 80%  { opacity: 1; transform: translateY(-50%) scale(1); }
+  88%, 100% { opacity: 0; transform: translateY(-50%) scale(0.7); }
+}
+@keyframes nh-aa-badge-3 {
+  0%, 68%   { opacity: 0; transform: translateY(-50%) scale(0.7); }
+  72%, 80%  { opacity: 1; transform: translateY(-50%) scale(1); }
+  88%, 100% { opacity: 0; transform: translateY(-50%) scale(0.7); }
+}
+
+/* ── Interview Coach Animation keyframes (16s loop) ──────────────── */
+@keyframes nh-ic-question {
+  0%, 3%   { opacity: 0; transform: translateY(5px); }
+  10%, 80% { opacity: 1; transform: translateY(0); }
+  90%, 100% { opacity: 0; transform: translateY(5px); }
+}
+@keyframes nh-ic-thinking {
+  0%, 12%  { opacity: 0; }
+  17%, 25% { opacity: 1; }
+  31%, 100% { opacity: 0; }
+}
+@keyframes nh-ic-response {
+  0%, 22%  { opacity: 0; transform: translateY(8px); }
+  29%, 80% { opacity: 1; transform: translateY(0); }
+  90%, 100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes nh-ic-b1 {
+  0%, 27%  { opacity: 0; transform: translateX(-5px); }
+  34%, 80% { opacity: 1; transform: translateX(0); }
+  90%, 100% { opacity: 0; transform: translateX(-5px); }
+}
+@keyframes nh-ic-b2 {
+  0%, 38%  { opacity: 0; transform: translateX(-5px); }
+  45%, 80% { opacity: 1; transform: translateX(0); }
+  90%, 100% { opacity: 0; transform: translateX(-5px); }
+}
+@keyframes nh-ic-b3 {
+  0%, 50%  { opacity: 0; transform: translateX(-5px); }
+  57%, 80% { opacity: 1; transform: translateX(0); }
+  90%, 100% { opacity: 0; transform: translateX(-5px); }
+}
+@keyframes nh-ic-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes nh-oa-notification {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes nh-aiv-petal1 {
+  0%   { transform: rotate(-22deg) scale(1);    opacity: 0.9; }
+  100% { transform: rotate(-14deg) scale(1.08); opacity: 1;   }
+}
+@keyframes nh-aiv-petal2 {
+  0%   { transform: rotate(22deg) scale(1);    opacity: 0.88; }
+  100% { transform: rotate(14deg) scale(1.08); opacity: 1;    }
+}
+@keyframes nh-aiv-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); }
+  50%       { box-shadow: 0 0 18px 4px rgba(236,72,153,0.22); }
+}
+
+/* ── Candidates dark-hero header: scoped via :has(#candidates-hero) ──
+   Applies only on the /candidates page and only before the user scrolls
+   (scrolling adds .fixed-menu which we exclude with :not). No JS needed. ── */
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-menu-dropdown-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-menu-dropdown:hover .main-nav-menu-dropdown-text,
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-menu-dropdown.w--open .main-nav-menu-dropdown-text {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .brand-logo-active {
+  filter: brightness(0) invert(1) !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-vertical-line {
+  background: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-cta-try {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: none !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-cta-try:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-menu-toggle-animated {
+  color: #ffffff !important;
+}
+
 /* Try for free button: keep on the right, smaller size */
 @media (min-width: 992px) {
   /* ── Centered header layout: logo | centred nav links | CTA ── */

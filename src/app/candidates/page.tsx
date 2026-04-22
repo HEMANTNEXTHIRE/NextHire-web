@@ -242,25 +242,32 @@ export default function CandidatesPage() {
     <>
       {/* ── HERO ──────────────────────────────────────────────────── */}
       <section id="candidates-hero" style={{
-        background: '#edf5f1',
+        background: '#000000',
         padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)', position: 'relative', overflow: 'hidden',
       }}>
-        {/* bg orbs */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-          <div style={{ position: 'absolute', width: 700, height: 700, background: 'radial-gradient(circle,rgba(95,168,158,0.18) 0%,transparent 65%)', borderRadius: '50%', top: -200, right: -100 }} />
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(#c8dfd6 1px,transparent 1px)', backgroundSize: '32px 32px', opacity: 0.5 }} />
-        </div>
+        {/* Video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+        >
+          <source src="/videos/candidates-hero.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay for text readability */}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.52)', zIndex: 0 }} />
 
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <h1 style={{
-            fontFamily: SERIF, color: '#111827', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400,
+            fontFamily: SERIF, color: '#ffffff', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400,
             lineHeight: 1.22, margin: '0 0 24px', letterSpacing: '-0.5px',
           }}>
             <span style={{ display: 'block', fontFamily: SERIF }}>Your AI agent runs the job search.</span>
-            <span style={{ display: 'block', color: '#2e7d4f', fontFamily: SERIF }}>You show up for the offer.</span>
+            <span style={{ display: 'block', color: '#4ade80', fontFamily: SERIF }}>You show up for the offer.</span>
           </h1>
 
-          <p style={{ color: '#3d5a56', fontSize: FONT.base, lineHeight: 1.7, margin: '0 auto 48px', maxWidth: 620 }}>
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: FONT.base, lineHeight: 1.7, margin: '0 auto 48px', maxWidth: 620 }}>
             From discovery to outreach to interviews — every step automated, tracked, and optimised. You don&apos;t apply to jobs. Your AI agent does.
           </p>
 
@@ -271,22 +278,22 @@ export default function CandidatesPage() {
             </a>
             <Link href="/pricing" style={{
               display: 'inline-flex', alignItems: 'center', gap: 7,
-              color: '#3d5a56', fontSize: FONT.sm, fontWeight: WEIGHT.medium,
-              textDecoration: 'none', border: '1px solid #c8dfd6',
-              borderRadius: 8, padding: '11px 22px', background: '#ffffff',
+              color: 'rgba(255,255,255,0.85)', fontSize: FONT.sm, fontWeight: WEIGHT.medium,
+              textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)',
+              borderRadius: 8, padding: '11px 22px', background: 'rgba(255,255,255,0.08)',
             }}>
               See pricing
             </Link>
           </div>
 
           {/* stat strip */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginTop: 40, paddingTop: 16, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginTop: 40, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.12)', flexWrap: 'wrap' }}>
             {PROOF.map((p) => (
               <div key={p.l} style={{
                 padding: '0 20px', textAlign: 'center', flex: '1 1 120px', minWidth: 100,
               }}>
-                <div style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#5fa89e', lineHeight: 1, marginBottom: 6 }}>{p.n}</div>
-                <div style={{ fontSize: FONT.xs, color: '#7a9e99', fontWeight: WEIGHT.medium, letterSpacing: '0.3px', lineHeight: 1.4 }}>{p.l}</div>
+                <div style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#4ade80', lineHeight: 1, marginBottom: 6 }}>{p.n}</div>
+                <div style={{ fontSize: FONT.xs, color: 'rgba(255,255,255,0.55)', fontWeight: WEIGHT.medium, letterSpacing: '0.3px', lineHeight: 1.4 }}>{p.l}</div>
               </div>
             ))}
           </div>

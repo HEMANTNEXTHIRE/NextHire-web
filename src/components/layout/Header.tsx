@@ -628,6 +628,7 @@ export default function Header() {
     }
   }, [isOpen])
 
+
   const navClasses = [
     'main-nav w-nav',
     isScrolled || isOpen ? 'fixed-menu' : '',

@@ -260,7 +260,7 @@ export default function HeroSection() {
         Our Product Differentiation
       </h2>
 
-      <div style={{ maxWidth: 1000, margin: '40px auto 0' }}>
+      <div style={{ maxWidth: 1480, margin: '40px auto 0' }}>
         <MorphingCardStack />
       </div>
     </section>
