@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useCallback } from 'react'
-import { WEIGHT, SERIF } from '@/constants/typography'
+import { WEIGHT } from '@/constants/typography'
 import { MorphingCardStack } from '@/components/ui/MorphingCardStack'
 import { MagicText } from '@/components/ui/MagicText'
 
@@ -248,14 +248,13 @@ export default function HeroSection() {
       }}
     >
       <h2 style={{
-        fontFamily: SERIF,
-        fontSize: 'clamp(22px, 3vw, 34px)',
+        fontFamily: "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
+        fontSize: '48px',
         fontWeight: 500,
-        color: '#111827',
-        letterSpacing: '-0.5px',
-        lineHeight: 1.2,
+        color: '#000000',
+        letterSpacing: '-1.4px',
+        lineHeight: '57.6px',
         margin: '0 0 4px',
-        fontSynthesis: 'none',
       }}>
         Our Product Differentiation
       </h2>

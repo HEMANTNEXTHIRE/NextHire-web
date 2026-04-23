@@ -3,6 +3,7 @@ import type React from 'react'
 import Link from 'next/link'
 import DualActionCTA from '@/components/ui/DualActionCTA'
 import AccordionFaq from '@/components/ui/AccordionFaq'
+import OrbitalFeatureMap from '@/components/ui/OrbitalFeatureMap'
 import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 
 
@@ -590,6 +591,21 @@ export default function CandidatesPage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── ORBITAL FEATURE MAP ──────────────────────────────────── */}
+      <section style={{ background: '#ffffff', padding: 'clamp(60px, 8vw, 90px) clamp(20px, 5vw, 40px) clamp(40px, 6vw, 60px)' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center', marginBottom: 40 }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 400, color: '#111827', margin: '0 0 14px', lineHeight: 1.2, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
+            Everything your job search needs
+          </h2>
+          <p style={{ fontSize: FONT.base, color: '#6b7280', margin: 0, lineHeight: 1.7, fontWeight: WEIGHT.normal }}>
+            Nine AI-powered tools working in concert — all in one platform.
+          </p>
+        </div>
+        <div style={{ maxWidth: 820, margin: '0 auto' }}>
+          <OrbitalFeatureMap activeIds={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
         </div>
       </section>
 

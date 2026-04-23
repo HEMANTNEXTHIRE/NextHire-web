@@ -1353,24 +1353,58 @@ dialog::backdrop {
   text-align: left !important;
 }
 .nh-feature-card h3 {
-  font-family: 'Noto Sans', system-ui, sans-serif !important;
-  font-size: 17px !important;
-  font-weight: 700 !important;
-  line-height: 1.25 !important;
-  letter-spacing: -0.03em !important;
-  color: #0a0a0a !important;
+  font-family: 'Graphik Web', 'Noto Sans', system-ui, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  line-height: 26px !important;
+  letter-spacing: -0.6px !important;
+  color: #000000 !important;
   margin: 0 !important;
   text-align: left !important;
 }
 .nh-feature-card p {
-  font-family: 'Noto Sans', system-ui, sans-serif !important;
-  font-size: 14px !important;
+  font-family: 'Graphik Web', 'Noto Sans', system-ui, sans-serif !important;
+  font-size: 18px !important;
   font-weight: 400 !important;
-  line-height: 1.7 !important;
-  letter-spacing: -0.005em !important;
-  color: #555555 !important;
+  line-height: 23.4px !important;
+  letter-spacing: -0.5px !important;
+  color: #737373 !important;
   margin: 0 !important;
   text-align: left !important;
+}
+
+/* ── MorphingCardStack responsive ──────────────────────────────────── */
+@media (max-width: 639px) {
+  .nh-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .nh-stack-outer {
+    width: 100% !important;
+  }
+  .nh-feature-card--stack {
+    width: calc(100vw - 32px) !important;
+    max-width: 460px !important;
+    left: 0 !important;
+  }
+  .nh-feature-card {
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+  .nh-feature-card h3 {
+    font-size: 17px !important;
+    line-height: 22px !important;
+  }
+  .nh-feature-card p {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .nh-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
 }
 
 /* ── Auto Apply Animation keyframes ────────────────────────────────── */

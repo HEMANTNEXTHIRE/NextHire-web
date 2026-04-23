@@ -3,10 +3,9 @@
 import React, { useState, useEffect, type ReactNode } from 'react'
 import { motion, AnimatePresence, LayoutGroup, type PanInfo } from 'motion/react'
 import { Layers, Grid3X3 } from 'lucide-react'
-import OrbitalFeatureMap from '@/components/ui/OrbitalFeatureMap'
 
 /* ─── Types ──────────────────────────────────────────────── */
-type ViewMode   = 'stack' | 'grid' | 'orbital'
+type ViewMode   = 'stack' | 'grid'
 type PlanFilter = 'lite'  | 'pro'  | 'max'
 
 interface CardData {
@@ -1180,28 +1179,12 @@ const ALL_CARDS: CardData[] = [
 
 const SWIPE_THRESHOLD = 50
 
-/* ─── Plan → orbital node ids mapping ───────────────────── */
-const PLAN_IDS: Record<PlanFilter, number[]> = {
-  lite: [1, 2, 3, 5, 6, 9],
-  pro:  [1, 2, 3, 4, 5, 6, 9],
-  max:  [1, 2, 3, 4, 5, 6, 7, 8, 9],
-}
-
 /* ─── Plan taglines ──────────────────────────────────────── */
 const PLAN_TAGLINES: Record<PlanFilter, string> = {
   lite: "You're applying. Algorithms are ghosting you. We fix your profile, beat the ATS, and flood your pipeline automatically.",
   pro:  'Getting to the interview is one skill. Passing it is another. Our AI sits with you in the room.',
   max:  "Most people wait for recruiters to find them. Max users don't wait.",
 }
-
-/* ─── Orbital icon ───────────────────────────────────────── */
-const OrbitalIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="1.6" fill="currentColor"/>
-    <circle cx="8" cy="8" r="4" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.7"/>
-    <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
-  </svg>
-)
 
 /* ─── Plan toggle ────────────────────────────────────────── */
 const PLANS: { key: PlanFilter; label: string }[] = [
@@ -1232,9 +1215,8 @@ function PlanToggle({ active, onChange }: { active: PlanFilter; onChange: (p: Pl
 /* ─── View toggle ────────────────────────────────────────── */
 function ViewToggle({ active, onChange }: { active: ViewMode; onChange: (v: ViewMode) => void }) {
   const opts: { key: ViewMode; icon: ReactNode; label: string }[] = [
-    { key: 'stack',   icon: <Layers size={16} />,  label: 'Stack'   },
-    { key: 'grid',    icon: <Grid3X3 size={16} />, label: 'Grid'    },
-    { key: 'orbital', icon: <OrbitalIcon />,        label: 'Orbital' },
+    { key: 'stack', icon: <Layers size={16} />,  label: 'Stack' },
+    { key: 'grid',  icon: <Grid3X3 size={16} />, label: 'Grid'  },
   ]
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', background: '#f3f4f6', border: '1px solid #e5e7eb', borderRadius: 999, padding: 4, gap: 2 }}>
@@ -1289,7 +1271,7 @@ function FeatureCard({
       onDragEnd={onDragEnd}
       whileDrag={{ scale: 1.02 }}
       onClick={onClick}
-      className="nh-feature-card"
+      className={isStack ? 'nh-feature-card nh-feature-card--stack' : 'nh-feature-card'}
       style={{
         position:      isStack ? 'absolute' : 'relative',
         width:         isStack ? 460 : '100%',
@@ -1361,6 +1343,18 @@ export function MorphingCardStack() {
   const [plan, setPlan]           = useState<PlanFilter>('max')
   const [activeIdx, setActiveIdx] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
+  const [isMobile, setIsMobile]   = useState(false)
+
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < 640
+      setIsMobile(mobile)
+      if (mobile) setView('stack')
+    }
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const filteredCards = ALL_CARDS.filter(c => c.plans.includes(plan))
 
@@ -1387,14 +1381,13 @@ export function MorphingCardStack() {
     ? getStackOrder()
     : filteredCards.map((c, i) => ({ ...c, stackPosition: i }))
 
-  /* Card height: padding 60 + title 28 + gap 10 + desc 90 + gap 22 + image 258 = ~468px */
   const STACK_W = 460
   const STACK_H = 520
 
   const containerStyle: React.CSSProperties = view === 'stack'
     ? {
         position: 'relative',
-        width:    STACK_W + (filteredCards.length - 1) * 10,
+        width:    isMobile ? '100%' : STACK_W + (filteredCards.length - 1) * 10,
         height:   STACK_H + (filteredCards.length - 1) * 10,
         margin:   '0 auto',
       }
@@ -1410,7 +1403,7 @@ export function MorphingCardStack() {
     <div style={{ width: '100%' }}>
       {/* Controls */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 40 }}>
-        <ViewToggle active={view} onChange={v => { setView(v) }} />
+        {!isMobile && <ViewToggle active={view} onChange={v => { setView(v) }} />}
         <PlanToggle active={plan} onChange={p => { setPlan(p); setActiveIdx(0) }} />
         <div style={{ position: 'relative', height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           <AnimatePresence mode="wait">
@@ -1433,18 +1426,11 @@ export function MorphingCardStack() {
         </div>
       </div>
 
-      {/* Orbital view */}
-      {view === 'orbital' && (
-        <div style={{ maxWidth: 820, margin: '0 auto' }}>
-          <OrbitalFeatureMap activeIds={PLAN_IDS[plan]} />
-        </div>
-      )}
-
       {/* Stack / Grid */}
-      {view !== 'orbital' && (
+      {(
         <>
           <LayoutGroup>
-            <motion.div layout style={containerStyle}>
+            <motion.div layout style={containerStyle} className={view === 'grid' ? 'nh-cards-grid' : 'nh-stack-outer'}>
               <AnimatePresence mode="popLayout">
                 {displayCards.map(card => (
                   <FeatureCard

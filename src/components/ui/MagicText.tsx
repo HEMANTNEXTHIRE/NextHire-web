@@ -29,7 +29,7 @@ interface MagicTextProps {
   fontSize?: string
 }
 
-export function MagicText({ text, fontSize = 'clamp(26px, 3.6vw, 48px)' }: MagicTextProps) {
+export function MagicText({ text, fontSize = 'clamp(32px, 4.2vw, 52px)' }: MagicTextProps) {
   const container = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({
     target: container,
@@ -44,12 +44,13 @@ export function MagicText({ text, fontSize = 'clamp(26px, 3.6vw, 48px)' }: Magic
         display:         'flex',
         flexWrap:        'wrap',
         justifyContent:  'center',
-        lineHeight:      1.35,
+        lineHeight:      '62.4px',
         padding:         0,
         margin:          0,
         fontSize,
+        fontFamily:      "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
         fontWeight:      500,
-        letterSpacing:   '-0.03em',
+        letterSpacing:   '-2.1px',
         textWrap:        'balance' as React.CSSProperties['textWrap'],
       }}
     >
