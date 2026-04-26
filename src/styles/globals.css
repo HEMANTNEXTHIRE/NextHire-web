@@ -1855,7 +1855,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   }
 
   .nh-mega-menu__feat {
-    padding: 10px 8px !important;
+    padding: 14px 16px !important;
     margin: 0 -8px !important;
   }
 
@@ -1946,55 +1946,29 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 
 .nh-mega-menu__feat {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 10px;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
   margin: 0 -10px;
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
-  transition: background 0.18s ease, box-shadow 0.18s ease;
-  border: 1px solid transparent;
+  transition: background 0.15s ease;
 }
 .nh-mega-menu__feat:hover {
-  background: rgba(243, 248, 246, 0.95);
-  border-color: rgba(200, 223, 214, 0.45);
-  box-shadow: 0 4px 18px rgba(37, 62, 66, 0.05);
-}
-
-.nh-mega-menu__feat-icon {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: #f3f4f6;
-  color: #374151;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.nh-mega-menu__feat:hover .nh-mega-menu__feat-icon {
-  background: #e8f5f0;
-  color: #2e7d4f;
-}
-
-.nh-mega-menu__feat-body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
+  background: #f5f5f5;
 }
 
 .nh-mega-menu__feat-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #111827;
-  letter-spacing: -0.15px;
+  letter-spacing: -0.2px;
   line-height: 1.3;
 }
 
 .nh-mega-menu__feat-desc {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
   color: #6b7280;
 }
@@ -2050,30 +2024,6 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 
 .nh-mega-menu__promo--companies .nh-mega-menu__promo-glow {
   background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
-}
-
-.nh-mega-menu__promo--pricing {
-  background: linear-gradient(168deg, #f0faf7 0%, #e2f0eb 48%, #d8ebe3 100%);
-}
-
-.nh-mega-menu__promo--pricing .nh-mega-menu__promo-kicker {
-  color: #3d7a72;
-}
-
-.nh-mega-menu__promo--pricing .nh-mega-menu__promo-glow {
-  background: radial-gradient(circle, rgba(46, 125, 79, 0.14) 0%, transparent 70%);
-}
-
-.nh-mega-menu__promo--jobs {
-  background: linear-gradient(168deg, #f4f7fb 0%, #e8eef6 48%, #dfe8f3 100%);
-}
-
-.nh-mega-menu__promo--jobs .nh-mega-menu__promo-kicker {
-  color: #5b7a9c;
-}
-
-.nh-mega-menu__promo--jobs .nh-mega-menu__promo-glow {
-  background: radial-gradient(circle, rgba(91, 122, 156, 0.14) 0%, transparent 70%);
 }
 
 .nh-mega-menu__promo--about {
@@ -4279,5 +4229,97 @@ body.andl-body, body.andl-body * {
 @keyframes nh-accordion-slide-down {
   from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Plan Feature Mosaic ─── */
+.nh-plan-mosaic {
+  display: flex;
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: left;
+}
+.nh-plan-mosaic__menu {
+  flex: 0 0 auto;
+  min-width: 200px;
+}
+.nh-plan-mosaic__grid {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+@media (max-width: 768px) {
+  .nh-plan-mosaic {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .nh-plan-mosaic__menu {
+    min-width: unset;
+    width: 100%;
+  }
+  .nh-plan-mosaic__menu ul {
+    flex-direction: row !important;
+    gap: 24px !important;
+    justify-content: center;
+  }
+  .nh-plan-mosaic__grid {
+    width: 100%;
+    max-width: 480px;
+  }
+}
+
+/* ─── Resume Builder Showcase (Cursor-style) ─── */
+.nh-rb-showcase__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: clamp(36px, 4vw, 56px);
+  align-items: center;
+}
+.nh-rb-showcase__inner--reverse {
+  grid-template-columns: 3fr 7fr;
+}
+.nh-rb-showcase__left {
+  min-width: 0;
+}
+.nh-rb-showcase__right {
+  max-width: none;
+}
+.nh-rb-showcase__mac {
+  width: 100%;
+  aspect-ratio: 18.4 / 15.75;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.nh-rb-showcase__right a:hover {
+  opacity: 0.75;
+}
+@media (max-width: 900px) {
+  .nh-rb-showcase__inner,
+  .nh-rb-showcase__inner--reverse {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .nh-rb-showcase__inner--reverse .nh-rb-showcase__right {
+    order: -1;
+  }
+  .nh-rb-showcase__right {
+    max-width: none;
+    text-align: center;
+  }
+  .nh-rb-showcase__mac {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+  .nh-rb-showcase__sidebar {
+    display: none !important;
+  }
+}
+
+/* Interview Coach typing animation */
+@keyframes nh-copilot-wave {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
 }
 

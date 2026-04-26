@@ -347,7 +347,7 @@ export default function ContactUsPage() {
                   Pricing
                 </Link>
                 <span style={{ color: HOME.hairline }}>|</span>
-                <Link href="/talk-to-an-expert" style={{ color: '#2e7d4f', textDecoration: 'none' }}>
+                <Link href="/contact-us" style={{ color: '#2e7d4f', textDecoration: 'none' }}>
                   Talk to an expert
                 </Link>
               </div>
@@ -364,7 +364,7 @@ export default function ContactUsPage() {
         rightTitle="TALK TO AN EXPERT"
         rightSubtitle="Let our team walk you through the platform"
         rightLabel="Book a demo"
-        rightHref="/talk-to-an-expert"
+        rightHref="/contact-us"
       />
     </main>
   )

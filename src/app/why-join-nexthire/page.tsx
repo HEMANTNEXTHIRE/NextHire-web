@@ -508,7 +508,7 @@ export default function WhyJoinNexthirePage() {
         rightTitle="HAVE QUESTIONS?"
         rightSubtitle="Talk to someone on our team"
         rightLabel="Schedule Now"
-        rightHref="/talk-to-an-expert"
+        rightHref="/contact-us"
       />
     </>
   )

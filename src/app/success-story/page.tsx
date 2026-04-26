@@ -301,7 +301,7 @@ export default function SuccessStoryPage() {
         rightTitle="TALK TO AN EXPERT"
         rightSubtitle="Build a team that wins"
         rightLabel="Schedule Now"
-        rightHref="/talk-to-an-expert"
+        rightHref="/contact-us"
       />
     </>
   )

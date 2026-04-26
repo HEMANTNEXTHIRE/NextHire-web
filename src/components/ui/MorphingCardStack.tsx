@@ -1188,9 +1188,9 @@ const PLAN_TAGLINES: Record<PlanFilter, string> = {
 
 /* ─── Plan toggle ────────────────────────────────────────── */
 const PLANS: { key: PlanFilter; label: string }[] = [
-  { key: 'lite', label: 'Lite' },
-  { key: 'pro',  label: 'Pro'  },
   { key: 'max',  label: 'Max'  },
+  { key: 'pro',  label: 'Pro'  },
+  { key: 'lite', label: 'Lite' },
 ]
 
 function PlanToggle({ active, onChange }: { active: PlanFilter; onChange: (p: PlanFilter) => void }) {

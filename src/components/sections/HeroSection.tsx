@@ -4,6 +4,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import { WEIGHT } from '@/constants/typography'
 import { MorphingCardStack } from '@/components/ui/MorphingCardStack'
 import { MagicText } from '@/components/ui/MagicText'
+import { PlanFeatureGrid } from '@/components/ui/PlanFeatureGrid'
 
 /* ─── Colour tokens ──────────────────────────────────────── */
 const C = {
@@ -261,6 +262,26 @@ export default function HeroSection() {
 
       <div style={{ maxWidth: 1480, margin: '40px auto 0' }}>
         <MorphingCardStack />
+      </div>
+
+      {/* Plan feature mosaic — grid of boxes per plan tier */}
+      <div style={{ marginTop: 80, paddingTop: 48, borderTop: '1px solid #f0f0f0' }}>
+        <h3 style={{
+          fontFamily: "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
+          fontSize: 28,
+          fontWeight: 500,
+          color: '#111827',
+          letterSpacing: '-0.8px',
+          lineHeight: 1.3,
+          margin: '0 0 8px',
+          textAlign: 'center',
+        }}>
+          What&apos;s in each plan
+        </h3>
+        <p style={{ fontSize: 15, color: '#6b7280', textAlign: 'center', margin: '0 0 32px', lineHeight: 1.6 }}>
+          Hover a plan to explore its features
+        </p>
+        <PlanFeatureGrid />
       </div>
     </section>
     </>

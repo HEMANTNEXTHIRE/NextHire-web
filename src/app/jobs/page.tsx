@@ -22,7 +22,7 @@ export default function JobsPage() {
         rightTitle="TALK TO AN EXPERT"
         rightSubtitle="Let our team help you find the right role"
         rightLabel="Book a demo"
-        rightHref="/talk-to-an-expert"
+        rightHref="/contact-us"
       />
     </main>
   )

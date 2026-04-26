@@ -51,7 +51,7 @@ export default function Footer() {
             <ul className="nh-footer-list" role="list">
               <li><Link href="/companies" className="nh-footer-link nh-footer-link--section">NextHire for Companies</Link></li>
               <li><Link href="/contact-us" className="nh-footer-link nh-footer-link--sub">Book a demo</Link></li>
-              <li><Link href="/talk-to-an-expert" className="nh-footer-link nh-footer-link--sub">Talk to an expert</Link></li>
+              <li><Link href="/contact-us" className="nh-footer-link nh-footer-link--sub">Talk to an expert</Link></li>
               <li className="nh-footer-gap">
                 <Link href="/companies#companies-platform" className="nh-footer-link nh-footer-link--section">Platform</Link>
               </li>
