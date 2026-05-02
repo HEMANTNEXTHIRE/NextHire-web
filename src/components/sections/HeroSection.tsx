@@ -2,9 +2,7 @@
 
 import React, { useState, useRef, useCallback } from 'react'
 import { WEIGHT } from '@/constants/typography'
-import { MorphingCardStack } from '@/components/ui/MorphingCardStack'
 import { MagicText } from '@/components/ui/MagicText'
-import { PlanFeatureGrid } from '@/components/ui/PlanFeatureGrid'
 
 /* ─── Colour tokens ──────────────────────────────────────── */
 const C = {
@@ -155,7 +153,7 @@ export default function HeroSection() {
             lineHeight: 1.22,
             fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
           }}>
-            Skip application queues
+            The unfair advantage
           </span>
           {/* Second line */}
           <span style={{
@@ -167,7 +165,7 @@ export default function HeroSection() {
             lineHeight: 1.22,
             fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
           }}>
-            Connect hiring managers instantly
+            every job seeker deserves
           </span>
         </h1>
         </div>
@@ -182,8 +180,7 @@ export default function HeroSection() {
           fontWeight: WEIGHT.normal,
           fontFamily: 'inherit',
         }}>
-          Escape the apply and pray cycle. AI scans millions of jobs, applies on
-          your behalf, and introduces you to hiring managers directly
+          Our AI talks to hiring managers on your behalf, uncovers roles never posted online, and coaches you live through every interview
         </p>
 
         {/* Feature checkmarks — matches reference row */}
@@ -193,9 +190,9 @@ export default function HeroSection() {
           marginBottom: '48px', marginTop: '20px',
         }}>
           {[
-            'AI applies to jobs for you',
             'Reach hiring managers directly',
-            'Land interviews on autopilot',
+            'Apply to hidden roles automatically',
+            'Live coaching during real interviews',
           ].map((item) => (
             <span key={item} style={{
               display: 'inline-flex', alignItems: 'center', gap: '7px',
@@ -230,61 +227,19 @@ export default function HeroSection() {
         display:         'flex',
         alignItems:      'center',
         justifyContent:  'center',
-        padding:         'clamp(48px, 9vmax, 100px) clamp(24px, 6vw, 100px)',
+        paddingTop:      '36px',
+        paddingBottom:   '120px',
+        paddingLeft:     'clamp(24px, 6vw, 100px)',
+        paddingRight:    'clamp(24px, 6vw, 100px)',
         textAlign:       'center',
       }}
     >
-      <div style={{ maxWidth: 860, width: '100%' }}>
-        <MagicText text="Our mission is to make getting a job as easy as spending money online, fast, seamless, and powered by intelligence." />
+      <div style={{ maxWidth: 1300, width: '100%' }}>
+        <MagicText text={"Our mission is to make getting a job\nas easy as spending money online,\nseamless, and powered by intelligence."} />
       </div>
     </section>
 
-    {/* ── SECOND: Morphing Card Stack version (A/B comparison) ── */}
-    <section
-      id="home-s1-v2"
-      style={{
-        background: '#ffffff',
-        padding: 'clamp(20px, 3vw, 36px) clamp(20px, 4vw, 60px) clamp(48px, 8vw, 80px)',
-        textAlign: 'center',
-      }}
-    >
-      <h2 style={{
-        fontFamily: "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
-        fontSize: '48px',
-        fontWeight: 500,
-        color: '#000000',
-        letterSpacing: '-1.4px',
-        lineHeight: '57.6px',
-        margin: '0 0 4px',
-      }}>
-        Our Product Differentiation
-      </h2>
-
-      <div style={{ maxWidth: 1480, margin: '40px auto 0' }}>
-        <MorphingCardStack />
-      </div>
-
-      {/* Plan feature mosaic — grid of boxes per plan tier */}
-      <div style={{ marginTop: 80, paddingTop: 48, borderTop: '1px solid #f0f0f0' }}>
-        <h3 style={{
-          fontFamily: "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
-          fontSize: 28,
-          fontWeight: 500,
-          color: '#111827',
-          letterSpacing: '-0.8px',
-          lineHeight: 1.3,
-          margin: '0 0 8px',
-          textAlign: 'center',
-        }}>
-          What&apos;s in each plan
-        </h3>
-        <p style={{ fontSize: 15, color: '#6b7280', textAlign: 'center', margin: '0 0 32px', lineHeight: 1.6 }}>
-          Hover a plan to explore its features
-        </p>
-        <PlanFeatureGrid />
-      </div>
-    </section>
-    </>
+</>
   )
 }
 

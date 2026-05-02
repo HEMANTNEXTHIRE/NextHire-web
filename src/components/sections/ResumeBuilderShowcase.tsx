@@ -184,6 +184,9 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
   )
 
   const icon = (d: string) => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
+  const sectionHeader = (label: string) => (
+    <div style={{ fontSize: 13, fontWeight: 400, color: '#8F8F8F', padding: '16px 14px 2px', lineHeight: '18.2px' }}>{label}</div>
+  )
 
   return (
     <div className="nh-rb-showcase__sidebar" style={{ width: 270, background: '#fff', borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden', fontFamily: FONT, fontSize: 14, color: '#0A1217' }}>
@@ -203,64 +206,65 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
         </div>
       </div>
 
-      <nav style={{ padding: '4px 16px', display: 'flex', flexDirection: 'column', gap: 1, flex: 1 }}>
-        {navItem('resume', 'Resume Builder', icon('M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z'),
-          <span style={{ fontSize: 10, color: '#16a34a', fontWeight: 500, marginLeft: 2 }}>Free</span>
-        )}
+      {/* Nav — flex:1 so it fills space, no internal spacer */}
+      <nav style={{ flex: 1, overflow: 'auto', padding: '4px 16px', display: 'flex', flexDirection: 'column', gap: 1 }}>
+        {navItem('resume', 'Resume Builder', icon('M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z'))}
         {navItem('profile', 'Profile', icon('M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z'),
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
         )}
         {navItem('inmail', 'InMail', icon('M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155'))}
         {navItem('tracker', 'Job Tracker', icon('M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z'))}
-        {navItem('autoapply', 'AI Auto Apply', icon('M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0'))}
+        {navItem('coverletter', 'Cover Letter', icon('M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'))}
+        {navItem('autoapply', 'Auto Apply', icon('M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0'))}
         {navItem('more', 'More', icon('M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm5.25 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm5.25 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'))}
 
-        <div style={{ fontSize: 12, fontWeight: 400, color: '#8F8F8F', padding: '20px 14px 6px' }}>Pro Plan</div>
+        {sectionHeader('Pro Plan')}
         {navItem('coach', 'AI Interview Coach', icon('M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z'))}
 
-        <div style={{ fontSize: 12, fontWeight: 400, color: '#8F8F8F', padding: '20px 14px 6px' }}>Max Plan</div>
+        {sectionHeader('Max Plan')}
         {navItem('outreach', 'AI Outreach Agent', icon('M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H6.75a.75.75 0 010-1.5h1.5c.704 0 1.402-.03 2.09-.09m0 1.68c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38a.75.75 0 01-1.021-.27l-.66-1.14a23.915 23.915 0 01-1.554-3.263M10.34 15.84a23.84 23.84 0 004.22-1.394m-4.22 1.394L9.86 18.5m.48-2.66a23.84 23.84 0 004.22-1.394m0 0a25.14 25.14 0 002.12-1.035 1.334 1.334 0 00.15-2.198L12 7.5'))}
-
-        <div style={{ flex: 1 }} />
-
-        {/* Getting Started */}
-        <div style={{ margin: '0 0 12px', padding: 16, borderRadius: 16, background: 'rgba(10,18,23,0.02)', cursor: 'pointer' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 400, color: '#8F8F8F', marginBottom: 8 }}>
-            <span>Getting Started</span><span>100%</span>
-          </div>
-          <div style={{ height: 6, background: 'rgba(10,18,23,0.08)', borderRadius: 999, overflow: 'hidden', marginBottom: 14 }}>
-            <div style={{ width: '100%', height: '100%', background: '#0A1217', borderRadius: 999 }} />
-          </div>
-          <div style={{ fontSize: 14, fontWeight: 400, color: '#fff', background: '#000', height: 40, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>Upgrade</div>
-        </div>
-
-        {/* Settings */}
-        <div style={{ position: 'relative' }}>
-          <div onClick={() => setSettingsOpen(!settingsOpen)} style={{
-            display: 'flex', alignItems: 'center', gap: 12, padding: '0 14px', height: 36, borderRadius: 999,
-            fontSize: 14, fontWeight: 400, color: '#0A1217', cursor: 'pointer', transition: 'background 0.15s',
-            background: settingsOpen ? '#e5e5e5' : 'transparent',
-          }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            <span style={{ flex: 1 }}>Settings</span>
-            <span style={{ color: '#a3a3a3', fontSize: 14 }}>...</span>
-          </div>
-          {settingsOpen && (
-            <div style={{ position: 'absolute', bottom: 40, left: 0, right: 0, background: '#fff', borderRadius: 12, border: '1px solid #e5e5e5', boxShadow: '0 8px 24px rgba(0,0,0,0.12)', padding: '8px 0', zIndex: 10 }}>
-              <div style={{ padding: '6px 14px', fontSize: 13, color: '#6b7280' }}>user@example.com</div>
-              <div style={{ padding: '4px 14px', fontSize: 11, color: '#a3a3a3', marginBottom: 4 }}>Free plan</div>
-              <div style={{ height: 1, background: '#e5e5e5', margin: '4px 8px' }} />
-              {['Upgrade plan', 'Profile settings', 'Settings', 'Sign out'].map(item => (
-                <div key={item} style={{ padding: '8px 14px', fontSize: 13, color: '#0A1217', cursor: 'pointer' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = '#f5f5f5' }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = 'transparent' }}>
-                  {item}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {navItem('aioutreach', 'AI Outreach', icon('M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z'))}
       </nav>
+
+      {/* Getting Started — pinned outside nav so it never creates a gap */}
+      <div style={{ padding: '8px 16px 12px' }}>
+        <div style={{ padding: 16, borderRadius: 16, background: 'rgba(10,18,23,0.02)', cursor: 'pointer' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 400, color: '#8F8F8F', marginBottom: 8 }}>
+            <span>Getting Started</span><span>0%</span>
+          </div>
+          <div style={{ height: 6, background: 'rgba(10,18,23,0.08)', borderRadius: 999, overflow: 'hidden', marginBottom: 12 }}>
+            <div style={{ width: '0%', height: '100%', background: '#0A1217', borderRadius: 999 }} />
+          </div>
+          <div style={{ fontSize: 14, fontWeight: 400, color: '#fff', background: '#000', height: 36, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Upgrade</div>
+        </div>
+      </div>
+
+      {/* Settings */}
+      <div style={{ padding: '0 16px 16px', position: 'relative' }}>
+        <div onClick={() => setSettingsOpen(!settingsOpen)} style={{
+          display: 'flex', alignItems: 'center', gap: 12, padding: '0 14px', height: 36, borderRadius: 999,
+          fontSize: 14, fontWeight: 400, color: '#0A1217', cursor: 'pointer', transition: 'background 0.15s',
+          background: settingsOpen ? '#e5e5e5' : 'transparent',
+        }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          <span style={{ flex: 1 }}>Settings</span>
+          <span style={{ color: '#a3a3a3', fontSize: 14 }}>...</span>
+        </div>
+        {settingsOpen && (
+          <div style={{ position: 'absolute', bottom: 44, left: 16, right: 16, background: '#fff', borderRadius: 16, border: '1px solid rgba(10,18,23,0.08)', boxShadow: '0 7px 16px rgba(0,0,0,0.08)', padding: '8px', zIndex: 10 }}>
+            <div style={{ padding: '6px 14px', fontSize: 13, color: '#6b7280' }}>user@example.com</div>
+            <div style={{ padding: '2px 14px 6px', fontSize: 11, color: '#a3a3a3' }}>Free plan</div>
+            <div style={{ height: 1, background: '#e5e5e5', margin: '4px 0' }} />
+            {['Upgrade plan', 'Profile settings', 'Settings', 'Sign out'].map(item => (
+              <div key={item} style={{ padding: '8px 14px', fontSize: 13, color: '#0A1217', cursor: 'pointer', borderRadius: 10 }}
+                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = '#f5f5f5' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = 'transparent' }}>
+                {item}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -607,7 +611,7 @@ function ResumeBuilderContent() {
           }}>{t.label}</button>
         ))}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
         {filtered.map((t, i) => (
           <button key={t.name} onClick={() => setSelected(t.name)} style={{
             cursor: 'pointer', textAlign: 'left' as const, background: '#fff', padding: 0, border: 'none', fontFamily: FONT,
@@ -1157,7 +1161,1128 @@ function AutoApplyContent() {
   )
 }
 
+/* ═══ AI Outreach "You Describe" content ═══ */
+
+const DESCRIBE_TARGET = 'Looking for Senior Product Manager in fintech company, open to remote'
+
+function MacCursor() {
+  return (
+    <svg width="22" height="28" viewBox="0 0 22 28" fill="none" style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.25))' }}>
+      <path
+        d="M3 2L3 21L7.5 16.5L11 24L13.5 23L10 15.5L16.5 15.5Z"
+        fill="white"
+        stroke="#1a1a1a"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function YouDescribeContent({ onComplete }: { onComplete?: () => void }) {
+  const [text, setText] = useState('')
+  const [phase, setPhase] = useState<'idle' | 'typing' | 'zoomed' | 'clicking'>('idle')
+
+  /* ── phase transitions ── */
+  useEffect(() => {
+    const t = setTimeout(() => setPhase('typing'), 800)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    if (phase !== 'typing') return
+    let i = 0
+    const iv = setInterval(() => {
+      i++
+      setText(DESCRIBE_TARGET.slice(0, i))
+      if (i >= DESCRIBE_TARGET.length) {
+        clearInterval(iv)
+        setTimeout(() => setPhase('zoomed'), 700)
+      }
+    }, 48)
+    return () => clearInterval(iv)
+  }, [phase])
+
+  useEffect(() => {
+    if (phase !== 'zoomed') return
+    const t = setTimeout(() => setPhase('clicking'), 1200)
+    return () => clearTimeout(t)
+  }, [phase])
+
+  useEffect(() => {
+    if (phase !== 'clicking') return
+    const t = setTimeout(() => onComplete?.(), 900)
+    return () => clearTimeout(t)
+  }, [phase, onComplete])
+
+  const isZoomed   = phase === 'zoomed' || phase === 'clicking'
+  const showHand   = phase === 'zoomed' || phase === 'clicking'
+  const isClicking = phase === 'clicking'
+
+  return (
+    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', padding: '0 40px 80px', fontFamily: FONT }}>
+      <div style={{ width: '100%', maxWidth: 640 }}>
+
+        {/* Greeting */}
+        <div style={{ marginBottom: 36, textAlign: 'center' }}>
+          <h2 style={{ fontSize: 38, fontWeight: 500, color: '#0A1217', lineHeight: 1.25, letterSpacing: '-0.5px', margin: 0 }}>
+            Hey, What job you are looking for?
+          </h2>
+          <p style={{ fontSize: 15, color: 'rgba(10,18,23,0.45)', marginTop: 12, lineHeight: '22px', margin: '12px 0 0' }}>
+            Define your target job and we&apos;ll match you with the right recruiters.
+          </p>
+        </div>
+
+        {/* Search bar — zooms from right on enter */}
+        <div style={{
+          position: 'relative',
+          transform: isZoomed ? 'scale(1.08)' : 'scale(1)',
+          transformOrigin: 'right center',
+          transition: 'transform 0.55s cubic-bezier(0.34, 1.3, 0.64, 1)',
+        }}>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 12, padding: '0 10px 0 20px',
+            height: 60, borderRadius: 999, background: '#fff',
+            boxShadow: isZoomed ? '0 8px 40px rgba(0,0,0,0.14)' : '0 4px 24px rgba(0,0,0,0.09)',
+            border: `1px solid ${isZoomed ? 'rgba(10,18,23,0.22)' : 'rgba(10,18,23,0.12)'}`,
+            transition: 'box-shadow 0.4s, border-color 0.4s',
+          }}>
+            {/* Magnifying glass */}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(10,18,23,0.35)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+
+            {/* Typed text or placeholder */}
+            <div style={{ flex: 1, fontSize: 15, fontWeight: 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', color: text ? '#0A1217' : 'rgba(10,18,23,0.38)' }}>
+              {text || 'Product Manager role in New York at an eCommerce company'}
+              {phase === 'typing' && (
+                <span style={{ display: 'inline-block', width: 2, height: 16, background: '#0A1217', marginLeft: 2, verticalAlign: 'middle', animation: 'hiw-cursor-blink 0.65s infinite' }} />
+              )}
+            </div>
+
+            {/* Submit arrow */}
+            <div style={{
+              width: 42, height: 42, borderRadius: '50%', flexShrink: 0,
+              background: isClicking ? '#16a34a' : '#0A1217',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transform: isClicking ? 'scale(0.87)' : 'scale(1)',
+              transition: 'transform 0.15s ease-in-out, background 0.2s, box-shadow 0.2s',
+              boxShadow: isClicking ? '0 0 0 5px rgba(22,163,74,0.22)' : 'none',
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </div>
+          </div>
+
+          {/* Hand cursor — arrives from below, clicks the button */}
+          {showHand && (
+            <div style={{
+              position: 'absolute',
+              right: 4,
+              top: 100,
+              pointerEvents: 'none',
+              animation: isClicking
+                ? 'hiw-hand-click 0.75s ease-in-out forwards'
+                : 'hiw-hand-arrive 0.55s cubic-bezier(0.34, 1.4, 0.64, 1) forwards',
+            }}>
+              <MacCursor />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ═══ Agent Discovers — company results UI ═══ */
+
+const FINTECH_COMPANIES = [
+  { n: 15, name: 'One97 Communications Limited',       desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',            industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held' },
+  { n: 16, name: 'Airtel Payments Bank',               desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
+  { n: 17, name: 'Cars24',                             desc: 'One of India\'s largest auto-tech companies. Harnessing cutting-edge technology to revolutionize mobility.', industry: 'Technology, Information and Internet', size: '5,001–10,000', type: 'Privately Held' },
+  { n: 18, name: 'Zetheta Algorithms Pvt. Ltd.',       desc: 'FinTech startup pioneering innovation in financial markets through gamified simulations.',                   industry: 'Technology, Information and Internet', size: '51–200',       type: 'Privately Held' },
+  { n: 19, name: 'National Payments Corporation (NPCI)',desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit'     },
+  { n: 20, name: 'Pine Labs',                          desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
+  { n: 21, name: 'Fincare Small Finance Bank',         desc: 'Excited to be a part of AU Small Finance Bank from April 2024. One of the fastest-growing digital banks.',  industry: 'Banking',                             size: '10,001+',      type: 'Privately Held' },
+  { n: 22, name: 'BharatPe',                           desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',               industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held' },
+  { n: 23, name: 'TVS Credit Services Ltd.',           desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                   industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held' },
+  { n: 24, name: 'Union Bank of India',                desc: 'One of the leading public sector banks. Network of 8,650+ domestic branches and 74,100+ employees.',        industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
+  { n: 25, name: 'Marquee Equity',                     desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',            industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held' },
+  { n: 26, name: 'Cashfree Payments',                  desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',          industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held' },
+  { n: 27, name: 'Angel One',                          desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',           industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
+  { n: 28, name: 'Jupiter',                            desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',       industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held' },
+  { n: 29, name: 'Punjab National Bank',               desc: 'Incorporated in 1895. 6,950+ domestic branches, serving more than 10 crore esteemed customers.',            industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
+  { n: 30, name: 'Rupeek',                             desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
+]
+
+
+const AI_RESPONSE_TEXT = "On it. I've mapped out fintech companies actively hiring for a Senior Product Manager, fully remote. These aren't job board listings. These are companies showing real hiring signals right now.\n\nBrowse the preview or tell me if you want to filter by stage, size, or fintech niche."
+const AI_WORDS = AI_RESPONSE_TEXT.split(' ')
+
+function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
+  const F = FONT
+  const [wordIdx, setWordIdx]           = useState(0)
+  const [showKeywords, setShowKeywords] = useState(false)
+  const [showLocation, setShowLocation] = useState(false)
+  const [showCompanies, setShowCompanies] = useState(false)
+  const [allSelected, setAllSelected]   = useState(false)
+  const [phase, setPhase] = useState<'idle' | 'arriving' | 'selecting' | 'moving' | 'connecting'>('idle')
+
+  const typedText    = AI_WORDS.slice(0, wordIdx).join(' ')
+  const isTypingDone = wordIdx >= AI_WORDS.length
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | null = null
+    const post: ReturnType<typeof setTimeout>[] = []
+
+    const start = setTimeout(() => {
+      let w = 0
+      interval = setInterval(() => {
+        w++
+        setWordIdx(w)
+        if (w === 2)  setShowKeywords(true)
+        if (w === 10) setShowLocation(true)
+        if (w >= AI_WORDS.length) {
+          clearInterval(interval!)
+          interval = null
+          post.push(
+            setTimeout(() => setShowCompanies(true),                         500),
+            setTimeout(() => setPhase('arriving'),                           1500),
+            setTimeout(() => { setPhase('selecting'); setAllSelected(true) }, 3200),
+            setTimeout(() => setPhase('moving'),                             4400),
+            setTimeout(() => setPhase('connecting'),                         5800),
+            setTimeout(() => onComplete?.(),                                 7000),
+          )
+        }
+      }, 65)
+    }, 400)
+
+    return () => {
+      clearTimeout(start)
+      if (interval) clearInterval(interval)
+      post.forEach(clearTimeout)
+    }
+  }, [])
+
+  const Checkbox = ({ checked }: { checked: boolean }) => (
+    <div style={{
+      width: 15, height: 15, borderRadius: 3,
+      border: checked ? 'none' : '1.5px solid #d1d5db',
+      background: checked ? '#0A1217' : '#fff',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0, transition: 'background 0.15s ease',
+    }}>
+      {checked && (
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      )}
+    </div>
+  )
+
+  const tag = (label: string) => (
+    <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 10px', borderRadius: 999, background: '#e0f2fe', color: '#0369a1', fontSize: 12, fontWeight: 500, fontFamily: F }}>
+      {label}
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+    </span>
+  )
+
+  const trunc: React.CSSProperties = { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
+
+  let handAnim = ''
+  if (phase === 'arriving')   handAnim = 'adc-hand-arrive'
+  if (phase === 'selecting')  handAnim = 'adc-hand-select'
+  if (phase === 'moving')     handAnim = 'adc-hand-move'
+  if (phase === 'connecting') handAnim = 'adc-hand-connect'
+
+  return (
+    <div style={{ flex: 1, display: 'flex', overflow: 'hidden', background: '#fff', fontFamily: F }}>
+
+      {/* ── Left: filter sidebar ── */}
+      <div style={{ width: 268, borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden' }}>
+        <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid #f0f0f0' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#0A1217', marginBottom: 6 }}>Find companies with filters</div>
+          <div style={{ display: 'flex', gap: 12, fontSize: 12, color: '#6b7280' }}>
+            <span style={{ cursor: 'pointer', textDecoration: 'underline' }}>See past searches</span>
+            <span style={{ cursor: 'pointer', textDecoration: 'underline' }}>Save search</span>
+          </div>
+        </div>
+        <div style={{ flex: 1, overflow: 'auto', padding: '12px 16px' }}>
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 12, fontWeight: 500, color: '#374151', marginBottom: 8 }}>Description keywords to include</div>
+            {showKeywords && (
+              <div className="adc-fade-in" style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                {['fintech', 'financial technology', 'payments', 'digital banking', 'digital finance'].map(tag)}
+              </div>
+            )}
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 12, fontWeight: 500, color: '#374151', marginBottom: 6 }}>Description keywords to exclude</div>
+            <div style={{ height: 28, border: '1px solid #e5e5e5', borderRadius: 6, padding: '0 8px', fontSize: 12, color: '#9ca3af', display: 'flex', alignItems: 'center' }}>e.g. agency, marketing</div>
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 12, fontWeight: 500, color: '#374151', marginBottom: 6 }}>Minimum estimated audience size</div>
+            <div style={{ height: 28, border: '1px solid #e5e5e5', borderRadius: 6, padding: '0 8px', fontSize: 12, color: '#9ca3af', display: 'flex', alignItems: 'center' }}>e.g. 10</div>
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+              <div style={{ fontSize: 12, fontWeight: 500, color: '#374151' }}>Location</div>
+              {showLocation && (
+                <span className="adc-fade-in" style={{ fontSize: 11, background: '#f3f4f6', borderRadius: 4, padding: '1px 7px', color: '#6b7280', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>
+                  1 filter
+                </span>
+              )}
+            </div>
+            <div style={{ fontSize: 11, color: '#6b7280', marginBottom: 4 }}>Countries to include</div>
+            {showLocation ? (
+              <div className="adc-fade-in" style={{ display: 'flex', gap: 5, marginBottom: 8 }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 10px', borderRadius: 999, background: '#e0f2fe', color: '#0369a1', fontSize: 12, fontWeight: 500 }}>
+                  India
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </span>
+              </div>
+            ) : (
+              <div style={{ height: 24, border: '1px solid #e5e5e5', borderRadius: 5, fontSize: 11, color: '#9ca3af', display: 'flex', alignItems: 'center', padding: '0 8px', marginBottom: 8 }}>e.g. India, USA</div>
+            )}
+            <div style={{ fontSize: 11, color: '#6b7280', marginBottom: 4 }}>Countries to exclude</div>
+            <div style={{ height: 24, border: '1px solid #e5e5e5', borderRadius: 5, fontSize: 11, color: '#9ca3af', display: 'flex', alignItems: 'center', padding: '0 8px', marginBottom: 8 }}>e.g. France, Germany</div>
+            <div style={{ fontSize: 11, color: '#6b7280', marginBottom: 4 }}>Cities or states to include</div>
+            <div style={{ height: 24, border: '1px solid #e5e5e5', borderRadius: 5, fontSize: 11, color: '#9ca3af', display: 'flex', alignItems: 'center', padding: '0 8px', marginBottom: 8 }}>e.g. Mumbai, Bengaluru</div>
+          </div>
+        </div>
+        <div style={{ padding: '10px 16px', borderTop: '1px solid #f0f0f0', fontSize: 12, color: '#6b7280' }}>
+          {showCompanies
+            ? <>Showing 60 of <strong style={{ color: '#0A1217' }}>4,311</strong> results</>
+            : 'Searching…'}
+        </div>
+      </div>
+
+      {/* ── Center: company table ── */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0, position: 'relative' }}>
+        {/* Top bar with Connect button */}
+        <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #e5e5e5', padding: '0 16px', height: 44, flexShrink: 0 }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: showCompanies ? '#0A1217' : '#9ca3af' }}>
+            {showCompanies ? '216 companies found' : 'Scanning…'}
+          </span>
+          {showCompanies && <span className="adc-fade-in" style={{ marginLeft: 8, fontSize: 12, color: '#6b7280' }}>· Fintech · India</span>}
+          <button style={{
+            marginLeft: 'auto',
+            display: 'flex', alignItems: 'center', gap: 6,
+            fontSize: 13, fontWeight: 500, color: '#fff',
+            background: allSelected ? '#2e7d4f' : '#1a3338',
+            border: 'none', borderRadius: 999,
+            padding: '0 18px', height: 32,
+            cursor: 'pointer', fontFamily: F,
+            transition: 'background 0.25s ease',
+          }}>
+            Connect
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+          </button>
+        </div>
+
+        {/* Table header */}
+        <div style={{ display: 'grid', gridTemplateColumns: '26px 32px 190px 1fr 158px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
+          <Checkbox checked={allSelected} />
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>#</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Company</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Description</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Industry</span>
+        </div>
+
+        {/* Rows or scanning placeholder */}
+        {showCompanies ? (
+          <div className="adc-fade-in" style={{ flex: 1, overflow: 'auto' }}>
+            {FINTECH_COMPANIES.map((co, i) => (
+              <div key={co.n} style={{
+                display: 'grid', gridTemplateColumns: '26px 32px 190px 1fr 158px',
+                padding: '0 16px', minHeight: 40, alignItems: 'center',
+                borderBottom: '1px solid #f5f5f5',
+                background: i % 2 === 0 ? '#fff' : '#fafafa',
+              }}>
+                <Checkbox checked={allSelected} />
+                <span style={{ fontSize: 12, color: '#9ca3af' }}>{co.n}</span>
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{co.name}</span>
+                <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.desc}</span>
+                <span style={{ fontSize: 12, color: '#6b7280', ...trunc }}>{co.industry}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ fontSize: 13, color: '#9ca3af', letterSpacing: 0.1 }}>Scanning fintech companies in India…</span>
+          </div>
+        )}
+
+        {/* Hand cursor overlay — positioned at table-header checkbox (top:44+9=53px, left:16px) */}
+        {phase !== 'idle' && (
+          <div className={handAnim} style={{ position: 'absolute', top: 53, left: 18, zIndex: 10, pointerEvents: 'none' }}>
+            <MacCursor />
+          </div>
+        )}
+      </div>
+
+      {/* ── Right: AI chat ── */}
+      <div style={{ width: 360, borderLeft: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, background: '#fff' }}>
+        <div style={{ padding: '12px 14px 10px', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#0A1217', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>AI Outreach Agent</span>
+        </div>
+        <div style={{ flex: 1, overflow: 'auto', padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {/* User message */}
+          <div style={{ alignSelf: 'flex-end', maxWidth: '80%' }}>
+            <div style={{ background: '#0A1217', color: '#fff', borderRadius: '16px 16px 4px 16px', padding: '8px 14px', fontSize: 13, lineHeight: 1.5, fontFamily: F }}>
+              Looking for Senior Product Manager in fintech company, open to remote
+            </div>
+          </div>
+          {/* AI types word-by-word */}
+          {wordIdx > 0 && (
+            <div style={{ alignSelf: 'flex-start', maxWidth: '92%' }}>
+              <div style={{ background: '#f3f4f6', color: '#0A1217', borderRadius: '4px 16px 16px 16px', padding: '10px 14px', fontSize: 13, lineHeight: 1.6, fontFamily: F, whiteSpace: 'pre-line' }}>
+                {typedText}
+                {!isTypingDone && <span className="adc-cursor"> |</span>}
+              </div>
+            </div>
+          )}
+        </div>
+        <div style={{ padding: '10px 14px', borderTop: '1px solid #e5e5e5', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <input readOnly placeholder="Filter by stage, size, or niche…" style={{ flex: 1, height: 34, border: '1px solid #e5e5e5', borderRadius: 999, padding: '0 12px', fontSize: 13, color: '#9ca3af', fontFamily: F, outline: 'none', background: '#fafafa' }} />
+          <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#0A1217', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, cursor: 'pointer' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ═══ Agent Reaches ═══ */
+
+const REACH_PEOPLE = [
+  { n:  1, name: 'James Smith',           company: 'Paypal',   title: 'Talent Acquisition',                    location: 'Noida, Uttar Pradesh, India',          li: 'mohd-altamash-ali-49860515a' },
+  { n:  2, name: 'Robert Smith',          company: 'Stripe',   title: 'Talent Acquisition Manager',             location: 'India',                                li: 'ritikaverma29' },
+  { n:  3, name: 'James Johnson',         company: 'Revolut',   title: 'General Manager - HRBP',                 location: 'Bengaluru, Karnataka, India',           li: 'shriman-n-s-41632830' },
+  { n:  4, name: 'Maria Martinez',        company: 'Airtel Payments Bank',   title: 'Talent Acquisition Specialist',          location: 'Pune, Maharashtra, India',             li: 'sayali-patil-14a38318' },
+  { n:  5, name: 'Charles Wilson',        company: 'Paytm',   title: 'Human Resources Business Partner',       location: 'Ahmedabad, Gujarat, India',            li: 'himanshi-81150b141' },
+  { n:  6, name: 'Maria Garcia',          company: 'Jupiter', title: 'Assistant Manager-HR',                   location: 'Bengaluru, Karnataka, India',           li: 'karuna-rana-136774a9' },
+  { n:  7, name: 'Barbara Williams',      company: 'Fiserv',   title: 'Human Resources Executive',              location: 'Noida, Uttar Pradesh, India',          li: 'amresh-singh-b88811177' },
+  { n:  8, name: 'James Gonzalez',        company: 'Chime',   title: 'Talent Acquisition Lead',                location: 'Delhi, India',                         li: 'seemayadav5' },
+  { n:  9, name: 'Charles Moore',         company: 'Razorpay',   title: 'Talent Acquisition',                     location: 'Noida, Uttar Pradesh, India',          li: 'sumerjain-hr' },
+  { n: 10, name: 'Atul Chaturvedi',       company: '',   title: 'Executive Manager HR',                   location: 'Noida, Uttar Pradesh, India',          li: 'atul-chaturvedi-382695a' },
+  { n: 11, name: 'Linda Jones',           company: 'Coinbase',   title: 'AVP - HRBP',                             location: 'Delhi, India',                         li: 'sonali-sood-5abb431b' },
+  { n: 12, name: 'Susan Miller',          company: 'Intuit',   title: 'Senior Talent Acquisition Specialist',   location: 'Gurugram, Haryana, India',             li: 'ratanchourashiahr' },
+  { n: 13, name: 'Michael Hernandez',     company: 'Mastercard',   title: 'Regional HR Business Partner',           location: 'India',                                li: 'ayush-dubey-students-jaipuria-indore-79b984194' },
+  { n: 14, name: 'Lakita Joshi',          company: 'Paytm',   title: 'Human Resources Executive',              location: 'Ghaziabad, Uttar Pradesh, India',      li: 'lakita-joshi-1b52671b0' },
+  { n: 15, name: 'Pradeep Malik',         company: 'Wise',   title: 'Deputy Manager - HRBP',                  location: 'Noida, Uttar Pradesh, India',          li: 'pradeep-malik-hr' },
+  { n: 16, name: 'Katerina Papadakis',    company: 'Plaid',   title: 'HR - Talent Acquisition',                location: 'Greater Delhi Area, India',            li: 'nitika-goyal-3406406a' },
+  { n: 17, name: 'Giannis Oikonomou',     company: 'Revolut',   title: 'Talent Acquisition Intern',              location: 'India',                                li: 'prachi-garg06' },
+  { n: 18, name: 'Ashish Banga',          company: 'Wealthfront',   title: 'Vice President Human Resources',         location: 'Gurugram, Haryana, India',             li: 'ashish-banga-90673014' },
+  { n: 19, name: 'Nitesh Sulyia',         company: 'Securitize',   title: 'Talent Acquisition Recruiter',           location: 'Noida, Uttar Pradesh, India',          li: 'nitesh-sulyia-19aa22191' },
+  { n: 20, name: 'Maria Papadopoulou',    company: 'Stripe',   title: 'Talent Acquisition',                     location: 'Greater Delhi Area, India',            li: 'yuvika-pandey-b7967015a' },
+  { n: 21, name: 'Adhishree Gupta',       company: 'Ramp',   title: 'Senior Associate - Talent Acquisition',  location: 'Noida, Uttar Pradesh, India',          li: 'adhishreegupta' },
+  { n: 22, name: 'Manish Kumar Sharma',   company: 'Brex',   title: 'Manager HRBP',                           location: 'Chandigarh, India',                    li: 'manish-kumar-sharma-16937754' },
+  { n: 23, name: 'Eleni Pappas',          company: 'Tencent',   title: 'Senior Human Resources Associate',       location: 'Noida, Uttar Pradesh, India',          li: 'sakshi-goyal-242b0912a' },
+  { n: 24, name: 'Olivia Brown',          company: 'Mastercard',   title: 'Human Resources Manager',                location: 'Noida, Uttar Pradesh, India',          li: 'saumya-singh-076773113' },
+  { n: 25, name: 'Malaya Priyadarshan',   company: 'Chime',   title: 'HRBP',                                   location: 'Uttar Pradesh, India',                 li: 'malaya-priyadarshan-a2b19383' },
+  { n: 26, name: 'Himani Singh',          company: 'Kin Insurance',   title: 'Human Resources Team Lead',              location: 'Noida, Uttar Pradesh, India',          li: 'himani-singh-580527141' },
+  { n: 27, name: 'Ariel Levi',            company: 'Securitize',   title: 'Human Resources Business Partner',       location: 'Noida, Uttar Pradesh, India',          li: 'radhika-tyagi-976500b7' },
+  { n: 28, name: 'Awalpreet Kaur',        company: 'Brex',   title: 'Senior Associate - Talent Acquisition',  location: 'Noida, Uttar Pradesh, India',          li: 'awalpreet-kaur-4bb5a0181' },
+  { n: 29, name: 'Aditya Rishi',          company: 'Wise',   title: 'Human Resources Manager',                location: 'Greater Delhi Area, India',            li: 'aditya-rishi-a2a80127' },
+  { n: 30, name: 'Brijesh Tripathi',      company: 'Paypal',   title: 'Talent Acquisition',                     location: 'Pune District, Maharashtra, India',    li: 'brijesh-tripathi-67b475122' },
+  { n: 31, name: 'David Cohen',           company: 'Paytm',   title: 'General Manager - HR',                   location: 'Gurugram, Haryana, India',             li: 'gaurav-wadhwa-5098216a' },
+  { n: 32, name: 'Sudharani .',           company: 'Wealthfront',   title: 'HR Executive',                           location: 'Bengaluru, Karnataka, India',           li: 'sudharani-70b77923a' },
+  { n: 33, name: 'Amrita Roy',            company: 'Kin Insurance',   title: 'Talent Acquisition Specialist',          location: 'Kolkata, West Bengal, India',          li: 'amrita-roy-0818b9214' },
+  { n: 34, name: 'Avigail Goldberg',      company: 'Chime',   title: 'Team Lead - HR',                         location: 'Delhi, India',                         li: 'somya-saxena-8153b8218' },
+  { n: 35, name: 'Jhalak Monga',          company: 'Jupiter',   title: 'Talent Acquisition Recruiter',           location: 'Delhi, India',                         li: 'jhalakmonga2312' },
+  { n: 36, name: 'Ayala Shapiro',         company: 'Relay',   title: 'Talent Acquisition Specialist',          location: 'Noida, Uttar Pradesh, India',          li: 'pulkit-chitranshi-a00793279' },
+  { n: 37, name: 'Shruti Arora',          company: 'Revolut',   title: 'Team Leader - Human Resources',          location: 'Delhi, India',                         li: 'shruti-arora-75480822a' },
+  { n: 38, name: 'Amelia Williams',       company: 'Ramp',   title: 'Vice President - HR',                    location: 'Gurugram, Haryana, India',             li: 'raakkhisingh' },
+  { n: 39, name: 'Muhammad Aziz',         company: 'Jupiter',   title: 'Talent Acquisition',                     location: 'Delhi, India',                         li: 'renu-chouhan-04744b1b6' },
+  { n: 40, name: 'Narendra Piprotar',     company: 'Paytm',   title: 'Training Manager',                       location: 'Ahmedabad, Gujarat, India',            li: 'narendra-piprotar-199135a2' },
+  { n: 41, name: 'Charu Bansal',          company: 'Stripe',   title: 'Talent Acquisition',                     location: 'Agra, Uttar Pradesh, India',           li: 'charu-bansal-87a9462a1' },
+  { n: 42, name: 'Tamar Ben-David',       company: 'Paypal',   title: 'Human Resources Intern',                 location: 'Ghaziabad, Uttar Pradesh, India',      li: 'shivangi-sharma-93100a262' },
+  { n: 43, name: 'Lily Davies',           company: 'Relay',   title: 'DGM Human Resources',                    location: 'South Delhi, Delhi, India',            li: 'chandrapriyanka' },
+  { n: 44, name: 'Aparna Srivastava',     company: 'Mastercard',   title: 'Vice President Human Resources',         location: 'Bengaluru, Karnataka, India',           li: 'aparna-srivastava-b310333a' },
+  { n: 45, name: 'Muhammad Taylor',       company: 'Ramp',   title: 'HR',                                     location: 'Delhi, India',                         li: 'shivangi-gubrele-63882b118' },
+  { n: 46, name: 'Naveen Mascarenhas',    company: 'Jupiter', title: 'Lead HR',                                location: 'Bengaluru, Karnataka, India',           li: 'naveen-f-mascarenhas-b36039130' },
+  { n: 47, name: 'Oliver Jones',          company: 'Tencent',   title: 'Talent Acquisition Lead',                location: 'Greater Bengaluru Area, India',        li: 'avinash-v-p-750ab6205' },
+  { n: 48, name: 'Karen Smith',           company: 'Revolut',   title: 'Human Resources Partner',                location: 'Gurgaon, Haryana, India',              li: 'avipsa-mohanty-a602361b' },
+  { n: 49, name: 'Jessica Jackson',       company: 'Robinhood',   title: 'Recruiter',                              location: 'Jamshedpur, Jharkhand, India',         li: 'shekharkumarsingh' },
+  { n: 50, name: 'Patricia Lopez',        company: 'PhonePe',   title: 'Human Resources Intern',                 location: 'Thrissur, Kerala, India',              li: 'reema-shibu-1827a9267' },
+]
+
+const EMAIL_SUBJECT = 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles'
+const EMAIL_PARAS = [
+  'Hi {{First Name}},',
+  'I hope this message finds you well.',
+  'I am a Senior Product Manager with 8 years of experience in fintech and consumer tech. I have led 0-to-1 product launches, scaled key product flows from 50K to 2M+ daily active users, and partnered with engineering, design, and data teams to ship features that move core business metrics.',
+  'I am reaching out about the Senior PM opportunity on your team. My background in product discovery, roadmap prioritisation, and cross-functional leadership aligns closely with what you are building. I have attached my resume for your review.',
+  'I would love a 20-minute call to explore how I can contribute. Thank you for your time and I look forward to connecting.',
+]
+
+function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
+  const F = FONT
+  const [view, setView]               = useState<'people' | 'email'>('people')
+  const [allSelected, setAllSelected] = useState(false)
+  const [phase, setPhase] = useState<
+    'idle' | 'arriving' | 'selecting' | 'moving-out' | 'clicking-out' |
+    'email-shown' | 'moving-send' | 'clicking-send'
+  >('idle')
+  const [connectedCount, setConnectedCount] = useState(0)
+  const [subjectChars, setSubjectChars]     = useState(0)
+  const [bodyParas, setBodyParas]           = useState(0)
+  const [showResume, setShowResume]         = useState(false)
+
+  /* People-view animation (runs once on mount) */
+  useEffect(() => {
+    const T = [
+      setTimeout(() => setPhase('arriving'),                           1000),
+      setTimeout(() => { setPhase('selecting'); setAllSelected(true) }, 2600),
+      setTimeout(() => setPhase('moving-out'),                         3900),
+      setTimeout(() => setPhase('clicking-out'),                       5100),
+      setTimeout(() => { setView('email'); setPhase('email-shown') },  5800),
+    ]
+    return () => T.forEach(clearTimeout)
+  }, [])
+
+  /* Email-view animation (triggers once when view becomes 'email') */
+  useEffect(() => {
+    if (view !== 'email') return
+    let subjectInterval: ReturnType<typeof setInterval> | null = null
+    let rcvInterval:     ReturnType<typeof setInterval> | null = null
+    const T: ReturnType<typeof setTimeout>[] = []
+
+    /* Recipients stagger */
+    let rcv = 0
+    rcvInterval = setInterval(() => {
+      rcv++
+      setConnectedCount(rcv)
+      if (rcv >= REACH_PEOPLE.length) { clearInterval(rcvInterval!); rcvInterval = null }
+    }, 80)
+
+    /* Subject typing starts at 500ms */
+    T.push(setTimeout(() => {
+      let idx = 0
+      subjectInterval = setInterval(() => {
+        idx++
+        setSubjectChars(idx)
+        if (idx >= EMAIL_SUBJECT.length) { clearInterval(subjectInterval!); subjectInterval = null }
+      }, 30)
+    }, 500))
+
+    const SDONE = 500 + EMAIL_SUBJECT.length * 30   // ≈ 2510 ms after email view opens
+
+    T.push(setTimeout(() => setBodyParas(1), SDONE + 300))
+    T.push(setTimeout(() => setBodyParas(2), SDONE + 1000))
+    T.push(setTimeout(() => setBodyParas(3), SDONE + 1800))
+    T.push(setTimeout(() => setBodyParas(4), SDONE + 3000))
+    T.push(setTimeout(() => setBodyParas(5), SDONE + 4000))
+    T.push(setTimeout(() => setShowResume(true),             SDONE + 4700))
+    T.push(setTimeout(() => setPhase('moving-send'),         SDONE + 5500))
+    T.push(setTimeout(() => setPhase('clicking-send'),       SDONE + 6800))
+    T.push(setTimeout(() => onComplete?.(),                  SDONE + 7800))
+
+    return () => {
+      if (subjectInterval) clearInterval(subjectInterval)
+      if (rcvInterval)     clearInterval(rcvInterval)
+      T.forEach(clearTimeout)
+    }
+  }, [view])
+
+  const Checkbox = ({ checked }: { checked: boolean }) => (
+    <div style={{
+      width: 15, height: 15, borderRadius: 3,
+      border: checked ? 'none' : '1.5px solid #d1d5db',
+      background: checked ? '#0A1217' : '#fff',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0, transition: 'background 0.15s ease',
+    }}>
+      {checked && <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
+    </div>
+  )
+
+  const trunc: React.CSSProperties = { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
+
+  /* ── People view ── */
+  if (view === 'people') {
+    let handAnim = ''
+    if (phase === 'arriving')     handAnim = 'arc-people-arrive'
+    if (phase === 'selecting')    handAnim = 'arc-people-select'
+    if (phase === 'moving-out')   handAnim = 'arc-people-move'
+    if (phase === 'clicking-out') handAnim = 'arc-people-click'
+
+    const cols = '26px 32px 180px 120px 210px 190px 1fr'
+
+    return (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#fff', fontFamily: F, position: 'relative' }}>
+        {/* Top bar */}
+        <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #e5e5e5', padding: '0 20px', height: 44, flexShrink: 0, gap: 8 }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>Matches</span>
+          <span style={{ fontSize: 12, background: '#f3f4f6', color: '#6b7280', padding: '2px 10px', borderRadius: 999, fontWeight: 500 }}>50</span>
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
+            <button style={{ fontSize: 12, fontWeight: 500, color: '#6b7280', background: '#f3f4f6', border: 'none', borderRadius: 6, padding: '0 14px', height: 30, cursor: 'pointer', fontFamily: F }}>Review</button>
+            <button style={{ fontSize: 13, fontWeight: 500, color: '#fff', background: allSelected ? '#2e7d4f' : '#1a3338', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, transition: 'background 0.25s ease', display: 'flex', alignItems: 'center', gap: 6 }}>
+              Connect
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+        {/* Table header */}
+        <div style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0 }}>
+          <Checkbox checked={allSelected} />
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>#</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Name</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Company</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Job Title</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Location</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>LinkedIn URL</span>
+        </div>
+        {/* Rows */}
+        <div style={{ flex: 1, overflow: 'auto' }}>
+          {REACH_PEOPLE.map((p, i) => (
+            <div key={p.n} style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', minHeight: 40, alignItems: 'center', borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
+              <Checkbox checked={allSelected} />
+              <span style={{ fontSize: 12, color: '#9ca3af' }}>{p.n}</span>
+              <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{p.name}</span>
+              <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.company}</span>
+              <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.title}</span>
+              <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{p.location}</span>
+              <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc }}>linkedin.com/in/{p.li}</span>
+            </div>
+          ))}
+        </div>
+        {/* Hand cursor — base at table-header checkbox (top:53, left:20) */}
+        {phase !== 'idle' && (
+          <div className={handAnim} style={{ position: 'absolute', top: 53, left: 20, zIndex: 10, pointerEvents: 'none' }}>
+            <MacCursor />
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  /* ── Email view ── */
+  let sendHandAnim = ''
+  if (phase === 'moving-send')   sendHandAnim = 'arc-hand-appear'
+  if (phase === 'clicking-send') sendHandAnim = 'arc-hand-send-click'
+
+  return (
+    <div style={{ flex: 1, display: 'flex', overflow: 'hidden', background: '#fff', fontFamily: F, position: 'relative' }}>
+
+      {/* Left: recipients panel */}
+      <div style={{ width: 260, borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, background: '#fafafa' }}>
+        <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid #f0f0f0' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#0A1217', marginBottom: 2 }}>
+            Adding {connectedCount} profile{connectedCount !== 1 ? 's' : ''}
+          </div>
+          <div style={{ fontSize: 11, color: '#6b7280', marginBottom: 10 }}>Sequence will start immediately</div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            {([['No Issues', connectedCount], ['Warnings', 0], ['Next Reviews', 0]] as const).map(([lbl, val]) => (
+              <div key={lbl} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#0A1217' }}>{val}</div>
+                <div style={{ fontSize: 10, color: '#9ca3af', marginTop: 1 }}>{lbl}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ padding: '10px 16px 6px', fontSize: 12, fontWeight: 600, color: '#374151' }}>
+          Recipients ({connectedCount})
+        </div>
+        <div style={{ flex: 1, overflow: 'auto', padding: '0 16px 12px' }}>
+          {REACH_PEOPLE.slice(0, connectedCount).map((p) => (
+            <div key={p.n} className="adc-fade-in" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid #f0f0f0' }}>
+              <div style={{ width: 26, height: 26, borderRadius: '50%', background: `hsl(${(p.name.charCodeAt(0) * 37 + p.name.charCodeAt(1) * 17) % 360},42%,62%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 10, fontWeight: 600, color: '#fff', fontFamily: F }}>
+                {p.name.split(' ').slice(0, 2).map(w => w[0]).join('')}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 12, fontWeight: 500, color: '#0A1217', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
+                <div style={{ fontSize: 11, color: '#6b7280', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.company}</div>
+              </div>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto', flexShrink: 0 }}><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right: email composer */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', height: 44, borderBottom: '1px solid #e5e5e5', flexShrink: 0 }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>Email</span>
+          <span style={{ fontSize: 12, color: '#9ca3af', marginLeft: 8 }}>· New thread · sent immediately</span>
+          <button style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 500, color: '#fff', background: '#2e7d4f', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, display: 'flex', alignItems: 'center', gap: 6 }}>
+            Connect
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+        {/* From / Subject */}
+        <div style={{ flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', height: 36, borderBottom: '1px solid #f5f5f5', gap: 10 }}>
+            <span style={{ fontSize: 12, color: '#9ca3af', width: 52, flexShrink: 0 }}>From</span>
+            <span style={{ fontSize: 13, color: '#374151' }}>hemant@gmail.com</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', height: 36, borderBottom: '1px solid #f0f0f0', gap: 10 }}>
+            <span style={{ fontSize: 12, color: '#9ca3af', width: 52, flexShrink: 0 }}>Subject</span>
+            <span style={{ fontSize: 13, color: '#0A1217', flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {EMAIL_SUBJECT.slice(0, subjectChars)}
+              {subjectChars > 0 && subjectChars < EMAIL_SUBJECT.length && <span className="adc-cursor"> |</span>}
+            </span>
+          </div>
+        </div>
+        {/* Toolbar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 20px', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+          {['B','I','U'].map(t => (
+            <button key={t} style={{ width: 26, height: 26, borderRadius: 4, border: '1px solid #e5e5e5', background: '#fff', fontSize: 12, fontWeight: t === 'B' ? 700 : 400, fontStyle: t === 'I' ? 'italic' : 'normal', textDecoration: t === 'U' ? 'underline' : 'none', cursor: 'pointer', color: '#374151', fontFamily: F }}>{t}</button>
+          ))}
+          <div style={{ width: 1, height: 16, background: '#e5e5e5', margin: '0 3px' }}/>
+          <button style={{ width: 26, height: 26, borderRadius: 4, border: '1px solid #e5e5e5', background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button style={{ width: 26, height: 26, borderRadius: 4, border: '1px solid #e5e5e5', background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </button>
+        </div>
+        {/* Body */}
+        <div style={{ flex: 1, overflow: 'auto', padding: '16px 20px' }}>
+          {bodyParas >= 1 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[0]}</p>}
+          {bodyParas >= 2 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[1]}</p>}
+          {bodyParas >= 3 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[2]}</p>}
+          {bodyParas >= 4 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[3]}</p>}
+          {bodyParas >= 5 && <p className="adc-fade-in" style={{ margin: '0 0 20px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[4]}</p>}
+          {showResume && (
+            <div className="adc-fade-in" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 14px', border: '1px solid #e5e5e5', borderRadius: 8, background: '#fafafa' }}>
+              <div style={{ width: 32, height: 32, borderRadius: 6, background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#0A1217' }}>Resume_2026.pdf</div>
+                <div style={{ fontSize: 11, color: '#9ca3af' }}>245 KB · PDF</div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Hand cursor — at "Add to Sequence" button (top-right) */}
+      {(phase === 'moving-send' || phase === 'clicking-send') && (
+        <div className={sendHandAnim} style={{ position: 'absolute', top: 8, right: 20, zIndex: 10, pointerEvents: 'none' }}>
+          <MacCursor />
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ═══ YouLand ═══ */
+
+/* Sent folder — user's outreach emails sent to each HR */
+const GMAIL_ROWS = [
+  { id: 1,  to: 'Seema Kalra',   company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Seema, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',    time: '10:42 AM'  },
+  { id: 2,  to: 'Rohit Verma',   company: 'PhonePe',  subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Rohit, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at PhonePe',  time: '9:31 AM'   },
+  { id: 3,  to: 'Meenakshi R',   company: 'Flipkart', subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Meenakshi, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Flipkart', time: '8:14 AM'   },
+  { id: 4,  to: 'Anjali Patel',  company: 'Jupiter',  subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Anjali, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Jupiter',  time: '7:02 AM'   },
+  { id: 5,  to: 'Dhruv Sharma',  company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Dhruv, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',    time: 'Yesterday' },
+  { id: 6,  to: 'Kavitha Nair',  company: 'Swiggy',   subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Kavitha, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Swiggy', time: 'Yesterday' },
+  { id: 7,  to: 'Priya Mehta',   company: 'Razorpay', subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Priya, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Razorpay', time: 'Mon'       },
+  { id: 8,  to: 'Arun Kumar',    company: 'Zepto',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Arun, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Zepto',    time: 'Mon'       },
+  { id: 9,  to: 'Niyati Jain',   company: 'Razorpay', subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Niyati, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Razorpay', time: 'Sun'       },
+  { id: 10, to: 'Sunita Reddy',  company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Sunita, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',  time: 'Sat'       },
+]
+
+const EMAIL_REPLY_PARAS = [
+  'Hi',
+  'I hope this message finds you well.',
+  'I am a Senior Product Manager with 8 years of experience in fintech and consumer tech. I have led 0-to-1 product launches, scaled key product flows from 50K to 2M+ daily active users, and partnered with engineering, design, and data teams to ship features that move core business metrics.',
+  'I am reaching out about the Senior PM opportunity on your team. My background in product discovery, roadmap prioritisation, and cross-functional leadership aligns closely with what you are building. I have attached my resume for your review.',
+  'I would love a 20-minute call to explore how I can contribute. Thank you for your time and I look forward to connecting.',
+]
+
+function YouLandContent({ onComplete }: { onComplete?: () => void }) {
+  const F = FONT
+  const [view, setView]             = useState<'list' | 'gmail' | 'email-open'>('list')
+  const [sentCount, setSentCount]   = useState(0)
+  const [handPhase, setHandPhase]   = useState<'none' | 'appearing' | 'clicking'>('none')
+  const [emailParas, setEmailParas] = useState(0)
+
+  useEffect(() => {
+    let n = 0
+    const interval = setInterval(() => { n++; setSentCount(n); if (n >= REACH_PEOPLE.length) clearInterval(interval) }, 35)
+    const T = [
+      setTimeout(() => setView('gmail'),                              2200),
+      setTimeout(() => setHandPhase('appearing'),                     3100),
+      setTimeout(() => setHandPhase('clicking'),                      4400),
+      setTimeout(() => { setView('email-open'); setHandPhase('none') }, 4900),
+    ]
+    return () => { clearInterval(interval); T.forEach(clearTimeout) }
+  }, [])
+
+  useEffect(() => {
+    if (view !== 'email-open') return
+    const T = [
+      setTimeout(() => setEmailParas(1),   200),
+      setTimeout(() => setEmailParas(2),   900),
+      setTimeout(() => setEmailParas(3),  1700),
+      setTimeout(() => setEmailParas(4),  2400),
+      setTimeout(() => setEmailParas(5),  3100),
+      setTimeout(() => onComplete?.(),    4200),
+    ]
+    return () => T.forEach(clearTimeout)
+  }, [view]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const trunc: React.CSSProperties = { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
+
+  /* ── Shared Gmail pieces (inlined as JSX variables — avoids inner-component remount) ── */
+
+  /* Gmail M logo */
+  const GmailLogo = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 3, flexShrink: 0 }}>
+      <svg viewBox="0 0 75 57" width="32" height="24" style={{ display: 'block' }}>
+        <path fill="#4285F4" d="M6 57h9V31L0 22v29a6 6 0 006 6z"/>
+        <path fill="#34A853" d="M60 57h9a6 6 0 006-6V22l-15 9z"/>
+        <path fill="#FBBC04" d="M75 9V22L60 31V6l6.6-4.8A6 6 0 0175 9z"/>
+        <path fill="#EA4335" d="M0 22V9A6 6 0 018.4 1.2L37.5 22.5 66.6 1.2A6 6 0 0175 9V22L37.5 47.5z"/>
+        <path fill="#C5221F" d="M0 9v13l15-9.5V6L8.4 1.2A6 6 0 000 9z"/>
+      </svg>
+      <span style={{ fontSize: 22, fontWeight: 400, color: '#5f6368', letterSpacing: '-0.5px', lineHeight: 1 }}>Gmail</span>
+    </div>
+  )
+
+  /* Reusable icon button */
+  const IcoBtn = ({ children }: { children: React.ReactNode }) => (
+    <div style={{ width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>{children}</div>
+  )
+
+  const gmailHeader = (
+    <div style={{ display: 'flex', alignItems: 'center', height: 64, padding: '0 6px', gap: 2, background: '#fff', flexShrink: 0 }}>
+      {/* Hamburger */}
+      <IcoBtn>
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><rect width="20" height="2" rx="1" fill="#5f6368"/><rect y="6" width="20" height="2" rx="1" fill="#5f6368"/><rect y="12" width="20" height="2" rx="1" fill="#5f6368"/></svg>
+      </IcoBtn>
+      {GmailLogo}
+      {/* Search */}
+      <div style={{ flex: 1, height: 48, background: '#eaf1fb', borderRadius: 24, display: 'flex', alignItems: 'center', padding: '0 8px 0 18px', gap: 12, margin: '0 16px', maxWidth: 760 }}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#5f6368" strokeWidth="1.8"/><path d="M17 17l4 4" stroke="#5f6368" strokeWidth="1.8" strokeLinecap="round"/></svg>
+        <span style={{ flex: 1, fontSize: 16, color: '#5f6368' }}>Search mail</span>
+        <IcoBtn>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="17" x2="14" y2="17"/></svg>
+        </IcoBtn>
+      </div>
+      {/* Right icons */}
+      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 0 }}>
+        <IcoBtn><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="#5f6368"/></svg></IcoBtn>
+        <IcoBtn><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg></IcoBtn>
+        <IcoBtn>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368">
+            {[5,12,19].flatMap(cx => [5,12,19].map(cy => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="1.5"/>))}
+          </svg>
+        </IcoBtn>
+        {/* Avatar */}
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg,#4285F4,#34A853)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#fff', marginLeft: 6, flexShrink: 0 }}>J</div>
+      </div>
+    </div>
+  )
+
+  /* Narrow icon-only sidebar (matches real collapsed Gmail sidebar) */
+  const gmailSidebar = (
+    <div style={{ width: 72, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 4, gap: 2, background: '#f6f8fc' }}>
+      {/* Compose pencil button */}
+      <div style={{ width: 56, height: 48, borderRadius: 24, background: '#c2e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginBottom: 6 }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#001d35" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </div>
+      {/* Inbox — selected */}
+      <div style={{ width: 56, borderRadius: 20, background: '#d3e3fd', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 0 4px', cursor: 'pointer', gap: 2 }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#0b57d0"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4.7L12 13 4 8.7V6l8 4.8L20 6v2.7z"/></svg>
+        <span style={{ fontSize: 10, color: '#0b57d0', fontWeight: 600, lineHeight: 1 }}>Mail</span>
+      </div>
+      {/* Chat */}
+      <div style={{ width: 56, borderRadius: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 0 4px', cursor: 'pointer', gap: 2 }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444746" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span style={{ fontSize: 10, color: '#444746', lineHeight: 1 }}>Chat</span>
+      </div>
+      {/* Meet */}
+      <div style={{ width: 56, borderRadius: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 0 4px', cursor: 'pointer', gap: 2 }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444746" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <span style={{ fontSize: 10, color: '#444746', lineHeight: 1 }}>Meet</span>
+      </div>
+    </div>
+  )
+
+  /* Sent folder breadcrumb row (replaces category tabs for Sent view) */
+  const SentLabel = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px', height: 44, borderBottom: '1px solid #e0e0e0', flexShrink: 0 }}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <span style={{ fontSize: 14, fontWeight: 600, color: '#202124' }}>Sent</span>
+      <span style={{ fontSize: 12, color: '#9aa0a6' }}>50 conversations</span>
+    </div>
+  )
+
+  /* Star icon */
+  const StarIco = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4c7c5" strokeWidth="1.4">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+  )
+
+  /* ── List view ── */
+  if (view === 'list') {
+    /* Same column layout as Agent Reaches: ✓ | # | Name | Company | Title | Location | LinkedIn | Status */
+    const cols = '26px 32px 180px 120px 210px 190px 1fr 90px'
+    const hdr: React.CSSProperties = { fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }
+    return (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#fff', fontFamily: F }}>
+        {/* Top bar */}
+        <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #e5e5e5', padding: '0 20px', height: 44, flexShrink: 0, gap: 8 }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>Outreach Sent</span>
+          <span style={{ fontSize: 12, background: '#dcfce7', color: '#166534', padding: '2px 10px', borderRadius: 999, fontWeight: 600 }}>{sentCount} sent</span>
+          <div style={{ marginLeft: 'auto' }}>
+            <button style={{ fontSize: 13, fontWeight: 500, color: '#fff', background: '#2e7d4f', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, display: 'flex', alignItems: 'center', gap: 6 }}>
+              Done
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+        {/* Table header */}
+        <div style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0 }}>
+          <span />
+          <span style={hdr}>#</span>
+          <span style={hdr}>Name</span>
+          <span style={hdr}>Company</span>
+          <span style={hdr}>Job Title</span>
+          <span style={hdr}>Location</span>
+          <span style={hdr}>LinkedIn URL</span>
+          <span style={hdr}>Status</span>
+        </div>
+        {/* Rows */}
+        <div style={{ flex: 1, overflow: 'auto' }}>
+          {REACH_PEOPLE.slice(0, sentCount).map((p, i) => (
+            <div key={p.n} className="adc-fade-in" style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', minHeight: 40, alignItems: 'center', borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style={{ fontSize: 12, color: '#9ca3af' }}>{p.n}</span>
+              <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{p.name}</span>
+              <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.company}</span>
+              <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.title}</span>
+              <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{p.location}</span>
+              <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc, paddingRight: 8 }}>linkedin.com/in/{p.li}</span>
+              <span style={{ fontSize: 12, color: '#16a34a', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16a34a', flexShrink: 0, display: 'inline-block' }} />
+                Sent
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  /* ── Gmail inbox view ── */
+  if (view === 'gmail') {
+    return (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#f6f8fc', fontFamily: F, position: 'relative' }}>
+        {gmailHeader}
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+          {gmailSidebar}
+          {/* White card panel */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#fff', margin: '0 8px 8px 0', borderRadius: 16, overflow: 'hidden' }}>
+            {SentLabel}
+            {/* Toolbar */}
+            <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 16px', height: 46, borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <div style={{ width: 15, height: 15, borderRadius: 2, border: '1.5px solid #5f6368' }} />
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#5f6368"><path d="M7 10l5 5 5-5z"/></svg>
+              </div>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginLeft: 4 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.8" strokeLinecap="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+              </div>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#5f6368"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+              </div>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 2, fontSize: 13, color: '#5f6368' }}>
+                <span>1–10 of 3,421</span>
+                <div style={{ width: 30, height: 30, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="2" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </div>
+                <div style={{ width: 30, height: 30, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
+              </div>
+            </div>
+            {/* Sent email rows */}
+            <div style={{ flex: 1, overflow: 'auto' }}>
+              {GMAIL_ROWS.map((row) => (
+                <div key={row.id} style={{ display: 'flex', alignItems: 'center', height: 50, padding: '0 8px 0 16px', borderBottom: '1px solid #f0f0f0', background: '#fff', cursor: 'pointer' }}>
+                  {/* checkbox */}
+                  <div style={{ width: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <div style={{ width: 15, height: 15, borderRadius: 2, border: '1.5px solid #c4c7c5' }} />
+                  </div>
+                  {/* star */}
+                  <div style={{ width: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <StarIco />
+                  </div>
+                  {/* recipient — "To: Name · Company" */}
+                  <div style={{ width: 200, flexShrink: 0, paddingRight: 8, display: 'flex', alignItems: 'baseline', gap: 4, overflow: 'hidden' }}>
+                    <span style={{ fontSize: 12, color: '#9aa0a6', flexShrink: 0 }}>To:</span>
+                    <span style={{ fontSize: 14, fontWeight: 400, color: '#202124', ...trunc }}>{row.to} · {row.company}</span>
+                  </div>
+                  {/* subject + dash + snippet */}
+                  <div style={{ flex: 1, overflow: 'hidden', whiteSpace: 'nowrap', display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                    <span style={{ fontSize: 14, fontWeight: 400, color: '#202124', flexShrink: 0 }}>{row.subject}</span>
+                    <span style={{ fontSize: 14, color: '#5f6368', overflow: 'hidden', textOverflow: 'ellipsis' }}>{' '}– {row.snippet}</span>
+                  </div>
+                  {/* timestamp */}
+                  <div style={{ width: 72, textAlign: 'right', fontSize: 12, fontWeight: 400, color: '#5f6368', flexShrink: 0, paddingLeft: 8 }}>
+                    {row.time}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Cursor — header(64) + sent-label(44) + toolbar(46) + half-row(25) = 179 */}
+        {handPhase !== 'none' && (
+          <div className={handPhase === 'appearing' ? 'yland-hand-appear' : 'yland-hand-click'}
+            style={{ position: 'absolute', top: 179, left: 680, zIndex: 10, pointerEvents: 'none' }}>
+            <MacCursor />
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  /* ── Email open view ── */
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#f6f8fc', fontFamily: F }}>
+      {gmailHeader}
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        {gmailSidebar}
+        <div style={{ flex: 1, background: '#fff', margin: '0 8px 8px 0', borderRadius: 16, overflow: 'auto', padding: '16px 24px' }}>
+          {/* Thread header */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.8" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </div>
+            <h2 style={{ fontSize: 20, fontWeight: 500, color: '#202124', margin: 0, flex: 1, letterSpacing: '-0.3px', lineHeight: 1.3 }}>
+            Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles
+            </h2>
+            <div style={{ display: 'flex', gap: 2 }}>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              </div>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Message card — outreach email user sent to Seema Kalra */}
+          {emailParas >= 1 && (
+            <div className="adc-fade-in" style={{ border: '1px solid #e0e0e0', borderRadius: 8, overflow: 'hidden' }}>
+              {/* Sender row — user is the sender */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', padding: '14px 16px', gap: 12 }}>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#2e7d4f', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#fff', flexShrink: 0 }}>H</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: '#202124' }}>me</span>
+                    <span style={{ fontSize: 12, color: '#5f6368' }}>&lt;hemant@gmail.com&gt;</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: '#5f6368', marginTop: 2 }}>
+                    to seema.kalra@paytm.com &nbsp;·&nbsp; Thu, May 1, 10:42 AM
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 2, flexShrink: 0, alignSelf: 'flex-start' }}>
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  </div>
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#5f6368"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+                  </div>
+                </div>
+              </div>
+              {/* Body — the outreach email */}
+              <div style={{ padding: '0 16px 18px 68px' }}>
+                {/* EMAIL_REPLY_PARAS[0] = 'Hi' */}
+                <p style={{ margin: '0 0 12px', fontSize: 14, color: '#202124', lineHeight: 1.7 }}>{EMAIL_REPLY_PARAS[0]} Seema,</p>
+                {emailParas >= 2 && <p className="adc-fade-in" style={{ margin: '0 0 12px', fontSize: 14, color: '#202124', lineHeight: 1.7 }}>{EMAIL_REPLY_PARAS[1]}</p>}
+                {emailParas >= 3 && <p className="adc-fade-in" style={{ margin: '0 0 12px', fontSize: 14, color: '#202124', lineHeight: 1.7 }}>{EMAIL_REPLY_PARAS[2]}</p>}
+                {emailParas >= 4 && <p className="adc-fade-in" style={{ margin: '0 0 12px', fontSize: 14, color: '#202124', lineHeight: 1.7 }}>{EMAIL_REPLY_PARAS[3]}</p>}
+                {emailParas >= 5 && <p className="adc-fade-in" style={{ margin: '0 0 16px', fontSize: 14, color: '#202124', lineHeight: 1.7 }}>{EMAIL_REPLY_PARAS[4]}</p>}
+                {/* Resume attachment */}
+                {emailParas >= 5 && (
+                  <div className="adc-fade-in" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 14px', border: '1px solid #e0e0e0', borderRadius: 8, background: '#fafafa' }}>
+                    <div style={{ width: 32, height: 32, borderRadius: 6, background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#202124' }}>Resume_2026.pdf</div>
+                      <div style={{ fontSize: 11, color: '#9aa0a6' }}>245 KB · PDF</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ═══ Exported Sections ═══ */
+
+export function YouDescribeMac({ onComplete }: { onComplete?: () => void }) {
+  return (
+    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach">
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <YouDescribeContent onComplete={onComplete} />
+      </div>
+    </MacDesktop>
+  )
+}
+
+export function AgentDiscoverMac({ onComplete }: { onComplete?: () => void }) {
+  return (
+    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach/companies">
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <AgentDiscoverContent onComplete={onComplete} />
+      </div>
+    </MacDesktop>
+  )
+}
+
+export function AgentReachesMac({ onComplete }: { onComplete?: () => void }) {
+  return (
+    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach/sequence">
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <AgentReachesContent onComplete={onComplete} />
+      </div>
+    </MacDesktop>
+  )
+}
+
+export function YouLandMac({ onComplete }: { onComplete?: () => void }) {
+  return (
+    <MacDesktop browserUrl="mail.google.com/mail/u/0/#inbox">
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <YouLandContent onComplete={onComplete} />
+      </div>
+    </MacDesktop>
+  )
+}
+
+export function ResumeBuilderMac() {
+  const [rbNav, setRbNav] = useState('resume')
+  return (
+    <MacDesktop browserUrl="app.nexthireconsulting.com/resume-builder" draggable>
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <AppSidebar activeNav={rbNav} setActiveNav={setRbNav} />
+        <ResumeBuilderContent />
+      </div>
+    </MacDesktop>
+  )
+}
 
 export default function ResumeBuilderShowcase() {
   const [rbNav, setRbNav] = useState('resume')

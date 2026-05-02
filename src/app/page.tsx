@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import HeroSection from '@/components/sections/HeroSection'
-import ResumeBuilderShowcase from '@/components/sections/ResumeBuilderShowcase'
 import HowItWorksSection from '@/components/sections/HowItWorksSection'
+import ResumeBuilderShowcase from '@/components/sections/ResumeBuilderShowcase'
 import HireSection from '@/components/sections/HireSection'
 import ProductShowcase from '@/components/sections/ProductShowcase'
 import type { ShowcaseCell } from '@/components/sections/ProductShowcase'
@@ -135,11 +135,11 @@ export default function HomePage() {
       {/* 1. Hero — tagline, CTAs, stats */}
       <HeroSection />
 
-      {/* Resume Builder showcase — Cursor-style Mac mockup */}
-      <ResumeBuilderShowcase />
-
-      {/* 2. How the Agent Works — 3-step flow */}
+      {/* 2. How the Agent Works — 4-step flow with platform mockup */}
       <HowItWorksSection />
+
+      {/* 3. Product showcases — Resume Builder, AI Auto Apply, Interview Coach */}
+      <ResumeBuilderShowcase />
 
       {/* 4. Full feature suite — 6 AI-powered tools */}
       <HireSection />

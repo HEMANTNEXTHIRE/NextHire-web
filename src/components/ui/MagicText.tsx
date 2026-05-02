@@ -14,7 +14,6 @@ function Word({ children, progress, range }: WordProps) {
   return (
     <span style={{
       position:    'relative',
-      marginTop:   '10px',
       marginRight: '0.28em',
       display:     'inline-block',
     }}>
@@ -29,37 +28,48 @@ interface MagicTextProps {
   fontSize?: string
 }
 
-export function MagicText({ text, fontSize = 'clamp(32px, 4.2vw, 52px)' }: MagicTextProps) {
+export function MagicText({ text, fontSize = '50px' }: MagicTextProps) {
   const container = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ['start 0.9', 'start 0.22'],
   })
-  const words = text.split(' ')
+
+  // Split on \n first, then words within each line
+  type Token = { type: 'word'; word: string } | { type: 'break' }
+  const tokens: Token[] = []
+  text.split('\n').forEach((line, li) => {
+    if (li > 0) tokens.push({ type: 'break' })
+    line.split(' ').filter(Boolean).forEach(w => tokens.push({ type: 'word', word: w }))
+  })
+  const wordCount = tokens.filter(t => t.type === 'word').length
+  let wordIdx = 0
 
   return (
     <p
       ref={container}
       style={{
-        display:         'flex',
-        flexWrap:        'wrap',
-        justifyContent:  'center',
-        lineHeight:      '62.4px',
-        padding:         0,
-        margin:          0,
+        display:       'block',
+        textAlign:     'center',
+        lineHeight:    1.3,
+        padding:       0,
+        margin:        0,
         fontSize,
-        fontFamily:      "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
-        fontWeight:      500,
-        letterSpacing:   '-2.1px',
-        textWrap:        'balance' as React.CSSProperties['textWrap'],
+        fontFamily:    "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
+        fontWeight:    700,
+        letterSpacing: '-1.8px',
       }}
     >
-      {words.map((word, i) => {
-        const start = i / words.length
-        const end   = start + 1 / words.length
+      {tokens.map((token, i) => {
+        if (token.type === 'break') {
+          return <br key={`br-${i}`} />
+        }
+        const idx   = wordIdx++
+        const start = idx / wordCount
+        const end   = start + 1 / wordCount
         return (
           <Word key={i} progress={scrollYProgress} range={[start, end]}>
-            {word}
+            {token.word}
           </Word>
         )
       })}
