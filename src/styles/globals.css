@@ -760,9 +760,9 @@ main {
 }
 
 .hiw-mac-wrap {
-  max-width: 820px;
+  max-width: 1100px;
   margin: 0 auto;
-  border-radius: 20px;
+  border-radius: 26px;
   overflow: hidden;
   box-shadow: 0 24px 80px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.06);
 }
@@ -995,33 +995,37 @@ dialog::backdrop {
 
   html body .nh-sticky-card {
     flex-direction: column !important;
-    gap: 16px !important;
-    padding: 24px 20px !important;
+    gap: 0 !important;
+    padding: 28px 24px 0 !important;
     min-height: unset !important;
+    overflow: hidden !important;
   }
-  /* Hide the 4-bullet features grid — biggest height culprit on mobile */
+  /* Hide the features checklist on mobile */
   html body .nh-card-features {
     display: none !important;
   }
-  /* Remove bottom margin on description since features are gone */
-  html body .nh-sticky-card p {
-    margin-bottom: 0 !important;
+  /* Right panel: full width, relative height, flush bottom */
+  html body .nh-sticky-card > div:last-child {
+    flex: none !important;
+    width: 100% !important;
+    height: 220px !important;
+    position: relative !important;
+    margin-top: 24px !important;
   }
-  /* Limit mockup panel height on mobile so card stays compact */
+  html body .nh-sticky-card > div:last-child > div {
+    border-radius: 0 0 28px 28px !important;
+    box-shadow: none !important;
+  }
+  /* Limit mockup panel height on mobile */
   html body .nh-card-mockup {
     min-height: unset !important;
     max-height: 220px !important;
     overflow: hidden !important;
   }
-  /* Right panel: full width in column layout */
-  html body .nh-sticky-card > div:last-child {
-    flex: none !important;
-    width: 100% !important;
-  }
 }
 @media (max-width: 540px) {
   html body .nh-sticky-card {
-    padding: 20px 16px !important;
+    padding: 22px 18px 0 !important;
   }
 }
 

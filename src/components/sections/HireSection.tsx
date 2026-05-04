@@ -8,105 +8,94 @@ import { FONT, WEIGHT, SERIF } from '@/constants/typography'
 /* ─── Palette ────────────────────────────────────────────────── */
 const P = {
   surface: '#ffffff',
-  bg:      '#edf5f1',
-  mint:    '#e4f0eb',
+  bg:      '#f5faf7',
+  mint:    '#e8f5ee',
   sage:    '#c8dfd6',
-  border:  '#ddeae4',
-  accent:  '#5fa89e',
-  accentD: '#3d7a72',
-  dark:    '#1a3338',
-  mid:     '#3d5a56',
+  border:  '#e0ece6',
+  accent:  '#338632',
+  accentD: '#338632',
+  dark:    '#132128',
+  mid:     '#424D53',
   muted:   '#8aada8',
-  green:   '#22c55e',
+  green:   '#338632',
+  cardBg:  '#eef7f3',
 }
 
 /* ─── Card data ─────────────────────────────────────────────── */
 const CARDS = [
   {
-    bg: P.surface,
-    tag: '01 · AI Auto Apply',
-    title: 'Apply to hundreds of jobs while you sleep',
-    desc: 'Your agent submits applications across every major portal on your behalf — each one with a role-specific resume tuned to the job description.',
+    bg: '#eef7f3',
+    tag: 'AI Auto Apply',
+    title: 'Apply to hundreds of\njobs while you sleep',
     features: [
-      { title: 'ATS-Optimised Resumes', desc: 'AI matches keywords and structure to every JD before sending.' },
-      { title: 'Portal Coverage', desc: 'LinkedIn, Indeed, Naukri, Greenhouse, Lever and 60+ more.' },
-      { title: 'Quality Guardrails', desc: 'Human experts review before the first batch goes out.' },
-      { title: 'Auto Job Tracker', desc: 'Every application logged, every follow-up scheduled automatically.' },
+      'ATS-optimised resumes tailored to every job description before sending',
+      'Covers LinkedIn, Indeed, Naukri, Greenhouse, Lever and 60+ portals',
+      'AI powered job recommendations tailored to your skills, experience, and career goals',
     ],
     stat1: { n: '40×', l: 'more reach vs manual' },
     stat2: { n: '82%', l: 'ATS pass rate' },
     imgContent: 'autoapply',
   },
   {
-    bg: '#f7faf9',
-    tag: '02 · AI Outreach Agent',
-    title: 'Reach hiring managers before the role goes live',
-    desc: 'Personalised emails sent from your own Gmail to HRs, founders, and hiring managers based on real hiring signals. CASA Level 3 certified privacy.',
+    bg: '#eef7f3',
+    tag: 'AI Outreach Agent',
+    title: 'Reach hiring managers\nbefore roles go live',
     features: [
-      { title: 'Signal-Based Targeting', desc: 'Detects team growth, tenure gaps, and LinkedIn hiring activity.' },
-      { title: 'Direct Recruiter InMail', desc: 'Reaches decision-makers directly, not through application portals.' },
-      { title: 'Your Identity, Always', desc: 'Sent from your Gmail — not a third-party system.' },
-      { title: 'Career Page Monitoring', desc: 'Tracks company career pages for new posts before they spread.' },
+      'Detects team growth, tenure gaps, and LinkedIn hiring signals in real time',
+      'Hyper-personalised emails sent directly from your own Gmail address',
+      'Tracks company career pages for new posts before they spread publicly',
     ],
     stat1: { n: '64%', l: 'avg email open rate' },
     stat2: { n: '31%', l: 'reply rate' },
     imgContent: 'outreach',
   },
   {
-    bg: P.surface,
-    tag: '03 · Resume Builder',
-    title: 'A new resume for every role — in seconds',
-    desc: 'AI generates a tailored, ATS-optimised resume matched to the exact job description. Our experts review and refine it. Nothing generic ever goes out.',
+    bg: '#eef7f3',
+    tag: 'Resume Builder',
+    title: 'A new resume for\nevery role in seconds',
     features: [
-      { title: 'JD-Matched Keywords', desc: 'Every resume aligned to the role\'s required skills and language.' },
-      { title: 'Expert Human Review', desc: 'Advisors check structure, tone, and impact before delivery.' },
-      { title: 'Portal Optimisation', desc: 'Formatted for ATS, Google Hire, and recruiter scanning tools.' },
-      { title: 'Version Library', desc: 'Every variant saved — swap and reuse for similar roles.' },
+      'Every resume aligned to the role\'s exact required skills and language',
+      'Expert advisors check structure, tone, and impact before delivery',
+      'Every variant saved — swap and reuse for similar future roles',
     ],
     stat1: { n: '82%', l: 'ATS pass rate' },
-    stat2: { n: '12s', l: 'avg resume generation' },
+    stat2: { n: '12s', l: 'avg generation time' },
     imgContent: 'resume',
   },
   {
-    bg: '#f7faf9',
-    tag: '04 · Interview Coach',
-    title: 'Walk into every interview already prepared',
-    desc: 'Practice with AI mock interviewers calibrated to your target company and role. Get real-time coaching during live calls and a detailed score breakdown after every session.',
+    bg: '#eef7f3',
+    tag: 'Interview Coach',
+    title: 'Walk into every interview\nalready prepared',
     features: [
-      { title: 'Role-Specific Mock Rounds', desc: 'Scenarios built from real interview patterns at your target companies.' },
-      { title: 'Live Call Copilot', desc: 'The AI listens in and surfaces answers and examples in real time.' },
-      { title: 'Simulate Full Rounds', desc: 'Voice, turn-taking, and pressure — just like the real thing.' },
-      { title: 'Score & Debrief', desc: 'Structured feedback on clarity, confidence, and answer quality.' },
+      'Mock rounds built from real interview patterns at your target companies',
+      'Live call copilot surfaces the right answers and examples in real time',
+      'Structured score and debrief after every session — clarity, confidence, quality',
     ],
     stat1: { n: '3×', l: 'more offers after coaching' },
     stat2: { n: '500+', l: 'interview scenarios' },
     imgContent: 'interview',
   },
   {
-    bg: P.surface,
-    tag: '05 · AI Interviewer',
-    title: 'Full interview simulation — voice, pressure, feedback',
-    desc: 'Step into a realistic AI-conducted interview tailored to your target company, role seniority, and interview style. No notes. No pausing. Just the real thing.',
+    bg: '#eef7f3',
+    tag: 'AI Interviewer',
+    title: 'Full interview simulation —\nvoice, pressure, feedback',
     features: [
-      { title: 'Company-Calibrated', desc: 'Questions drawn from real interview loops at Stripe, Google, Notion and more.' },
-      { title: 'Voice & Turn-Taking', desc: 'Speaks, listens, and adapts — mimicking a real interviewer\'s pacing.' },
-      { title: 'Pressure Mode', desc: 'Intentionally challenging follow-ups to stress-test your answers.' },
-      { title: 'Instant Transcript', desc: 'Full recording and transcript with per-answer commentary.' },
+      'Questions calibrated to real interview loops at Stripe, Google, Notion and more',
+      'Speaks, listens, and adapts — mimicking a real interviewer\'s pacing',
+      'Intentionally challenging follow-ups to stress-test your answers under pressure',
     ],
     stat1: { n: '91%', l: 'confidence improvement' },
     stat2: { n: '200+', l: 'company profiles' },
     imgContent: 'aiinterviewer',
   },
   {
-    bg: '#f7faf9',
-    tag: '06 · Job Tracker',
-    title: 'Never lose track of where you stand',
-    desc: 'A unified pipeline view across every application your agent has filed, every outreach sent, and every interview booked. Nothing slips through the cracks.',
+    bg: '#eef7f3',
+    tag: 'Job Tracker',
+    title: 'Never lose track of\nwhere you stand',
     features: [
-      { title: 'Pipeline Board', desc: 'Kanban-style view: Applied → Screening → Interview → Offer.' },
-      { title: 'Auto-Populated', desc: 'Every agent action logged automatically — no manual input needed.' },
-      { title: 'Follow-Up Reminders', desc: 'Nudges sent before ghosting windows close.' },
-      { title: 'Offer Comparison', desc: 'Side-by-side comp, role, and team breakdown to help you decide.' },
+      'Kanban pipeline: Applied → Screening → Interview → Offer, auto-populated',
+      'Nudges sent before ghosting windows close — zero missed follow-ups',
+      'Side-by-side offer comparison on comp, role, and team to help you decide',
     ],
     stat1: { n: '0', l: 'missed follow-ups' },
     stat2: { n: '100%', l: 'applications tracked' },
@@ -183,42 +172,102 @@ function AutoApplyMockup() {
 }
 
 /* 02 — Outreach */
-function OutreachMockup() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
-      <Label>Outreach Preview</Label>
+const OUTREACH_LOGOS: Record<string, string> = {
+  'Stripe':    '/company-logos/stripe.png',
+  'Paypal':    '/company-logos/paypal.svg',
+  'Revolut':   '/company-logos/revolut.png',
+  'Paytm':     '/company-logos/paytm.png',
+  'Razorpay':  '/company-logos/razorpay.png',
+  'Visa':      '/company-logos/visa.png',
+  'Mastercard':'/company-logos/mastercard.svg',
+  'Ramp':      '/company-logos/ramp.png',
+  'Brex':      '/company-logos/brex.png',
+  'Coinbase':  '/company-logos/coinbase.svg',
+}
 
-      {/* Email card */}
-      <div style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 12, padding: 16, flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {/* Header row */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
-          <div>
-            <div style={{ fontSize: FONT.xs, color: P.muted }}>To: <span style={{ color: P.dark, fontWeight: WEIGHT.semi }}>marcus@stripe.com</span></div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 2 }}>Head of Engineering · Stripe</div>
+const OUTREACH_ROWS = [
+  { name: 'James Smith',       company: 'Stripe',     title: 'Talent Acquisition Manager', status: 'Replied',  statusColor: '#338632', statusBg: '#e8f5ee' },
+  { name: 'Maria Martinez',    company: 'Paypal',     title: 'Talent Acquisition Specialist', status: 'Opened', statusColor: '#1d6fb8', statusBg: '#e8f0fb' },
+  { name: 'Charles Wilson',    company: 'Razorpay',   title: 'HR Business Partner',        status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'Atul Chaturvedi',   company: 'Visa',       title: 'Executive Manager HR',       status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'Adhishree Gupta',   company: 'Ramp',       title: 'Senior Talent Acquisition',  status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'Manish Sharma',     company: 'Brex',       title: 'Manager HRBP',               status: 'Sending', statusColor: '#b45309', statusBg: '#fef3c7' },
+  { name: 'Linda Jones',       company: 'Coinbase',   title: 'AVP - HRBP',                 status: 'Queued',  statusColor: '#8aada8', statusBg: '#f0f6f4' },
+]
+
+function OutreachMockup() {
+  const li = '/company-logos/linkedin.svg'
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 0 }}>
+
+      {/* Header */}
+      <div style={{ padding: '0 0 12px', borderBottom: `1px solid ${P.border}`, marginBottom: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.green, letterSpacing: 1.4, textTransform: 'uppercase' as const }}>
+            Agent Outreach · Live
           </div>
-          <Badge color={P.accent} bg={P.mint}>Auto-deleted after send</Badge>
-        </div>
-        <Divider />
-        {/* Body */}
-        <div style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.65 }}>
-          Hi Marcus, I noticed Stripe&apos;s infra team grew 18% in 60 days — usually a signal for a Platform Engineer hire before it&apos;s posted publicly.
-        </div>
-        <div style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.65 }}>
-          I&apos;ve led distributed systems at two Series B companies. Happy to connect if timing works.
-        </div>
-        {/* Signal tag */}
-        <div style={{ marginTop: 'auto', background: P.mint, border: `1px solid ${P.sage}`, borderRadius: 8, padding: '8px 12px', display: 'flex', gap: 10, alignItems: 'center' }}>
-          <div style={{ width: 6, height: 6, borderRadius: '50%', background: P.green, flexShrink: 0, boxShadow: `0 0 6px ${P.green}` }} />
-          <span style={{ fontSize: FONT.xs, color: P.mid }}>Signal: <strong>Team +18% in 60 days</strong> · hiring likely pre-posting</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: P.green, boxShadow: `0 0 6px ${P.green}` }} />
+            <span style={{ fontSize: FONT.xs, color: P.muted }}>50 contacts found</span>
+          </div>
         </div>
       </div>
 
-      {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-        {[{ l: 'Open Rate', v: '64%', c: P.accent }, { l: 'Reply Rate', v: '31%', c: P.green }].map(s => (
-          <div key={s.l} style={{ background: P.mint, border: `1px solid ${P.sage}`, borderRadius: 10, padding: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: s.c, lineHeight: 1 }}>{s.v}</div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 4 }}>{s.l}</div>
+      {/* Rows */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 5, overflow: 'hidden' }}>
+        {OUTREACH_ROWS.map((r) => (
+          <div key={r.name} style={{
+            display: 'flex', alignItems: 'center', gap: 10,
+            padding: '8px 10px',
+            background: P.surface, border: `1px solid ${P.border}`,
+            borderRadius: 10,
+          }}>
+            {/* Avatar initial */}
+            <div style={{
+              width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
+              background: P.mint, border: `1px solid ${P.sage}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '11px', fontWeight: WEIGHT.bold, color: P.green,
+            }}>
+              {r.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+            </div>
+
+            {/* Name + title */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.semi, color: P.dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={li} alt="LinkedIn" width={11} height={11} style={{ flexShrink: 0, opacity: 0.7 }} />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 2 }}>
+                {OUTREACH_LOGOS[r.company] && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={OUTREACH_LOGOS[r.company]} alt={r.company} height={10} style={{ objectFit: 'contain', flexShrink: 0, maxWidth: 32, opacity: 0.75 }} />
+                )}
+                <span style={{ fontSize: '10px', color: P.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.title}</span>
+              </div>
+            </div>
+
+            {/* Status badge */}
+            <span style={{
+              fontSize: '10px', fontWeight: WEIGHT.bold,
+              color: r.statusColor, background: r.statusBg,
+              borderRadius: 5, padding: '2px 7px', flexShrink: 0, whiteSpace: 'nowrap',
+            }}>{r.status}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Stats bar */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 12, paddingTop: 12, borderTop: `1px solid ${P.border}` }}>
+        {[
+          { v: '50', l: 'Contacted',  c: P.dark },
+          { v: '64%', l: 'Open rate', c: '#1d6fb8' },
+          { v: '31%', l: 'Reply rate', c: P.green },
+        ].map(s => (
+          <div key={s.l} style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: s.c, lineHeight: 1 }}>{s.v}</div>
+            <div style={{ fontSize: '10px', color: P.muted, marginTop: 3 }}>{s.l}</div>
           </div>
         ))}
       </div>
@@ -457,7 +506,7 @@ export default function HireSection() {
   const wrapperRef     = useRef<HTMLDivElement>(null)
   const cardRefs       = useRef<(HTMLDivElement | null)[]>([])
   const nextSiblingRef = useRef<HTMLDivElement>(null)
-  const stateRef       = useRef<ScrollState>({ thresholds: [], topGap: 88, wrapperH: 0 })
+  const stateRef       = useRef<ScrollState>({ thresholds: [], topGap: 0, wrapperH: 0 })
 
   const { scrollY } = useScroll()
 
@@ -469,15 +518,22 @@ export default function HireSection() {
 
     const isMobileView = window.matchMedia('(max-width: 860px)').matches
     const topBase = isMobileView ? 68 : 100
-    const topGap  = isMobileView ? 44 : 88
+    const topGap  = isMobileView ? 44 : 0
 
     // Reset heights before measuring
     cards.forEach(c => c.style.removeProperty('height'))
 
-    // Desktop: normalise all cards to tallest
+    // Desktop: all cards same height, capped so each card has a ~50px bottom gap
+    let maxH = 0
     if (!isMobileView) {
-      const maxH = Math.max(...cards.map(c => c.offsetHeight))
+      const naturalMax = Math.max(...cards.map(c => c.offsetHeight))
+      maxH = Math.min(naturalMax, Math.max(window.innerHeight - topBase - 50, 480))
       cards.forEach(c => { c.style.height = `${maxH}px` })
+    }
+
+    // Extend wrapper by maxH so the last card's containing block is tall enough to stick
+    if (nextSiblingRef.current) {
+      nextSiblingRef.current.style.height = isMobileView ? '0px' : `${maxH}px`
     }
 
     const wrapperH = wrapper.offsetHeight
@@ -487,7 +543,7 @@ export default function HireSection() {
       // absoluteTop uses offsetParent chain — correct for sticky elements
       const cardAbsTop  = absoluteTop(card)
       const enterY      = cardAbsTop - topOffset
-      const endDistance = i === cards.length - 1 ? 0 : card.offsetHeight
+      const endDistance = card.offsetHeight
       return { enterY, leaveY: enterY + endDistance }
     })
 
@@ -518,7 +574,7 @@ export default function HireSection() {
         wrapper.style.removeProperty('height')
         wrapper.classList.remove('nh-sticky-remove')
       }
-      if (nextSiblingRef.current) nextSiblingRef.current.style.marginTop = '0px'
+      if (nextSiblingRef.current) nextSiblingRef.current.style.height = '0px'
       run()
     }
 
@@ -556,8 +612,8 @@ export default function HireSection() {
     if (wrapper) {
       wrapper.style.transform = shift > 0 ? `translateY(-${shift}px)` : ''
     }
-    if (nextSiblingRef.current) {
-      nextSiblingRef.current.style.marginTop = shift > 0 ? `-${shift}px` : '0px'
+    if (nextSiblingRef.current && shift > 0) {
+      nextSiblingRef.current.style.marginTop = `-${shift}px`
     }
 
     // Dim cards that are 3+ positions behind the frontmost active card
@@ -583,8 +639,8 @@ export default function HireSection() {
   })
 
   return (
-    <section id="features" style={{ background: P.bg, padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+    <section id="features" style={{ background: '#f5faf7', padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Section header */}
         <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 80px' }}>
@@ -599,12 +655,9 @@ export default function HireSection() {
             letterSpacing: '-0.5px',
             fontSynthesis: 'none',
           }}>
-            <span style={{ display: 'block', color: '#111827', fontFamily: SERIF }}>While you focus on</span>
-            <span style={{ display: 'block', color: '#111827', fontFamily: SERIF }}>what matters.</span>
+            <span style={{ display: 'block', color: '#132128', fontFamily: SERIF }}>While you focus on</span>
+            <span style={{ display: 'block', color: '#132128', fontFamily: SERIF }}>what matters.</span>
           </h2>
-          <p style={{ fontSize: FONT.md, color: P.mid, lineHeight: 1.7, margin: 0, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
-            Six tools. One agent. Running around the clock so your job search never pauses.
-          </p>
         </div>
 
         {/* Sticky stacked cards */}
@@ -616,72 +669,113 @@ export default function HireSection() {
               className="nh-sticky-card"
               style={{
                 background: card.bg,
-                border: `1px solid ${P.border}`,
-                borderRadius: 20,
-                minHeight: 480,
-                marginBottom: 40,
-                padding: '44px 44px 44px 48px',
+                border: 'none',
+                borderRadius: 28,
+                minHeight: 600,
+                marginBottom: 400,
+                padding: '0',
                 display: 'flex',
-                gap: 56,
-                alignItems: 'flex-start',
+                gap: 0,
+                alignItems: 'stretch',
                 position: 'sticky',
-                top: `${88 * i + 100}px`,   /* desktop; CSS overrides for mobile */
-                boxShadow: '0 4px 32px rgba(37,62,66,0.07)',
+                top: '100px',
+                boxShadow: '0 8px 48px rgba(19,33,40,0.10)',
                 transition: 'opacity 1s',
+                overflow: 'hidden',
               }}
             >
               {/* ── Left: text ── */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: 1.8, color: P.accent, textTransform: 'uppercase', marginBottom: 14 }}>
+              <div style={{
+                flex: '0 0 50%', minWidth: 0,
+                paddingLeft: 72, paddingRight: 64, paddingTop: 72, paddingBottom: 72,
+                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+              }}>
+                {/* Tag */}
+                <div style={{
+                  fontSize: '12px', fontWeight: WEIGHT.bold, letterSpacing: 1.8,
+                  color: P.green, textTransform: 'uppercase',
+                  marginBottom: 18,
+                }}>
                   {card.tag}
                 </div>
-                <h3 style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.dark, margin: '0 0 14px', lineHeight: 1.22, letterSpacing: '-0.4px' }}>
+
+                {/* Title — exact specs: 32px #132128 -0.3px */}
+                <h3 style={{
+                  fontSize: '32px',
+                  fontWeight: WEIGHT.extra,
+                  color: '#132128',
+                  margin: '0 0 36px',
+                  lineHeight: 1.3,
+                  letterSpacing: '-0.3px',
+                  whiteSpace: 'pre-line',
+                }}>
                   {card.title}
                 </h3>
-                <p style={{ fontSize: FONT.base, color: P.mid, lineHeight: 1.72, margin: '0 0 28px' }}>
-                  {card.desc}
-                </p>
-                <div className="nh-card-features" style={{ display: 'flex', flexWrap: 'wrap', gap: 18 }}>
-                  {card.features.map(f => (
-                    <div key={f.title} style={{ flex: '0 0 calc(50% - 9px)', borderLeft: `2px solid ${P.sage}`, paddingLeft: 16, paddingTop: 2 }}>
-                      <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.dark, marginBottom: 5, lineHeight: 1.3 }}>{f.title}</div>
-                      <div style={{ fontSize: FONT.sm, color: P.muted, lineHeight: 1.6 }}>{f.desc}</div>
+
+                {/* Checklist — exact: 16px #424D53 */}
+                <div className="nh-card-features" style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 44 }}>
+                  {card.features.map((f, fi) => (
+                    <div key={fi} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                      <span style={{
+                        color: '#338632', fontSize: '16px',
+                        lineHeight: '24px', flexShrink: 0, fontWeight: WEIGHT.bold,
+                      }}>✓</span>
+                      <span style={{
+                        fontSize: '16px', color: '#424D53',
+                        lineHeight: '24px', letterSpacing: '-0.3px',
+                      }}>{f}</span>
                     </div>
                   ))}
                 </div>
+
+                {/* Learn more */}
+                <a
+                  href="https://app.nexthireconsulting.com"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    fontSize: '16px', fontWeight: WEIGHT.semi, letterSpacing: '-0.3px',
+                    color: '#338632', textDecoration: 'none', width: 'fit-content',
+                  }}
+                >
+                  Learn more
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M3 7h8M8 4l3 3-3 3" stroke="#338632" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
               </div>
 
-              {/* ── Right: mockup + stats ── */}
-              <div style={{ flex: '0 0 360px', display: 'flex', flexDirection: 'column', gap: 0 }}>
-                {/* Mockup panel — always white */}
-                <div className="nh-card-mockup" style={{
-                  background: P.surface,
-                  borderRadius: 16,
-                  padding: 24,
-                  border: `1px solid ${P.border}`,
-                  minHeight: 320,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  boxShadow: '0 2px 16px rgba(37,62,66,0.06)',
-                }}>
-                  {MOCKUPS[card.imgContent]}
-                </div>
-
-                {/* Stats */}
-                <div style={{ display: 'flex', gap: 32, marginTop: 22, paddingTop: 16 }}>
-                  {[card.stat1, card.stat2].map(s => (
-                    <div key={s.l}>
-                      <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.dark, lineHeight: 1 }}>{s.n}</div>
-                      <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 5 }}>{s.l}</div>
-                    </div>
-                  ))}
-                </div>
+              {/* ── Right: white panel, flush to card edge ── */}
+              <div style={{
+                flex: '0 0 50%', position: 'relative',
+                borderRadius: '0 28px 28px 0',
+                overflow: 'hidden',
+                background: card.imgContent === 'autoapply' ? '#EEF7ED' : '#ffffff',
+                boxShadow: '-12px 0 48px rgba(19,33,40,0.08)',
+              }}>
+                {card.imgContent === 'autoapply' ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src="/hire-autoapply.png"
+                    alt="AI Auto Apply"
+                    style={{
+                      position: 'absolute',
+                      top: '50%', left: '50%',
+                      transform: 'translate(-60%, -50%) scale(1.2)',
+                      width: '100%', height: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
+                ) : (
+                  <div className="nh-card-mockup" style={{ position: 'absolute', inset: 0, padding: 32, display: 'flex', flexDirection: 'column' }}>
+                    {MOCKUPS[card.imgContent]}
+                  </div>
+                )}
               </div>
             </div>
           ))}
+          {/* Spacer — keeps the wrapper tall enough for the last card to stick */}
+          <div ref={nextSiblingRef} style={{ height: 0 }} />
         </div>
-
-        <div ref={nextSiblingRef} style={{ height: 0 }} />
       </div>
     </section>
   )

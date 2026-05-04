@@ -110,7 +110,7 @@ function ScaledBrowserContent({ children }: { children: React.ReactNode }) {
 
 /* ═══ Mac Desktop with Draggable Browser ═══ */
 
-function MacDesktop({ browserUrl, children, draggable }: { browserUrl: string, children: React.ReactNode, draggable?: boolean }) {
+function MacDesktop({ browserUrl, children, draggable, borderRadius = 16 }: { browserUrl: string, children: React.ReactNode, draggable?: boolean, borderRadius?: number }) {
   const macRef = useRef<HTMLDivElement>(null)
   const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null)
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null)
@@ -152,7 +152,7 @@ function MacDesktop({ browserUrl, children, draggable }: { browserUrl: string, c
     : { position: 'absolute', top: 50, left: 28, right: 28, bottom: 28, zIndex: 1, display: 'flex', flexDirection: 'column', borderRadius: 8, overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.2)' }
 
   return (
-    <div ref={macRef} className="nh-rb-showcase__mac" style={{ position: 'relative', isolation: 'isolate', borderRadius: 16, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)', backgroundImage: 'url(/mac-wallpaper.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', cursor: 'default', userSelect: 'none' }}>
+    <div ref={macRef} className="nh-rb-showcase__mac" style={{ position: 'relative', isolation: 'isolate', borderRadius, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)', backgroundImage: 'url(/mac-wallpaper.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', cursor: 'default', userSelect: 'none' }}>
       <MacMenuBar />
       <div style={browserStyle} onPointerMove={draggable ? onPointerMove : undefined} onPointerUp={draggable ? onPointerUp : undefined}>
         <BrowserBar url={browserUrl} onPointerDown={draggable ? onPointerDown : undefined} />
@@ -1299,22 +1299,22 @@ function YouDescribeContent({ onComplete }: { onComplete?: () => void }) {
 /* ═══ Agent Discovers — company results UI ═══ */
 
 const FINTECH_COMPANIES = [
-  { n: 15, name: 'One97 Communications Limited',       desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',            industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held' },
-  { n: 16, name: 'Airtel Payments Bank',               desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
-  { n: 17, name: 'Cars24',                             desc: 'One of India\'s largest auto-tech companies. Harnessing cutting-edge technology to revolutionize mobility.', industry: 'Technology, Information and Internet', size: '5,001–10,000', type: 'Privately Held' },
-  { n: 18, name: 'Zetheta Algorithms Pvt. Ltd.',       desc: 'FinTech startup pioneering innovation in financial markets through gamified simulations.',                   industry: 'Technology, Information and Internet', size: '51–200',       type: 'Privately Held' },
-  { n: 19, name: 'National Payments Corporation (NPCI)',desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit'     },
-  { n: 20, name: 'Pine Labs',                          desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
-  { n: 21, name: 'Fincare Small Finance Bank',         desc: 'Excited to be a part of AU Small Finance Bank from April 2024. One of the fastest-growing digital banks.',  industry: 'Banking',                             size: '10,001+',      type: 'Privately Held' },
-  { n: 22, name: 'BharatPe',                           desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',               industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held' },
-  { n: 23, name: 'TVS Credit Services Ltd.',           desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                   industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held' },
-  { n: 24, name: 'Union Bank of India',                desc: 'One of the leading public sector banks. Network of 8,650+ domestic branches and 74,100+ employees.',        industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
-  { n: 25, name: 'Marquee Equity',                     desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',            industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held' },
-  { n: 26, name: 'Cashfree Payments',                  desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',          industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held' },
-  { n: 27, name: 'Angel One',                          desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',           industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
-  { n: 28, name: 'Jupiter',                            desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',       industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held' },
-  { n: 29, name: 'Punjab National Bank',               desc: 'Incorporated in 1895. 6,950+ domestic branches, serving more than 10 crore esteemed customers.',            industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
-  { n: 30, name: 'Rupeek',                             desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
+  { n: 15, name: 'One97 Communications Limited',        desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',             industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held', location: 'Noida, Uttar Pradesh', country: 'India',         linkedin: 'linkedin.com/company/one97' },
+  { n: 16, name: 'Airtel Payments Bank',                desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',          industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company',  location: 'New Delhi',            country: 'India',         linkedin: 'linkedin.com/company/airtel-payments-bank' },
+  { n: 17, name: 'Stripe',                              desc: 'Global financial infrastructure platform for the internet. Powers hundreds of billions in payments annually.', industry: 'Financial Services',                 size: '5,001–10,000', type: 'Privately Held', location: 'San Francisco, CA',    country: 'United States', linkedin: 'linkedin.com/company/stripe' },
+  { n: 18, name: 'Razorpay',                            desc: 'India\'s leading payment gateway. Processes $60B+ in payments annually for 8M+ businesses.',                 industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/razorpay' },
+  { n: 19, name: 'National Payments Corporation (NPCI)', desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit',      location: 'Mumbai, Maharashtra',  country: 'India',         linkedin: 'linkedin.com/company/npci' },
+  { n: 20, name: 'Pine Labs',                           desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',          industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Noida, Uttar Pradesh', country: 'India',         linkedin: 'linkedin.com/company/pine-labs' },
+  { n: 21, name: 'Fincare Small Finance Bank',          desc: 'One of the fastest-growing digital banks. Part of AU Small Finance Bank from April 2024.',                   industry: 'Banking',                             size: '10,001+',      type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/fincarebank' },
+  { n: 22, name: 'BharatPe',                            desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',                industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held', location: 'New Delhi',            country: 'India',         linkedin: 'linkedin.com/company/bharatpe' },
+  { n: 23, name: 'TVS Credit Services Ltd.',            desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                    industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held', location: 'Chennai, Tamil Nadu',  country: 'India',         linkedin: 'linkedin.com/company/tvs-credit' },
+  { n: 24, name: 'PhonePe',                             desc: 'India\'s leading UPI payments platform. 500M+ registered users, powering 47% of all UPI transactions.',      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/phonepe-platform' },
+  { n: 25, name: 'Marquee Equity',                      desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',             industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held', location: 'New Delhi',            country: 'India',         linkedin: 'linkedin.com/company/marquee-equity' },
+  { n: 26, name: 'Cashfree Payments',                   desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',           industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/cashfree' },
+  { n: 27, name: 'Angel One',                           desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',            industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company',  location: 'Mumbai, Maharashtra',  country: 'India',         linkedin: 'linkedin.com/company/angelbroking' },
+  { n: 28, name: 'Jupiter',                             desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',        industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/jupitermoney' },
+  { n: 29, name: 'Revolut',                             desc: 'Global fintech super-app with 45M+ customers across 38 countries. Banking, crypto, and stock trading.',      industry: 'Financial Services',                  size: '5,001–10,000', type: 'Privately Held', location: 'London',               country: 'United Kingdom',linkedin: 'linkedin.com/company/revolut' },
+  { n: 30, name: 'Rupeek',                              desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',          industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/rupeek' },
 ]
 
 
@@ -1484,12 +1484,16 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
         </div>
 
         {/* Table header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '26px 32px 190px 1fr 158px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '26px 28px 160px 1fr 140px 90px 90px 140px 180px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
           <Checkbox checked={allSelected} />
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>#</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Company</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Description</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Industry</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Size</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Type</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Location</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>LinkedIn URL</span>
         </div>
 
         {/* Rows or scanning placeholder */}
@@ -1497,7 +1501,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
           <div className="adc-fade-in" style={{ flex: 1, overflow: 'auto' }}>
             {FINTECH_COMPANIES.map((co, i) => (
               <div key={co.n} style={{
-                display: 'grid', gridTemplateColumns: '26px 32px 190px 1fr 158px',
+                display: 'grid', gridTemplateColumns: '26px 28px 160px 1fr 140px 90px 90px 140px 180px',
                 padding: '0 16px', minHeight: 40, alignItems: 'center',
                 borderBottom: '1px solid #f5f5f5',
                 background: i % 2 === 0 ? '#fff' : '#fafafa',
@@ -1506,7 +1510,11 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
                 <span style={{ fontSize: 12, color: '#9ca3af' }}>{co.n}</span>
                 <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{co.name}</span>
                 <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.desc}</span>
-                <span style={{ fontSize: 12, color: '#6b7280', ...trunc }}>{co.industry}</span>
+                <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.industry}</span>
+                <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.size}</span>
+                <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.type}</span>
+                <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.location}</span>
+                <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc }}>{co.linkedin}</span>
               </div>
             ))}
           </div>
@@ -1562,6 +1570,60 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
 
 /* ═══ Agent Reaches ═══ */
 
+const COMPANY_DETAILS: Record<string, { industry: string; size: string; type: string; country: string }> = {
+  'Paypal':               { industry: 'Financial Services',   size: '10,001+',      type: 'Public Company',  country: 'United States' },
+  'Stripe':               { industry: 'Financial Services',   size: '5,001–10,000', type: 'Privately Held',  country: 'United States' },
+  'Revolut':              { industry: 'Financial Services',   size: '5,001–10,000', type: 'Privately Held',  country: 'United Kingdom' },
+  'Airtel Payments Bank': { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Public Company',  country: 'India' },
+  'Paytm':                { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Public Company',  country: 'India' },
+  'Jupiter':              { industry: 'Banking',              size: '501–1,000',    type: 'Privately Held',  country: 'India' },
+  'Fiserv':               { industry: 'Financial Services',   size: '10,001+',      type: 'Public Company',  country: 'United States' },
+  'Chime':                { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Privately Held',  country: 'United States' },
+  'Razorpay':             { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Privately Held',  country: 'India' },
+  'Visa':                 { industry: 'Financial Services',   size: '10,001+',      type: 'Public Company',  country: 'United States' },
+  'Coinbase':             { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Public Company',  country: 'United States' },
+  'Intuit':               { industry: 'Software Development', size: '10,001+',      type: 'Public Company',  country: 'United States' },
+  'Mastercard':           { industry: 'Financial Services',   size: '10,001+',      type: 'Public Company',  country: 'United States' },
+  'Wise':                 { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Public Company',  country: 'United Kingdom' },
+  'Plaid':                { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Privately Held',  country: 'United States' },
+  'Wealthfront':          { industry: 'Financial Services',   size: '201–500',      type: 'Privately Held',  country: 'United States' },
+  'Securitize':           { industry: 'Financial Services',   size: '51–200',       type: 'Privately Held',  country: 'United States' },
+  'Ramp':                 { industry: 'Financial Services',   size: '501–1,000',    type: 'Privately Held',  country: 'United States' },
+  'Brex':                 { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Privately Held',  country: 'United States' },
+  'Tencent':              { industry: 'Technology',           size: '10,001+',      type: 'Public Company',  country: 'China' },
+  'Kin Insurance':        { industry: 'Insurance',            size: '201–500',      type: 'Privately Held',  country: 'United States' },
+  'Relay':                { industry: 'Financial Services',   size: '201–500',      type: 'Privately Held',  country: 'United States' },
+  'Robinhood':            { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Public Company',  country: 'United States' },
+  'PhonePe':              { industry: 'Financial Services',   size: '1,001–5,000',  type: 'Privately Held',  country: 'India' },
+}
+
+const COMPANY_LOGOS: Record<string, string> = {
+  'Stripe':               '/company-logos/stripe.png',
+  'Paypal':               '/company-logos/paypal.svg',
+  'Revolut':              '/company-logos/revolut.png',
+  'Airtel Payments Bank': '/company-logos/airtel.png',
+  'Paytm':                '/company-logos/paytm.png',
+  'Jupiter':              '/company-logos/jupiter.png',
+  'Fiserv':               '/company-logos/fiserv.png',
+  'Chime':                '/company-logos/chime.png',
+  'Razorpay':             '/company-logos/razorpay.png',
+  'Visa':                 '/company-logos/visa.png',
+  'Coinbase':             '/company-logos/coinbase.svg',
+  'Intuit':               '/company-logos/intuit.png',
+  'Mastercard':           '/company-logos/mastercard.svg',
+  'Wise':                 '/company-logos/wise.png',
+  'Plaid':                '/company-logos/plaid.png',
+  'Wealthfront':          '/company-logos/wealthfront.png',
+  'Securitize':           '/company-logos/securitize.png',
+  'Ramp':                 '/company-logos/ramp.png',
+  'Brex':                 '/company-logos/brex.png',
+  'Tencent':              '/company-logos/tencent.png',
+  'Kin Insurance':        '/company-logos/kin.png',
+  'PhonePe':              '/company-logos/phonepe.png',
+  'Robinhood':            '/company-logos/robinhood.png',
+  'Relay':                '/company-logos/relayfi.png',
+}
+
 const REACH_PEOPLE = [
   { n:  1, name: 'James Smith',           company: 'Paypal',   title: 'Talent Acquisition',                    location: 'Noida, Uttar Pradesh, India',          li: 'mohd-altamash-ali-49860515a' },
   { n:  2, name: 'Robert Smith',          company: 'Stripe',   title: 'Talent Acquisition Manager',             location: 'India',                                li: 'ritikaverma29' },
@@ -1572,7 +1634,7 @@ const REACH_PEOPLE = [
   { n:  7, name: 'Barbara Williams',      company: 'Fiserv',   title: 'Human Resources Executive',              location: 'Noida, Uttar Pradesh, India',          li: 'amresh-singh-b88811177' },
   { n:  8, name: 'James Gonzalez',        company: 'Chime',   title: 'Talent Acquisition Lead',                location: 'Delhi, India',                         li: 'seemayadav5' },
   { n:  9, name: 'Charles Moore',         company: 'Razorpay',   title: 'Talent Acquisition',                     location: 'Noida, Uttar Pradesh, India',          li: 'sumerjain-hr' },
-  { n: 10, name: 'Atul Chaturvedi',       company: '',   title: 'Executive Manager HR',                   location: 'Noida, Uttar Pradesh, India',          li: 'atul-chaturvedi-382695a' },
+  { n: 10, name: 'Atul Chaturvedi',       company: 'Visa',   title: 'Executive Manager HR',                   location: 'Noida, Uttar Pradesh, India',          li: 'atul-chaturvedi-382695a' },
   { n: 11, name: 'Linda Jones',           company: 'Coinbase',   title: 'AVP - HRBP',                             location: 'Delhi, India',                         li: 'sonali-sood-5abb431b' },
   { n: 12, name: 'Susan Miller',          company: 'Intuit',   title: 'Senior Talent Acquisition Specialist',   location: 'Gurugram, Haryana, India',             li: 'ratanchourashiahr' },
   { n: 13, name: 'Michael Hernandez',     company: 'Mastercard',   title: 'Regional HR Business Partner',           location: 'India',                                li: 'ayush-dubey-students-jaipuria-indore-79b984194' },
@@ -1615,13 +1677,13 @@ const REACH_PEOPLE = [
   { n: 50, name: 'Patricia Lopez',        company: 'PhonePe',   title: 'Human Resources Intern',                 location: 'Thrissur, Kerala, India',              li: 'reema-shibu-1827a9267' },
 ]
 
-const EMAIL_SUBJECT = 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles'
+const EMAIL_SUBJECT = 'Senior Product Manager · 8 yrs · Fintech & Payments · Open to Roles'
 const EMAIL_PARAS = [
   'Hi {{First Name}},',
   'I hope this message finds you well.',
-  'I am a Senior Product Manager with 8 years of experience in fintech and consumer tech. I have led 0-to-1 product launches, scaled key product flows from 50K to 2M+ daily active users, and partnered with engineering, design, and data teams to ship features that move core business metrics.',
-  'I am reaching out about the Senior PM opportunity on your team. My background in product discovery, roadmap prioritisation, and cross-functional leadership aligns closely with what you are building. I have attached my resume for your review.',
-  'I would love a 20-minute call to explore how I can contribute. Thank you for your time and I look forward to connecting.',
+  'I\'m a Senior Product Manager with 8 years of experience in fintech and consumer tech — I\'ve led 0-to-1 product launches, scaled core flows from 50K to 2M+ daily active users, and partnered with engineering, design, and data teams to ship features that drive measurable outcomes.',
+  'I\'m reaching out about the Senior PM opportunity on your team. My background in product discovery, roadmap prioritisation, and cross-functional leadership aligns closely with what you\'re building. I\'ve attached my resume for your review.',
+  'I\'d welcome a 20-minute call to explore how I can contribute. Thank you for your time — looking forward to connecting.',
 ]
 
 function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
@@ -1715,7 +1777,7 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
     if (phase === 'moving-out')   handAnim = 'arc-people-move'
     if (phase === 'clicking-out') handAnim = 'arc-people-click'
 
-    const cols = '26px 32px 180px 120px 210px 190px 1fr'
+    const cols = '26px 28px 150px 110px 220px 210px 130px 80px 130px 170px'
 
     return (
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#fff', fontFamily: F, position: 'relative' }}>
@@ -1739,11 +1801,16 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Company</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Job Title</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Location</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Industry</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Size</span>
+          <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>Type</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.4 }}>LinkedIn URL</span>
         </div>
         {/* Rows */}
         <div style={{ flex: 1, overflow: 'auto' }}>
-          {REACH_PEOPLE.map((p, i) => (
+          {REACH_PEOPLE.map((p, i) => {
+            const co = COMPANY_DETAILS[p.company]
+            return (
             <div key={p.n} style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', minHeight: 40, alignItems: 'center', borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
               <Checkbox checked={allSelected} />
               <span style={{ fontSize: 12, color: '#9ca3af' }}>{p.n}</span>
@@ -1751,9 +1818,13 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
               <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.company}</span>
               <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.title}</span>
               <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{p.location}</span>
+              <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co?.industry ?? '—'}</span>
+              <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co?.size ?? '—'}</span>
+              <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co?.type ?? '—'}</span>
               <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc }}>linkedin.com/in/{p.li}</span>
             </div>
-          ))}
+            )
+          })}
         </div>
         {/* Hand cursor — base at table-header checkbox (top:53, left:20) */}
         {phase !== 'idle' && (
@@ -1794,15 +1865,22 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
         </div>
         <div style={{ flex: 1, overflow: 'auto', padding: '0 16px 12px' }}>
           {REACH_PEOPLE.slice(0, connectedCount).map((p) => (
-            <div key={p.n} className="adc-fade-in" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid #f0f0f0' }}>
-              <div style={{ width: 26, height: 26, borderRadius: '50%', background: `hsl(${(p.name.charCodeAt(0) * 37 + p.name.charCodeAt(1) * 17) % 360},42%,62%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 10, fontWeight: 600, color: '#fff', fontFamily: F }}>
-                {p.name.split(' ').slice(0, 2).map(w => w[0]).join('')}
+            <div key={p.n} className="adc-fade-in" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0', borderBottom: '1px solid #f0f0f0' }}>
+              <div style={{ minWidth: 0, flex: 1 }}>
+                {/* Name + LinkedIn icon */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 3 }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: '#0A1217', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</span>
+                  <img src="/company-logos/linkedin.svg" alt="LinkedIn" width={13} height={13} style={{ flexShrink: 0 }} />
+                </div>
+                {/* Company logo + name */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {COMPANY_LOGOS[p.company] && (
+                    <img src={COMPANY_LOGOS[p.company]} alt={p.company} height={13} style={{ objectFit: 'contain', flexShrink: 0, maxWidth: 40 }} />
+                  )}
+                  <span style={{ fontSize: 11, color: '#6b7280', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.company}</span>
+                </div>
               </div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: 12, fontWeight: 500, color: '#0A1217', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
-                <div style={{ fontSize: 11, color: '#6b7280', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.company}</div>
-              </div>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto', flexShrink: 0 }}><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><polyline points="20 6 9 17 4 12"/></svg>
             </div>
           ))}
         </div>
@@ -1881,24 +1959,15 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
 
 /* Sent folder — user's outreach emails sent to each HR */
 const GMAIL_ROWS = [
-  { id: 1,  to: 'Seema Kalra',   company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Seema, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',    time: '10:42 AM'  },
-  { id: 2,  to: 'Rohit Verma',   company: 'PhonePe',  subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Rohit, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at PhonePe',  time: '9:31 AM'   },
-  { id: 3,  to: 'Meenakshi R',   company: 'Flipkart', subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Meenakshi, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Flipkart', time: '8:14 AM'   },
-  { id: 4,  to: 'Anjali Patel',  company: 'Jupiter',  subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Anjali, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Jupiter',  time: '7:02 AM'   },
-  { id: 5,  to: 'Dhruv Sharma',  company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Dhruv, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',    time: 'Yesterday' },
-  { id: 6,  to: 'Kavitha Nair',  company: 'Swiggy',   subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Kavitha, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Swiggy', time: 'Yesterday' },
-  { id: 7,  to: 'Priya Mehta',   company: 'Razorpay', subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Priya, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Razorpay', time: 'Mon'       },
-  { id: 8,  to: 'Arun Kumar',    company: 'Zepto',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Arun, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Zepto',    time: 'Mon'       },
-  { id: 9,  to: 'Niyati Jain',   company: 'Razorpay', subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Niyati, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Razorpay', time: 'Sun'       },
-  { id: 10, to: 'Sunita Reddy',  company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles', snippet: 'Hi Sunita, I am a Senior PM with 8 years in fintech. I have led 0-to-1 product launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',  time: 'Sat'       },
+  { id: 1,  to: 'Hemant',   company: 'Paytm',    subject: 'Senior Product Manager · 8 yrs · Fintech & Payments · Open to Roles', snippet: 'Hi Seema, I\'m a Senior PM with 8 years in fintech — led 0-to-1 launches and scaled payment flows to 2M+ DAUs. Reaching out about the PM opening at Paytm',    time: '10:42 AM'  },
 ]
 
 const EMAIL_REPLY_PARAS = [
   'Hi',
   'I hope this message finds you well.',
-  'I am a Senior Product Manager with 8 years of experience in fintech and consumer tech. I have led 0-to-1 product launches, scaled key product flows from 50K to 2M+ daily active users, and partnered with engineering, design, and data teams to ship features that move core business metrics.',
-  'I am reaching out about the Senior PM opportunity on your team. My background in product discovery, roadmap prioritisation, and cross-functional leadership aligns closely with what you are building. I have attached my resume for your review.',
-  'I would love a 20-minute call to explore how I can contribute. Thank you for your time and I look forward to connecting.',
+  'I\'m a Senior Product Manager with 8 years of experience in fintech and consumer tech — I\'ve led 0-to-1 product launches, scaled core flows from 50K to 2M+ daily active users, and worked closely with engineering, design, and data teams to ship features that drive measurable business outcomes.',
+  'I\'m reaching out about the Senior PM opening on your team. My background in product discovery, roadmap prioritisation, and cross-functional leadership seems like a strong fit for where you\'re headed. I\'ve attached my resume for your review.',
+  'I\'d welcome a 20-minute call to explore how I can contribute. Thank you for your time — looking forward to connecting.',
 ]
 
 function YouLandContent({ onComplete }: { onComplete?: () => void }) {
@@ -2165,7 +2234,7 @@ function YouLandContent({ onComplete }: { onComplete?: () => void }) {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="1.8" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
             </div>
             <h2 style={{ fontSize: 20, fontWeight: 500, color: '#202124', margin: 0, flex: 1, letterSpacing: '-0.3px', lineHeight: 1.3 }}>
-            Senior Product Manager · 8 yrs · Fintech and Payments · Open to Roles
+            Senior Product Manager · 8 yrs · Fintech &amp; Payments · Open to Roles
             </h2>
             <div style={{ display: 'flex', gap: 2 }}>
               <div style={{ width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -2234,7 +2303,7 @@ function YouLandContent({ onComplete }: { onComplete?: () => void }) {
 
 export function YouDescribeMac({ onComplete }: { onComplete?: () => void }) {
   return (
-    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach">
+    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach" borderRadius={26}>
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         <YouDescribeContent onComplete={onComplete} />
       </div>
@@ -2244,7 +2313,7 @@ export function YouDescribeMac({ onComplete }: { onComplete?: () => void }) {
 
 export function AgentDiscoverMac({ onComplete }: { onComplete?: () => void }) {
   return (
-    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach/companies">
+    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach/companies" borderRadius={26}>
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         <AgentDiscoverContent onComplete={onComplete} />
       </div>
@@ -2254,7 +2323,7 @@ export function AgentDiscoverMac({ onComplete }: { onComplete?: () => void }) {
 
 export function AgentReachesMac({ onComplete }: { onComplete?: () => void }) {
   return (
-    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach/sequence">
+    <MacDesktop browserUrl="app.nexthireconsulting.com/outreach/sequence" borderRadius={26}>
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         <AgentReachesContent onComplete={onComplete} />
       </div>
@@ -2264,7 +2333,7 @@ export function AgentReachesMac({ onComplete }: { onComplete?: () => void }) {
 
 export function YouLandMac({ onComplete }: { onComplete?: () => void }) {
   return (
-    <MacDesktop browserUrl="mail.google.com/mail/u/0/#inbox">
+    <MacDesktop browserUrl="mail.google.com/mail/u/0/#inbox" borderRadius={26}>
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         <YouLandContent onComplete={onComplete} />
       </div>

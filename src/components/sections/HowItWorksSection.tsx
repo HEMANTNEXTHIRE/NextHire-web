@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { SERIF } from '@/constants/typography'
 import { YouDescribeMac, AgentDiscoverMac, AgentReachesMac, YouLandMac } from '@/components/sections/ResumeBuilderShowcase'
 
@@ -35,10 +35,35 @@ const STEPS: { key: StepKey; label: string; description: string }[] = [
 
 export default function HowItWorksSection() {
   const [active, setActive] = useState<StepKey>('describe')
+  const sectionRef = useRef<HTMLElement>(null)
+  const isVisibleRef = useRef(false)
+  const pendingAdvanceRef = useRef<StepKey | null>(null)
   const currentStep = STEPS.find((s) => s.key === active)!
 
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting
+        if (entry.isIntersecting && pendingAdvanceRef.current) {
+          setActive(pendingAdvanceRef.current)
+          pendingAdvanceRef.current = null
+        }
+      },
+      { threshold: 0.2 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const advance = (next: StepKey) => {
+    if (isVisibleRef.current) setActive(next)
+    else pendingAdvanceRef.current = next
+  }
+
   return (
-    <section id="how-it-works" style={{ background: '#ffffff', padding: '120px 40px' }}>
+    <section ref={sectionRef} id="how-it-works" style={{ background: '#ffffff', padding: '120px 40px' }}>
       <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
 
         {/* Heading */}
@@ -79,15 +104,15 @@ export default function HowItWorksSection() {
           <p>{currentStep.description}</p>
         </div>
 
-        {/* Platform mockup — switches per tab */}
+        {/* Platform mockup — always mounted so animation state is preserved on scroll */}
         <div key={`mac-${active}`} className="hiw-mac-wrap">
           {active === 'describe'
-            ? <YouDescribeMac onComplete={() => setActive('discover')} />
+            ? <YouDescribeMac onComplete={() => advance('discover')} />
             : active === 'discover'
-            ? <AgentDiscoverMac onComplete={() => setActive('outreach')} />
+            ? <AgentDiscoverMac onComplete={() => advance('outreach')} />
             : active === 'outreach'
-            ? <AgentReachesMac onComplete={() => setActive('land')} />
-            : <YouLandMac onComplete={() => setTimeout(() => setActive('describe'), 2500)} />
+            ? <AgentReachesMac onComplete={() => advance('land')} />
+            : <YouLandMac onComplete={() => setTimeout(() => advance('describe'), 2500)} />
           }
         </div>
 

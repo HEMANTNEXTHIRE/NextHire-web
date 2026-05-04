@@ -129,43 +129,50 @@ export default function HeroSection() {
       <div style={{
         position: 'relative', zIndex: 1,
         maxWidth: '900px', margin: '0 auto',
-        padding: 'clamp(72px, 12vw, 120px) clamp(20px, 5vw, 40px) clamp(60px, 10vw, 100px)',
+        padding: 'clamp(92px, 12vw, 140px) clamp(20px, 5vw, 40px) clamp(60px, 10vw, 100px)',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         textAlign: 'center',
       }}>
 
         {/* ── Headline ── */}
-        <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
+        <div style={{
+          width: 'fit-content',
+          maxWidth: '100vw',
+          margin: '0 auto 32px',
+          paddingBottom: '0.15em',
+        }}>
           <h1 style={{
             fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
             margin: 0,
             letterSpacing: '-0.5px',
-            lineHeight: 1.22,
+            lineHeight: 1.15,
             fontSynthesis: 'none',
           }}>
           {/* First line */}
           <span style={{
             display: 'block',
-            fontSize: 'clamp(36px, 6vw, 76px)',
-            fontWeight: 400,
+            fontSize: '70px',
+            fontWeight: 450,
             fontStyle: 'normal',
             color: C.dark,
-            lineHeight: 1.22,
+            lineHeight: 1.08,
+            whiteSpace: 'nowrap',
             fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
           }}>
-            The unfair advantage
+            The Unfair Advantage
           </span>
           {/* Second line */}
           <span style={{
             display: 'block',
-            fontSize: 'clamp(36px, 6vw, 76px)',
-            fontWeight: 400,
+            fontSize: '70px',
+            fontWeight: 450,
             fontStyle: 'normal',
             color: C.accent,
-            lineHeight: 1.22,
+            lineHeight: 1.08,
+            whiteSpace: 'nowrap',
             fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
           }}>
-            every job seeker deserves
+            Every Job Seeker Deserves
           </span>
         </h1>
         </div>
@@ -227,8 +234,8 @@ export default function HeroSection() {
         display:         'flex',
         alignItems:      'center',
         justifyContent:  'center',
-        paddingTop:      '36px',
-        paddingBottom:   '120px',
+        paddingTop:      'clamp(18px, 5vmax, 60px)',
+        paddingBottom:   'clamp(74px, 12vmax, 130px)',
         paddingLeft:     'clamp(24px, 6vw, 100px)',
         paddingRight:    'clamp(24px, 6vw, 100px)',
         textAlign:       'center',
