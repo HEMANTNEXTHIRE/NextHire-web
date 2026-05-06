@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import ReduxProvider from '@/components/ReduxProvider'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import NotificationContainer from '@/components/ui/Notification'
+import PostHogProvider from '@/components/PostHogProvider'
+import PageViewTracker from '@/components/PageViewTracker'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
@@ -114,11 +117,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           data-fs-cc-debug="false"
         />
 
-        {/* Google Fonts — Noto Sans + Playfair Display (hero serif) */}
+        {/* Google Fonts — Inter + Droid Serif (hero serif) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&family=Droid+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
           rel="stylesheet"
         />
 
@@ -145,12 +148,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </noscript>
 
-        <ReduxProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <NotificationContainer />
-        </ReduxProvider>
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PageViewTracker />
+          </Suspense>
+          <ReduxProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <NotificationContainer />
+          </ReduxProvider>
+        </PostHogProvider>
       </body>
     </html>
   )

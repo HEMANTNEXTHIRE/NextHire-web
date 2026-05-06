@@ -3,7 +3,7 @@ import type React from 'react'
 import Link from 'next/link'
 import DualActionCTA from '@/components/ui/DualActionCTA'
 import AccordionFaq from '@/components/ui/AccordionFaq'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 
 
 export const metadata: Metadata = {
@@ -260,11 +260,11 @@ export default function CandidatesPage() {
 
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <h1 style={{
-            fontFamily: SERIF, color: '#ffffff', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400,
+            fontFamily: "'Droid Serif', Georgia, serif", color: '#ffffff', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400,
             lineHeight: 1.22, margin: '0 0 24px', letterSpacing: '-0.5px',
           }}>
-            <span style={{ display: 'block', fontFamily: SERIF }}>Your AI agent runs the job search.</span>
-            <span style={{ display: 'block', color: '#4ade80', fontFamily: SERIF }}>You show up for the offer.</span>
+            <span style={{ display: 'block' }}>Your AI agent runs the job search.</span>
+            <span style={{ display: 'block', color: '#ffffff' }}>You show up for the offer.</span>
           </h1>
 
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: FONT.base, lineHeight: 1.7, margin: '0 auto 48px', maxWidth: 620 }}>
@@ -307,7 +307,7 @@ export default function CandidatesPage() {
             <p style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#5fa89e', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 16, margin: '0 0 16px' }}>
               The 4-step loop
             </p>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(30px, 5vw, 56px)', fontWeight: 400, color: '#111827', margin: '0 0 18px', lineHeight: 1.18, letterSpacing: '-0.8px', fontSynthesis: 'none' }}>
+            <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(30px, 5vw, 56px)', fontWeight: 400, color: '#132128', margin: '0 0 18px', lineHeight: 1.18, letterSpacing: '-0.8px', fontSynthesis: 'none' }}>
               What the agent does while you sleep
             </h2>
             <p style={{ fontSize: FONT.base, color: '#6b7280', maxWidth: 480, margin: '0 auto', lineHeight: 1.7, fontWeight: WEIGHT.normal }}>
@@ -331,7 +331,7 @@ export default function CandidatesPage() {
                     padding: '4px 10px', letterSpacing: '0.04em',
                   }}>{step.num}</span>
                 </div>
-                <h3 style={{ fontSize: 'clamp(18px, 2vw, 22px)', fontWeight: WEIGHT.bold, color: '#111827', margin: '0 0 10px', letterSpacing: '-0.4px', lineHeight: 1.28 }}>
+                <h3 style={{ fontSize: 'clamp(18px, 2vw, 22px)', fontWeight: WEIGHT.bold, color: '#132128', margin: '0 0 10px', letterSpacing: '-0.4px', lineHeight: 1.28 }}>
                   {step.title}
                 </h3>
                 <p style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, margin: '0 0 20px' }}>
@@ -368,11 +368,11 @@ export default function CandidatesPage() {
           {/* heading */}
           <div style={{ textAlign: 'center', marginBottom: 'clamp(52px, 7vw, 72px)' }}>
             <h2 style={{
-              fontFamily: SERIF,
+              fontFamily: "'Droid Serif', Georgia, serif",
               fontSize: 'clamp(36px, 6vw, 76px)',
               fontWeight: 400,
               fontStyle: 'normal',
-              color: '#111827',
+              color: '#132128',
               margin: '0 0 20px',
               lineHeight: 1.22,
               letterSpacing: '-0.5px',
@@ -410,13 +410,13 @@ export default function CandidatesPage() {
               boxShadow: '0 1px 4px rgba(37,62,66,0.04)',
               transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
             }}>
-              <div style={{ fontSize: 'clamp(22px, 2.4vw, 30px)', fontWeight: WEIGHT.extra, color: '#111827', lineHeight: 1.28, letterSpacing: '-0.4px', marginBottom: 16 }}>
+              <div style={{ fontSize: 'clamp(22px, 2.4vw, 30px)', fontWeight: WEIGHT.extra, color: '#132128', lineHeight: 1.28, letterSpacing: '-0.4px', marginBottom: 16 }}>
                 {TOOLS[0].label}
               </div>
               <div style={{ fontSize: FONT.base, color: '#4b5563', lineHeight: 1.72, marginBottom: 24, maxWidth: 300 }}>
                 {TOOLS[0].desc}
               </div>
-              <Link href="/pricing" style={{ color: '#2e7d4f', fontSize: FONT.sm, fontWeight: WEIGHT.semi, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <Link href="/pricing" style={{ color: '#338632', fontSize: FONT.sm, fontWeight: WEIGHT.semi, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                 See how it works <span style={{ fontSize: 16 }}>→</span>
               </Link>
             </div>
@@ -445,7 +445,7 @@ export default function CandidatesPage() {
                 <div style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: 18, marginBottom: 18 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
-                      <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: '#111827' }}>AI Outreach Agent</div>
+                      <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: '#132128' }}>AI Outreach Agent</div>
                       <div style={{ fontSize: FONT.xs, color: '#9ca3af', marginTop: 3 }}>Personalised emails from your Gmail</div>
                     </div>
                     <span style={{ fontSize: 11, fontWeight: 700, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '4px 12px', borderRadius: 100 }}>Live</span>
@@ -457,7 +457,7 @@ export default function CandidatesPage() {
                 ].map(r => (
                   <div key={r.co} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 0', borderBottom: '1px solid #f3f4f6' }}>
                     <div>
-                      <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#111827' }}>{r.co} · {r.role}</div>
+                      <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#132128' }}>{r.co} · {r.role}</div>
                       <div style={{ fontSize: FONT.xs, color: '#9ca3af', marginTop: 2 }}>priya@{r.co.toLowerCase()}.com</div>
                     </div>
                     <span style={{ fontSize: 11, fontWeight: 700, color: r.sc, background: `${r.sc}14`, padding: '3px 10px', borderRadius: 100 }}>{r.status}</span>
@@ -491,7 +491,7 @@ export default function CandidatesPage() {
                 overflow: 'hidden',
                 transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
               }}>
-                <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#111827', lineHeight: 1.28, letterSpacing: '-0.3px', marginBottom: 10 }}>
+                <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#132128', lineHeight: 1.28, letterSpacing: '-0.3px', marginBottom: 10 }}>
                   {t.label}
                 </div>
                 <div style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, marginBottom: 28 }}>
@@ -518,7 +518,7 @@ export default function CandidatesPage() {
                 overflow: 'hidden',
                 transition: 'transform 0.24s cubic-bezier(0.33,1,0.68,1), box-shadow 0.24s ease',
               }}>
-                <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#111827', lineHeight: 1.28, letterSpacing: '-0.3px', marginBottom: 10 }}>
+                <div style={{ fontSize: 20, fontWeight: WEIGHT.extra, color: '#132128', lineHeight: 1.28, letterSpacing: '-0.3px', marginBottom: 10 }}>
                   {t.label}
                 </div>
                 <div style={{ fontSize: FONT.sm, color: '#6b7280', lineHeight: 1.72, marginBottom: 28 }}>
@@ -541,7 +541,7 @@ export default function CandidatesPage() {
             <p style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: '#5fa89e', letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 16px' }}>
               The comparison
             </p>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(30px, 5vw, 56px)', fontWeight: 400, color: '#111827', margin: '0 0 14px', lineHeight: 1.18, letterSpacing: '-0.8px', fontSynthesis: 'none' }}>
+            <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(30px, 5vw, 56px)', fontWeight: 400, color: '#132128', margin: '0 0 14px', lineHeight: 1.18, letterSpacing: '-0.8px', fontSynthesis: 'none' }}>
               Old way vs. NextHire way
             </h2>
             <p style={{ fontSize: FONT.base, color: '#6b7280', margin: 0, fontWeight: WEIGHT.normal, lineHeight: 1.7 }}>Same goal. Completely different experience.</p>
@@ -573,7 +573,7 @@ export default function CandidatesPage() {
             <div style={{ background: '#f0f7f4', border: '1px solid #c8dfd6', borderRadius: 20, padding: '32px 28px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 24 }}>
                 <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block', boxShadow: '0 0 6px rgba(34,197,94,0.4)' }} />
-                <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.2px', color: '#2e7d4f', textTransform: 'uppercase' }}>With NextHire</span>
+                <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, letterSpacing: '1.2px', color: '#338632', textTransform: 'uppercase' }}>With NextHire</span>
               </div>
               {[
                 'Agent runs 24/7 — you check results',
@@ -596,7 +596,7 @@ export default function CandidatesPage() {
       {/* ── FAQ ──────────────────────────────────────────────────── */}
       <section id="candidates-faq" style={{ background: '#fff', padding: 'clamp(72px, 10vw, 100px) clamp(20px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 740, margin: '0 auto', textAlign: 'center', marginBottom: 60 }}>
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
+          <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0 0 20px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
             Frequently asked questions
           </h2>
         </div>

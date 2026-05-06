@@ -15,7 +15,6 @@ const NAV_ITEMS = [
   { key: 'candidates',      label: 'Candidates',      dropdown: true, href: '/candidates' },
   { key: 'for-clients',     label: 'Companies',       dropdown: true, href: '/companies' },
   { key: 'pricing',         label: 'Pricing',         dropdown: false, href: '/pricing' },
-  { key: 'success-stories', label: 'Jobs',            dropdown: false, href: '/jobs' },
   { key: 'about',           label: 'About',           dropdown: true, href: '/about-nexthire' },
 ]
 

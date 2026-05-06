@@ -30,7 +30,7 @@ export const WEIGHT = {
   extra: 800,
 } as const
 
-export const FONT_FAMILY = "'Noto Sans', system-ui, -apple-system, sans-serif"
+export const FONT_FAMILY = "'Inter', system-ui, -apple-system, sans-serif"
 
-/** Playfair Display serif stack — use for all hero/display headings */
-export const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
+/** Droid Serif serif stack — use for all hero/display headings */
+export const SERIF = "'Droid Serif', Georgia, 'Times New Roman', serif"

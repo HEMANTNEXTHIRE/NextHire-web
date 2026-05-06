@@ -58,7 +58,7 @@ export default function ExpertForm() {
     background: '#fff',
     color: '#1a3338',
     outline: 'none',
-    fontFamily: "'Noto Sans', system-ui, sans-serif",
+    fontFamily: "'Inter', system-ui, sans-serif",
     transition: 'border-color 0.3s ease',
     marginBottom: '20px',
   }

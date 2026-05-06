@@ -59,7 +59,7 @@ function AutoApplyAnimation() {
       borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column',
       padding: '12px 12px 10px', gap: 8, boxSizing: 'border-box',
-      fontFamily: "'Noto Sans', system-ui, sans-serif",
+      fontFamily: "'Inter', system-ui, sans-serif",
       position: 'relative',
     }}>
       {/* Subtle dot grid */}
@@ -76,7 +76,7 @@ function AutoApplyAnimation() {
               <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, boxShadow: '0 0 0 0.5px rgba(0,0,0,0.15)' }} />
             ))}
           </div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>AI Auto Apply</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>AI Auto Apply</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           {count > 0 && (
@@ -104,10 +104,10 @@ function AutoApplyAnimation() {
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2.5">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
-        <span style={{ fontSize: 11, color: chars > 0 ? '#111827' : '#9ca3af', letterSpacing: '-0.01em', flex: 1, fontWeight: chars > 0 ? 500 : 400 }}>
+        <span style={{ fontSize: 11, color: chars > 0 ? '#132128' : '#9ca3af', letterSpacing: '-0.01em', flex: 1, fontWeight: chars > 0 ? 500 : 400 }}>
           {chars > 0 ? AA_SEARCH.slice(0, chars) : 'Search jobs…'}
           {chars > 0 && chars < AA_SEARCH.length && (
-            <span style={{ display: 'inline-block', width: 1.5, height: 11, background: '#111827', marginLeft: 1, verticalAlign: 'middle', animation: 'nh-ic-cursor 0.8s step-end infinite' }} />
+            <span style={{ display: 'inline-block', width: 1.5, height: 11, background: '#132128', marginLeft: 1, verticalAlign: 'middle', animation: 'nh-ic-cursor 0.8s step-end infinite' }} />
           )}
         </span>
         {showJobs && (
@@ -141,7 +141,7 @@ function AutoApplyAnimation() {
             {/* Info */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.2 }}>{job.company}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em', lineHeight: 1.2 }}>{job.company}</span>
                 <span style={{ fontSize: 8, fontWeight: 700, color: job.color, background: job.light, border: `1px solid ${job.color}30`, padding: '0 5px', borderRadius: 4 }}>{job.salary}</span>
               </div>
               <div style={{ fontSize: 9, color: '#6b7280', marginTop: 1, letterSpacing: '-0.01em' }}>{job.role} · {job.loc}</div>
@@ -241,7 +241,7 @@ function OutreachAgentAnimation() {
       borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column',
       padding: '11px 12px 10px', gap: 7, boxSizing: 'border-box',
-      fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative',
+      fontFamily: "'Inter', system-ui, sans-serif", position: 'relative',
     }}>
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)',
@@ -419,7 +419,7 @@ function InterviewCoachAnimation() {
       display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center',
       padding: '14px 12px', gap: 7, boxSizing: 'border-box',
-      fontFamily: "'Noto Sans', system-ui, sans-serif",
+      fontFamily: "'Inter', system-ui, sans-serif",
       position: 'relative',
     }}>
       {/* Subtle dot grid */}
@@ -594,7 +594,7 @@ function ResumeBuilderAnimation() {
   return (
     <div style={{ width: '100%', height: '100%', background: '#fafaf8', borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column', padding: '11px 12px 10px', gap: 8,
-      boxSizing: 'border-box', fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative' }}>
+      boxSizing: 'border-box', fontFamily: "'Inter', system-ui, sans-serif", position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.055) 1px, transparent 1px)',
         backgroundSize: '18px 18px' }} />
@@ -602,7 +602,7 @@ function ResumeBuilderAnimation() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ display: 'flex', gap: 5 }}>{['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}</div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>Resume Builder</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>Resume Builder</span>
         </div>
         {badge && <span style={{ fontSize: 8.5, fontWeight: 700, color: '#166534', background: '#dcfce7', border: '1px solid #bbf7d0', padding: '2px 7px', borderRadius: 20 }}>ATS Ready ✓</span>}
       </div>
@@ -629,7 +629,7 @@ function ResumeBuilderAnimation() {
       <div style={{ flex: 1, background: '#fff', border: '1.5px solid #e5e7eb', borderRadius: 10,
         padding: '9px 11px', display: 'flex', flexDirection: 'column', gap: 6,
         position: 'relative', zIndex: 1, overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-        <div style={{ width: '55%', height: 8, background: '#111827', borderRadius: 4 }} />
+        <div style={{ width: '55%', height: 8, background: '#132128', borderRadius: 4 }} />
         <div style={{ width: '38%', height: 5, background: '#d1d5db', borderRadius: 3 }} />
         {['90%','75%','88%','65%','82%'].map((w, i) => (
           <div key={i} style={{ height: 4, background: '#f3f4f6', borderRadius: 3, width: w }} />
@@ -679,7 +679,7 @@ function JobTrackerAnimation() {
   return (
     <div style={{ width: '100%', height: '100%', background: '#f5f7ff', borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column', padding: '11px 12px 10px', gap: 8,
-      boxSizing: 'border-box', fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative' }}>
+      boxSizing: 'border-box', fontFamily: "'Inter', system-ui, sans-serif", position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'linear-gradient(rgba(99,102,241,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.04) 1px,transparent 1px)',
         backgroundSize: '20px 20px' }} />
@@ -687,7 +687,7 @@ function JobTrackerAnimation() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ display: 'flex', gap: 5 }}>{['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}</div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>Job Tracker</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>Job Tracker</span>
         </div>
         <div style={{ display: 'flex', gap: 5 }}>
           {[
@@ -714,7 +714,7 @@ function JobTrackerAnimation() {
                 border: `1.5px solid ${app.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 9, fontWeight: 800, color: app.color }}>{app.company[0]}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>{app.company}</div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>{app.company}</div>
                 <div style={{ fontSize: 8.5, color: '#6b7280', marginTop: 1 }}>{app.role}</div>
               </div>
               <span style={{ fontSize: 8.5, fontWeight: 700, padding: '3px 8px', borderRadius: 20, whiteSpace: 'nowrap', flexShrink: 0,
@@ -756,7 +756,7 @@ function RecruiterInMailAnimation() {
   return (
     <div style={{ width: '100%', height: '100%', background: '#f0f7ff', borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column', padding: '11px 12px 10px', gap: 8,
-      boxSizing: 'border-box', fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative' }}>
+      boxSizing: 'border-box', fontFamily: "'Inter', system-ui, sans-serif", position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'radial-gradient(circle, rgba(59,130,246,0.06) 1px, transparent 1px)',
         backgroundSize: '18px 18px' }} />
@@ -764,7 +764,7 @@ function RecruiterInMailAnimation() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ display: 'flex', gap: 5 }}>{['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}</div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>Recruiter InMail</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>Recruiter InMail</span>
         </div>
         {replies > 0 && <span style={{ fontSize: 8.5, fontWeight: 700, color: '#1d4ed8', background: '#eff6ff', border: '1px solid #bfdbfe', padding: '2px 7px', borderRadius: 20 }}>{replies} {replies === 1 ? 'Reply' : 'Replies'} ↩</span>}
       </div>
@@ -772,7 +772,7 @@ function RecruiterInMailAnimation() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#fff', border: '1.5px solid #e5e7eb', borderRadius: 10, padding: '7px 10px', position: 'relative', zIndex: 1, flexShrink: 0 }}>
         <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'linear-gradient(135deg,#3b82f6,#6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 800, color: '#fff', flexShrink: 0 }}>MK</div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 9.5, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>Mike Kim</div>
+          <div style={{ fontSize: 9.5, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>Mike Kim</div>
           <div style={{ fontSize: 8, color: '#6b7280' }}>Senior Recruiter · Figma</div>
         </div>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0a66c2" strokeWidth="2" strokeLinecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
@@ -828,14 +828,14 @@ function JobPortalOptimization() {
   return (
     <div style={{ width: '100%', height: '100%', background: '#fff9f5', borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column', padding: '11px 12px 10px', gap: 8,
-      boxSizing: 'border-box', fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative' }}>
+      boxSizing: 'border-box', fontFamily: "'Inter', system-ui, sans-serif", position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'radial-gradient(circle, rgba(249,115,22,0.055) 1px, transparent 1px)',
         backgroundSize: '18px 18px' }} />
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, position: 'relative', zIndex: 1, flexShrink: 0 }}>
         <div style={{ display: 'flex', gap: 5 }}>{['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}</div>
-        <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>Job Portal Optimization</span>
+        <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>Job Portal Optimization</span>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, position: 'relative', zIndex: 1, flex: 1 }}>
@@ -846,7 +846,7 @@ function JobPortalOptimization() {
                 <div style={{ width: 18, height: 18, borderRadius: 4, background: p.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ fontSize: 7.5, fontWeight: 900, color: '#fff' }}>{p.name[0]}</span>
                 </div>
-                <span style={{ fontSize: 9.5, fontWeight: 700, color: '#111827' }}>{p.name}</span>
+                <span style={{ fontSize: 9.5, fontWeight: 700, color: '#132128' }}>{p.name}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                 <span style={{ fontSize: 13, fontWeight: 800, color: p.color, letterSpacing: '-0.03em' }}>{scores[i]}%</span>
@@ -901,7 +901,7 @@ function AIInterviewerAnimation() {
     <div style={{ width: '100%', height: '100%', background: '#fdf8f5', borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column', alignItems: 'center',
       padding: '12px 12px 11px', gap: 8, boxSizing: 'border-box',
-      fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative' }}>
+      fontFamily: "'Inter', system-ui, sans-serif", position: 'relative' }}>
 
       {/* Subtle warm dot grid */}
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
@@ -1054,7 +1054,7 @@ function CareerPageAnimation() {
   return (
     <div style={{ width: '100%', height: '100%', background: '#ffffff', borderRadius: 14, overflow: 'hidden',
       display: 'flex', flexDirection: 'column', padding: '11px 12px 10px', gap: 8,
-      boxSizing: 'border-box', fontFamily: "'Noto Sans', system-ui, sans-serif", position: 'relative' }}>
+      boxSizing: 'border-box', fontFamily: "'Inter', system-ui, sans-serif", position: 'relative' }}>
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px)',
         backgroundSize: '18px 18px' }} />
@@ -1062,9 +1062,9 @@ function CareerPageAnimation() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ display: 'flex', gap: 5 }}>{['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}</div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>Career Page Jobs</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>Career Page Jobs</span>
         </div>
-        {totalJobs > 0 && <span style={{ fontSize: 9, fontWeight: 700, color: '#2e7d4f', background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '2px 7px', borderRadius: 20 }}>{totalJobs}+ jobs</span>}
+        {totalJobs > 0 && <span style={{ fontSize: 9, fontWeight: 700, color: '#338632', background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '2px 7px', borderRadius: 20 }}>{totalJobs}+ jobs</span>}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, position: 'relative', zIndex: 1, flexShrink: 0 }}>
@@ -1082,7 +1082,7 @@ function CareerPageAnimation() {
             transition: `opacity 0.32s ease, transform 0.32s cubic-bezier(0.34,1.56,0.64,1)` }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 20, height: 20, borderRadius: 5, background: co.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 900, color: '#fff', flexShrink: 0 }}>{co.initial}</div>
-              <span style={{ fontSize: 9.5, fontWeight: 700, color: '#111827', letterSpacing: '-0.02em' }}>{co.name}</span>
+              <span style={{ fontSize: 9.5, fontWeight: 700, color: '#132128', letterSpacing: '-0.02em' }}>{co.name}</span>
             </div>
             <div style={{ fontSize: 13, fontWeight: 800, color: co.color, letterSpacing: '-0.02em' }}>{co.jobs} roles</div>
             <div style={{ fontSize: 7.5, color: '#9ca3af' }}>careers.{co.name.toLowerCase()}.com</div>
@@ -1102,10 +1102,10 @@ function CareerPageAnimation() {
 
 /* ─── Tokens ─────────────────────────────────────────────── */
 const C = {
-  accent:  '#2e7d4f',
+  accent:  '#338632',
   accentM: '#3d7a72',
   accentL: '#5fa89e',
-  dark:    '#111827',
+  dark:    '#132128',
   muted:   '#6b7280',
   white:   '#ffffff',
 }

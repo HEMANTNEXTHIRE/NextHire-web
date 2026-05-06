@@ -173,7 +173,7 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
   const navItem = (key: string, label: string, icon: React.ReactNode, extra?: React.ReactNode) => (
     <div key={key} onClick={() => { setActiveNav(key); setSettingsOpen(false) }} style={{
       display: 'flex', alignItems: 'center', gap: 12, padding: '0 14px', height: 36, borderRadius: 999,
-      fontSize: 14, fontWeight: 400, color: '#0A1217', lineHeight: '21px',
+      fontSize: 14, fontWeight: 400, color: '#132128', lineHeight: '21px',
       background: activeNav === key ? '#e5e5e5' : 'transparent',
       cursor: 'pointer', transition: 'background 0.15s', fontFamily: FONT,
     }}>
@@ -189,12 +189,12 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
   )
 
   return (
-    <div className="nh-rb-showcase__sidebar" style={{ width: 270, background: '#fff', borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden', fontFamily: FONT, fontSize: 14, color: '#0A1217' }}>
+    <div className="nh-rb-showcase__sidebar" style={{ width: 270, background: '#fff', borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden', fontFamily: FONT, fontSize: 14, color: '#132128' }}>
       {/* Header */}
       <div style={{ padding: '16px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <img src="/nexthire-logo.png" alt="" width={24} height={24} style={{ borderRadius: 4 }} />
-          <span style={{ fontSize: 18, fontWeight: 800, color: '#0A1217', letterSpacing: '-0.03em' }}>NextHire</span>
+          <span style={{ fontSize: 18, fontWeight: 800, color: '#132128', letterSpacing: '-0.03em' }}>NextHire</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <div style={{ width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#6b7280' }}>
@@ -233,7 +233,7 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
             <span>Getting Started</span><span>0%</span>
           </div>
           <div style={{ height: 6, background: 'rgba(10,18,23,0.08)', borderRadius: 999, overflow: 'hidden', marginBottom: 12 }}>
-            <div style={{ width: '0%', height: '100%', background: '#0A1217', borderRadius: 999 }} />
+            <div style={{ width: '0%', height: '100%', background: '#132128', borderRadius: 999 }} />
           </div>
           <div style={{ fontSize: 14, fontWeight: 400, color: '#fff', background: '#000', height: 36, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Upgrade</div>
         </div>
@@ -243,7 +243,7 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
       <div style={{ padding: '0 16px 16px', position: 'relative' }}>
         <div onClick={() => setSettingsOpen(!settingsOpen)} style={{
           display: 'flex', alignItems: 'center', gap: 12, padding: '0 14px', height: 36, borderRadius: 999,
-          fontSize: 14, fontWeight: 400, color: '#0A1217', cursor: 'pointer', transition: 'background 0.15s',
+          fontSize: 14, fontWeight: 400, color: '#132128', cursor: 'pointer', transition: 'background 0.15s',
           background: settingsOpen ? '#e5e5e5' : 'transparent',
         }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -256,7 +256,7 @@ function AppSidebar({ activeNav, setActiveNav }: { activeNav: string, setActiveN
             <div style={{ padding: '2px 14px 6px', fontSize: 11, color: '#a3a3a3' }}>Free plan</div>
             <div style={{ height: 1, background: '#e5e5e5', margin: '4px 0' }} />
             {['Upgrade plan', 'Profile settings', 'Settings', 'Sign out'].map(item => (
-              <div key={item} style={{ padding: '8px 14px', fontSize: 13, color: '#0A1217', cursor: 'pointer', borderRadius: 10 }}
+              <div key={item} style={{ padding: '8px 14px', fontSize: 13, color: '#132128', cursor: 'pointer', borderRadius: 10 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = '#f5f5f5' }}
                 onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = 'transparent' }}>
                 {item}
@@ -453,7 +453,7 @@ function ResumeMini({ t, idx }: { t: TemplateInfo, idx: number }) {
         </div>
         <div style={{ flex: 1, background: '#fff', padding: '12px 10px', overflow: 'hidden' }}>
           <SectionTitle color={acc}>EXPERIENCE</SectionTitle>
-          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#0A1217" />)}
+          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#132128" />)}
         </div>
       </div>
     )
@@ -474,9 +474,9 @@ function ResumeMini({ t, idx }: { t: TemplateInfo, idx: number }) {
         </div>
         <div style={{ flex: 1, padding: '6px 10px', overflow: 'hidden' }}>
           <SectionTitle color="#374151" borderColor="#d1d5db">EXPERIENCE</SectionTitle>
-          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#111827" />)}
+          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#132128" />)}
           <SectionTitle color="#374151" borderColor="#d1d5db">EDUCATION</SectionTitle>
-          {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#111827" />)}
+          {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#132128" />)}
           <SectionTitle color="#374151" borderColor="#d1d5db">SKILLS</SectionTitle>
           <SkillsInline skills={d.skills} color="#4b5563" />
         </div>
@@ -490,16 +490,16 @@ function ResumeMini({ t, idx }: { t: TemplateInfo, idx: number }) {
       <div style={{ display: 'flex', width: '100%', height: '100%', background: '#fff', fontFamily: F, overflow: 'hidden' }}>
         <div style={{ width: 4, background: acc, flexShrink: 0 }} />
         <div style={{ flex: 1, padding: '12px 10px', overflow: 'hidden' }}>
-          <div style={{ ...T.name, color: '#0A1217', fontFamily: F }}>{d.name}</div>
+          <div style={{ ...T.name, color: '#132128', fontFamily: F }}>{d.name}</div>
           <div style={{ ...T.title, color: '#6b7280', fontFamily: F, marginBottom: 2 }}>{d.title}</div>
           <div style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
             {[d.email, d.phone, d.location].map((c, i) => <span key={i} style={{ ...T.contact, color: '#9ca3af', fontFamily: F }}>{c}</span>)}
           </div>
           <div style={{ width: '100%', height: '0.5px', background: '#e5e7eb', marginBottom: 4 }} />
           <SectionTitle color={acc}>EXPERIENCE</SectionTitle>
-          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#111827" />)}
+          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#132128" />)}
           <SectionTitle color={acc}>EDUCATION</SectionTitle>
-          {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#111827" />)}
+          {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#132128" />)}
           <SectionTitle color={acc}>SKILLS</SectionTitle>
           <SkillsInline skills={d.skills} color="#4b5563" />
         </div>
@@ -520,9 +520,9 @@ function ResumeMini({ t, idx }: { t: TemplateInfo, idx: number }) {
         </div>
         <div style={{ flex: 1, padding: '6px 10px', overflow: 'hidden' }}>
           <SectionTitle color="#374151" borderColor="#e5e7eb">EXPERIENCE</SectionTitle>
-          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#111827" />)}
+          {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#132128" />)}
           <SectionTitle color="#374151" borderColor="#e5e7eb">EDUCATION</SectionTitle>
-          {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#111827" />)}
+          {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#132128" />)}
           <SectionTitle color="#374151" borderColor="#e5e7eb">SKILLS</SectionTitle>
           <SkillsInline skills={d.skills} color="#4b5563" />
         </div>
@@ -534,18 +534,18 @@ function ResumeMini({ t, idx }: { t: TemplateInfo, idx: number }) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', background: '#fff', padding: '14px 12px', fontFamily: F, overflow: 'hidden' }}>
         <div style={{ textAlign: 'center', marginBottom: 4 }}>
-          <div style={{ ...T.name, color: '#0A1217', fontFamily: F, fontSize: 10, letterSpacing: '0.04em', textTransform: 'uppercase' as const }}>{d.name}</div>
+          <div style={{ ...T.name, color: '#132128', fontFamily: F, fontSize: 10, letterSpacing: '0.04em', textTransform: 'uppercase' as const }}>{d.name}</div>
           <div style={{ ...T.title, color: '#6b7280', fontFamily: F, fontSize: 4.5, marginTop: 1 }}>{d.title}</div>
         </div>
-        <div style={{ width: '100%', height: '0.5px', background: '#0A1217', marginBottom: 1, opacity: 0.3 }} />
-        <div style={{ width: '100%', height: '0.5px', background: '#0A1217', marginBottom: 2, opacity: 0.3 }} />
+        <div style={{ width: '100%', height: '0.5px', background: '#132128', marginBottom: 1, opacity: 0.3 }} />
+        <div style={{ width: '100%', height: '0.5px', background: '#132128', marginBottom: 2, opacity: 0.3 }} />
         <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 4 }}>
           {[d.email, d.phone, d.location].map((c, i) => <span key={i} style={{ ...T.contact, color: '#6b7280', fontFamily: F }}>{c}</span>)}
         </div>
         <SectionTitle color="#374151" borderColor="#d1d5db">EXPERIENCE</SectionTitle>
-        {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#111827" />)}
+        {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#132128" />)}
         <SectionTitle color="#374151" borderColor="#d1d5db">EDUCATION</SectionTitle>
-        {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#111827" />)}
+        {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#132128" />)}
         <SectionTitle color="#374151" borderColor="#d1d5db">SKILLS</SectionTitle>
         <SkillsInline skills={d.skills} color="#4b5563" />
       </div>
@@ -556,15 +556,15 @@ function ResumeMini({ t, idx }: { t: TemplateInfo, idx: number }) {
   const acc = t.accent || '#374151'
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', background: '#fff', padding: '12px 10px', fontFamily: F, overflow: 'hidden' }}>
-      <div style={{ ...T.name, color: '#0A1217', fontFamily: F }}>{d.name}</div>
+      <div style={{ ...T.name, color: '#132128', fontFamily: F }}>{d.name}</div>
       <div style={{ ...T.title, color: '#6b7280', fontFamily: F, marginBottom: 2 }}>{d.title}</div>
       <div style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
         {[d.email, d.phone, d.location].map((c, i) => <span key={i} style={{ ...T.contact, color: '#9ca3af', fontFamily: F }}>{c}</span>)}
       </div>
       <SectionTitle color={acc} borderColor={acc}>EXPERIENCE</SectionTitle>
-      {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#111827" />)}
+      {d.exp.map((e, i) => <ExpBlock key={i} exp={e} color="#132128" />)}
       <SectionTitle color={acc} borderColor={acc}>EDUCATION</SectionTitle>
-      {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#111827" />)}
+      {d.edu.map((e, i) => <EduBlock key={i} edu={e} color="#132128" />)}
       <SectionTitle color={acc} borderColor={acc}>SKILLS</SectionTitle>
       <SkillsInline skills={d.skills} color="#4b5563" />
     </div>
@@ -588,7 +588,7 @@ function ResumeBuilderContent() {
   return (
     <div style={{ flex: 1, overflow: 'auto', padding: '32px 48px', background: '#fff', fontFamily: FONT }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
-        <h2 style={{ fontSize: 30, fontWeight: 800, color: '#0A1217', margin: 0, letterSpacing: '-0.03em' }}>Resume Builder</h2>
+        <h2 style={{ fontSize: 30, fontWeight: 800, color: '#132128', margin: 0, letterSpacing: '-0.03em' }}>Resume Builder</h2>
         <button onClick={() => { window.location.href = 'https://app.nexthireconsulting.com' }} style={{
           fontSize: 14, fontWeight: 400, color: '#fff', background: '#000', padding: '0 20px', height: 36, borderRadius: 999,
           border: 'none', cursor: 'pointer', fontFamily: FONT, transition: 'background 0.15s',
@@ -598,7 +598,7 @@ function ResumeBuilderContent() {
           + New Resume
         </button>
       </div>
-      <h3 style={{ fontSize: 24, fontWeight: 700, color: '#0A1217', margin: '0 0 6px' }}>Start from a template</h3>
+      <h3 style={{ fontSize: 24, fontWeight: 700, color: '#132128', margin: '0 0 6px' }}>Start from a template</h3>
       <p style={{ fontSize: 14, color: '#a3a3a3', margin: '0 0 20px', fontWeight: 400 }}>Choose a design and customize it later</p>
       <div style={{ display: 'flex', gap: 8, marginBottom: 28 }}>
         {TABS.map(t => (
@@ -618,7 +618,7 @@ function ResumeBuilderContent() {
           }}>
             <div style={{
               borderRadius: 16, overflow: 'hidden',
-              border: selected === t.name ? '2px solid #0A1217' : '1px solid rgba(10,18,23,0.08)',
+              border: selected === t.name ? '2px solid #132128' : '1px solid rgba(10,18,23,0.08)',
               boxShadow: '0 1px 4px rgba(0,0,0,0.05)', transition: 'transform 0.15s, box-shadow 0.15s',
             }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.02)'; e.currentTarget.style.boxShadow = '0 7px 16px rgba(0,0,0,0.08)' }}
@@ -628,7 +628,7 @@ function ResumeBuilderContent() {
               </div>
             </div>
             <div style={{ padding: '8px 4px 0' }}>
-              <div style={{ fontSize: 14, fontWeight: 500, color: '#0A1217', lineHeight: '19.6px' }}>{t.name}</div>
+              <div style={{ fontSize: 14, fontWeight: 500, color: '#132128', lineHeight: '19.6px' }}>{t.name}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
                 <span style={{
                   fontSize: 11, fontWeight: 500, borderRadius: 6, padding: '1px 8px',
@@ -1226,7 +1226,7 @@ function YouDescribeContent({ onComplete }: { onComplete?: () => void }) {
 
         {/* Greeting */}
         <div style={{ marginBottom: 36, textAlign: 'center' }}>
-          <h2 style={{ fontSize: 38, fontWeight: 500, color: '#0A1217', lineHeight: 1.25, letterSpacing: '-0.5px', margin: 0 }}>
+          <h2 style={{ fontSize: 38, fontWeight: 500, color: '#132128', lineHeight: 1.25, letterSpacing: '-0.5px', margin: 0 }}>
             Hey, What job you are looking for?
           </h2>
           <p style={{ fontSize: 15, color: 'rgba(10,18,23,0.45)', marginTop: 12, lineHeight: '22px', margin: '12px 0 0' }}>
@@ -1254,17 +1254,17 @@ function YouDescribeContent({ onComplete }: { onComplete?: () => void }) {
             </svg>
 
             {/* Typed text or placeholder */}
-            <div style={{ flex: 1, fontSize: 15, fontWeight: 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', color: text ? '#0A1217' : 'rgba(10,18,23,0.38)' }}>
+            <div style={{ flex: 1, fontSize: 15, fontWeight: 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', color: text ? '#132128' : 'rgba(10,18,23,0.38)' }}>
               {text || 'Product Manager role in New York at an eCommerce company'}
               {phase === 'typing' && (
-                <span style={{ display: 'inline-block', width: 2, height: 16, background: '#0A1217', marginLeft: 2, verticalAlign: 'middle', animation: 'hiw-cursor-blink 0.65s infinite' }} />
+                <span style={{ display: 'inline-block', width: 2, height: 16, background: '#132128', marginLeft: 2, verticalAlign: 'middle', animation: 'hiw-cursor-blink 0.65s infinite' }} />
               )}
             </div>
 
             {/* Submit arrow */}
             <div style={{
               width: 42, height: 42, borderRadius: '50%', flexShrink: 0,
-              background: isClicking ? '#16a34a' : '#0A1217',
+              background: isClicking ? '#16a34a' : '#132128',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transform: isClicking ? 'scale(0.87)' : 'scale(1)',
               transition: 'transform 0.15s ease-in-out, background 0.2s, box-shadow 0.2s',
@@ -1299,22 +1299,22 @@ function YouDescribeContent({ onComplete }: { onComplete?: () => void }) {
 /* ═══ Agent Discovers — company results UI ═══ */
 
 const FINTECH_COMPANIES = [
-  { n: 15, name: 'One97 Communications Limited',        desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',             industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held', location: 'Noida, Uttar Pradesh', country: 'India',         linkedin: 'linkedin.com/company/one97' },
-  { n: 16, name: 'Airtel Payments Bank',                desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',          industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company',  location: 'New Delhi',            country: 'India',         linkedin: 'linkedin.com/company/airtel-payments-bank' },
-  { n: 17, name: 'Stripe',                              desc: 'Global financial infrastructure platform for the internet. Powers hundreds of billions in payments annually.', industry: 'Financial Services',                 size: '5,001–10,000', type: 'Privately Held', location: 'San Francisco, CA',    country: 'United States', linkedin: 'linkedin.com/company/stripe' },
-  { n: 18, name: 'Razorpay',                            desc: 'India\'s leading payment gateway. Processes $60B+ in payments annually for 8M+ businesses.',                 industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/razorpay' },
-  { n: 19, name: 'National Payments Corporation (NPCI)', desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit',      location: 'Mumbai, Maharashtra',  country: 'India',         linkedin: 'linkedin.com/company/npci' },
-  { n: 20, name: 'Pine Labs',                           desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',          industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Noida, Uttar Pradesh', country: 'India',         linkedin: 'linkedin.com/company/pine-labs' },
-  { n: 21, name: 'Fincare Small Finance Bank',          desc: 'One of the fastest-growing digital banks. Part of AU Small Finance Bank from April 2024.',                   industry: 'Banking',                             size: '10,001+',      type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/fincarebank' },
-  { n: 22, name: 'BharatPe',                            desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',                industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held', location: 'New Delhi',            country: 'India',         linkedin: 'linkedin.com/company/bharatpe' },
-  { n: 23, name: 'TVS Credit Services Ltd.',            desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                    industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held', location: 'Chennai, Tamil Nadu',  country: 'India',         linkedin: 'linkedin.com/company/tvs-credit' },
-  { n: 24, name: 'PhonePe',                             desc: 'India\'s leading UPI payments platform. 500M+ registered users, powering 47% of all UPI transactions.',      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/phonepe-platform' },
-  { n: 25, name: 'Marquee Equity',                      desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',             industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held', location: 'New Delhi',            country: 'India',         linkedin: 'linkedin.com/company/marquee-equity' },
-  { n: 26, name: 'Cashfree Payments',                   desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',           industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/cashfree' },
-  { n: 27, name: 'Angel One',                           desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',            industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company',  location: 'Mumbai, Maharashtra',  country: 'India',         linkedin: 'linkedin.com/company/angelbroking' },
-  { n: 28, name: 'Jupiter',                             desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',        industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/jupitermoney' },
-  { n: 29, name: 'Revolut',                             desc: 'Global fintech super-app with 45M+ customers across 38 countries. Banking, crypto, and stock trading.',      industry: 'Financial Services',                  size: '5,001–10,000', type: 'Privately Held', location: 'London',               country: 'United Kingdom',linkedin: 'linkedin.com/company/revolut' },
-  { n: 30, name: 'Rupeek',                              desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',          industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, Karnataka', country: 'India',         linkedin: 'linkedin.com/company/rupeek' },
+  { n: 15, name: 'One97 Communications Limited',       desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',            industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held' },
+  { n: 16, name: 'Airtel Payments Bank',               desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
+  { n: 17, name: 'Cars24',                             desc: 'One of India\'s largest auto-tech companies. Harnessing cutting-edge technology to revolutionize mobility.', industry: 'Technology, Information and Internet', size: '5,001–10,000', type: 'Privately Held' },
+  { n: 18, name: 'Zetheta Algorithms Pvt. Ltd.',       desc: 'FinTech startup pioneering innovation in financial markets through gamified simulations.',                   industry: 'Technology, Information and Internet', size: '51–200',       type: 'Privately Held' },
+  { n: 19, name: 'National Payments Corporation (NPCI)',desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit'     },
+  { n: 20, name: 'Pine Labs',                          desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
+  { n: 21, name: 'Fincare Small Finance Bank',         desc: 'Excited to be a part of AU Small Finance Bank from April 2024. One of the fastest-growing digital banks.',  industry: 'Banking',                             size: '10,001+',      type: 'Privately Held' },
+  { n: 22, name: 'BharatPe',                           desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',               industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held' },
+  { n: 23, name: 'TVS Credit Services Ltd.',           desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                   industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held' },
+  { n: 24, name: 'Union Bank of India',                desc: 'One of the leading public sector banks. Network of 8,650+ domestic branches and 74,100+ employees.',        industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
+  { n: 25, name: 'Marquee Equity',                     desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',            industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held' },
+  { n: 26, name: 'Cashfree Payments',                  desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',          industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held' },
+  { n: 27, name: 'Angel One',                          desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',           industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
+  { n: 28, name: 'Jupiter',                            desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',       industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held' },
+  { n: 29, name: 'Punjab National Bank',               desc: 'Incorporated in 1895. 6,950+ domestic branches, serving more than 10 crore esteemed customers.',            industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
+  { n: 30, name: 'Rupeek',                             desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
 ]
 
 
@@ -1370,7 +1370,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
     <div style={{
       width: 15, height: 15, borderRadius: 3,
       border: checked ? 'none' : '1.5px solid #d1d5db',
-      background: checked ? '#0A1217' : '#fff',
+      background: checked ? '#132128' : '#fff',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       flexShrink: 0, transition: 'background 0.15s ease',
     }}>
@@ -1403,7 +1403,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
       {/* ── Left: filter sidebar ── */}
       <div style={{ width: 268, borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden' }}>
         <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid #f0f0f0' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: '#0A1217', marginBottom: 6 }}>Find companies with filters</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#132128', marginBottom: 6 }}>Find companies with filters</div>
           <div style={{ display: 'flex', gap: 12, fontSize: 12, color: '#6b7280' }}>
             <span style={{ cursor: 'pointer', textDecoration: 'underline' }}>See past searches</span>
             <span style={{ cursor: 'pointer', textDecoration: 'underline' }}>Save search</span>
@@ -1455,7 +1455,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
         </div>
         <div style={{ padding: '10px 16px', borderTop: '1px solid #f0f0f0', fontSize: 12, color: '#6b7280' }}>
           {showCompanies
-            ? <>Showing 60 of <strong style={{ color: '#0A1217' }}>4,311</strong> results</>
+            ? <>Showing 60 of <strong style={{ color: '#132128' }}>4,311</strong> results</>
             : 'Searching…'}
         </div>
       </div>
@@ -1464,7 +1464,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0, position: 'relative' }}>
         {/* Top bar with Connect button */}
         <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #e5e5e5', padding: '0 16px', height: 44, flexShrink: 0 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: showCompanies ? '#0A1217' : '#9ca3af' }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: showCompanies ? '#132128' : '#9ca3af' }}>
             {showCompanies ? '216 companies found' : 'Scanning…'}
           </span>
           {showCompanies && <span className="adc-fade-in" style={{ marginLeft: 8, fontSize: 12, color: '#6b7280' }}>· Fintech · India</span>}
@@ -1472,7 +1472,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
             marginLeft: 'auto',
             display: 'flex', alignItems: 'center', gap: 6,
             fontSize: 13, fontWeight: 500, color: '#fff',
-            background: allSelected ? '#2e7d4f' : '#1a3338',
+            background: allSelected ? '#338632' : '#1a3338',
             border: 'none', borderRadius: 999,
             padding: '0 18px', height: 32,
             cursor: 'pointer', fontFamily: F,
@@ -1484,7 +1484,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
         </div>
 
         {/* Table header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '26px 28px 160px 1fr 140px 90px 90px 140px 180px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '26px 32px 190px 1fr 158px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
           <Checkbox checked={allSelected} />
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>#</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Company</span>
@@ -1508,13 +1508,13 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
               }}>
                 <Checkbox checked={allSelected} />
                 <span style={{ fontSize: 12, color: '#9ca3af' }}>{co.n}</span>
-                <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{co.name}</span>
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#132128', ...trunc, paddingRight: 8 }}>{co.name}</span>
                 <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.desc}</span>
                 <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.industry}</span>
                 <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.size}</span>
                 <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.type}</span>
                 <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co.location}</span>
-                <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc }}>{co.linkedin}</span>
+                <span style={{ fontSize: 12, color: '#338632', ...trunc }}>{co.linkedin}</span>
               </div>
             ))}
           </div>
@@ -1535,22 +1535,22 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
       {/* ── Right: AI chat ── */}
       <div style={{ width: 360, borderLeft: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, background: '#fff' }}>
         <div style={{ padding: '12px 14px 10px', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#0A1217', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#132128', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
           </div>
-          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>AI Outreach Agent</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#132128' }}>AI Outreach Agent</span>
         </div>
         <div style={{ flex: 1, overflow: 'auto', padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           {/* User message */}
           <div style={{ alignSelf: 'flex-end', maxWidth: '80%' }}>
-            <div style={{ background: '#0A1217', color: '#fff', borderRadius: '16px 16px 4px 16px', padding: '8px 14px', fontSize: 13, lineHeight: 1.5, fontFamily: F }}>
+            <div style={{ background: '#132128', color: '#fff', borderRadius: '16px 16px 4px 16px', padding: '8px 14px', fontSize: 13, lineHeight: 1.5, fontFamily: F }}>
               Looking for Senior Product Manager in fintech company, open to remote
             </div>
           </div>
           {/* AI types word-by-word */}
           {wordIdx > 0 && (
             <div style={{ alignSelf: 'flex-start', maxWidth: '92%' }}>
-              <div style={{ background: '#f3f4f6', color: '#0A1217', borderRadius: '4px 16px 16px 16px', padding: '10px 14px', fontSize: 13, lineHeight: 1.6, fontFamily: F, whiteSpace: 'pre-line' }}>
+              <div style={{ background: '#f3f4f6', color: '#132128', borderRadius: '4px 16px 16px 16px', padding: '10px 14px', fontSize: 13, lineHeight: 1.6, fontFamily: F, whiteSpace: 'pre-line' }}>
                 {typedText}
                 {!isTypingDone && <span className="adc-cursor"> |</span>}
               </div>
@@ -1559,7 +1559,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
         </div>
         <div style={{ padding: '10px 14px', borderTop: '1px solid #e5e5e5', display: 'flex', alignItems: 'center', gap: 8 }}>
           <input readOnly placeholder="Filter by stage, size, or niche…" style={{ flex: 1, height: 34, border: '1px solid #e5e5e5', borderRadius: 999, padding: '0 12px', fontSize: 13, color: '#9ca3af', fontFamily: F, outline: 'none', background: '#fafafa' }} />
-          <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#0A1217', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, cursor: 'pointer' }}>
+          <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#132128', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, cursor: 'pointer' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
           </div>
         </div>
@@ -1759,7 +1759,7 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
     <div style={{
       width: 15, height: 15, borderRadius: 3,
       border: checked ? 'none' : '1.5px solid #d1d5db',
-      background: checked ? '#0A1217' : '#fff',
+      background: checked ? '#132128' : '#fff',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       flexShrink: 0, transition: 'background 0.15s ease',
     }}>
@@ -1783,11 +1783,11 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#fff', fontFamily: F, position: 'relative' }}>
         {/* Top bar */}
         <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #e5e5e5', padding: '0 20px', height: 44, flexShrink: 0, gap: 8 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>Matches</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#132128' }}>Matches</span>
           <span style={{ fontSize: 12, background: '#f3f4f6', color: '#6b7280', padding: '2px 10px', borderRadius: 999, fontWeight: 500 }}>50</span>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
             <button style={{ fontSize: 12, fontWeight: 500, color: '#6b7280', background: '#f3f4f6', border: 'none', borderRadius: 6, padding: '0 14px', height: 30, cursor: 'pointer', fontFamily: F }}>Review</button>
-            <button style={{ fontSize: 13, fontWeight: 500, color: '#fff', background: allSelected ? '#2e7d4f' : '#1a3338', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, transition: 'background 0.25s ease', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <button style={{ fontSize: 13, fontWeight: 500, color: '#fff', background: allSelected ? '#338632' : '#1a3338', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, transition: 'background 0.25s ease', display: 'flex', alignItems: 'center', gap: 6 }}>
               Connect
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
@@ -1814,14 +1814,14 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
             <div key={p.n} style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', minHeight: 40, alignItems: 'center', borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
               <Checkbox checked={allSelected} />
               <span style={{ fontSize: 12, color: '#9ca3af' }}>{p.n}</span>
-              <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{p.name}</span>
+              <span style={{ fontSize: 13, fontWeight: 500, color: '#132128', ...trunc, paddingRight: 8 }}>{p.name}</span>
               <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.company}</span>
               <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.title}</span>
               <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{p.location}</span>
               <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co?.industry ?? '—'}</span>
               <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co?.size ?? '—'}</span>
               <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{co?.type ?? '—'}</span>
-              <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc }}>linkedin.com/in/{p.li}</span>
+              <span style={{ fontSize: 12, color: '#338632', ...trunc }}>linkedin.com/in/{p.li}</span>
             </div>
             )
           })}
@@ -1847,14 +1847,14 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
       {/* Left: recipients panel */}
       <div style={{ width: 260, borderRight: '1px solid #e5e5e5', display: 'flex', flexDirection: 'column', flexShrink: 0, background: '#fafafa' }}>
         <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid #f0f0f0' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: '#0A1217', marginBottom: 2 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#132128', marginBottom: 2 }}>
             Adding {connectedCount} profile{connectedCount !== 1 ? 's' : ''}
           </div>
           <div style={{ fontSize: 11, color: '#6b7280', marginBottom: 10 }}>Sequence will start immediately</div>
           <div style={{ display: 'flex', gap: 16 }}>
             {([['No Issues', connectedCount], ['Warnings', 0], ['Next Reviews', 0]] as const).map(([lbl, val]) => (
               <div key={lbl} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#0A1217' }}>{val}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#132128' }}>{val}</div>
                 <div style={{ fontSize: 10, color: '#9ca3af', marginTop: 1 }}>{lbl}</div>
               </div>
             ))}
@@ -1869,7 +1869,7 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
               <div style={{ minWidth: 0, flex: 1 }}>
                 {/* Name + LinkedIn icon */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 3 }}>
-                  <span style={{ fontSize: 12, fontWeight: 600, color: '#0A1217', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</span>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: '#132128', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</span>
                   <img src="/company-logos/linkedin.svg" alt="LinkedIn" width={13} height={13} style={{ flexShrink: 0 }} />
                 </div>
                 {/* Company logo + name */}
@@ -1890,9 +1890,9 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', height: 44, borderBottom: '1px solid #e5e5e5', flexShrink: 0 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>Email</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#132128' }}>Email</span>
           <span style={{ fontSize: 12, color: '#9ca3af', marginLeft: 8 }}>· New thread · sent immediately</span>
-          <button style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 500, color: '#fff', background: '#2e7d4f', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <button style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 500, color: '#fff', background: '#338632', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, display: 'flex', alignItems: 'center', gap: 6 }}>
             Connect
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
@@ -1905,7 +1905,7 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', height: 36, borderBottom: '1px solid #f0f0f0', gap: 10 }}>
             <span style={{ fontSize: 12, color: '#9ca3af', width: 52, flexShrink: 0 }}>Subject</span>
-            <span style={{ fontSize: 13, color: '#0A1217', flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <span style={{ fontSize: 13, color: '#132128', flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {EMAIL_SUBJECT.slice(0, subjectChars)}
               {subjectChars > 0 && subjectChars < EMAIL_SUBJECT.length && <span className="adc-cursor"> |</span>}
             </span>
@@ -1926,18 +1926,18 @@ function AgentReachesContent({ onComplete }: { onComplete?: () => void }) {
         </div>
         {/* Body */}
         <div style={{ flex: 1, overflow: 'auto', padding: '16px 20px' }}>
-          {bodyParas >= 1 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[0]}</p>}
-          {bodyParas >= 2 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[1]}</p>}
-          {bodyParas >= 3 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[2]}</p>}
-          {bodyParas >= 4 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[3]}</p>}
-          {bodyParas >= 5 && <p className="adc-fade-in" style={{ margin: '0 0 20px', fontSize: 13, color: '#0A1217', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[4]}</p>}
+          {bodyParas >= 1 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#132128', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[0]}</p>}
+          {bodyParas >= 2 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#132128', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[1]}</p>}
+          {bodyParas >= 3 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#132128', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[2]}</p>}
+          {bodyParas >= 4 && <p className="adc-fade-in" style={{ margin: '0 0 14px', fontSize: 13, color: '#132128', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[3]}</p>}
+          {bodyParas >= 5 && <p className="adc-fade-in" style={{ margin: '0 0 20px', fontSize: 13, color: '#132128', lineHeight: 1.7, fontFamily: F }}>{EMAIL_PARAS[4]}</p>}
           {showResume && (
             <div className="adc-fade-in" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 14px', border: '1px solid #e5e5e5', borderRadius: 8, background: '#fafafa' }}>
               <div style={{ width: 32, height: 32, borderRadius: 6, background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
               </div>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: '#0A1217' }}>Resume_2026.pdf</div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: '#132128' }}>Resume_2026.pdf</div>
                 <div style={{ fontSize: 11, color: '#9ca3af' }}>245 KB · PDF</div>
               </div>
             </div>
@@ -2105,10 +2105,10 @@ function YouLandContent({ onComplete }: { onComplete?: () => void }) {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: '#fff', fontFamily: F }}>
         {/* Top bar */}
         <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #e5e5e5', padding: '0 20px', height: 44, flexShrink: 0, gap: 8 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: '#0A1217' }}>Outreach Sent</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#132128' }}>Outreach Sent</span>
           <span style={{ fontSize: 12, background: '#dcfce7', color: '#166534', padding: '2px 10px', borderRadius: 999, fontWeight: 600 }}>{sentCount} sent</span>
           <div style={{ marginLeft: 'auto' }}>
-            <button style={{ fontSize: 13, fontWeight: 500, color: '#fff', background: '#2e7d4f', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <button style={{ fontSize: 13, fontWeight: 500, color: '#fff', background: '#338632', border: 'none', borderRadius: 999, padding: '0 18px', height: 32, cursor: 'pointer', fontFamily: F, display: 'flex', alignItems: 'center', gap: 6 }}>
               Done
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
@@ -2131,11 +2131,11 @@ function YouLandContent({ onComplete }: { onComplete?: () => void }) {
             <div key={p.n} className="adc-fade-in" style={{ display: 'grid', gridTemplateColumns: cols, padding: '0 20px', minHeight: 40, alignItems: 'center', borderBottom: '1px solid #f5f5f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               <span style={{ fontSize: 12, color: '#9ca3af' }}>{p.n}</span>
-              <span style={{ fontSize: 13, fontWeight: 500, color: '#0A1217', ...trunc, paddingRight: 8 }}>{p.name}</span>
+              <span style={{ fontSize: 13, fontWeight: 500, color: '#132128', ...trunc, paddingRight: 8 }}>{p.name}</span>
               <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.company}</span>
               <span style={{ fontSize: 13, color: '#374151', ...trunc, paddingRight: 8 }}>{p.title}</span>
               <span style={{ fontSize: 12, color: '#6b7280', ...trunc, paddingRight: 8 }}>{p.location}</span>
-              <span style={{ fontSize: 12, color: '#2e7d4f', ...trunc, paddingRight: 8 }}>linkedin.com/in/{p.li}</span>
+              <span style={{ fontSize: 12, color: '#338632', ...trunc, paddingRight: 8 }}>linkedin.com/in/{p.li}</span>
               <span style={{ fontSize: 12, color: '#16a34a', display: 'flex', alignItems: 'center', gap: 4 }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16a34a', flexShrink: 0, display: 'inline-block' }} />
                 Sent
@@ -2251,7 +2251,7 @@ function YouLandContent({ onComplete }: { onComplete?: () => void }) {
             <div className="adc-fade-in" style={{ border: '1px solid #e0e0e0', borderRadius: 8, overflow: 'hidden' }}>
               {/* Sender row — user is the sender */}
               <div style={{ display: 'flex', alignItems: 'flex-start', padding: '14px 16px', gap: 12 }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#2e7d4f', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#fff', flexShrink: 0 }}>H</div>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#338632', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#fff', flexShrink: 0 }}>H</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: '#202124' }}>me</span>
@@ -2370,13 +2370,13 @@ export default function ResumeBuilderShowcase() {
           </div>
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontFamily: FONT, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 500, color: '#0A1217', lineHeight: 1.35, letterSpacing: '-0.01em', margin: '0 0 6px' }}>
+              <h3 style={{ fontFamily: FONT, fontSize: '22px', fontWeight: 500, color: '#132128', lineHeight: '33px', letterSpacing: '-0.3px', margin: '0 0 6px' }}>
                 Builds your resume, optimizes it automatically
               </h3>
-              <p style={{ fontFamily: FONT, fontSize: 'clamp(13px, 1.3vw, 15px)', fontWeight: 400, color: 'rgba(10,18,23,0.55)', lineHeight: 1.55, letterSpacing: '-0.005em', margin: '0 0 20px' }}>
+              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 20px' }}>
                 AI scans the job description, tailors keywords, and restructures your resume so it passes ATS filters and lands on the recruiter&apos;s desk.
               </p>
-              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 13, fontWeight: 500, color: '#2e7d4f', textDecoration: 'none' }}>
+              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '14px', lineHeight: '21px', letterSpacing: '-0.3px', fontWeight: 500, color: '#338632', textDecoration: 'none' }}>
                 Try Resume Builder <span>&rarr;</span>
               </a>
             </div>
@@ -2388,13 +2388,13 @@ export default function ResumeBuilderShowcase() {
         <div className="nh-rb-showcase__inner nh-rb-showcase__inner--reverse">
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontFamily: FONT, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 500, color: '#0A1217', lineHeight: 1.35, letterSpacing: '-0.01em', margin: '0 0 6px' }}>
+              <h3 style={{ fontFamily: FONT, fontSize: '22px', fontWeight: 500, color: '#132128', lineHeight: '33px', letterSpacing: '-0.3px', margin: '0 0 6px' }}>
                 Applies to hundreds of jobs while you sleep
               </h3>
-              <p style={{ fontFamily: FONT, fontSize: 'clamp(13px, 1.3vw, 15px)', fontWeight: 400, color: 'rgba(10,18,23,0.55)', lineHeight: 1.55, letterSpacing: '-0.005em', margin: '0 0 20px' }}>
+              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 20px' }}>
                 AI scans millions of jobs matching your profile, builds a role-specific resume for each, and submits tailored applications 24/7 — so you wake up to interview requests.
               </p>
-              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 13, fontWeight: 500, color: '#2e7d4f', textDecoration: 'none' }}>
+              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '14px', lineHeight: '21px', letterSpacing: '-0.3px', fontWeight: 500, color: '#338632', textDecoration: 'none' }}>
                 Try AI Auto Apply <span>&rarr;</span>
               </a>
             </div>
@@ -2416,13 +2416,13 @@ export default function ResumeBuilderShowcase() {
           </div>
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontFamily: FONT, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 500, color: '#0A1217', lineHeight: 1.35, letterSpacing: '-0.01em', margin: '0 0 6px' }}>
+              <h3 style={{ fontFamily: FONT, fontSize: '22px', fontWeight: 500, color: '#132128', lineHeight: '33px', letterSpacing: '-0.3px', margin: '0 0 6px' }}>
                 Works autonomously, coaches in real-time
               </h3>
-              <p style={{ fontFamily: FONT, fontSize: 'clamp(13px, 1.3vw, 15px)', fontWeight: 400, color: 'rgba(10,18,23,0.55)', lineHeight: 1.55, letterSpacing: '-0.005em', margin: '0 0 20px' }}>
+              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 20px' }}>
                 AI listens to interview questions as they are asked and suggests relevant, structured answers in real-time so you can respond with confidence.
               </p>
-              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 13, fontWeight: 500, color: '#2e7d4f', textDecoration: 'none' }}>
+              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '14px', lineHeight: '21px', letterSpacing: '-0.3px', fontWeight: 500, color: '#338632', textDecoration: 'none' }}>
                 Learn about AI Interview Coach <span>&rarr;</span>
               </a>
             </div>

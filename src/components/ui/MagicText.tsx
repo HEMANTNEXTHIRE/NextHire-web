@@ -28,7 +28,7 @@ interface MagicTextProps {
   fontSize?: string
 }
 
-export function MagicText({ text, fontSize = '50px' }: MagicTextProps) {
+export function MagicText({ text, fontSize = '54px' }: MagicTextProps) {
   const container = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({
     target: container,
@@ -51,13 +51,13 @@ export function MagicText({ text, fontSize = '50px' }: MagicTextProps) {
       style={{
         display:       'block',
         textAlign:     'center',
-        lineHeight:    1.3,
+        lineHeight:    '64.8px',
         padding:       0,
         margin:        0,
         fontSize,
-        fontFamily:    "'Graphik Web', 'Noto Sans', system-ui, sans-serif",
-        fontWeight:    700,
-        letterSpacing: '-1.8px',
+        fontFamily:    "'Droid Serif', Georgia, 'Times New Roman', serif",
+        fontWeight:    400,
+        letterSpacing: '-1.2px',
       }}
     >
       {tokens.map((token, i) => {

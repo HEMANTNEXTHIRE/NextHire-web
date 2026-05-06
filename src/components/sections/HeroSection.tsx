@@ -10,8 +10,8 @@ const C = {
   surface: '#ffffff',
   mint:    '#e4f0eb',
   sage:    '#c8dfd6',
-  accent:  '#2e7d4f',
-  dark:    '#111827',
+  accent:  '#338632',
+  dark:    '#132128',
   mid:     '#4b5563',
   muted:   '#9ca3af',
   border:  '#d1e8dc',
@@ -54,7 +54,7 @@ function DreamInput() {
         background: '#ffffff',
         borderRadius: '20px',
         boxShadow: focused
-          ? '0 0 0 2px #2e7d4f, 0 8px 40px rgba(0,0,0,0.12)'
+          ? '0 0 0 2px #338632, 0 8px 40px rgba(0,0,0,0.12)'
           : '0 2px 8px rgba(0,0,0,0.08), 0 8px 40px rgba(0,0,0,0.06)',
         padding: '20px 64px 20px 20px',
         transition: 'box-shadow 0.2s ease',
@@ -82,7 +82,7 @@ function DreamInput() {
           fontFamily: 'inherit',
           fontSize: '15px',
           lineHeight: 1.6,
-          color: '#111827',
+          color: '#132128',
           display: 'block',
           overflowY: 'hidden',
           minHeight: '72px',
@@ -98,7 +98,7 @@ function DreamInput() {
           width: '38px',
           height: '38px',
           borderRadius: '50%',
-          background: '#111827',
+          background: '#132128',
           border: 'none',
           cursor: 'pointer',
           display: 'flex',
@@ -107,8 +107,8 @@ function DreamInput() {
           flexShrink: 0,
           transition: 'background 0.15s ease, transform 0.15s ease',
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#2e7d4f' }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#111827' }}
+        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#338632' }}
+        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#132128' }}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M8 12V4M4 8l4-4 4 4" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -142,46 +142,46 @@ export default function HeroSection() {
           paddingBottom: '0.15em',
         }}>
           <h1 style={{
-            fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
+            fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
             margin: 0,
-            letterSpacing: '-0.5px',
-            lineHeight: 1.15,
+            letterSpacing: '-0.7px',
             fontSynthesis: 'none',
           }}>
           {/* First line */}
           <span style={{
             display: 'block',
-            fontSize: '70px',
+            fontSize: '72px',
             fontWeight: 450,
             fontStyle: 'normal',
-            color: C.dark,
-            lineHeight: 1.08,
+            color: '#132128',
+            lineHeight: '86.4px',
             whiteSpace: 'nowrap',
-            fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
+            fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
           }}>
             The Unfair Advantage
           </span>
           {/* Second line */}
           <span style={{
             display: 'block',
-            fontSize: '70px',
+            fontSize: '72px',
             fontWeight: 450,
             fontStyle: 'normal',
-            color: C.accent,
-            lineHeight: 1.08,
+            color: '#338632',
+            lineHeight: '86.4px',
             whiteSpace: 'nowrap',
-            fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif",
+            fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
           }}>
             Every Job Seeker Deserves
           </span>
         </h1>
         </div>
 
-        {/* Sub-headline — matches reference: centered gray, ~17-18px */}
+        {/* Sub-headline */}
         <p style={{
-          color: '#6b7280',
-          fontSize: '17px',
-          lineHeight: 1.72,
+          color: '#424D53',
+          fontSize: '18px',
+          lineHeight: '27px',
+          letterSpacing: '-0.3px',
           margin: '0 0 10px',
           maxWidth: '560px',
           fontWeight: WEIGHT.normal,
@@ -202,14 +202,15 @@ export default function HeroSection() {
             'Live coaching during real interviews',
           ].map((item) => (
             <span key={item} style={{
-              display: 'inline-flex', alignItems: 'center', gap: '7px',
-              fontSize: '14px', fontWeight: WEIGHT.medium, color: C.accent,
-              fontFamily: 'inherit',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              fontSize: '16px', lineHeight: '24px', letterSpacing: '-0.3px',
+              fontWeight: WEIGHT.medium, fontFamily: 'inherit',
             }}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8.5l3.5 3.5 6.5-7" stroke={C.accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="19" height="19" viewBox="0 0 19 19" fill="none" aria-hidden="true">
+                <circle cx="9.5" cy="9.5" r="9.5" fill="#338632" fillOpacity="0.12"/>
+                <path d="M5.5 9.8l3 3 5-6" stroke="#338632" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span style={{ color: '#374151' }}>{item}</span>
+              <span style={{ color: '#132128' }}>{item}</span>
             </span>
           ))}
         </div>
@@ -229,6 +230,7 @@ export default function HeroSection() {
 
     {/* ── Mission statement — scroll-animated magic text ── */}
     <section
+      id="home-mission"
       style={{
         background:      '#ffffff',
         display:         'flex',

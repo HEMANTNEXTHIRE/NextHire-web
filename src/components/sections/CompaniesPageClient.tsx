@@ -1,14 +1,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 import { FloatingIntegrations } from '@/components/sections/FloatingIntegrations'
 
 /* Homepage-aligned tokens (HeroSection / pricing) */
 const HOME = {
   bg: '#ffffff',
-  dark: '#111827',
-  accent: '#2e7d4f',
+  dark: '#132128',
+  accent: '#338632',
   subtext: '#6b7280',
   muted: '#9ca3af',
   ctaMint: '#1de9b6',
@@ -155,9 +155,9 @@ function Typewriter({ texts }: { texts: string[] }) {
     }
   }, [displayed, phase, idx, texts])
   return (
-    <span style={{ color: HOME.accent }}>
+    <span style={{ color: HOME.dark }}>
       {displayed}
-      <span style={{ display: 'inline-block', width: 2, height: '0.85em', background: HOME.accent, verticalAlign: 'text-bottom', marginLeft: 2, animation: 'fcBlink 1s step-end infinite' }} />
+      <span style={{ display: 'inline-block', width: 2, height: '0.85em', background: HOME.dark, verticalAlign: 'text-bottom', marginLeft: 2, animation: 'fcBlink 1s step-end infinite' }} />
     </span>
   )
 }
@@ -330,11 +330,11 @@ export default function CompaniesPageClient() {
 
           <Reveal delay={0.06}>
             <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
-              <h1 style={{ fontFamily: SERIF, margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-                <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, fontFamily: SERIF }}>
+              <h1 style={{ fontFamily: "'Droid Serif', Georgia, serif", margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+                <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark }}>
                   Hire the right people.
                 </span>
-                <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', fontFamily: SERIF }}>
+                <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark }}>
                   <Typewriter texts={['In days, not months.', 'At 10× the speed.', 'With zero wasted hours.']} />
                 </span>
               </h1>
@@ -429,7 +429,7 @@ export default function CompaniesPageClient() {
                 >
                   {/* Top accent bar */}
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.accent}, ${C.accentD})`, opacity: 0.7 }} />
-                  <div style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: WEIGHT.extra, color: C.dark, lineHeight: 1, letterSpacing: '-1.5px', marginBottom: 10, fontFamily: SERIF }}>{s.n}</div>
+                  <div style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: WEIGHT.extra, color: C.dark, lineHeight: 1, letterSpacing: '-1.5px', marginBottom: 10, fontFamily: "'Inter',system-ui,sans-serif" }}>{s.n}</div>
                   <div style={{ fontSize: FONT.sm, color: C.muted, lineHeight: 1.5, fontWeight: WEIGHT.medium }}>{s.l}</div>
                 </div>
               ))}
@@ -446,7 +446,7 @@ export default function CompaniesPageClient() {
 
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 72 }}>
-              <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+              <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
                 Five agents. One pipeline.
               </h2>
             </div>
@@ -488,7 +488,7 @@ export default function CompaniesPageClient() {
                       </span>
                     </div>
                     {/* Heading */}
-                    <h3 style={{ fontFamily: SERIF, fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: 400, color: '#111827', margin: '0 0 16px', lineHeight: 1.28, letterSpacing: '-0.3px', fontSynthesis: 'none' }}>
+                    <h3 style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: 400, color: '#132128', margin: '0 0 16px', lineHeight: 1.28, letterSpacing: '-0.3px', fontSynthesis: 'none' }}>
                       {feat.heading}
                     </h3>
                     {/* Body */}
@@ -544,7 +544,7 @@ export default function CompaniesPageClient() {
         <div style={{ maxWidth: 940, margin: '0 auto' }}>
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 52 }}>
-              <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 12px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+              <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0 0 12px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
                 Traditional recruiting vs. NextHire
               </h2>
               <p style={{ fontSize: FONT.base, color: C.muted, margin: 0 }}>Same outcome. Completely different experience.</p>

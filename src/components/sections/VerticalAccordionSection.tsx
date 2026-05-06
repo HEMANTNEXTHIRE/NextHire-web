@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 
 /* ─── CSS keyframes ───────────────────────────────────────────── */
 const EASE_OUT = 'cubic-bezier(0.33, 1, 0.68, 1)'
@@ -535,19 +535,19 @@ export default function VerticalAccordionSection() {
             The full platform
           </div>
           <h2 style={{
-            fontFamily: SERIF,
-            fontSize: 'clamp(36px, 6vw, 76px)',
+            fontFamily: "'Droid Serif', Georgia, serif",
+            fontSize: '54px',
             fontWeight: 400,
             fontStyle: 'normal',
             margin: '0 0 20px',
-            lineHeight: 1.22,
-            letterSpacing: '-0.5px',
+            lineHeight: '64.8px',
+            letterSpacing: '-1.2px',
             maxWidth: 900,
             fontSynthesis: 'none',
           }}>
-            <span style={{ display: 'block', color: '#111827', fontFamily: SERIF }}>Everything works for you,</span>
-            <span style={{ display: 'block', color: '#111827', fontFamily: SERIF }}>while you focus on</span>
-            <span style={{ display: 'block', color: '#2e7d4f', fontFamily: SERIF }}>what matters</span>
+            <span style={{ display: 'block', color: '#132128' }}>Everything works for you,</span>
+            <span style={{ display: 'block', color: '#132128' }}>while you focus on</span>
+            <span style={{ display: 'block', color: '#338632' }}>what matters</span>
           </h2>
           <p style={{ fontSize: 17, color: T.mid, lineHeight: 1.7, margin: 0, maxWidth: 520 }}>
             Six AI-powered tools, one platform. Each does its job — together they replace a full recruiting team.

@@ -3,13 +3,13 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import ContactForm from '@/components/forms/ContactForm'
 import DualActionCTA from '@/components/ui/DualActionCTA'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 
 
 const HOME = {
   bg: '#ffffff',
-  dark: '#111827',
-  accent: '#2e7d4f',
+  dark: '#132128',
+  accent: '#338632',
   subtext: '#6b7280',
   muted: '#9ca3af',
   ctaMint: '#1de9b6',
@@ -146,8 +146,8 @@ export default function ContactUsPage() {
 
           <h1
             style={{
-              fontFamily: SERIF,
-              color: '#111827',
+              fontFamily: "'Inter',system-ui,sans-serif",
+              color: '#132128',
               fontSize: 'clamp(36px, 6vw, 76px)',
               fontWeight: 400,
               lineHeight: 1.22,
@@ -156,8 +156,8 @@ export default function ContactUsPage() {
               fontSynthesis: 'none',
             }}
           >
-            <span style={{ display: 'block', fontFamily: SERIF }}>We&apos;re here to help.</span>
-            <span style={{ display: 'block', color: '#2e7d4f', fontFamily: SERIF }}>Tell us what you need.</span>
+            <span style={{ display: 'block', fontFamily: "'Inter',system-ui,sans-serif" }}>We&apos;re here to help.</span>
+            <span style={{ display: 'block', color: '#338632', fontFamily: "'Inter',system-ui,sans-serif" }}>Tell us what you need.</span>
           </h1>
 
           <p
@@ -197,7 +197,7 @@ export default function ContactUsPage() {
             </p>
             <h2
               style={{
-                fontFamily: SERIF,
+                fontFamily: "'Inter',system-ui,sans-serif",
                 fontSize: 'clamp(22px, 2.8vw, 28px)',
                 fontWeight: 400,
                 color: HOME.dark,
@@ -238,7 +238,7 @@ export default function ContactUsPage() {
               </p>
               <h2
                 style={{
-                  fontFamily: SERIF,
+                  fontFamily: "'Inter',system-ui,sans-serif",
                   fontSize: 'clamp(20px, 2.4vw, 24px)',
                   fontWeight: 400,
                   color: HOME.dark,
@@ -288,7 +288,7 @@ export default function ContactUsPage() {
                         rel={row.external ? 'noopener noreferrer' : undefined}
                         style={{
                           fontSize: FONT.sm,
-                          color: '#2e7d4f',
+                          color: '#338632',
                           textDecoration: 'none',
                           fontWeight: WEIGHT.medium,
                           wordBreak: 'break-word',
@@ -308,7 +308,7 @@ export default function ContactUsPage() {
             <div className="contact-shell__cta">
               <h3
                 style={{
-                  fontFamily: SERIF,
+                  fontFamily: "'Inter',system-ui,sans-serif",
                   fontSize: FONT.base,
                   fontWeight: 400,
                   margin: '0 0 6px',
@@ -343,11 +343,11 @@ export default function ContactUsPage() {
                 Try for free →
               </a>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', fontSize: 12, fontWeight: WEIGHT.semi }}>
-                <Link href="/pricing" style={{ color: '#2e7d4f', textDecoration: 'none' }}>
+                <Link href="/pricing" style={{ color: '#338632', textDecoration: 'none' }}>
                   Pricing
                 </Link>
                 <span style={{ color: HOME.hairline }}>|</span>
-                <Link href="/contact-us" style={{ color: '#2e7d4f', textDecoration: 'none' }}>
+                <Link href="/contact-us" style={{ color: '#338632', textDecoration: 'none' }}>
                   Talk to an expert
                 </Link>
               </div>

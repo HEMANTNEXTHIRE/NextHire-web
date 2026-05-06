@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useCallback, useEffect } from 'react'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 
 
 /* ─── Types ─────────────────────────────────────────────────────── */
@@ -214,21 +214,21 @@ export default function ProductShowcase({ heading, headingLine2, cells }: Props)
       <div style={{ maxWidth: '1340px', margin: '0 auto' }}>
         {(heading || headingLine2) && (
           <h2 style={{
-            fontFamily: SERIF,
-            fontSize: 'clamp(36px, 6vw, 76px)',
+            fontFamily: "'Droid Serif', Georgia, serif",
+            fontSize: '54px',
             fontWeight: 400,
             fontStyle: 'normal',
-            color: '#111827',
+            color: '#132128',
             margin: '0 0 56px',
             textAlign: 'center',
-            lineHeight: 1.22,
-            letterSpacing: '-0.5px',
+            lineHeight: '64.8px',
+            letterSpacing: '-1.2px',
             fontSynthesis: 'none',
           }}>
             {headingLine2 ? (
               <>
-                <span style={{ display: 'block', fontFamily: SERIF }}>{heading}</span>
-                <span style={{ display: 'block', fontFamily: SERIF }}>{headingLine2}</span>
+                <span style={{ display: 'block' }}>{heading}</span>
+                <span style={{ display: 'block' }}>{headingLine2}</span>
               </>
             ) : (
               heading

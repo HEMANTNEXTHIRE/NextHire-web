@@ -4,9 +4,9 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'motion/react'
 
 const C = {
-  dark:    '#111827',
+  dark:    '#132128',
   subtext: '#6b7280',
-  accent:  '#2e7d4f',
+  accent:  '#338632',
   accentD: '#3d7a72',
   green:   '#22c55e',
 }

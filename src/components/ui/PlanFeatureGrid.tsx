@@ -107,7 +107,7 @@ export function PlanFeatureGrid() {
                 <span style={{
                   fontSize: 'clamp(16px, 2vw, 26px)',
                   fontWeight: 700,
-                  color: plan === p.key ? '#2e7d4f' : '#9ca3af',
+                  color: plan === p.key ? '#338632' : '#9ca3af',
                   transition: 'color 0.4s ease',
                   marginTop: 'clamp(2px, 0.4vw, 6px)',
                 }}>
@@ -121,7 +121,7 @@ export function PlanFeatureGrid() {
                   letterSpacing: '-0.04em',
                   lineHeight: 0.88,
                   transition: 'all 0.5s ease',
-                  color: plan === p.key ? '#111827' : 'transparent',
+                  color: plan === p.key ? '#132128' : 'transparent',
                   WebkitTextStroke: plan === p.key ? '0' : '1.5px #d1d5db',
                   transform: plan === p.key ? 'translateX(8px)' : 'translateX(0)',
                   opacity: plan === p.key ? 1 : 0.45,
@@ -258,7 +258,7 @@ export function PlanFeatureGrid() {
                         fontSize: 22, color: '#9ca3af', fontFamily: 'inherit', lineHeight: 1,
                       }}
                     >&times;</button>
-                    <h3 style={{ fontSize: 22, fontWeight: 700, color: '#111827', margin: '0 0 10px', letterSpacing: '-0.4px', lineHeight: 1.25 }}>
+                    <h3 style={{ fontSize: 22, fontWeight: 700, color: '#132128', margin: '0 0 10px', letterSpacing: '-0.4px', lineHeight: 1.25 }}>
                       {f.title}
                     </h3>
                     <p style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.65, margin: 0 }}>

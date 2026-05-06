@@ -12,7 +12,7 @@ export default function NotFound() {
       style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 40px', background: 'linear-gradient(135deg,#0a0e27 0%,#173b3f 100%)', textAlign: 'center' }}
     >
       <div>
-        <div style={{ fontSize: '120px', fontWeight: 900, color: '#0fddcc', lineHeight: 1, marginBottom: '16px', opacity: 0.8 }}>
+        <div style={{ fontSize: '120px', fontFamily: "'Droid Serif', Georgia, serif", fontWeight: 700, color: '#0fddcc', lineHeight: 1, marginBottom: '16px', opacity: 0.8 }}>
           404
         </div>
         <h1 style={{ fontSize: '40px', fontWeight: 800, color: '#fff', margin: '0 0 20px', lineHeight: 1.2 }}>

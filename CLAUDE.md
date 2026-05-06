@@ -39,8 +39,30 @@ Defined in `/src/constants/typography.ts`. Always use these scales — do not ha
 | `xl` | 40px | Page heroes |
 | `xlClamp` | clamp | Responsive hero titles |
 
-- **Primary font:** "Noto Sans" (system-ui fallback)
-- **Serif accent:** "Playfair Display" — for hero titles and section headers only
+#### Two-font system — this is the rule, not a preference
+
+Only two fonts exist in this codebase:
+
+| Font | Use |
+|---|---|
+| **Droid Serif** | All `h1`, `h2`, `h3` + **any text rendered at 50px or above**, regardless of element type |
+| **Inter** | Everything else — body copy, `p`, `span`, labels, buttons, captions, `h4`–`h6` |
+
+**The 50px rule:** Any visible text at 50px or larger must use Droid Serif — even if it is a `<div>`, `<p>`, or `<span>`. There is one exception: large numeric stats (e.g. "1M+", "64%", "312") may stay Inter since they are data display, not prose.
+
+**How it is enforced in `globals.css`** (around the "Font foundation" comment):
+1. A global `* { font-family: Inter !important }` rule sets the baseline for all elements.
+2. A second rule `h1, h1 span, h2, h2 span, h3, h3 span { font-family: Droid Serif !important }` overrides headings globally — no per-section overrides needed.
+3. A small exceptions list forces Inter back on the few headings that intentionally stay Inter (success-story hero, contact hero, legal hero, companies-cta h2, candidates-how h3).
+4. Non-heading elements at ≥50px get a targeted ID-scoped rule — see `#home-mission p` as the reference pattern.
+
+**What this means when making changes:**
+- Adding a new `h1`/`h2`/`h3` anywhere automatically gets Droid Serif — no extra CSS needed.
+- Adding body text, labels, or UI copy automatically gets Inter — no extra CSS needed.
+- If a heading must be Inter, add it to the exceptions list in `globals.css` under "Exceptions: headings that must stay Inter".
+- If a non-heading element is set to ≥50px, add a targeted CSS rule in `globals.css` to give it Droid Serif — inline `fontFamily` alone will lose to the `!important` global rule.
+- **Never fight the global rule with inline `fontFamily` alone** — the `!important` in `globals.css` will win. Always add a CSS override when switching fonts on an element that the global rule covers.
+
 - **Weights:** 400 normal · 500 medium · 600 semi-bold · 700 bold · 800 extra-bold
 
 ### Spacing & Shape

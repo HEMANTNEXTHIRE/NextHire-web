@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { SERIF } from '@/constants/typography'
 import { YouDescribeMac, AgentDiscoverMac, AgentReachesMac, YouLandMac } from '@/components/sections/ResumeBuilderShowcase'
 
 type StepKey = 'describe' | 'discover' | 'outreach' | 'land'
@@ -69,19 +68,19 @@ export default function HowItWorksSection() {
         {/* Heading */}
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
           <h2 style={{
-            fontFamily: SERIF,
-            fontSize: 'clamp(36px, 6vw, 72px)',
+            fontFamily: "'Droid Serif', Georgia, serif",
+            fontSize: '54px',
             fontWeight: 400,
             fontStyle: 'normal',
             margin: '0 0 22px',
-            lineHeight: 1.2,
-            letterSpacing: '-0.5px',
+            lineHeight: '64.8px',
+            letterSpacing: '-1.2px',
             fontSynthesis: 'none',
           }}>
-            <span style={{ display: 'block', color: '#111827' }}>Not a job board.</span>
-            <span style={{ display: 'block', color: '#2e7d4f' }}>Your personal AI agent.</span>
+            <span style={{ display: 'block', color: '#132128' }}>Not a job board.</span>
+            <span style={{ display: 'block', color: '#132128' }}>Your personal AI agent.</span>
           </h2>
-          <p style={{ fontSize: 18, color: '#4B5563', maxWidth: '520px', margin: '0 auto', lineHeight: 1.65 }}>
+          <p style={{ fontSize: 18, color: '#424D53', maxWidth: '520px', margin: '0 auto', lineHeight: '27px', letterSpacing: '-0.3px' }}>
             The agent works 24/7, discovering opportunities, reaching decision makers, and tracking every touchpoint
           </p>
         </div>

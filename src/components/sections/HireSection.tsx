@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback } from 'react'
 import { useScroll, useMotionValueEvent } from 'motion/react'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 
 
 /* ─── Palette ────────────────────────────────────────────────── */
@@ -77,6 +77,7 @@ const CARDS = [
   },
   {
     bg: '#eef7f3',
+
     tag: 'AI Interviewer',
     title: 'Full interview simulation —\nvoice, pressure, feedback',
     features: [
@@ -90,6 +91,7 @@ const CARDS = [
   },
   {
     bg: '#eef7f3',
+
     tag: 'Job Tracker',
     title: 'Never lose track of\nwhere you stand',
     features: [
@@ -646,17 +648,17 @@ export default function HireSection() {
         <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 80px' }}>
           <div style={{ marginBottom: 20, height: 32 }} aria-hidden="true" />
           <h2 style={{
-            fontFamily: SERIF,
-            fontSize: 'clamp(36px, 6vw, 76px)',
+            fontFamily: "'Droid Serif', Georgia, serif",
+            fontSize: '54px',
             fontWeight: 400,
             fontStyle: 'normal',
             margin: '0 0 20px',
-            lineHeight: 1.22,
-            letterSpacing: '-0.5px',
+            lineHeight: '64.8px',
+            letterSpacing: '-1.2px',
             fontSynthesis: 'none',
           }}>
-            <span style={{ display: 'block', color: '#132128', fontFamily: SERIF }}>While you focus on</span>
-            <span style={{ display: 'block', color: '#132128', fontFamily: SERIF }}>what matters.</span>
+            <span style={{ display: 'block', color: '#132128' }}>While you focus on</span>
+            <span style={{ display: 'block', color: '#132128' }}>what matters.</span>
           </h2>
         </div>
 
@@ -679,7 +681,7 @@ export default function HireSection() {
                 alignItems: 'stretch',
                 position: 'sticky',
                 top: '100px',
-                boxShadow: '0 8px 48px rgba(19,33,40,0.10)',
+                zIndex: i + 1,
                 transition: 'opacity 1s',
                 overflow: 'hidden',
               }}
@@ -689,40 +691,47 @@ export default function HireSection() {
                 flex: '0 0 50%', minWidth: 0,
                 paddingLeft: 72, paddingRight: 64, paddingTop: 72, paddingBottom: 72,
                 display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                alignItems: 'flex-start',
               }}>
                 {/* Tag */}
                 <div style={{
-                  fontSize: '12px', fontWeight: WEIGHT.bold, letterSpacing: 1.8,
-                  color: P.green, textTransform: 'uppercase',
+                  display: 'inline-block',
+                  fontSize: '16px', fontWeight: WEIGHT.semi, letterSpacing: '0px',
+                  lineHeight: '24px', color: '#424d53',
+                  textTransform: 'uppercase',
+                  background: '#E8E9EA',
+                  borderRadius: '10px',
+                  padding: '8px 18px',
                   marginBottom: 18,
                 }}>
                   {card.tag}
                 </div>
 
-                {/* Title — exact specs: 32px #132128 -0.3px */}
+                {/* Title */}
                 <h3 style={{
                   fontSize: '32px',
-                  fontWeight: WEIGHT.extra,
+                  fontWeight: WEIGHT.normal,
+                  fontFamily: "'Inter', system-ui, sans-serif",
                   color: '#132128',
                   margin: '0 0 36px',
-                  lineHeight: 1.3,
+                  lineHeight: '41.6px',
                   letterSpacing: '-0.3px',
                   whiteSpace: 'pre-line',
                 }}>
                   {card.title}
                 </h3>
 
-                {/* Checklist — exact: 16px #424D53 */}
+                {/* Checklist */}
                 <div className="nh-card-features" style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 44 }}>
                   {card.features.map((f, fi) => (
                     <div key={fi} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                       <span style={{
-                        color: '#338632', fontSize: '16px',
-                        lineHeight: '24px', flexShrink: 0, fontWeight: WEIGHT.bold,
+                        color: '#338632', fontSize: '18px',
+                        lineHeight: '27px', flexShrink: 0, fontWeight: WEIGHT.bold,
                       }}>✓</span>
                       <span style={{
-                        fontSize: '16px', color: '#424D53',
-                        lineHeight: '24px', letterSpacing: '-0.3px',
+                        fontSize: '18px', color: '#132128',
+                        lineHeight: '27px', letterSpacing: '-0.3px',
                       }}>{f}</span>
                     </div>
                   ))}
@@ -733,8 +742,8 @@ export default function HireSection() {
                   href="https://app.nexthireconsulting.com"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
-                    fontSize: '16px', fontWeight: WEIGHT.semi, letterSpacing: '-0.3px',
-                    color: '#338632', textDecoration: 'none', width: 'fit-content',
+                    fontSize: '16px', fontWeight: WEIGHT.normal, letterSpacing: '-0.3px',
+                    lineHeight: '24px', color: '#338632', textDecoration: 'none', width: 'fit-content',
                   }}
                 >
                   Learn more

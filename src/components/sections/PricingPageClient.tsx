@@ -2,9 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 import AccordionFaq from '@/components/ui/AccordionFaq'
-// SERIF is used in the ROI / table sections below
 
 
 /* ── Palette ──────────────────────────────────────────────────── */
@@ -142,8 +141,8 @@ function priceFmt(monthly: number, cycle: BillingCycle) {
 /* ── Hero palette ──────────────────────────────────────────────── */
 const HOME = {
   bg: '#ffffff',
-  dark: '#111827',
-  accent: '#2e7d4f',
+  dark: '#132128',
+  accent: '#338632',
   subtext: '#6b7280',
   muted: '#9ca3af',
   hairline: '#e5e7eb',
@@ -216,7 +215,7 @@ export default function PricingPageClient() {
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
 
   return (
-    <div style={{ background: '#ffffff', minHeight: '100vh', fontFamily: "'Noto Sans', system-ui, sans-serif" }}>
+    <div style={{ background: '#ffffff', minHeight: '100vh', fontFamily: "'Inter', system-ui, sans-serif" }}>
       <style suppressHydrationWarning>{STYLES}</style>
 
       {/* ════════════════════════════════════════════════════════
@@ -227,15 +226,15 @@ export default function PricingPageClient() {
 
 
           {/* H1 */}
-          <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
-            <h1 style={{ fontFamily: SERIF, margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark, fontFamily: SERIF }}>Pick your plan</span>
-              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.accent, fontFamily: SERIF }}>Start in minutes</span>
+          <div style={{ width: '100%', margin: '0 0 24px' }}>
+            <h1 style={{ fontFamily: "'Droid Serif', Georgia, serif", margin: 0, letterSpacing: '-1.9px', lineHeight: 1.1, fontSynthesis: 'none' }}>
+              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 500, color: HOME.dark }}>Pick your plan</span>
+              <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 500, color: HOME.dark }}>Start in minutes</span>
             </h1>
           </div>
 
           {/* Description */}
-          <p style={{ color: HOME.subtext, fontSize: 17, lineHeight: 1.72, margin: '0 0 0', maxWidth: 560, fontWeight: WEIGHT.normal }}>
+          <p style={{ color: HOME.subtext, fontSize: 17, lineHeight: 1.7, margin: 0, maxWidth: 520, fontWeight: WEIGHT.normal, letterSpacing: '-0.2px' }}>
             Whether you&apos;re a professional landing your next role or a company building your next team &mdash; there&apos;s a plan built for you.
           </p>
 
@@ -378,10 +377,10 @@ export default function PricingPageClient() {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                         <p style={{ margin: 0, lineHeight: 1 }}>
                           <span style={{
-                            fontSize: 28,
-                            fontWeight: WEIGHT.semi,
+                            fontSize: 42,
+                            fontWeight: WEIGHT.bold,
                             letterSpacing: '-0.04em',
-                            lineHeight: 1.3,
+                            lineHeight: 1.1,
                           }}>
                             {p.display}
                           </span>
@@ -509,7 +508,7 @@ export default function PricingPageClient() {
                       {/* Price */}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                         <p style={{ margin: 0, lineHeight: 1 }}>
-                          <span style={{ fontSize: 28, fontWeight: WEIGHT.semi, letterSpacing: '-0.04em', lineHeight: 1.3 }}>
+                          <span style={{ fontSize: 42, fontWeight: WEIGHT.bold, letterSpacing: '-0.04em', lineHeight: 1.1 }}>
                             {plan.priceLine}
                           </span>
                         </p>
@@ -605,7 +604,7 @@ export default function PricingPageClient() {
             <div style={{ display: 'inline-block', background: `${P.accent}12`, color: P.accentD, padding: '6px 16px', borderRadius: 100, fontSize: FONT.sm, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 14 }}>
               The ROI of NextHire
             </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#111827', margin: '0 0 14px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+            <h2 style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0 0 14px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
               Numbers that make the decision easy.
             </h2>
             <p style={{ fontSize: FONT.md, color: P.mid, maxWidth: 520, margin: '0 auto', lineHeight: 1.65 }}>
@@ -742,46 +741,63 @@ export default function PricingPageClient() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          COMPARISON TABLE — candidates (Luma-style)
+          COMPARISON TABLE — candidates
       ══════════════════════════════════════════════════════ */}
       {tab === 'candidates' && (
-        <section id="pricing-included" style={{ background: '#ffffff', padding: '80px clamp(20px, 5vw, 40px) 80px' }}>
-          <div style={{ maxWidth: 1060, margin: '0 auto' }}>
+        <section id="pricing-included" style={{ background: '#fbfaf4', padding: '60px 0 90px' }}>
+          <div className="ct-scroll-wrap">
+            <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 30px', minWidth: 700 }}>
 
-            <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 400, color: '#111827', margin: '0 0 48px', textAlign: 'center', letterSpacing: '-0.04em', lineHeight: 1.18, fontSynthesis: 'none' }}>
-              What&apos;s included at a glance
-            </h2>
+              {/* ── Sticky header: heading left + plan cols right ── */}
+              <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'flex-end', gap: 22, paddingBottom: 20 }}>
 
-            {/* Table */}
-            <div className="compare-table-grid" style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: 14, overflow: 'hidden' }}>
+                {/* Heading */}
+                <div style={{ flex: '2 0 0' }}>
+                  <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(22px, 2.8vw, 38px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.042em', lineHeight: 1.15, margin: 0 }}>
+                    Features
+                  </h2>
+                </div>
 
-              {/* ── Dark header ── */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: '#111827', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
-                {/* Feature col label */}
-                <div className="ct-pad" style={{ borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: 10, fontWeight: WEIGHT.medium, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Feature</span>
-                </div>
-                {/* Free */}
-                <div className="ct-pad" style={{ textAlign: 'center', borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.04em' }}>Free</span>
-                  <span className="ct-plan-sub" style={{ color: 'rgba(255,255,255,0.3)', letterSpacing: '-0.02em' }}>Try the tools</span>
-                </div>
-                {/* Lite */}
-                <div className="ct-pad" style={{ textAlign: 'center', borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: '#ffffff', letterSpacing: '-0.04em' }}>Lite</span>
-                  <span className="ct-plan-sub" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '-0.02em' }}>Visibility</span>
-                </div>
-                {/* Pro — accent tint in dark header */}
-                <div className="ct-pad" style={{ textAlign: 'center', borderRight: '1px solid rgba(95,168,158,0.25)', background: 'rgba(95,168,158,0.15)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: '#ffffff', letterSpacing: '-0.04em' }}>Pro</span>
-                  <span className="ct-plan-sub" style={{ color: P.accent, fontWeight: WEIGHT.medium, letterSpacing: '-0.02em' }}>Conversion</span>
-                </div>
-                {/* Max */}
-                <div className="ct-pad" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                  <span className="ct-plan-name" style={{ fontWeight: WEIGHT.medium, color: '#ffffff', letterSpacing: '-0.04em' }}>Max</span>
-                  <span className="ct-plan-sub" style={{ color: 'rgba(255,255,255,0.4)', letterSpacing: '-0.02em' }}>Volume + speed</span>
+                {/* Plan columns */}
+                <div style={{ flex: '4 0 0', display: 'flex', flexFlow: 'row', gap: 12, alignItems: 'flex-end' }}>
+
+                  {/* Free */}
+                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Free</span>
+                    </div>
+                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: 'transparent', color: '#091717', border: '1.5px solid rgba(9,23,23,0.28)', transition: 'opacity 0.15s' }}>Get started</a>
+                  </div>
+
+                  {/* Lite */}
+                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Lite</span>
+                    </div>
+                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: 'transparent', color: '#091717', border: '1.5px solid rgba(9,23,23,0.28)', transition: 'opacity 0.15s' }}>Start Lite</a>
+                  </div>
+
+                  {/* Pro — BEST VALUE */}
+                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Pro</span>
+                    </div>
+                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: '#338632', color: '#fbfaf4', border: 'none', transition: 'opacity 0.15s' }}>Start Pro</a>
+                  </div>
+
+                  {/* Max */}
+                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Max</span>
+                    </div>
+                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: '#091717', color: '#fbfaf4', border: 'none', transition: 'opacity 0.15s' }}>Start Max</a>
+                  </div>
+
                 </div>
               </div>
+
+              {/* ── Header divider — 2px, 30% opacity ── */}
+              <div style={{ height: 2, background: 'rgba(9,23,23,0.3)', marginBottom: 0 }} />
 
               {/* ── Feature rows ── */}
               {([
@@ -791,67 +807,47 @@ export default function PricingPageClient() {
                 { label: 'AI Auto Apply',            vals: [{ v: '5 / day' }, { v: 'Unlimited' }, { v: 'Unlimited' }, { v: 'Unlimited' }] },
                 { label: 'Direct Recruiter InMail',  vals: [{ v: false }, { v: '50 / mo' }, { v: '200 / mo' }, { v: 'Unlimited' }] },
                 { label: 'AI Outreach Agent',        vals: [{ v: false }, { v: false }, { v: false }, { v: '3,000 / mo', note: "Don't wait to be found" }] },
-              ] as Array<{ label: string; vals: Array<{ v: boolean | string; note?: string }> }>).map((row, i) => {
-                const isEven = i % 2 === 1
-                const rowBg = isEven ? '#f9fafb' : '#ffffff'
-                const divider = '1px solid rgba(0,0,0,0.06)'
-                return (
-                  <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: rowBg, borderTop: divider }}>
-                    {/* Feature label */}
-                    <div className="ct-pad" style={{ borderRight: divider, display: 'flex', alignItems: 'center' }}>
-                      <span className="ct-label" style={{ fontWeight: WEIGHT.medium, color: '#111827', letterSpacing: '-0.03em', lineHeight: 1.35 }}>{row.label}</span>
-                    </div>
-                    {/* Free */}
-                    <div className="ct-pad" style={{ textAlign: 'center', borderRight: divider, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
-                      {row.vals[0].v === true
-                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill={isEven ? '#e9f0ed' : '#edf5f1'}/><path d="M5 9.5l2.5 2.5 5-5" stroke="#2e7d4f" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        : row.vals[0].v === false
-                        ? <span style={{ color: '#d1d5db', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
-                        : <span className="ct-val" style={{ color: '#6b7280', letterSpacing: '-0.03em' }}>{row.vals[0].v as string}</span>}
-                    </div>
-                    {/* Lite */}
-                    <div className="ct-pad" style={{ textAlign: 'center', borderRight: divider, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
-                      {row.vals[1].v === true
-                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill={isEven ? '#dff0ec' : '#e4f0eb'}/><path d="M5 9.5l2.5 2.5 5-5" stroke="#2e7d4f" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        : row.vals[1].v === false
-                        ? <span style={{ color: '#d1d5db', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
-                        : <span className="ct-val" style={{ color: P.accent, letterSpacing: '-0.03em' }}>{row.vals[1].v as string}</span>}
-                    </div>
-                    {/* Pro — persistent column highlight */}
-                    <div className="ct-pad" style={{ textAlign: 'center', background: isEven ? '#e8f5f1' : '#f0f9f5', borderRight: '1px solid rgba(95,168,158,0.2)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
-                      {row.vals[2].v === true
-                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#c8dfd6"/><path d="M5 9.5l2.5 2.5 5-5" stroke="#166534" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        : row.vals[2].v === false
-                        ? <span style={{ color: '#c8dfd6', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
-                        : <><span className="ct-val" style={{ color: P.accentD, fontWeight: WEIGHT.semi, letterSpacing: '-0.03em' }}>{row.vals[2].v as string}</span>
-                          {row.vals[2].note && <span style={{ fontSize: 10, color: P.accentD, fontWeight: WEIGHT.medium, lineHeight: 1.35, maxWidth: 96, textAlign: 'center', letterSpacing: '-0.01em', opacity: 0.75 }}>{row.vals[2].note}</span>}</>}
-                    </div>
-                    {/* Max */}
-                    <div className="ct-pad" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3 }}>
-                      {row.vals[3].v === true
-                        ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill={isEven ? '#e9f0ed' : '#edf5f1'}/><path d="M5 9.5l2.5 2.5 5-5" stroke="#2e7d4f" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        : row.vals[3].v === false
-                        ? <span style={{ color: '#d1d5db', fontSize: 17, lineHeight: 1, letterSpacing: '-0.02em' }}>—</span>
-                        : <><span className="ct-val" style={{ color: '#111827', fontWeight: WEIGHT.semi, letterSpacing: '-0.03em' }}>{row.vals[3].v as string}</span>
-                          {row.vals[3].note && <span style={{ fontSize: 10, color: '#374151', fontWeight: WEIGHT.medium, lineHeight: 1.35, maxWidth: 96, textAlign: 'center', letterSpacing: '-0.01em', opacity: 0.6 }}>{row.vals[3].note}</span>}</>}
-                    </div>
-                  </div>
-                )
-              })}
+              ] as Array<{ label: string; vals: Array<{ v: boolean | string; note?: string }> }>).map((row, rowIdx, arr) => (
+                <div key={row.label}>
+                  <div style={{ display: 'flex', flexFlow: 'row', gap: 22, padding: '22px 0', alignItems: 'stretch' }}>
 
-              {/* ── CTA row ── */}
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', background: '#111827', borderTop: '1px solid rgba(255,255,255,0.09)' }}>
-                <div className="ct-pad" style={{ borderRight: '1px solid rgba(255,255,255,0.09)', display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: 10, fontWeight: WEIGHT.medium, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Get started</span>
-                </div>
-                {CANDIDATE_PLANS.map((plan, idx) => (
-                  <div key={plan.id} className="ct-pad" style={{ borderRight: idx < CANDIDATE_PLANS.length - 1 ? (idx === 2 ? '1px solid rgba(95,168,158,0.25)' : '1px solid rgba(255,255,255,0.09)') : 'none', background: idx === 2 ? 'rgba(95,168,158,0.15)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <a href={plan.ctaHref} style={{ display: 'inline-block', padding: '7px 13px', borderRadius: 8, fontSize: 11, fontWeight: WEIGHT.medium, textDecoration: 'none', letterSpacing: '-0.02em', whiteSpace: 'nowrap', color: idx === 2 ? '#ffffff' : 'rgba(255,255,255,0.55)', background: idx === 2 ? P.accentD : 'rgba(255,255,255,0.07)', border: idx === 2 ? 'none' : '1px solid rgba(255,255,255,0.12)' }}>
-                      {plan.cta}
-                    </a>
+                    {/* Feature label */}
+                    <div style={{ flex: '2 0 0', display: 'flex', alignItems: 'center' }}>
+                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(14px,1.5vw,18px)', fontWeight: WEIGHT.medium, color: '#091717', letterSpacing: '-0.038em', lineHeight: 1.4 }}>{row.label}</span>
+                    </div>
+
+                    {/* Value cells */}
+                    <div style={{ flex: '4 0 0', display: 'flex', flexFlow: 'row', gap: 10, alignItems: 'stretch' }}>
+                      {[0, 1, 2, 3].map((colIdx) => {
+                        const cell = row.vals[colIdx]
+                        const isPro = colIdx === 2
+                        return (
+                          <div key={colIdx} style={{ flex: '1 0 0', display: 'flex', flexFlow: 'row', gap: 12, alignItems: 'center', justifyContent: 'center', minHeight: 52 }}>
+                            {cell.v === true ? (
+                              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                                <circle cx="14" cy="14" r="14" fill={isPro ? '#338632' : '#1FB8CD'} />
+                                <path d="M8 14.5l4.5 4.5 7.5-9" stroke="#FBFAF4" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            ) : cell.v === false ? (
+                              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                                <circle cx="14" cy="14" r="14" fill="#091717" fillOpacity=".1" />
+                                <path d="M9.5 9.5l9 9M18.5 9.5l-9 9" stroke="#FBFAF4" strokeWidth="1.75" strokeLinecap="round" />
+                              </svg>
+                            ) : (
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                                <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(13px,1.4vw,16px)', fontWeight: isPro ? WEIGHT.semi : 300, color: isPro ? P.accentD : '#3d5a56', letterSpacing: '-0.025em', lineHeight: 1.4, textAlign: 'center' }}>{cell.v as string}</span>
+                                {cell.note && <span style={{ fontSize: 10, color: isPro ? P.accentD : '#7a9a96', lineHeight: 1.4, maxWidth: 110, textAlign: 'center', fontStyle: 'italic' }}>{cell.note}</span>}
+                              </div>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
-                ))}
-              </div>
+                  {/* Row divider — 2px, 10% opacity */}
+                  {rowIdx < arr.length - 1 && <div style={{ height: 2, background: 'rgba(9,23,23,0.1)' }} />}
+                </div>
+              ))}
 
             </div>
           </div>

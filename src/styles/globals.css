@@ -66,7 +66,7 @@
   --font-xl: 40px;
   --font-hero: clamp(38px, 5vw, 52px);
   --font-section: clamp(30px, 3.5vw, 42px);
-  --font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Next.js global resets */
@@ -87,7 +87,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Force Noto Sans everywhere — overrides Webflow base */
+/* Force Inter everywhere — overrides Webflow base */
 *, *::before, *::after {
   font-family: inherit;
 }
@@ -141,96 +141,17 @@ main {
   display: none !important;
 }
 
-/* Force Playfair Display on the hero headline — overrides Webflow h1 font-family */
-#home-s1 h1,
-#home-s1 h1 span,
-#home-s1 h1 em {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+/* ── Mission statement paragraph (p element, not a heading) → Droid Serif ── */
+#home-mission p,
+#home-mission p span {
+  font-family: 'Droid Serif', Georgia, 'Times New Roman', serif !important;
 }
 
-#how-it-works h2,
-#how-it-works h2 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#full-platform h2,
-#full-platform h2 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#features h2,
-#features h2 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#product-showcase h2,
-#product-showcase h2 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#dual-action-cta .dual-action-button-cta-tag-left,
-#dual-action-cta .dual-action-button-cta-tag-right,
-#dual-action-cta .dual-action-button-cta-left-div-heading,
-#dual-action-cta .dual-action-button-cta-right-div-heading {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#success-story-hero h1,
-#success-story-hero h1 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#candidates-hero h1,
-#candidates-hero h1 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-#candidates-how h2,
-#candidates-how h3,
-#candidates-tools h2,
-#candidates-compare h2,
-#candidates-faq h2 {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
+/* ── Pricing hero: font-family now covered by global rule; keep style/weight ── */
 #pricing-hero h1,
 #pricing-hero h1 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#pricing-numbers h2,
-#pricing-included h2,
-#pricing-faq h2 {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#companies-hero h1,
-#companies-hero h1 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-#companies-platform h2,
-#companies-compare h2,
-#companies-integrations h2,
-#companies-cta h2,
-#companies-cta h2 span,
-#about-hero h1,
-#about-hero h1 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-}
-
-/* Contact page hero — same as candidates: global body.andl-body * forces Noto on all nodes */
-#contact-hero h1,
-#contact-hero h1 span {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-  font-synthesis: none !important;
   font-style: normal !important;
-}
-
-/* Legal pages (Privacy, Terms, DPA, Marketing Disclosure) — Playfair title */
-#nh-legal-hero .nh-legal-page__title {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
-  font-synthesis: none !important;
-  font-style: normal !important;
+  font-weight: 500 !important;
 }
 
 /* Jobs board — same as home hero: global Noto inherit must not flatten Playfair */
@@ -239,7 +160,7 @@ main {
 #jobs-board .jobs-board-preview__title,
 #jobs-board .jobs-board-section__title,
 #jobs-board .jobs-board-card__title {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
   font-synthesis: none !important;
   font-style: normal !important;
 }
@@ -753,9 +674,10 @@ main {
 }
 
 .hiw-tab-desc p {
-  font-size: 17px;
-  color: #4b5563;
-  line-height: 1.7;
+  font-size: 18px;
+  color: #424D53;
+  line-height: 27px;
+  letter-spacing: -0.3px;
   margin: 0;
 }
 
@@ -774,7 +696,7 @@ main {
 @media (max-width: 767px) {
   .hiw-tabs { flex-wrap: wrap; border-radius: 20px; width: auto; }
   .hiw-tab { font-size: 13px; padding: 8px 16px; }
-  .hiw-tab-desc p { font-size: 15px; }
+  .hiw-tab-desc p { font-size: 16px; line-height: 24px; }
 }
 
 @keyframes hiw-cursor-blink {
@@ -1274,13 +1196,29 @@ dialog::backdrop {
 
 /* ---- Footer: column grid ---- */
 
+/* Footer background */
+.footer {
+  background: #162127 !important;
+}
+
 /* Core link and text styles */
 .nh-footer-heading {
-  color: #173b3f;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.4;
+  color: #A1A6A9;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: -0.3px;
   margin: 0 0 14px;
+  display: block;
+}
+
+.nh-footer-heading--link {
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nh-footer-heading--link:hover {
+  color: #ffffff;
 }
 
 .nh-footer-list {
@@ -1298,28 +1236,29 @@ dialog::backdrop {
 }
 
 .nh-footer-link {
-  color: #475653;
-  font-size: 13px;
-  line-height: 1.5;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.3px;
   text-decoration: none;
   display: block;
   transition: color 0.2s ease;
 }
 
 .nh-footer-link:hover {
-  color: #173b3f;
+  color: #A1A6A9;
 }
 
 .nh-footer-link--section {
-  font-weight: 600;
-  color: #2d5256;
+  font-weight: 400;
+  color: #ffffff;
 }
 
 .nh-footer-link--sub {
   padding-left: 14px;
-  font-size: 12.5px;
+  font-size: 16px;
   position: relative;
-  color: #5a7370;
+  color: #ffffff;
 }
 
 .nh-footer-link--sub::before {
@@ -1330,8 +1269,40 @@ dialog::backdrop {
   transform: translateY(-50%);
   width: 9px;
   height: 1.5px;
-  background: linear-gradient(to left, #173b3f, rgba(23,59,63,0));
-  opacity: 0.4;
+  background: rgba(255,255,255,0.3);
+  opacity: 0.6;
+}
+
+/* Social icons — white */
+.footer-social-in,
+.footer-lower__social-icons img {
+  filter: brightness(0) invert(1);
+}
+
+/* Footer lower bar — copyright and legal links */
+.footer-all-right-text,
+.footer-lower-left-content {
+  color: #ffffff !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: -0.3px !important;
+}
+
+.footer-lower__bottom-link {
+  color: rgba(255,255,255,0.65) !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: -0.3px !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.footer-lower__bottom-link:hover {
+  color: #A1A6A9 !important;
+}
+
+.nh-footer-dot {
+  background: rgba(255,255,255,0.35) !important;
 }
 
 /* Dot separator in lower bar */
@@ -1381,17 +1352,18 @@ dialog::backdrop {
   }
 
   .nh-footer-heading {
-    font-size: 12px !important;
+    font-size: 14px !important;
+    line-height: 21px !important;
     margin-bottom: 8px !important;
   }
 
   .nh-footer-link {
-    font-size: 11.5px !important;
-    line-height: 1.45 !important;
+    font-size: 13px !important;
+    line-height: 20px !important;
   }
 
   .nh-footer-link--sub {
-    font-size: 11px !important;
+    font-size: 13px !important;
     padding-left: 11px !important;
   }
 
@@ -1473,6 +1445,87 @@ dialog::backdrop {
 }
 .footer-lower-left-content { display: none; }
 
+/* ── New compact footer lower bar ─────────────────────────── */
+.nh-footer-lower {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.nh-footer-logo-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.nh-footer-logo-img {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.nh-footer-legal {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.nh-footer-copy {
+  color: rgba(255,255,255,0.55) !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: -0.3px !important;
+  white-space: nowrap;
+}
+
+.nh-footer-socials {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nh-footer-social-link {
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease;
+  text-decoration: none;
+}
+
+.nh-footer-social-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .nh-footer-lower {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding-top: 20px !important;
+  }
+
+  .nh-footer-legal {
+    gap: 4px 6px !important;
+  }
+
+  .footer-lower__bottom-link {
+    font-size: 11px !important;
+  }
+
+  .nh-footer-dot {
+    display: none !important;
+  }
+
+  .nh-footer-socials {
+    gap: 14px !important;
+  }
+}
+
 
 /* ---- Header: solid bar when scrolled (body.fixed-menu from Header.tsx) ---- */
 .page-header,
@@ -1498,6 +1551,9 @@ dialog::backdrop {
   color: #1a3338 !important;
   opacity: 0.75;
   transition: opacity 0.2s ease, color 0.2s ease;
+  font-size: 14px !important;
+  line-height: 21px !important;
+  letter-spacing: -0.3px !important;
 }
 
 /* When bar is solid (scrolled or mobile open): full-opacity text */
@@ -1506,6 +1562,9 @@ dialog::backdrop {
   color: #1a3338 !important;
   opacity: 0.75;
   transition: opacity 0.2s ease, color 0.2s ease;
+  font-size: 14px !important;
+  line-height: 21px !important;
+  letter-spacing: -0.3px !important;
 }
 
 /* Hovered or open item: full opacity + teal colour to stand out */
@@ -1549,7 +1608,7 @@ dialog::backdrop {
   text-align: left !important;
 }
 .nh-feature-card h3 {
-  font-family: 'Graphik Web', 'Noto Sans', system-ui, sans-serif !important;
+  font-family: 'Graphik Web', 'Inter', system-ui, sans-serif !important;
   font-size: 20px !important;
   font-weight: 500 !important;
   line-height: 26px !important;
@@ -1559,7 +1618,7 @@ dialog::backdrop {
   text-align: left !important;
 }
 .nh-feature-card p {
-  font-family: 'Graphik Web', 'Noto Sans', system-ui, sans-serif !important;
+  font-family: 'Graphik Web', 'Inter', system-ui, sans-serif !important;
   font-size: 18px !important;
   font-weight: 400 !important;
   line-height: 23.4px !important;
@@ -1736,13 +1795,14 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   opacity: 1 !important;
 }
 body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-cta-try {
-  background: rgba(255, 255, 255, 0.12) !important;
+  background: #132128 !important;
+  background-image: none !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border: none !important;
   box-shadow: none !important;
 }
 body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-cta-try:hover {
-  background: rgba(255, 255, 255, 0.22) !important;
+  background: #1f2937 !important;
 }
 body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-menu-toggle-animated {
   color: #ffffff !important;
@@ -1936,11 +1996,16 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 
 /* Desktop CTA sizing (unchanged) */
 .main-nav .main-nav-cta-try.button-primary {
-  padding: 8px 18px !important;
-  font-size: 13px !important;
+  padding: 11px 24px !important;
+  font-size: 14px !important;
+  line-height: 14px !important;
+  letter-spacing: -0.3px !important;
   font-weight: 600 !important;
   border-radius: 9999px !important;
   white-space: nowrap !important;
+  background-color: #132128 !important;
+  background-image: none !important;
+  color: #ffffff !important;
 }
 
 /* Global: prevent any .button-primary text from wrapping */
@@ -2097,7 +2162,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 .nh-mega-menu__intro-title {
   font-size: clamp(19px, 1.35vw, 22px);
   font-weight: 700;
-  color: #111827;
+  color: #132128;
   margin: 0 0 8px;
   letter-spacing: -0.35px;
   line-height: 1.25;
@@ -2114,7 +2179,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 .nh-mega-menu__intro-link {
   font-size: 14px;
   font-weight: 600;
-  color: #2e7d4f;
+  color: #338632;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -2158,7 +2223,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 .nh-mega-menu__feat-title {
   font-size: 15px;
   font-weight: 700;
-  color: #111827;
+  color: #132128;
   letter-spacing: -0.2px;
   line-height: 1.3;
 }
@@ -2176,7 +2241,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   flex-shrink: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #2e7d4f;
+  color: #338632;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -2257,7 +2322,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   margin: 0 0 12px;
   font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 700;
-  color: #111827;
+  color: #132128;
   line-height: 1.28;
   letter-spacing: -0.35px;
 }
@@ -2276,7 +2341,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   padding: 12px 22px;
   border-radius: 9999px;
   background: #1de9b6;
-  color: #111827 !important;
+  color: #132128 !important;
   font-size: 14px;
   font-weight: 700;
   text-decoration: none !important;
@@ -2299,7 +2364,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 .nh-mega-menu__promo-btn-secondary {
   font-size: 14px;
   font-weight: 600;
-  color: #2e7d4f;
+  color: #338632;
   text-decoration: none;
 }
 .nh-mega-menu__promo-btn-secondary:hover {
@@ -2379,274 +2444,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   display: block;
 }
 
-/* ---- Dual CTA: alignment fix ---- */
-/* Webflow applies margin-left:23px to .cta-tag-left and padding-left:23px to .cta-tag-right.
-   With the star removed the right tag has an extra 23px shift vs the left.
-   Zero it out so both labels and headings start at the same horizontal edge. */
-.dual-action-button-cta-tag-right {
-  padding-left: 0 !important;
-  margin-left: 0 !important;
-}
-.dual-action-button-cta-right-div-heading {
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-}
-
-/* ── Dual CTA: kill Webflow absolute CTAs + fix “TALK TO AN EXPERT” overlap ──
-   Webflow uses position:absolute; bottom:82px on *-inner — headings then collide with labels. */
-#dual-action-cta .dual-action-button-cta-left-div,
-#dual-action-cta .dual-action-button-cta-right-div {
-  display: flex !important;
-  flex-direction: column !important;
-  /* stretch so button row can be full-width; desktop resets to flex-start below */
-  align-items: stretch !important;
-  justify-content: flex-start !important;
-  box-sizing: border-box !important;
-}
-#dual-action-cta .dual-action-button-cta-left-div-inner,
-#dual-action-cta .dual-action-button-cta-right-div-inner {
-  position: static !important;
-  inset: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
-  display: flex !important;
-  /* Laptop: left-align with headings; mobile overrides to center */
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-top: 0 !important;
-  z-index: auto !important;
-}
-#dual-action-cta .dual-action-button-cta-left-div-heading,
-#dual-action-cta .dual-action-button-cta-right-div-heading {
-  position: relative !important;
-  z-index: 1 !important;
-  /* Space below title before CTA (mobile + laptop; beats stray margin:0 overrides) */
-  margin: 0 0 clamp(24px, 5vw, 40px) 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  line-height: 1.22 !important;
-}
-#dual-action-cta .dual-action-button-cta-tag-wrapper {
-  margin-bottom: 12px !important;
-  width: 100% !important;
-  flex-wrap: wrap !important;
-}
-#dual-action-cta .dual-action-button-cta-tag-wrapper p {
-  white-space: normal !important;
-  word-break: break-word !important;
-}
-
-/* Desktop / tablet: same top line for labels, same baseline for both CTAs */
-@media (min-width: 768px) {
-  #dual-action-cta .dual-action-button-cta-wrapper {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: stretch !important;
-    width: 100% !important;
-  }
-  /*
-   * Webflow legacy padding (calc) shifts content — use matching padding both sides.
-   */
-  #dual-action-cta .dual-action-button-cta-left-div,
-  #dual-action-cta .dual-action-button-cta-right-div {
-    flex: 1 1 50% !important;
-    min-width: 0 !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-    box-sizing: border-box !important;
-    padding: clamp(56px, 7vw, 88px) clamp(40px, 5vw, 72px) !important;
-    position: relative !important;
-  }
-  /* Decorative shape only on left — out of flex flow so it doesn’t make the column taller */
-  #dual-action-cta .dual-action-button-cta-left-div-pattern-mobile {
-    position: absolute !important;
-    top: 0 !important;
-    right: 0 !important;
-    z-index: 0 !important;
-    pointer-events: none !important;
-    width: min(200px, 42%) !important;
-    height: auto !important;
-    opacity: 0.22 !important;
-    margin: 0 !important;
-  }
-  #dual-action-cta .dual-action-button-cta-tag-wrapper,
-  #dual-action-cta .dual-action-button-cta-left-div-heading,
-  #dual-action-cta .dual-action-button-cta-right-div-heading {
-    position: relative !important;
-    z-index: 1 !important;
-    justify-content: flex-start !important;
-    align-self: stretch !important;
-    text-align: left !important;
-  }
-  /* Push both buttons to the same horizontal line (bottom of the shorter column) */
-  #dual-action-cta .dual-action-button-cta-left-div-inner,
-  #dual-action-cta .dual-action-button-cta-right-div-inner {
-    align-self: stretch !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    margin-top: auto !important;
-  }
-}
-
-/* Mobile: center whole column (needs #id to beat base #dual-action-cta align-items: stretch) */
-@media (max-width: 767px) {
-  #dual-action-cta .dual-action-button-cta-left-div,
-  #dual-action-cta .dual-action-button-cta-right-div {
-    align-items: center !important;
-    text-align: center !important;
-  }
-  #dual-action-cta .dual-action-button-cta-tag-wrapper {
-    justify-content: center !important;
-  }
-  #dual-action-cta .dual-action-button-cta-left-div-heading,
-  #dual-action-cta .dual-action-button-cta-right-div-heading {
-    text-align: center !important;
-  }
-  #dual-action-cta .dual-action-button-cta-left-div-inner,
-  #dual-action-cta .dual-action-button-cta-right-div-inner {
-    margin-top: 0 !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-}
-
-.dual-action-button-cta-right-div-aligned.dual-action-button-cta-right-div {
-  text-align: left;
-}
-.dual-action-button-cta-right-div-aligned .dual-action-button-cta-tag-wrapper {
-  gap: 0;
-}
-
-.dual-action-button-cta-tag-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  min-width: 0;
-  position: relative;
-}
-.dual-action-button-cta-tag-wrapper p {
-  margin: 0;
-  white-space: nowrap;
-  flex-shrink: 0;
-  order: 1;
-}
-/* Override Webflow's position:absolute on the icon — keep it in flex flow */
-.dual-action-button-cta-left-div-img,
-.dual-action-button-cta-right-div-img,
-.dual-action-button-cta-tag-wrapper .w-embed,
-.dual-action-button-cta-left-div-img.w-embed,
-.dual-action-button-cta-right-div-img.w-embed {
-  position: static !important;
-  flex-shrink: 0;
-  order: 2;
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
-  min-height: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ---- Dual CTA: palette override to match homepage colour scheme ---- */
-/* Left panel: dark teal (our dark token) */
-.dual-action-button-cta-left-div {
-  background-color: #1a3338 !important;
-}
-.dual-action-button-cta-tag-left {
-  color: #5fa89e !important;   /* teal accent instead of plain white */
-}
-.dual-action-button-cta-left-div-heading {
-  color: #ffffff !important;
-}
-.dual-action-button-cta-left-div-para {
-  color: rgba(255,255,255,0.7) !important;
-}
-
-/* Right panel: light mint (matches hero) */
-/* Webflow's mobile CSS sets display:none on the right div — override it */
-.dual-action-button-cta-right-div,
-.dual-action-button-cta-right-div.js-dual-action-button-cta-right-div {
-  display: flex !important;
-  background-color: #edf5f1 !important;
-}
-
-/* Stack panels vertically on mobile */
-@media (max-width: 767px) {
-  .dual-action-button-cta-wrapper {
-    flex-direction: column !important;
-    display: flex !important;
-  }
-  .dual-action-button-cta-left-div,
-  .dual-action-button-cta-right-div {
-    width: 100% !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    padding: 40px 28px !important;
-    box-sizing: border-box !important;
-    position: relative !important;   /* contain abs-positioned pattern image */
-  }
-  /* Tag, heading, button: stacked + centered */
-  .dual-action-button-cta-tag-wrapper {
-    flex-direction: row !important;
-    justify-content: center !important;
-    margin-bottom: 12px !important;
-    width: 100% !important;
-  }
-  .dual-action-button-cta-right-div-heading,
-  .dual-action-button-cta-left-div-heading {
-    text-align: center !important;
-    justify-content: center !important;
-    font-size: clamp(26px, 6vw, 40px) !important;
-    margin-bottom: 24px !important;
-    width: 100% !important;
-  }
-  .dual-action-button-cta-left-div-inner,
-  .dual-action-button-cta-right-div-inner {
-    position: static !important;
-    width: 100% !important;
-    justify-content: center !important;
-    display: flex !important;
-  }
-  .dual-action-button-cta-left-div-inner-button,
-  .dual-action-button-cta-right-div-inner-button {
-    width: auto !important;
-  }
-  /* Pattern image: keep it inside the left panel, don't let it overflow */
-  .dual-action-button-cta-left-div-pattern-mobile {
-    width: 140px !important;
-    height: auto !important;
-    opacity: 0.3 !important;
-  }
-}
-.dual-action-button-cta-tag-right {
-  color: #5fa89e !important;   /* teal accent label */
-}
-.dual-action-button-cta-right-div-heading {
-  color: #1a3338 !important;
-}
-.dual-action-button-cta-right-div-para {
-  color: #3d5a56 !important;
-}
-
-/* Right panel "Schedule Now" button: outline style on mint bg */
-.dual-action-button-cta-right-div-inner-button {
-  background-color: #ffffff !important;
-  color: #1a3338 !important;
-  border: 1.5px solid #c8dfd6 !important;
-  box-shadow: 0 2px 8px rgba(37,62,66,0.06) !important;
-  white-space: nowrap !important;
-}
-.dual-action-button-cta-right-div-inner-button:hover {
-  background-color: #1a3338 !important;
-  color: #ffffff !important;
-  border-color: #1a3338 !important;
-}
+/* ── Dual CTA: one card, two halves — component is fully inline-styled, no overrides needed ── */
 /* ── candidates page ──────────────────────────────────────── */
 .tool-card:hover {
   box-shadow:
@@ -2758,13 +2556,36 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   max-height: 12px;
 }
 
-/* ─── Noto Sans override — replaces all Inter / system-ui from Webflow CSS ─── */
+/* ─── Font foundation — two fonts only: Inter (body) + Droid Serif (headings) ─── */
+/* 1. Everything defaults to Inter */
 *,
-h1, h2, h3, h4, h5, h6,
 p, span, a, button, input, textarea, select, label,
+h4, h5, h6,
 .w-richtext, .w-form, .w-button,
 body.andl-body, body.andl-body * {
-  font-family: 'Noto Sans', system-ui, -apple-system, sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+/* 2. All h1/h2/h3 get Droid Serif — body.andl-body prefix beats (0,0,1,1) specificity of body.andl-body * */
+h1, h1 span, h1 em,
+h2, h2 span, h2 em,
+h3, h3 span, h3 em,
+body.andl-body h1, body.andl-body h1 span, body.andl-body h1 em,
+body.andl-body h2, body.andl-body h2 span, body.andl-body h2 em,
+body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
+  font-family: 'Droid Serif', Georgia, 'Times New Roman', serif !important;
+}
+/* 3. Exceptions: headings that must stay Inter */
+#success-story-hero h1,
+#success-story-hero h1 span,
+#contact-hero h1,
+#contact-hero h1 span,
+#nh-legal-hero .nh-legal-page__title,
+#companies-integrations h2,
+#companies-cta h2,
+#companies-cta h2 span,
+#candidates-how h3,
+#candidates-how h3 span {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2785,37 +2606,8 @@ body.andl-body, body.andl-body * {
   }
 }
 
-/* ── Pricing: Luma-style compare table ── */
-
-/* Responsive cell padding */
-.ct-pad { padding: 10px 12px; }
-@media (min-width: 480px) { .ct-pad { padding: 14px 16px; } }
-@media (min-width: 768px) { .ct-pad { padding: 18px 20px; } }
-
-/* Plan name in dark header */
-.ct-plan-name { font-size: 11px; }
-@media (min-width: 480px) { .ct-plan-name { font-size: 14px; } }
-@media (min-width: 768px) { .ct-plan-name { font-size: 18px; } }
-
-/* Plan subtitle in dark header */
-.ct-plan-sub { font-size: 9px; font-weight: 400; }
-@media (min-width: 480px) { .ct-plan-sub { font-size: 11px; } }
-@media (min-width: 768px) { .ct-plan-sub { font-size: 12px; } }
-
-/* Feature label */
-.ct-label { font-size: 11px; }
-@media (min-width: 480px) { .ct-label { font-size: 13px; } }
-@media (min-width: 768px) { .ct-label { font-size: 15px; } }
-
-/* Value text in data cells */
-.ct-val { font-size: 10px; }
-@media (min-width: 480px) { .ct-val { font-size: 12px; } }
-@media (min-width: 768px) { .ct-val { font-size: 14px; } }
-
-/* Collapse Free column on narrow screens */
-@media (max-width: 520px) {
-  #pricing-included .compare-table-grid > div:nth-child(1) { display: none; }
-}
+/* ── Pricing comparison table ── */
+.ct-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* ── Orbital Feature Map ────────────────────────────────────── */
 @keyframes nh-orbital-center-pulse {
@@ -3240,10 +3032,10 @@ body.andl-body, body.andl-body * {
   border-radius: 9999px !important;
   border: none !important;
   background: #1de9b6 !important;
-  color: #111827 !important;
+  color: #132128 !important;
   font-size: 16px !important;
   font-weight: 700 !important;
-  font-family: 'Noto Sans', system-ui, sans-serif !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
   cursor: pointer !important;
   box-shadow: 0 4px 16px rgba(29, 233, 182, 0.35) !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease !important;
@@ -3440,7 +3232,7 @@ body.andl-body, body.andl-body * {
   --jb-muted: #737373;
   --jb-line: #e8e8e8;
   --jb-surface: #fafafa;
-  --jb-hero-accent: #2e7d4f;
+  --jb-hero-accent: #338632;
   scroll-margin-top: 88px;
   padding: clamp(48px, 9vw, 96px) clamp(20px, 4vw, 40px) clamp(48px, 6vw, 80px);
   background: #ffffff;
@@ -3499,13 +3291,14 @@ body.andl-body, body.andl-body * {
 .jobs-board-headline__line {
   display: block;
   font-size: clamp(32px, 5.5vw, 64px);
+  font-family: 'Droid Serif', Georgia, serif !important;
   font-weight: 400;
   font-style: normal;
   line-height: 1.22;
 }
 
 .jobs-board-headline__line--primary {
-  color: #111827;
+  color: #132128;
 }
 
 .jobs-board-headline__line--accent {
@@ -4191,7 +3984,7 @@ body.andl-body, body.andl-body * {
   font-weight: 400;
   letter-spacing: -0.45px;
   line-height: 1.18;
-  color: #111827;
+  color: #132128;
 }
 
 .nh-legal-page__lead {
@@ -4227,7 +4020,7 @@ body.andl-body, body.andl-body * {
   font-family: var(--font-family);
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 700;
-  color: #111827;
+  color: #132128;
   margin: 2.5rem 0 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
@@ -4243,7 +4036,7 @@ body.andl-body, body.andl-body * {
   font-family: var(--font-family);
   font-size: 1.0625rem;
   font-weight: 600;
-  color: #111827;
+  color: #132128;
   margin: 1.75rem 0 0.625rem;
   line-height: 1.4;
 }
@@ -4274,11 +4067,11 @@ body.andl-body, body.andl-body * {
 
 .nh-legal-prose strong {
   font-weight: 600;
-  color: #111827;
+  color: #132128;
 }
 
 .nh-legal-prose a {
-  color: #2e7d4f;
+  color: #338632;
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -4291,7 +4084,7 @@ body.andl-body, body.andl-body * {
 
 .nh-legal-summary {
   background: #edf5f1;
-  border-left: 4px solid #2e7d4f;
+  border-left: 4px solid #338632;
   border-radius: 0 8px 8px 0;
   padding: 16px 20px;
   margin-bottom: 32px;
@@ -4330,13 +4123,13 @@ body.andl-body, body.andl-body * {
 
 .nh-accordion-title {
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.8px;
   line-height: 1.25;
   text-align: center;
   margin: 0;
   color: #000000;
-  font-family: var(--font-family);
+  font-family: 'Droid Serif', Georgia, serif;
 }
 @media (min-width: 768px) {
   .nh-accordion-title { font-size: 48px; }

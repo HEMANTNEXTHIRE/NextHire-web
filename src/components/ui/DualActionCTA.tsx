@@ -1,68 +1,176 @@
-import Link from 'next/link'
-import { SERIF } from '@/constants/typography'
+'use client'
 
+import Link from 'next/link'
 
 interface DualActionCTAProps {
   leftTitle?: string
   leftSubtitle?: string
+  leftDesc?: string
   leftLabel?: string
   leftHref?: string
   rightTitle?: string
   rightSubtitle?: string
+  rightDesc?: string
   rightLabel?: string
   rightHref?: string
 }
 
 const APP_URL = 'https://app.nexthireconsulting.com'
 
+const descStyle: React.CSSProperties = {
+  fontFamily: "'Inter', system-ui, sans-serif",
+  fontSize: '18px',
+  fontWeight: 400,
+  lineHeight: '27px',
+  letterSpacing: '-0.3px',
+  color: '#424d53',
+  margin: '0 0 40px',
+}
+
 export default function DualActionCTA({
   leftTitle = 'GET STARTED',
   leftSubtitle = 'Kickstart Your Career Journey',
+  leftDesc = 'AI that searches, applies, and coaches while you focus on landing the offer.',
   leftLabel = 'Try for free',
   leftHref = APP_URL,
   rightTitle = 'TALK TO AN EXPERT',
   rightSubtitle = 'Build a team that wins',
+  rightDesc = 'AI agents run sourcing, screening, and outreach so your team only meets the best.',
   rightLabel = 'Schedule Now',
   rightHref = '/contact-us',
 }: DualActionCTAProps) {
   const isExternalLeft = leftHref.startsWith('http')
+  const isExternalRight = rightHref.startsWith('http')
+
+  const btnStyle: React.CSSProperties = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#132128',
+    color: '#ffffff',
+    fontSize: '16px',
+    fontWeight: 500,
+    lineHeight: '24px',
+    letterSpacing: '-0.3px',
+    padding: '14px 28px',
+    borderRadius: '9999px',
+    border: 'none',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap' as const,
+    transition: 'background 0.2s ease',
+    marginTop: 'auto',
+  }
+
   return (
-    <section id="dual-action-cta" className="dual-action-button-cta js-dual-action-button-cta">
-      <div className="dual-action-button-cta-wrapper">
-        <div className="dual-action-button-cta-left-div js-dual-action-button-cta-left-div">
-          <div className="dual-action-button-cta-tag-wrapper">
-            <p className="dual-action-button-cta-tag-left" style={{ fontFamily: SERIF }}>{leftTitle}</p>
+    <section
+      id="dual-action-cta"
+      style={{
+        background: '#162127',
+        padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px) 0',
+      }}
+    >
+      {/* One card, two halves */}
+      <div style={{
+        maxWidth: '1160px',
+        margin: '0 auto',
+        background: '#eef7f3',
+        borderRadius: '28px',
+        boxShadow: '0 8px 48px rgba(19,33,40,0.10)',
+        display: 'flex',
+        alignItems: 'stretch',
+        overflow: 'hidden',
+        minHeight: '600px',
+      }}>
+
+        {/* ── Left half ── */}
+        <div style={{
+          flex: '0 0 50%',
+          minWidth: 0,
+          padding: '72px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          borderRight: '1px solid rgba(19,33,40,0.08)',
+          boxSizing: 'border-box',
+        }}>
+          <div style={{
+            display: 'inline-block',
+            fontSize: '16px', fontWeight: 600, lineHeight: '24px', letterSpacing: '0px',
+            color: '#424d53', textTransform: 'uppercase',
+            background: '#E8E9EA', borderRadius: '10px', padding: '8px 18px',
+            marginBottom: '18px',
+          }}>
+            {leftTitle}
           </div>
 
-          <h2 className="dual-action-button-cta-left-div-heading" style={{ fontFamily: SERIF, fontWeight: 400 }}>{leftSubtitle}</h2>
+          <h2 style={{
+            fontFamily: "'Droid Serif', Georgia, serif",
+            fontSize: '54px', fontWeight: 400, lineHeight: '64.8px', letterSpacing: '-1.2px',
+            color: '#132128', margin: '0 0 16px',
+          }}>
+            {leftSubtitle}
+          </h2>
 
-          <div className="dual-action-button-cta-left-div-inner js-dual-action-button-cta-left-div-inner">
-            {isExternalLeft ? (
-              <a href={leftHref} target="_blank" rel="noopener noreferrer" className="button-primary dual-action-button-cta-left-div-inner-button w-button">
-                {leftLabel}
-              </a>
-            ) : (
-              <Link href={leftHref} className="button-primary dual-action-button-cta-left-div-inner-button w-button">
-                {leftLabel}
-              </Link>
-            )}
-          </div>
-          <img alt="" width={400} height={300} className="dual-action-button-cta-left-div-pattern-mobile" loading="lazy" src="https://cdn.prod.website-files.com/660dcc7f45ad8881324199b5/6626c34d918de4b3cbec4ac4_shapev2.avif" />
+          <p style={descStyle}>{leftDesc}</p>
+
+          {isExternalLeft ? (
+            <a href={leftHref} target="_blank" rel="noopener noreferrer" style={btnStyle}
+              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
+              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
+            >{leftLabel}</a>
+          ) : (
+            <Link href={leftHref} style={btnStyle}
+              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
+              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
+            >{leftLabel}</Link>
+          )}
         </div>
 
-        <div className="dual-action-button-cta-right-div js-dual-action-button-cta-right-div">
-          <div className="dual-action-button-cta-tag-wrapper">
-            <p className="dual-action-button-cta-tag-right" style={{ fontFamily: SERIF }}>{rightTitle}</p>
+        {/* ── Right half ── */}
+        <div style={{
+          flex: '0 0 50%',
+          minWidth: 0,
+          padding: '72px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          boxSizing: 'border-box',
+          background: '#E4F3F5',
+        }}>
+          <div style={{
+            display: 'inline-block',
+            fontSize: '16px', fontWeight: 600, lineHeight: '24px', letterSpacing: '0px',
+            color: '#424d53', textTransform: 'uppercase',
+            background: '#E8E9EA', borderRadius: '10px', padding: '8px 18px',
+            marginBottom: '18px',
+          }}>
+            {rightTitle}
           </div>
 
-          <h2 className="dual-action-button-cta-right-div-heading" style={{ fontFamily: SERIF, fontWeight: 400 }}>{rightSubtitle}</h2>
+          <h2 style={{
+            fontFamily: "'Droid Serif', Georgia, serif",
+            fontSize: '54px', fontWeight: 400, lineHeight: '64.8px', letterSpacing: '-1.2px',
+            color: '#132128', margin: '0 0 16px',
+          }}>
+            {rightSubtitle}
+          </h2>
 
-          <div className="dual-action-button-cta-right-div-inner js-dual-action-button-cta-right-div-inner">
-            <Link href={rightHref} className="button-secondary dual-action-button-cta-right-div-inner-button js-dual-action-button-cta-right-div-inner-button button-secondary-mobile w-button">
-              {rightLabel}
-            </Link>
-          </div>
+          <p style={descStyle}>{rightDesc}</p>
+
+          {isExternalRight ? (
+            <a href={rightHref} target="_blank" rel="noopener noreferrer" style={btnStyle}
+              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
+              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
+            >{rightLabel}</a>
+          ) : (
+            <Link href={rightHref} style={btnStyle}
+              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
+              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
+            >{rightLabel}</Link>
+          )}
         </div>
+
       </div>
     </section>
   )

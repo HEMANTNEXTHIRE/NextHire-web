@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import DualActionCTA from '@/components/ui/DualActionCTA'
-import { FONT, WEIGHT, SERIF } from '@/constants/typography'
+import { FONT, WEIGHT } from '@/constants/typography'
 
 
 export const metadata: Metadata = {
@@ -35,9 +35,9 @@ export default function AboutPage() {
       {/* Hero */}
       <section id="about-hero" style={{ background: '#edf5f1', padding: 'clamp(80px,10vw,110px) clamp(20px,5vw,40px)', textAlign: 'center' }}>
         <div className="w-layout-blockcontainer container-large-e25 w-container">
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', margin: '0 0 24px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
-            <span style={{ display: 'block', color: '#111827', fontFamily: SERIF }}>We&apos;re on a Mission to</span>
-            <span style={{ display: 'block', color: '#2e7d4f', fontFamily: SERIF }}>Democratize Career Growth</span>
+          <h1 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', margin: '0 0 24px', lineHeight: 1.22, letterSpacing: '-0.5px', fontSynthesis: 'none' }}>
+            <span style={{ display: 'block', color: '#132128' }}>We&apos;re on a Mission to</span>
+            <span style={{ display: 'block', color: '#338632' }}>Democratize Career Growth</span>
           </h1>
           <p style={{ fontSize: FONT.lg, color: '#3d5a56', maxWidth: '700px', margin: '0 auto', lineHeight: 1.7 }}>
           We help people find and land the right jobs faster with automation and intelligence.
