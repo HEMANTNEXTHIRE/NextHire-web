@@ -18,7 +18,7 @@ const CHIPS: Array<{ text: string; x: string; y: string; angle?: number; bg: str
 
 /* ── Right panel items ───────────────────────────────────────── */
 const WITH_ITEMS = [
-  { num: '01', icon: '🔍', text: "AI finds roles before they're even posted" },
+  { num: '01', icon: '🔍', text: 'AI finds roles before they\'re even posted' },
   { num: '02', icon: '🤖', text: 'Talk directly to hiring managers, skip the line'},
   { num: '03', icon: '💬', text: 'Real-time coaching through every interview'},
   { num: '04', icon: '🎯', text: 'Multiple offers. You pick the best one.'},
@@ -26,7 +26,7 @@ const WITH_ITEMS = [
 
 export default function WithWithoutSection() {
   return (
-    <section style={{ background: '#ffffff', padding: '80px 0' }}>
+    <section style={{ background: '#ffffff', padding: '80px 0 0' }}>
       <div className="nh-container">
 
         {/* Heading */}
@@ -103,7 +103,7 @@ export default function WithWithoutSection() {
               top: 20, left: 20, right: 20, bottom: 20,
               overflow: 'hidden',
             }}>
-              <Gravity gravity={{ x: 0, y: 0.8 }} grabCursor addTopWall autoStart>
+              <Gravity gravity={{ x: 0, y: 0.8 }} grabCursor addTopWall={false} autoStart>
                 {CHIPS.map((chip) => (
                   <MatterBody
                     key={chip.text}
@@ -135,6 +135,15 @@ export default function WithWithoutSection() {
               </Gravity>
             </div>
 
+            {/* Drag hint */}
+            <div style={{
+              position: 'absolute', bottom: 22, left: 0, right: 0,
+              textAlign: 'center', zIndex: 20, pointerEvents: 'none',
+            }}>
+              <span style={{ fontSize: 11, color: '#9ca3af', letterSpacing: '0.3px' }}>
+                drag to interact
+              </span>
+            </div>
           </div>
 
           {/* ── RIGHT: With NextHire ──────────────────────────── */}
