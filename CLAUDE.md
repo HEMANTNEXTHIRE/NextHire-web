@@ -69,8 +69,44 @@ Only two fonts exist in this codebase:
 
 - Card border-radius: `10px` (inputs, cards) — `12px` (larger panels)
 - Borders: `2px solid #c8dfd6` (sage) for form fields and cards
-- Section padding: `80px 0` desktop, `48px 0` mobile
-- Max content width: `1200px` (centered)
+- Section padding: `80px 0` desktop, `48px 0` mobile (vertical only — horizontal padding lives on the inner container)
+
+### Standard Content Container — the layout rule
+
+Every section's outermost content wrapper **must** use the `.nh-container` CSS class (defined near the top of `globals.css`):
+
+```css
+.nh-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 2.5vw, 30px);
+  padding-right: clamp(20px, 2.5vw, 30px);
+}
+```
+
+This makes every section's content left-edge align with the nav logo and right-edge align with the "Try for free" button. The nav bar itself uses `max-width: 1320px; padding: 30px` — `.nh-container` matches this exactly.
+
+**How to apply it:**
+
+```tsx
+// Section shell — background spans full viewport
+<section style={{ background: '#f7faf9', padding: '80px 0' }}>
+  {/* Content container — width-capped and edge-aligned */}
+  <div className="nh-container">
+    {/* cards, grids, text… */}
+  </div>
+</section>
+```
+
+**Exceptions (do not use `.nh-container` for these):**
+- Narrow hero text blocks (e.g., `max-width: 700px` centered headline + description) — these can be a narrower inner div *inside* an `.nh-container` wrapper
+- Legal prose columns — use `LegalPageShell` which has its own width
+- Full-bleed backgrounds — the `<section>` itself is always full-width; only the inner wrapper uses `.nh-container`
+
+**What this means when adding a new section:**
+- Put `padding: 'Xpx 0'` (vertical only) on the `<section>` element
+- Wrap all content in `<div className="nh-container">`
+- Never put `maxWidth` or horizontal padding on the `<section>` itself
 
 ---
 
@@ -145,6 +181,7 @@ Do not add Redux for local component state — use `useState`/`useReducer`.
 6. **No new Redux slices** unless the state genuinely needs to be shared across distant components.
 7. **Forms submit to Google Apps Script** — see `/src/lib/forms.ts` for the helper pattern.
 8. **DualActionCTA** is the standard page-bottom CTA — reuse it, don't create one-off CTAs.
+9. **`.nh-container` is the standard inner wrapper** — every section's content div must use it so all content edges align with the nav (see "Standard Content Container" above). Never set `maxWidth` or horizontal padding on a `<section>` element directly.
 
 ---
 

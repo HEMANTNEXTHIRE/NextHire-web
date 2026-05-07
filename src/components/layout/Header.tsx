@@ -12,10 +12,10 @@ import {
 } from '@/store/slices/navSlice'
 
 const NAV_ITEMS = [
-  { key: 'candidates',      label: 'Candidates',      dropdown: true, href: '/candidates' },
-  { key: 'for-clients',     label: 'Companies',       dropdown: true, href: '/companies' },
+  { key: 'candidates',      label: 'Candidates',      dropdown: true,  href: '/' },
+  { key: 'for-clients',     label: 'Companies',       dropdown: true,  href: '/companies' },
   { key: 'pricing',         label: 'Pricing',         dropdown: false, href: '/pricing' },
-  { key: 'about',           label: 'About',           dropdown: true, href: '/about-nexthire' },
+  { key: 'blog',             label: 'Blog',            dropdown: false, href: '/blog' },
 ]
 
 /* ── Mega-menu: 6 features (2×3) + tapered promo — same shell for Candidates & Companies ── */
@@ -30,32 +30,32 @@ const CANDIDATE_MEGA_FEATURES: MegaFeature[] = [
   {
     title: 'AI Outreach Agent',
     desc: 'Personalised emails to hiring managers from your Gmail — privacy-safe, auto-deleted after send.',
-    href: '/candidates#candidates-tools',
+    href: 'https://app.nexthireconsulting.com/ai-outreach',
   },
   {
     title: 'AI Auto Apply',
     desc: 'Tailored applications across matched roles with ATS-optimised resumes per submission.',
-    href: '/candidates#candidates-tools',
+    href: 'https://app.nexthireconsulting.com/auto-apply',
   },
   {
     title: 'Resume Builder',
     desc: 'AI-drafted, expert-reviewed resumes tuned to every role you target.',
-    href: '/candidates#candidates-tools',
+    href: 'https://app.nexthireconsulting.com/resume/builder',
   },
   {
     title: 'AI Interview Coach',
     desc: 'Real-time coaching on live calls — surface strong answers when it matters.',
-    href: '/candidates#candidates-tools',
+    href: 'https://app.nexthireconsulting.com/interview-copilot',
   },
   {
-    title: 'AI Interviewer',
-    desc: 'Mock interviews calibrated to your target company with scored feedback.',
-    href: '/candidates#candidates-tools',
+    title: 'Cover Letter',
+    desc: 'AI-generated cover letters tailored to every job description — ready in seconds.',
+    href: 'https://app.nexthireconsulting.com/cover-letter',
   },
   {
     title: 'Job Tracker',
     desc: 'Every application, reply, and interview stage in one dashboard with reminders.',
-    href: '/candidates#candidates-tools',
+    href: 'https://app.nexthireconsulting.com/tracker',
   },
 ]
 
@@ -93,11 +93,6 @@ const COMPANY_MEGA_FEATURES: MegaFeature[] = [
 ]
 
 const ABOUT_MEGA_FEATURES: MegaFeature[] = [
-  {
-    title: 'About NextHire',
-    desc: 'Our mission, story, and how we connect talent with opportunity at scale.',
-    href: '/about-nexthire',
-  },
   {
     title: 'Success stories',
     desc: 'Real outcomes from candidates who stopped waiting — interviews, offers, and momentum.',
@@ -149,9 +144,9 @@ const MEGA_MENU_CONFIG: Record<MegaMenuVariant, MegaMenuConfig> = {
     introTitle: 'NextHire for Candidates',
     introDesc:
       'Your AI agent runs discovery, apply, outreach, and interview prep — so you can focus on landing the offer.',
-    overviewHref: '/candidates',
+    overviewHref: '/',
     features: CANDIDATE_MEGA_FEATURES,
-    footerHref: '/candidates#candidates-tools',
+    footerHref: '/#features',
     footerLabel: 'Explore all candidate tools',
     promoTone: 'candidates',
     promoAria: 'Get started',

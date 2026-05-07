@@ -16,13 +16,13 @@ const STEPS: { key: StepKey; label: string; description: string }[] = [
     key: 'discover',
     label: 'Agent Discovers',
     description:
-      'Your AI scans millions of live jobs, uncosted roles, and real hiring signals to build a targeted list of companies ready to hire someone like you.',
+      'Your AI scans millions of jobs, hidden roles, and hiring signals to build a targeted list of companies ready to hire someone like you.',
   },
   {
     key: 'outreach',
     label: 'Agent Reaches',
     description:
-      'Hyper-personalised emails go out to hiring managers and founders directly from your own email address. No third party. No spam. Just you.',
+      'Hyper-personalised emails go out to hiring managers directly from your own email address. No third party. No spam. Just you.',
   },
   {
     key: 'land',
@@ -62,28 +62,8 @@ export default function HowItWorksSection() {
   }
 
   return (
-    <section ref={sectionRef} id="how-it-works" style={{ background: '#ffffff', padding: '120px 40px' }}>
-      <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
-
-        {/* Heading */}
-        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <h2 style={{
-            fontFamily: "'Droid Serif', Georgia, serif",
-            fontSize: '54px',
-            fontWeight: 400,
-            fontStyle: 'normal',
-            margin: '0 0 22px',
-            lineHeight: '64.8px',
-            letterSpacing: '-1.2px',
-            fontSynthesis: 'none',
-          }}>
-            <span style={{ display: 'block', color: '#132128' }}>Not a job board.</span>
-            <span style={{ display: 'block', color: '#132128' }}>Your personal AI agent.</span>
-          </h2>
-          <p style={{ fontSize: 18, color: '#424D53', maxWidth: '520px', margin: '0 auto', lineHeight: '27px', letterSpacing: '-0.3px' }}>
-            The agent works 24/7, discovering opportunities, reaching decision makers, and tracking every touchpoint
-          </p>
-        </div>
+    <section ref={sectionRef} id="how-it-works" style={{ background: '#ffffff', padding: '120px 30px' }}>
+      <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
 
         {/* Tab bar */}
         <div className="hiw-tabs">

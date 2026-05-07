@@ -104,6 +104,22 @@ main {
   max-width: 100%;
 }
 
+/* ── Standard content container ────────────────────────────────────────────
+   Every section's inner content wrapper must use this class (or the exact
+   same inline values) so that content left-edge aligns with the nav logo
+   and right-edge aligns with the "Try for free" button.
+   Nav reference: max-width 1320px, padding-left/right 30px (at ≥992px).
+   ──────────────────────────────────────────────────────────────────────── */
+.nh-container {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(20px, 2.5vw, 30px);
+  padding-right: clamp(20px, 2.5vw, 30px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Swiper CSS — loaded globally so all slider pages have styles available */
 @import 'swiper/css';
 @import 'swiper/css/navigation';
@@ -149,7 +165,9 @@ main {
 
 /* ── Pricing hero: font-family now covered by global rule; keep style/weight ── */
 #pricing-hero h1,
-#pricing-hero h1 span {
+#pricing-hero h1 span,
+#pricing-numbers h2,
+#pricing-numbers h2 span {
   font-style: normal !important;
   font-weight: 500 !important;
 }
@@ -638,32 +656,32 @@ main {
 .hiw-tabs {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 40px;
   margin: 0 auto 36px;
   background: transparent;
-  padding: 0;
+  padding: 0 0 2px;
   width: fit-content;
   flex-wrap: wrap;
 }
 
 .hiw-tab {
-  background: rgba(26, 51, 56, 0.07);
+  background: none;
   border: none;
+  border-bottom: 2px solid transparent;
   cursor: pointer;
-  padding: 11px 26px;
-  border-radius: 100px;
-  font-size: 15px;
+  padding: 8px 0;
+  font-size: 16px;
   font-weight: 500;
-  color: #4b5563;
-  transition: all 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+  color: #9ca3af;
+  transition: color 0.2s ease, border-color 0.2s ease;
   white-space: nowrap;
   font-family: inherit;
   line-height: 1.4;
 }
 
 .hiw-tab--active {
-  background: #1a3338;
-  color: #ffffff;
+  color: #1a3338;
+  border-bottom: 2px solid #1a3338;
 }
 
 .hiw-tab-desc {
@@ -682,20 +700,19 @@ main {
 }
 
 .hiw-mac-wrap {
-  max-width: 1100px;
-  margin: 0 auto;
+  width: 100%;
   border-radius: 26px;
   overflow: hidden;
   box-shadow: 0 24px 80px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.06);
 }
 
 .hiw-mac-wrap .nh-rb-showcase__mac {
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 16 / 9;
 }
 
 @media (max-width: 767px) {
-  .hiw-tabs { flex-wrap: wrap; border-radius: 20px; width: auto; }
-  .hiw-tab { font-size: 13px; padding: 8px 16px; }
+  .hiw-tabs { gap: 24px; }
+  .hiw-tab { font-size: 14px; }
   .hiw-tab-desc p { font-size: 16px; line-height: 24px; }
 }
 
@@ -1008,9 +1025,9 @@ dialog::backdrop {
     padding 0.22s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-/* Taller inactive rows + gap → left column visually fills fixed 564px column */
+/* Taller inactive rows + gap → left column visually fills fixed 564px column (5 items) */
 .vas-nav-item:not(.vas-nav-item--active) {
-  min-height: 82px;
+  min-height: 100px;
 }
 
 .vas-nav-item--active {
@@ -1199,6 +1216,14 @@ dialog::backdrop {
 /* Footer background */
 .footer {
   background: #162127 !important;
+}
+
+/* Override Webflow's 940px w-container so footer aligns with the nav (1320px / 30px) */
+.footer .footer-container.w-container,
+.footer .w-layout-blockcontainer.w-container {
+  max-width: 1320px !important;
+  padding-left: clamp(20px, 2.5vw, 30px) !important;
+  padding-right: clamp(20px, 2.5vw, 30px) !important;
 }
 
 /* Core link and text styles */
@@ -2575,10 +2600,6 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   font-family: 'Droid Serif', Georgia, 'Times New Roman', serif !important;
 }
 /* 3. Exceptions: headings that must stay Inter */
-#success-story-hero h1,
-#success-story-hero h1 span,
-#contact-hero h1,
-#contact-hero h1 span,
 #nh-legal-hero .nh-legal-page__title,
 #companies-integrations h2,
 #companies-cta h2,
@@ -4096,49 +4117,61 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 /* ── AccordionFaq component — unlayered so Webflow CSS cannot override ────── */
 .nh-accordion-faq {
   width: 100%;
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 2.5vw, 30px);
   color: #000000;
-  letter-spacing: -0.4px;
   line-height: 1.5;
-  font-family: var(--font-family);
-}
-@media (min-width: 768px) {
-  .nh-accordion-faq { padding: 0 32px; }
 }
 
-.nh-accordion-header {
+.nh-accordion-inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-  text-align: center;
+  gap: 40px;
+  align-items: flex-start;
 }
+
 @media (min-width: 768px) {
-  .nh-accordion-header { gap: 20px; margin-bottom: 80px; }
+  .nh-accordion-inner {
+    flex-direction: row;
+    gap: clamp(48px, 7vw, 96px);
+    align-items: flex-start;
+  }
+}
+
+.nh-accordion-sidebar {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .nh-accordion-sidebar {
+    flex: 0 0 360px;
+    width: 360px;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+  }
 }
 
 .nh-accordion-title {
-  font-size: 30px;
-  font-weight: 400;
-  letter-spacing: -0.8px;
-  line-height: 1.25;
-  text-align: center;
-  margin: 0;
-  color: #000000;
-  font-family: 'Droid Serif', Georgia, serif;
-}
-@media (min-width: 768px) {
-  .nh-accordion-title { font-size: 48px; }
+  font-size: 54px !important;
+  font-weight: 500 !important;
+  letter-spacing: -1.2px !important;
+  line-height: 1.2 !important;
+  color: #132128 !important;
+  margin: 0 !important;
+  text-align: left !important;
+  font-family: 'Droid Serif', Georgia, serif !important;
 }
 
 .nh-accordion-list {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
+  width: 100%;
 }
 
 .nh-accordion-item {
@@ -4150,8 +4183,9 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   transition: all 150ms ease-in-out;
   background: #ffffff;
 }
+
 @media (min-width: 768px) {
-  .nh-accordion-item { border-radius: 24px; padding: 12px 0; }
+  .nh-accordion-item { border-radius: 16px; padding: 8px 0; }
 }
 
 .nh-accordion-button {
@@ -4171,20 +4205,22 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   outline-offset: 4px;
   box-shadow: none !important;
 }
+
 @media (min-width: 768px) {
-  .nh-accordion-button { gap: 16px; padding: 16px 28px; }
+  .nh-accordion-button { gap: 16px; padding: 16px 24px; }
 }
 
 .nh-accordion-question {
   flex: 1;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.4px;
-  line-height: 1.25;
-  color: #000000;
+  line-height: 1.4;
+  color: #132128;
 }
+
 @media (min-width: 768px) {
-  .nh-accordion-question { font-size: 20px; }
+  .nh-accordion-question { font-size: 17px; }
 }
 
 .nh-accordion-icon {
@@ -4198,21 +4234,25 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
 }
+
 @media (min-width: 768px) {
-  .nh-accordion-icon { width: 20px; height: 20px; }
+  .nh-accordion-icon { width: 18px; height: 18px; }
 }
+
 .nh-accordion-button:hover .nh-accordion-icon { color: #000000; }
 .nh-accordion-icon--open { transform: rotate(45deg); color: #000000; }
 
 .nh-accordion-answer {
-  color: #737373;
-  padding: 4px 16px 12px;
+  color: #6b7280;
+  padding: 4px 16px 14px;
   font-size: 15px;
   line-height: 1.65;
+  letter-spacing: -0.2px;
   animation: nh-accordion-slide-down 0.2s ease-in-out;
 }
+
 @media (min-width: 768px) {
-  .nh-accordion-answer { padding: 4px 28px 16px; }
+  .nh-accordion-answer { padding: 4px 24px 16px; }
 }
 
 @keyframes nh-accordion-slide-down {
@@ -4278,7 +4318,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 .nh-rb-showcase__mac {
   width: 100%;
-  aspect-ratio: 18.4 / 15.75;
+  aspect-ratio: 18.4 / 14.4;
   font-family: 'Inter', system-ui, sans-serif;
 }
 .nh-rb-showcase__right a:hover {
@@ -4310,5 +4350,461 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 @keyframes nh-copilot-wave {
   0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
   40% { transform: scale(1); opacity: 1; }
+}
+
+/* ── RoleLifecycleSection ─────────────────────────────────────────────── */
+.nh-lc-grid {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: stretch;
+  margin-bottom: 8rem;
+}
+
+.nh-lc-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 33.9375rem;
+}
+
+.nh-lc-item {
+  opacity: 0.4;
+  transition: opacity 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 29.5rem;
+  padding: 1.5rem 0;
+}
+
+.nh-lc-item--active {
+  opacity: 1;
+}
+
+.nh-lc-title {
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  color: #132128 !important;
+  margin: 0 !important;
+  letter-spacing: -0.3px !important;
+}
+
+.nh-lc-pill {
+  display: inline-block;
+  background-color: #ecf7ec;
+  color: #424d53;
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.nh-lc-desc {
+  font-size: 1.125rem;
+  color: #424d53;
+  line-height: 1.5;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.nh-lc-card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.nh-lc-card-sticky {
+  position: sticky;
+  top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nh-lc-card {
+  border-radius: 21px;
+  width: 100%;
+  max-width: 40.625rem;
+  min-height: 37.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.5s ease;
+}
+
+.nh-lc-illustration {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity 0.4s ease;
+}
+
+@media (max-width: 991px) {
+  .nh-lc-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 5.5rem;
+  }
+  .nh-lc-card-wrapper {
+    display: none;
+  }
+  .nh-lc-content-wrapper {
+    gap: 42px;
+  }
+  .nh-lc-item {
+    opacity: 1;
+    max-width: none;
+    padding: 0;
+  }
+  .nh-lc-title {
+    font-size: 1.75rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .nh-lc-content-wrapper {
+    gap: 2.625rem;
+  }
+  .nh-lc-title {
+    font-size: 1.5rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRICING PLAN TABS  (nh-pt-*)
+   ═══════════════════════════════════════════════════════════════ */
+.nh-pt-wrap {
+  display: flex;
+  width: 100%;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.nh-pt-menu {
+  width: 100%;
+  max-width: 35.625rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.nh-pt-panel {
+  width: 100%;
+  max-width: 41.75rem;
+  position: sticky;
+  top: 100px;
+}
+
+/* Button reset — kills browser defaults and focus ring */
+.nh-pt-item {
+  border: none;
+  border-top: 1px solid #e7e9ea;
+  padding: 1.5rem 0;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.nh-pt-item:focus,
+.nh-pt-item:focus-visible {
+  outline: none;
+  border-top: 1px solid #e7e9ea;
+  box-shadow: none;
+}
+
+.nh-pt-item--last {
+  border-bottom: 1px solid #e7e9ea;
+}
+
+.nh-pt-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.nh-pt-pill {
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.nh-pt-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+.nh-pt-content {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.nh-pt-open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.nh-pt-content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.nh-pt-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nh-pt-check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Mobile: stack vertically, image panel on top */
+@media (max-width: 991px) {
+  .nh-pt-wrap {
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+  .nh-pt-menu {
+    max-width: none;
+  }
+  .nh-pt-panel {
+    max-width: none;
+    position: static;
+  }
+}
+
+/* Tablet: tighter gap */
+@media (min-width: 992px) and (max-width: 1100px) {
+  .nh-pt-wrap {
+    gap: 2.5rem;
+  }
+}
+
+/* Mobile small */
+@media (max-width: 479px) {
+  .nh-pt-title {
+    font-size: 1rem;
+    line-height: 1em;
+  }
+  .nh-pt-item-header {
+    align-items: flex-start;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MATCHED TABS  — ported from Andela source, scoped to
+   #pricing-plan-tabs so it never bleeds into other sections
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Root: inherit exact base styles from the original #component block */
+#pricing-plan-tabs {
+  letter-spacing: -0.3px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #132128;
+  width: 100%;
+  display: flex;
+}
+
+/* Left menu column */
+#pricing-plan-tabs .matched-tabs-menu {
+  flex-flow: column;
+  max-width: 35.625rem;
+  margin-right: auto;
+  width: 100%;
+  display: flex;
+}
+
+/* Right content column */
+#pricing-plan-tabs .matched-tabs-content {
+  width: 100%;
+  max-width: 41.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each tab row */
+#pricing-plan-tabs .matched-tab-link {
+  border-top: 1px solid #e7e9ea;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  display: flex;
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+#pricing-plan-tabs .matched-tab-link.border-bottom {
+  border-bottom: 1px solid #e7e9ea;
+}
+
+/* Tab header row: pill + title side by side */
+#pricing-plan-tabs .matched-tab-header {
+  grid-column-gap: 0.75rem;
+  grid-row-gap: 0.75rem;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+/* Step/plan pill badge */
+#pricing-plan-tabs .matched-pill {
+  letter-spacing: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  margin-bottom: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* Tab title — 24px / weight 500 / line-height from root (1.5 = 36px) */
+#pricing-plan-tabs .matched-title-tab {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Collapsed content wrapper — height animated via inline style */
+#pricing-plan-tabs .matched-tab-content {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Inner content flex column */
+#pricing-plan-tabs .matched-tab-content-inner {
+  grid-column-gap: 1.25rem;
+  grid-row-gap: 1.25rem;
+  flex-flow: column;
+  padding-top: 1.25rem;
+  display: flex;
+}
+
+/* Lead paragraph — 18px / line-height 27px / #424D53 */
+#pricing-plan-tabs .text-l {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+#pricing-plan-tabs .text-dark-green-black {
+  color: #424d53;
+}
+
+/* Checklist wrapper */
+#pricing-plan-tabs .matched-list-wrapper {
+  grid-column-gap: 0.75rem;
+  grid-row-gap: 0.75rem;
+  flex-flow: column;
+  display: flex;
+}
+
+/* Checklist row — 16px / 24px / #132128 (inherited from root) */
+#pricing-plan-tabs .hero-check-text-wrap {
+  grid-column-gap: 0.25rem;
+  grid-row-gap: 0.25rem;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+#pricing-plan-tabs .icon-embed {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* Right image/content panel */
+#pricing-plan-tabs .matched-image-wrapper {
+  background-color: #f5f5f5;
+  border-radius: 21px;
+  flex-flow: column;
+  align-items: flex-start;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+}
+
+#pricing-plan-tabs .matched-tab-pane {
+  height: 100%;
+}
+
+/* Responsive — tablet: reverse + stack */
+@media screen and (width <= 991px) {
+  #pricing-plan-tabs {
+    grid-column-gap: 32px;
+    grid-row-gap: 32px;
+    flex-flow: column-reverse;
+  }
+  #pricing-plan-tabs .matched-tabs-menu {
+    max-width: none;
+  }
+  #pricing-plan-tabs .matched-tabs-content {
+    max-width: none;
+    margin-top: 2rem;
+  }
+}
+
+/* Responsive — mobile small */
+@media screen and (width <= 479px) {
+  #pricing-plan-tabs .matched-title-tab {
+    line-height: 1em;
+  }
+  #pricing-plan-tabs .matched-tab-header {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  #pricing-plan-tabs .matched-image-wrapper {
+    min-height: auto;
+    padding-top: 12px;
+  }
+}
+
+/* Tablet mid: adjust menu padding */
+@media (width >= 992px) and (width <= 1100px) {
+  #pricing-plan-tabs .matched-tabs-menu {
+    padding-right: 16px;
+  }
 }
 

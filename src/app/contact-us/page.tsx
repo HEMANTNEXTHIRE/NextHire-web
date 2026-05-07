@@ -88,7 +88,7 @@ export default function ContactUsPage() {
         id="contact-hero"
         style={{
           background: '#edf5f1',
-          padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)',
+          padding: 'clamp(72px, 10vw, 110px) 0',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -116,7 +116,7 @@ export default function ContactUsPage() {
           />
         </div>
 
-        <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+        <div className="nh-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -146,7 +146,6 @@ export default function ContactUsPage() {
 
           <h1
             style={{
-              fontFamily: "'Inter',system-ui,sans-serif",
               color: '#132128',
               fontSize: 'clamp(36px, 6vw, 76px)',
               fontWeight: 400,
@@ -156,8 +155,8 @@ export default function ContactUsPage() {
               fontSynthesis: 'none',
             }}
           >
-            <span style={{ display: 'block', fontFamily: "'Inter',system-ui,sans-serif" }}>We&apos;re here to help.</span>
-            <span style={{ display: 'block', color: '#338632', fontFamily: "'Inter',system-ui,sans-serif" }}>Tell us what you need.</span>
+            <span style={{ display: 'block' }}>We&apos;re here to help.</span>
+            <span style={{ display: 'block', color: '#338632' }}>Tell us what you need.</span>
           </h1>
 
           <p

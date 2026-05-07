@@ -147,12 +147,22 @@ function MacDesktop({ browserUrl, children, draggable, borderRadius = 16 }: { br
     dragState.current = null
   }, [])
 
-  const browserStyle: React.CSSProperties = pos
-    ? { position: 'absolute', left: pos.x, top: pos.y, width: 'calc(100% - 56px)', height: 'calc(100% - 78px)', zIndex: 1, display: 'flex', flexDirection: 'column', borderRadius: 8, overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.2)' }
-    : { position: 'absolute', top: 50, left: 28, right: 28, bottom: 28, zIndex: 1, display: 'flex', flexDirection: 'column', borderRadius: 8, overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.2)' }
+  const browserStyle: React.CSSProperties = {
+    position: 'absolute',
+    left: pos ? pos.x : 28,
+    top: pos ? pos.y : 50,
+    width: 'calc(100% - 56px)',
+    height: 'calc(100% - 78px)',
+    zIndex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: 8,
+    overflow: 'hidden',
+    boxShadow: '0 24px 80px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.2)',
+  }
 
   return (
-    <div ref={macRef} className="nh-rb-showcase__mac" style={{ position: 'relative', isolation: 'isolate', borderRadius, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)', backgroundImage: 'url(/mac-wallpaper.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', cursor: 'default', userSelect: 'none' }}>
+    <div ref={macRef} className="nh-rb-showcase__mac" style={{ position: 'relative', isolation: 'isolate', borderRadius, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)', background: '#F2FAFB', cursor: 'default', userSelect: 'none' }}>
       <MacMenuBar />
       <div style={browserStyle} onPointerMove={draggable ? onPointerMove : undefined} onPointerUp={draggable ? onPointerUp : undefined}>
         <BrowserBar url={browserUrl} onPointerDown={draggable ? onPointerDown : undefined} />
@@ -589,7 +599,7 @@ function ResumeBuilderContent() {
     <div style={{ flex: 1, overflow: 'auto', padding: '32px 48px', background: '#fff', fontFamily: FONT }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
         <h2 style={{ fontSize: 30, fontWeight: 800, color: '#132128', margin: 0, letterSpacing: '-0.03em' }}>Resume Builder</h2>
-        <button onClick={() => { window.location.href = 'https://app.nexthireconsulting.com' }} style={{
+        <button onClick={() => { window.location.href = 'https://app.nexthireconsulting.com/resume/builder' }} style={{
           fontSize: 14, fontWeight: 400, color: '#fff', background: '#000', padding: '0 20px', height: 36, borderRadius: 999,
           border: 'none', cursor: 'pointer', fontFamily: FONT, transition: 'background 0.15s',
         }}
@@ -1002,159 +1012,124 @@ function InterviewCoachContent() {
   )
 }
 
-/* ═══ AI Auto Apply Content — OpenClaw dark dashboard UI ═══ */
+/* ═══ AI Auto Apply Content — NextHire app job search UI ═══ */
 
-const OC = {
-  bg: '#12141a', bgAccent: '#14161d', bgElevated: '#1a1d25', bgHover: '#262a35',
-  card: '#181b22', cardFg: '#f4f4f5', cardHighlight: 'rgba(255,255,255,0.05)',
-  text: '#e4e4e7', textStrong: '#fafafa',
-  muted: '#71717a', mutedStrong: '#52525b',
-  border: '#27272a', borderStrong: '#3f3f46',
-  accent: '#ff5c5c', accentSubtle: 'rgba(255,92,92,0.15)',
-  teal: '#14b8a6', tealSubtle: 'rgba(20,184,166,0.15)',
-  ok: '#22c55e',
-  font: "'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-  mono: "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace",
+const NH_APP = {
+  bg: '#ffffff',
+  sidebar: '#ffffff',
+  border: '#e5e7eb',
+  text: '#111827',
+  muted: '#6b7280',
+  active: '#111827',
+  activeBg: '#111827',
+  activeFg: '#ffffff',
+  tag: '#f3f4f6',
+  tagText: '#374151',
+  applyBtn: '#0d9488',
+  applyBtnFg: '#ffffff',
+  font: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
 }
 
-const OC_NAV_GROUPS = [
-  { label: 'Chat', tabs: [{ id: 'chat', icon: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z' }] },
-  { label: 'Control', tabs: [
-    { id: 'overview', icon: 'M3 3v18h18' },
-    { id: 'channels', icon: 'M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71' },
-    { id: 'sessions', icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
-    { id: 'cron', icon: 'M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83' },
-  ]},
-  { label: 'Agent', tabs: [
-    { id: 'agents', icon: 'M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z' },
-    { id: 'skills', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8' },
-  ]},
-  { label: 'Settings', tabs: [
-    { id: 'config', icon: 'M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z' },
-    { id: 'logs', icon: 'M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z' },
-  ]},
+const NH_NAV = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
+  { id: 'quick-apply', label: 'Quick Apply', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+  { id: 'search', label: 'Search Jobs', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z', active: true },
+  { id: 'applications', label: 'Applications', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
+  { id: 'profile', label: 'My Profile', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
+  { id: 'email', label: 'Email Integration', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
 ]
 
-const OC_CHAT_MESSAGES: { role: 'user' | 'assistant'; text: string }[] = [
-  { role: 'user', text: 'Apply to all Senior Frontend Engineer roles at Stripe, Vercel, and Linear that were posted this week.' },
-  { role: 'assistant', text: 'Found 7 matching roles across those companies. Here\'s what I\'ll do:\n\n1. **Stripe** — Senior Frontend Engineer (2 openings)\n2. **Vercel** — Senior Frontend Engineer, DX\n3. **Vercel** — Staff Frontend Engineer\n4. **Linear** — Senior Frontend Engineer\n5. **Linear** — Frontend Engineer, Desktop\n6. **Stripe** — Frontend Engineer, Checkout\n\nI\'ll tailor your resume for each role and submit via their ATS. Starting now...' },
-  { role: 'assistant', text: '✓ Applied to Stripe — Senior Frontend Engineer (NYC)\n✓ Applied to Stripe — Senior Frontend Engineer (SF)\n✓ Applied to Vercel — Senior Frontend Engineer, DX\n✓ Applied to Linear — Senior Frontend Engineer\n⏳ Applying to remaining 3 roles...' },
+const NH_JOBS = [
+  { loc: 'United States · 2 weeks ago', title: 'Senior Frontend Engineer', company: 'Stripe', tags: ['React', 'TypeScript', 'Next.js'], url: 'stripe.com' },
+  { loc: 'Remote · 3 days ago', title: 'Frontend Engineer, DX', company: 'Vercel', tags: ['React', 'Node.js', 'Rust'], url: 'vercel.com' },
+  { loc: 'San Francisco · 1 week ago', title: 'Staff Frontend Engineer', company: 'Linear', tags: ['TypeScript', 'React', '+12'], url: 'linear.app' },
+  { loc: 'New York · 5 days ago', title: 'Senior Software Engineer', company: 'Figma', tags: ['JavaScript', 'WebGL', '+8'], url: 'figma.com' },
+  { loc: 'Remote · 2 days ago', title: 'Frontend Platform Engineer', company: 'Notion', tags: ['React', 'Webpack', '+6'], url: 'notion.so' },
+  { loc: 'Seattle · 1 week ago', title: 'Sr. Software Engineer, UI', company: 'Amazon', tags: ['React', 'Java', '+14'], url: 'amazon.jobs' },
 ]
+
+const NH_FILTERS = ['AI Matching', 'Keyword Search', 'Date', 'Job Type', 'Workplace', 'Location', 'More']
 
 function AutoApplyContent() {
   return (
-    <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '180px 1fr', gridTemplateRows: '44px 1fr', background: OC.bg, fontFamily: OC.font, overflow: 'hidden', color: OC.text, fontSize: 13 }}>
-      {/* Topbar */}
-      <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 14px', borderBottom: `1px solid ${OC.border}`, background: OC.bg }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={OC.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M3 6h18M3 18h18" /></svg>
-          <div style={{ width: 20, height: 20, borderRadius: 4, background: OC.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8" /></svg>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            <span style={{ fontSize: 12, fontWeight: 700, color: OC.textStrong, letterSpacing: '-0.03em', lineHeight: 1.1 }}>AI AUTO APPLY</span>
-            <span style={{ fontSize: 8, fontWeight: 500, color: OC.muted, letterSpacing: '0.05em', textTransform: 'uppercase' as const }}>Job Agent</span>
-          </div>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '3px 8px', borderRadius: 999, border: `1px solid ${OC.border}`, fontSize: 10 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: OC.ok }} />
-            <span style={{ color: OC.muted }}>Health</span>
-            <span style={{ fontFamily: OC.mono, color: OC.text, fontSize: 10 }}>OK</span>
-          </div>
-        </div>
-      </div>
-
+    <div style={{ flex: 1, display: 'flex', background: NH_APP.bg, fontFamily: NH_APP.font, overflow: 'hidden', color: NH_APP.text, fontSize: 13 }}>
       {/* Sidebar */}
-      <div style={{ borderRight: `1px solid ${OC.border}`, padding: '10px 8px', overflow: 'hidden', background: OC.bg }}>
-        {OC_NAV_GROUPS.map(group => (
-          <div key={group.label} style={{ marginBottom: 10 }}>
-            <div style={{ fontSize: 9, fontWeight: 500, color: OC.muted, letterSpacing: '0.04em', textTransform: 'uppercase' as const, padding: '4px 8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>{group.label}</span>
-              <span style={{ color: OC.mutedStrong, fontSize: 10 }}>{'−'}</span>
+      <div style={{ width: 152, borderRight: `1px solid ${NH_APP.border}`, display: 'flex', flexDirection: 'column', flexShrink: 0, background: NH_APP.sidebar }}>
+        {/* Logo */}
+        <div style={{ padding: '14px 16px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: 15, fontWeight: 700, color: '#0d4a4a', letterSpacing: '-0.3px' }}>NextHire</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={NH_APP.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        {/* Nav items */}
+        <div style={{ flex: 1, padding: '4px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {NH_NAV.map(item => (
+            <div key={item.id} style={{
+              display: 'flex', alignItems: 'center', gap: 8, padding: '7px 8px', borderRadius: 6, cursor: 'pointer',
+              background: item.active ? NH_APP.activeBg : 'transparent',
+              color: item.active ? NH_APP.activeFg : NH_APP.muted,
+              fontSize: 12, fontWeight: item.active ? 500 : 400,
+            }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d={item.icon} />
+              </svg>
+              <span>{item.label}</span>
             </div>
-            {group.tabs.map(tab => {
-              const isActive = tab.id === 'chat'
-              return (
-                <div key={tab.id} style={{
-                  display: 'flex', alignItems: 'center', gap: 7, padding: '5px 8px', borderRadius: 6, cursor: 'pointer',
-                  background: isActive ? OC.accentSubtle : 'transparent',
-                  color: isActive ? OC.accent : OC.muted,
-                  fontSize: 12, fontWeight: isActive ? 500 : 400,
-                }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={tab.icon} /></svg>
-                  <span style={{ textTransform: 'capitalize' as const }}>{tab.id}</span>
-                </div>
-              )
-            })}
+          ))}
+        </div>
+        {/* Bottom */}
+        <div style={{ padding: '10px 12px', borderTop: `1px solid ${NH_APP.border}` }}>
+          <div style={{ fontSize: 10, color: NH_APP.muted, marginBottom: 4 }}>Today's applications <strong style={{ color: NH_APP.text }}>0/100</strong></div>
+          <div style={{ height: 4, borderRadius: 99, background: '#e5e7eb', marginBottom: 8, overflow: 'hidden' }}>
+            <div style={{ width: '0%', height: '100%', background: NH_APP.applyBtn, borderRadius: 99 }} />
           </div>
-        ))}
+          <div style={{ background: '#111827', color: '#fff', borderRadius: 6, padding: '5px 10px', fontSize: 11, fontWeight: 500, textAlign: 'center' as const, cursor: 'pointer' }}>Upgrade</div>
+        </div>
       </div>
 
-      {/* Main content — Chat view */}
-      <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: 12 }}>
-        {/* Chat header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 8, marginBottom: 8, flexShrink: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <select style={{ background: OC.bgElevated, border: `1px solid ${OC.border}`, borderRadius: 6, color: OC.text, fontSize: 11, padding: '3px 8px', fontFamily: OC.mono, outline: 'none' }}>
-              <option>default</option>
-            </select>
+      {/* Main */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Search bar */}
+        <div style={{ padding: '10px 14px 0', flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 6, border: `1px solid ${NH_APP.border}`, borderRadius: 6, padding: '5px 10px', background: '#f9fafb' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={NH_APP.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <span style={{ fontSize: 12, color: NH_APP.text }}>Senior Frontend Engineer</span>
+            </div>
+            <div style={{ background: NH_APP.applyBtn, color: '#fff', borderRadius: 6, padding: '5px 14px', fontSize: 12, fontWeight: 500, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>Search</div>
           </div>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <div style={{ padding: '3px 8px', borderRadius: 6, border: `1px solid ${OC.border}`, fontSize: 10, color: OC.muted, cursor: 'pointer' }}>New</div>
-            <div style={{ padding: '3px 8px', borderRadius: 6, border: `1px solid ${OC.border}`, fontSize: 10, color: OC.muted, cursor: 'pointer' }}>Focus</div>
+          {/* Filter chips */}
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'nowrap' as const, overflow: 'hidden', marginBottom: 6 }}>
+            {NH_FILTERS.map((f, i) => (
+              <div key={f} style={{
+                padding: '3px 8px', borderRadius: 99, fontSize: 10, whiteSpace: 'nowrap' as const, cursor: 'pointer',
+                border: `1px solid ${i === 1 ? NH_APP.applyBtn : NH_APP.border}`,
+                background: i === 1 ? '#f0fdfa' : '#fff',
+                color: i === 1 ? NH_APP.applyBtn : NH_APP.muted,
+                fontWeight: i === 1 ? 500 : 400,
+              }}>{f}</div>
+            ))}
           </div>
+          <div style={{ fontSize: 11, color: NH_APP.muted, marginBottom: 8 }}>1,829 jobs found</div>
         </div>
 
-        {/* Chat thread */}
-        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 14, padding: '4px 2px' }}>
-          {OC_CHAT_MESSAGES.map((msg, i) => {
-            const isUser = msg.role === 'user'
-            return (
-              <div key={i} style={{ display: 'flex', gap: 8, flexDirection: isUser ? 'row-reverse' : 'row', alignItems: 'flex-end' }}>
-                <div style={{
-                  width: 28, height: 28, borderRadius: 6, flexShrink: 0,
-                  background: isUser ? OC.accentSubtle : OC.bgElevated,
-                  color: isUser ? OC.accent : OC.muted,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 11, fontWeight: 600, marginBottom: 2,
-                }}>
-                  {isUser ? 'H' : 'AI'}
-                </div>
-                <div style={{ maxWidth: '80%', display: 'flex', flexDirection: 'column', alignItems: isUser ? 'flex-end' : 'flex-start', gap: 2 }}>
-                  <div style={{
-                    background: OC.card, borderRadius: 10, padding: '8px 11px',
-                    border: `1px solid transparent`, fontSize: 12, lineHeight: 1.5,
-                    color: OC.text, whiteSpace: 'pre-wrap' as const,
-                  }}>
-                    {msg.text}
-                  </div>
-                  <div style={{ display: 'flex', gap: 6, alignItems: 'baseline', marginTop: 2 }}>
-                    <span style={{ fontSize: 9, fontWeight: 500, color: OC.muted }}>{isUser ? 'You' : 'Agent'}</span>
-                    <span style={{ fontSize: 9, color: OC.muted, opacity: 0.7 }}>{isUser ? '2:14 PM' : i === 1 ? '2:14 PM' : '2:15 PM'}</span>
-                  </div>
-                </div>
+        {/* Job grid */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '0 14px 14px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, alignContent: 'start' }}>
+          {NH_JOBS.map((job, i) => (
+            <div key={i} style={{ border: `1px solid ${NH_APP.border}`, borderRadius: 8, padding: '10px', background: '#fff', display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div style={{ fontSize: 9, color: NH_APP.muted }}>{job.loc}</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: NH_APP.text, lineHeight: 1.3 }}>{job.title}</div>
+              <div style={{ fontSize: 10, color: NH_APP.muted }}>{job.company}</div>
+              <div style={{ display: 'flex', gap: 3, flexWrap: 'wrap' as const, margin: '2px 0' }}>
+                {job.tags.map(tag => (
+                  <span key={tag} style={{ background: NH_APP.tag, color: NH_APP.tagText, fontSize: 9, padding: '2px 5px', borderRadius: 4 }}>{tag}</span>
+                ))}
               </div>
-            )
-          })}
-        </div>
-
-        {/* Compose area */}
-        <div style={{ flexShrink: 0, marginTop: 8, borderTop: `1px solid ${OC.border}`, paddingTop: 10 }}>
-          <div style={{
-            background: OC.bgElevated, borderRadius: 10, border: `1px solid ${OC.border}`,
-            padding: '8px 12px', display: 'flex', alignItems: 'flex-end', gap: 8,
-          }}>
-            <div style={{ flex: 1, fontSize: 12, color: OC.mutedStrong, lineHeight: 1.5, minHeight: 18, userSelect: 'none' as const }}>
-              Message (↩ to send, Shift+↩ for line breaks)
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 2 }}>
+                <span style={{ fontSize: 9, color: NH_APP.muted }}>↗ {job.url}</span>
+                <div style={{ background: NH_APP.applyBtn, color: NH_APP.applyBtnFg, fontSize: 9, fontWeight: 600, padding: '3px 8px', borderRadius: 4, cursor: 'pointer' }}>Apply</div>
+              </div>
             </div>
-            <div style={{
-              width: 24, height: 24, borderRadius: 6, background: OC.accent, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1299,22 +1274,22 @@ function YouDescribeContent({ onComplete }: { onComplete?: () => void }) {
 /* ═══ Agent Discovers — company results UI ═══ */
 
 const FINTECH_COMPANIES = [
-  { n: 15, name: 'One97 Communications Limited',       desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',            industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held' },
-  { n: 16, name: 'Airtel Payments Bank',               desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
-  { n: 17, name: 'Cars24',                             desc: 'One of India\'s largest auto-tech companies. Harnessing cutting-edge technology to revolutionize mobility.', industry: 'Technology, Information and Internet', size: '5,001–10,000', type: 'Privately Held' },
-  { n: 18, name: 'Zetheta Algorithms Pvt. Ltd.',       desc: 'FinTech startup pioneering innovation in financial markets through gamified simulations.',                   industry: 'Technology, Information and Internet', size: '51–200',       type: 'Privately Held' },
-  { n: 19, name: 'National Payments Corporation (NPCI)',desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                      industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit'     },
-  { n: 20, name: 'Pine Labs',                          desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
-  { n: 21, name: 'Fincare Small Finance Bank',         desc: 'Excited to be a part of AU Small Finance Bank from April 2024. One of the fastest-growing digital banks.',  industry: 'Banking',                             size: '10,001+',      type: 'Privately Held' },
-  { n: 22, name: 'BharatPe',                           desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',               industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held' },
-  { n: 23, name: 'TVS Credit Services Ltd.',           desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                   industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held' },
-  { n: 24, name: 'Union Bank of India',                desc: 'One of the leading public sector banks. Network of 8,650+ domestic branches and 74,100+ employees.',        industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
-  { n: 25, name: 'Marquee Equity',                     desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',            industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held' },
-  { n: 26, name: 'Cashfree Payments',                  desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',          industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held' },
-  { n: 27, name: 'Angel One',                          desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',           industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company'  },
-  { n: 28, name: 'Jupiter',                            desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',       industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held' },
-  { n: 29, name: 'Punjab National Bank',               desc: 'Incorporated in 1895. 6,950+ domestic branches, serving more than 10 crore esteemed customers.',            industry: 'Banking',                             size: '10,001+',      type: 'Public Company'  },
-  { n: 30, name: 'Rupeek',                             desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held' },
+  { n: 15, name: 'One97 Communications Limited',        desc: 'India\'s leading mobile-internet company. Offers digital goods & services under Paytm brand.',            industry: 'Technology, Information and Internet', size: '1,001–5,000',  type: 'Privately Held', location: 'Noida, India',        linkedin: 'linkedin.com/company/one97' },
+  { n: 16, name: 'Airtel Payments Bank',                desc: 'India\'s first Payments Bank. Committed to empowering the nation with accessible digital banking.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company',  location: 'New Delhi, India',    linkedin: 'linkedin.com/company/airtel-payments-bank' },
+  { n: 17, name: 'Cars24',                              desc: 'One of India\'s largest auto-tech companies. Harnessing cutting-edge technology to revolutionize mobility.', industry: 'Technology, Information and Internet', size: '5,001–10,000', type: 'Privately Held', location: 'Gurugram, India',     linkedin: 'linkedin.com/company/cars24' },
+  { n: 18, name: 'Zetheta Algorithms Pvt. Ltd.',        desc: 'FinTech startup pioneering innovation in financial markets through gamified simulations.',                   industry: 'Technology, Information and Internet', size: '51–200',       type: 'Privately Held', location: 'Bengaluru, India',    linkedin: 'linkedin.com/company/zetheta' },
+  { n: 19, name: 'National Payments Corporation (NPCI)', desc: 'Umbrella organisation for all retail payment systems in India. Backed by RBI & IBA.',                     industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Non Profit',     location: 'Mumbai, India',       linkedin: 'linkedin.com/company/npci-india' },
+  { n: 20, name: 'Pine Labs',                           desc: 'Built for those who mean business. Enriching commerce across the globe with multichannel solutions.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Noida, India',        linkedin: 'linkedin.com/company/pine-labs' },
+  { n: 21, name: 'Fincare Small Finance Bank',          desc: 'Excited to be a part of AU Small Finance Bank from April 2024. One of the fastest-growing digital banks.',  industry: 'Banking',                             size: '10,001+',      type: 'Privately Held', location: 'Bengaluru, India',    linkedin: 'linkedin.com/company/fincare-sfb' },
+  { n: 22, name: 'BharatPe',                            desc: 'Founded in 2018 with the vision of making financial inclusion a reality for Indian merchants.',               industry: 'Financial Services',                  size: '201–500',      type: 'Privately Held', location: 'New Delhi, India',    linkedin: 'linkedin.com/company/bharatpe' },
+  { n: 23, name: 'TVS Credit Services Ltd.',            desc: 'Empowering Indians from all walks of life with financial products that serve their needs.',                   industry: 'Financial Services',                  size: '10,001+',      type: 'Privately Held', location: 'Chennai, India',      linkedin: 'linkedin.com/company/tvs-credit' },
+  { n: 24, name: 'Union Bank of India',                 desc: 'One of the leading public sector banks. Network of 8,650+ domestic branches and 74,100+ employees.',        industry: 'Banking',                             size: '10,001+',      type: 'Public Company',  location: 'Mumbai, India',       linkedin: 'linkedin.com/company/union-bank-of-india' },
+  { n: 25, name: 'Marquee Equity',                      desc: 'Founded in 2016. Team of 100+ dedicated to making capital raising easier for clients worldwide.',            industry: 'Financial Services',                  size: '51–200',       type: 'Privately Held', location: 'New Delhi, India',    linkedin: 'linkedin.com/company/marquee-equity' },
+  { n: 26, name: 'Cashfree Payments',                   desc: 'Process transactions worth $80B annually, trusted by 800,000+ businesses. Backed by Y Combinator.',          industry: 'Financial Services',                  size: '501–1,000',    type: 'Privately Held', location: 'Bengaluru, India',    linkedin: 'linkedin.com/company/cashfree' },
+  { n: 27, name: 'Angel One',                           desc: 'Fintech company with 32M+ registered clients on a mission to become No. 1 fintech org in India.',           industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Public Company',  location: 'Mumbai, India',       linkedin: 'linkedin.com/company/angel-one' },
+  { n: 28, name: 'Jupiter',                             desc: 'An all-things-money app. Delivers a financial experience with smart insights based on your spending.',       industry: 'Banking',                             size: '501–1,000',    type: 'Privately Held', location: 'Bengaluru, India',    linkedin: 'linkedin.com/company/jupiter-money' },
+  { n: 29, name: 'Punjab National Bank',                desc: 'Incorporated in 1895. 6,950+ domestic branches, serving more than 10 crore esteemed customers.',            industry: 'Banking',                             size: '10,001+',      type: 'Public Company',  location: 'New Delhi, India',    linkedin: 'linkedin.com/company/punjab-national-bank' },
+  { n: 30, name: 'Rupeek',                              desc: 'India\'s leading asset-backed digital lending fintech platform. Pioneer in gold loans since 2015.',         industry: 'Financial Services',                  size: '1,001–5,000',  type: 'Privately Held', location: 'Bengaluru, India',    linkedin: 'linkedin.com/company/rupeek' },
 ]
 
 
@@ -1484,7 +1459,7 @@ function AgentDiscoverContent({ onComplete }: { onComplete?: () => void }) {
         </div>
 
         {/* Table header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '26px 32px 190px 1fr 158px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '26px 28px 160px 1fr 140px 90px 90px 140px 180px', padding: '0 16px', height: 34, alignItems: 'center', borderBottom: '1px solid #f0f0f0', background: '#fafafa', flexShrink: 0, gap: 0 }}>
           <Checkbox checked={allSelected} />
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>#</span>
           <span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 500 }}>Company</span>
@@ -2358,7 +2333,7 @@ export default function ResumeBuilderShowcase() {
 
   return (
     <>
-      <section style={{ background: '#f5f5f0', padding: 'clamp(48px, 8vw, 80px) 0', overflowX: 'clip' }}>
+      <section style={{ background: '#ffffff', padding: 'clamp(48px, 8vw, 80px) 0', overflowX: 'clip' }}>
         <div className="nh-rb-showcase__inner">
           <div className="nh-rb-showcase__left">
             <MacDesktop browserUrl="app.nexthireconsulting.com/resume-builder" draggable>
@@ -2370,44 +2345,46 @@ export default function ResumeBuilderShowcase() {
           </div>
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontFamily: FONT, fontSize: '22px', fontWeight: 500, color: '#132128', lineHeight: '33px', letterSpacing: '-0.3px', margin: '0 0 6px' }}>
+              <h3 style={{ fontSize: '54px', fontWeight: 400, color: '#132128', lineHeight: '64.8px', letterSpacing: '-1.2px', margin: '0 0 16px' }}>
                 Builds your resume, optimizes it automatically
               </h3>
-              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 20px' }}>
+              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 28px' }}>
                 AI scans the job description, tailors keywords, and restructures your resume so it passes ATS filters and lands on the recruiter&apos;s desk.
               </p>
-              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '14px', lineHeight: '21px', letterSpacing: '-0.3px', fontWeight: 500, color: '#338632', textDecoration: 'none' }}>
-                Try Resume Builder <span>&rarr;</span>
+              <a href="https://app.nexthireconsulting.com/resume/builder" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+                <span style={{ background: '#e1fcad', borderRadius: 999, padding: '10px 22px', fontSize: 14, fontWeight: 500, color: '#132128', fontFamily: FONT, lineHeight: '21px' }}>Try Resume Builder</span>
+                <span style={{ background: '#e1fcad', borderRadius: '50%', width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#132128', flexShrink: 0 }}>↗</span>
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section style={{ background: '#f5f5f0', padding: 'clamp(48px, 8vw, 80px) 0', overflowX: 'clip' }}>
+      <section style={{ background: '#ffffff', padding: 'clamp(48px, 8vw, 80px) 0', overflowX: 'clip' }}>
         <div className="nh-rb-showcase__inner nh-rb-showcase__inner--reverse">
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontFamily: FONT, fontSize: '22px', fontWeight: 500, color: '#132128', lineHeight: '33px', letterSpacing: '-0.3px', margin: '0 0 6px' }}>
+              <h3 style={{ fontSize: '54px', fontWeight: 400, color: '#132128', lineHeight: '64.8px', letterSpacing: '-1.2px', margin: '0 0 16px' }}>
                 Applies to hundreds of jobs while you sleep
               </h3>
-              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 20px' }}>
+              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 28px' }}>
                 AI scans millions of jobs matching your profile, builds a role-specific resume for each, and submits tailored applications 24/7 — so you wake up to interview requests.
               </p>
-              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '14px', lineHeight: '21px', letterSpacing: '-0.3px', fontWeight: 500, color: '#338632', textDecoration: 'none' }}>
-                Try AI Auto Apply <span>&rarr;</span>
+              <a href="https://app.nexthireconsulting.com/auto-apply" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+                <span style={{ background: '#e1fcad', borderRadius: 999, padding: '10px 22px', fontSize: 14, fontWeight: 500, color: '#132128', fontFamily: FONT, lineHeight: '21px' }}>Try AI Auto Apply</span>
+                <span style={{ background: '#e1fcad', borderRadius: '50%', width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#132128', flexShrink: 0 }}>↗</span>
               </a>
             </div>
           </div>
           <div className="nh-rb-showcase__left">
-            <MacDesktop browserUrl="localhost:18789/chat" draggable>
+            <MacDesktop browserUrl="app.nexthireconsulting.com/auto-apply" draggable>
               <AutoApplyContent />
             </MacDesktop>
           </div>
         </div>
       </section>
 
-      <section style={{ background: '#f5f5f0', padding: 'clamp(48px, 8vw, 80px) 0 clamp(64px, 10vw, 100px)', overflowX: 'clip', position: 'relative', zIndex: 10 }}>
+      <section style={{ background: '#ffffff', padding: 'clamp(48px, 8vw, 80px) 0 clamp(64px, 10vw, 100px)', overflowX: 'clip', position: 'relative', zIndex: 10 }}>
         <div className="nh-rb-showcase__inner">
           <div className="nh-rb-showcase__left">
             <MacDesktop browserUrl="meet.google.com/abc-defg-hij">
@@ -2416,14 +2393,15 @@ export default function ResumeBuilderShowcase() {
           </div>
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontFamily: FONT, fontSize: '22px', fontWeight: 500, color: '#132128', lineHeight: '33px', letterSpacing: '-0.3px', margin: '0 0 6px' }}>
+              <h3 style={{ fontSize: '54px', fontWeight: 400, color: '#132128', lineHeight: '64.8px', letterSpacing: '-1.2px', margin: '0 0 16px' }}>
                 Works autonomously, coaches in real-time
               </h3>
-              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 20px' }}>
+              <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 28px' }}>
                 AI listens to interview questions as they are asked and suggests relevant, structured answers in real-time so you can respond with confidence.
               </p>
-              <a href="https://app.nexthireconsulting.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '14px', lineHeight: '21px', letterSpacing: '-0.3px', fontWeight: 500, color: '#338632', textDecoration: 'none' }}>
-                Learn about AI Interview Coach <span>&rarr;</span>
+              <a href="https://app.nexthireconsulting.com/interview-copilot" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+                <span style={{ background: '#e1fcad', borderRadius: 999, padding: '10px 22px', fontSize: 14, fontWeight: 500, color: '#132128', fontFamily: FONT, lineHeight: '21px' }}>Learn about AI Interview Coach</span>
+                <span style={{ background: '#e1fcad', borderRadius: '50%', width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#132128', flexShrink: 0 }}>↗</span>
               </a>
             </div>
           </div>

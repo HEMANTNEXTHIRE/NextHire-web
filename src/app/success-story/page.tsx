@@ -219,9 +219,9 @@ export default function SuccessStoryPage() {
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#5fa89e', display: 'inline-block', boxShadow: '0 0 8px #5fa89e' }} />
             <span style={{ color: '#3d7a72', fontSize: FONT.sm, fontWeight: WEIGHT.semi, letterSpacing: '0.5px' }}>Real people. Real results.</span>
           </div>
-          <h1 style={{ fontFamily: "'Inter',system-ui,sans-serif", color: '#132128', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, lineHeight: 1.22, margin: '0 0 20px', letterSpacing: '-0.5px' }}>
-            <span style={{ display: 'block', fontFamily: "'Inter',system-ui,sans-serif", whiteSpace: 'nowrap' }}>Stories from candidates</span>
-            <span style={{ display: 'block', color: '#338632', fontFamily: "'Inter',system-ui,sans-serif", whiteSpace: 'nowrap' }}>who stopped waiting.</span>
+          <h1 style={{ color: '#132128', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, lineHeight: 1.22, margin: '0 0 20px', letterSpacing: '-0.5px' }}>
+            <span style={{ display: 'block', whiteSpace: 'nowrap' }}>Stories from candidates</span>
+            <span style={{ display: 'block', color: '#338632', whiteSpace: 'nowrap' }}>who stopped waiting.</span>
           </h1>
           <p style={{ color: '#3d5a56', fontSize: FONT.base, lineHeight: 1.75, margin: '0 0 44px', maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
             From first AI application to signed offer — see how professionals across every role and industry used NextHire to change their trajectory.
@@ -233,8 +233,8 @@ export default function SuccessStoryPage() {
       </section>
 
       {/* ── STATS ────────────────────────────────────────────── */}
-      <section style={{ background: '#ffffff', borderBottom: '1px solid #ddeae4', padding: 'clamp(32px, 5vw, 48px) clamp(20px, 5vw, 40px)' }}>
-        <div style={{ maxWidth: 1160, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0 }} className="ss-stats-grid">
+      <section style={{ background: '#ffffff', borderBottom: '1px solid #ddeae4', padding: 'clamp(32px, 5vw, 48px) 0' }}>
+        <div className="nh-container ss-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0 }}>
           {STATS.map((s, i) => (
             <div key={s.label} style={{
               textAlign: 'center', padding: '8px 24px',
@@ -248,8 +248,8 @@ export default function SuccessStoryPage() {
       </section>
 
       {/* ── TESTIMONIAL CARD GRID ─────────────────────────────── */}
-      <section style={{ background: '#f7faf9', padding: 'clamp(60px, 8vw, 80px) clamp(20px, 5vw, 40px) clamp(72px, 10vw, 100px)' }}>
-        <div style={{ maxWidth: 1160, margin: '0 auto' }}>
+      <section style={{ background: '#f7faf9', padding: 'clamp(60px, 8vw, 80px) 0 clamp(72px, 10vw, 100px)' }}>
+        <div className="nh-container">
           <div style={{ marginBottom: 52, textAlign: 'center' }}>
             <h2 style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: '#1a3338', margin: '0 0 12px', letterSpacing: '-0.5px' }}>
               What our candidates say
@@ -280,7 +280,7 @@ export default function SuccessStoryPage() {
               <Link href="https://app.nexthireconsulting.com" className="button-primary w-button">
                 Try for free →
               </Link>
-              <Link href="/candidates" style={{
+              <Link href="/" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 7,
                 color: '#3d5a56', fontSize: FONT.sm, fontWeight: WEIGHT.medium,
                 textDecoration: 'none', border: '1px solid #c8dfd6',

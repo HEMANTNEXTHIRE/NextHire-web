@@ -4,33 +4,21 @@ import { useState, useEffect, useRef } from 'react'
 import { FONT, WEIGHT } from '@/constants/typography'
 import { FloatingIntegrations } from '@/components/sections/FloatingIntegrations'
 
-/* Homepage-aligned tokens (HeroSection / pricing) */
-const HOME = {
-  bg: '#ffffff',
-  dark: '#132128',
-  accent: '#338632',
-  subtext: '#6b7280',
-  muted: '#9ca3af',
-  ctaMint: '#1de9b6',
-}
-
-
 /* ── Palette ──────────────────────────────────────────────────── */
 const C = {
-  dark:    '#1a3338',
-  mid:     '#3d5a56',
+  dark:    '#132128',
+  mid:     '#4b5563',
   sage:    '#c8dfd6',
   mint:    '#e4f0eb',
   light:   '#edf5f1',
   surface: '#f7faf9',
   white:   '#ffffff',
-  accent:  '#5fa89e',
+  accent:  '#338632',
   accentD: '#3d7a72',
-  muted:   '#8aada8',
+  muted:   '#9ca3af',
   green:   '#22c55e',
 }
 
-/** Matches homepage `.hiw-panel` / pricing — tapered shell, soft shadow */
 const NH_PANEL = {
   r: 28,
   shadow: '0 16px 56px rgba(37, 62, 66, 0.10), 0 2px 10px rgba(37, 62, 66, 0.05)' as const,
@@ -41,10 +29,10 @@ const NH_PANEL = {
 
 /* ── Data ─────────────────────────────────────────────────────── */
 const STATS = [
-  { n: '800M+', l: 'Candidate profiles indexed', icon: '🌐' },
-  { n: '10×',   l: 'Faster shortlist delivery',  icon: '⚡' },
-  { n: '70%',   l: 'Reduction in recruiter hours', icon: '⏱️' },
-  { n: '80%',   l: 'AI interview completion rate', icon: '🎯' },
+  { n: '800M+', l: 'Candidate profiles indexed' },
+  { n: '10×',   l: 'Faster shortlist delivery'  },
+  { n: '70%',   l: 'Reduction in recruiter hours' },
+  { n: '80%',   l: 'AI interview completion rate' },
 ]
 
 const COMPARE_ROWS = [
@@ -57,46 +45,43 @@ const COMPARE_ROWS = [
   { feature: 'ATS / CRM sync',               old: 'Manual CSV export',       nh: '50+ native integrations'      },
 ]
 
-
-/* ── Global animation styles ──────────────────────────────────── */
+/* ── Global animation + responsive styles ─────────────────────── */
 const STYLES = `
 @keyframes fcFloat   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-@keyframes fcDrift   { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(15px,-10px) scale(1.03)} }
 @keyframes fcPulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.9)} }
-@keyframes fcSpin    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-@keyframes fcSpinRev { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
 @keyframes fcSlideUp { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fcSlideL  { from{opacity:0;transform:translateX(-26px)} to{opacity:1;transform:translateX(0)} }
 @keyframes fcSlideR  { from{opacity:0;transform:translateX(26px)} to{opacity:1;transform:translateX(0)} }
 @keyframes fcScale   { from{opacity:0;transform:scale(0.86)} to{opacity:1;transform:scale(1)} }
 @keyframes fcMarch   { from{background-position:0 0} to{background-position:40px 40px} }
-@keyframes fcBarFill { from{width:0} to{width:var(--bw)} }
-@keyframes fcRipple  { from{transform:scale(0.8);opacity:1} to{transform:scale(2);opacity:0} }
-@keyframes fcBlink   { 0%,45%{opacity:1} 50%,95%{opacity:0} 100%{opacity:1} }
-@keyframes fcWave    { 0%{d:path("M0 15 Q180 5 360 15 Q540 25 720 15 Q900 5 1080 15 Q1260 25 1440 15")} 50%{d:path("M0 15 Q180 25 360 15 Q540 5 720 15 Q900 25 1080 15 Q1260 5 1440 15")} 100%{d:path("M0 15 Q180 5 360 15 Q540 25 720 15 Q900 5 1080 15 Q1260 25 1440 15")} }
-@keyframes fcTypeIn  { from{max-width:0;opacity:0} to{max-width:600px;opacity:1} }
 @keyframes fcCountUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fcBlink   { 0%,45%{opacity:1} 50%,95%{opacity:0} 100%{opacity:1} }
 
 .fc-card { transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease !important; }
 .fc-card:hover { transform: translateY(-5px) !important; box-shadow: 0 18px 56px rgba(37,62,66,0.12) !important; }
-@keyframes fcIntBob { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-5px); } }
-.companies-int-bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; max-width: 920px; margin-left: auto; margin-right: auto; }
-@media (max-width: 900px) {
-  .companies-int-bento { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
-  .companies-int-hub { grid-column: 1 / -1 !important; grid-row: auto !important; min-height: 160px !important; }
-  .companies-int-cell { grid-column: auto !important; grid-row: auto !important; }
-}
-.companies-int-cell {
-  transition: transform 0.28s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.28s ease !important;
-}
-.companies-int-cell:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 14px 40px rgba(37, 62, 66, 0.1) !important;
-}
-.fc-feature-card { transition: transform 0.26s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.26s ease, background 0.2s !important; border: none !important; }
-.fc-feature-card:hover { transform: translateY(-3px) !important; box-shadow: 0 18px 48px rgba(37, 62, 66, 0.09), 0 2px 8px rgba(37, 62, 66, 0.04) !important; background: ${NH_PANEL.inner} !important; }
+.fc-feature-card { transition: transform 0.26s cubic-bezier(0.33,1,0.68,1), box-shadow 0.26s ease, background 0.2s !important; }
+.fc-feature-card:hover { transform: translateY(-3px) !important; box-shadow: 0 18px 48px rgba(37,62,66,0.09), 0 2px 8px rgba(37,62,66,0.04) !important; background: ${NH_PANEL.inner} !important; }
 .fc-compare-row { transition: background 0.15s ease !important; }
 .fc-compare-row:hover { background: rgba(243,248,246,0.92) !important; }
+
+.companies-hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid rgba(200,223,214,0.5); border-radius: 24px; overflow: hidden; background: #fff; box-shadow: 0 20px 60px rgba(37,62,66,0.08), 0 2px 10px rgba(37,62,66,0.04); }
+
+.companies-feature-row { display: grid; grid-template-columns: 1fr 420px; min-height: 360px; }
+.companies-feature-row-rev { display: grid; grid-template-columns: 420px 1fr; min-height: 360px; }
+
+.companies-metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+
+@media (max-width: 900px) {
+  .companies-hero-stats { grid-template-columns: repeat(2, 1fr) !important; }
+  .companies-hero-stats > div:nth-child(2) { border-right: none !important; }
+  .companies-hero-stats > div:nth-child(1),
+  .companies-hero-stats > div:nth-child(2) { border-bottom: 1px solid rgba(200,223,214,0.5); }
+  .companies-feature-row,
+  .companies-feature-row-rev { grid-template-columns: 1fr !important; }
+  .companies-feature-row > div,
+  .companies-feature-row-rev > div { order: unset !important; }
+  .companies-metrics-grid { grid-template-columns: repeat(2,1fr) !important; }
+}
 `
 
 /* ── Scroll reveal wrapper ────────────────────────────────────── */
@@ -155,9 +140,9 @@ function Typewriter({ texts }: { texts: string[] }) {
     }
   }, [displayed, phase, idx, texts])
   return (
-    <span style={{ color: HOME.dark }}>
+    <span style={{ color: C.dark }}>
       {displayed}
-      <span style={{ display: 'inline-block', width: 2, height: '0.85em', background: HOME.dark, verticalAlign: 'text-bottom', marginLeft: 2, animation: 'fcBlink 1s step-end infinite' }} />
+      <span style={{ display: 'inline-block', width: 2, height: '0.85em', background: C.dark, verticalAlign: 'text-bottom', marginLeft: 2, animation: 'fcBlink 1s step-end infinite' }} />
     </span>
   )
 }
@@ -172,8 +157,7 @@ export default function CompaniesPageClient() {
       tag: 'FIND TALENT',
       heading: 'Source anyone in seconds.',
       body: 'Describe the role in plain English. The AI sourcing agent scans 800M+ profiles across 30+ data sources — job boards, professional networks, GitHub, patent databases — building enriched, scored shortlists. Up to 10× faster than manual sourcing.',
-      icon: '🔍',
-      color: C.accent,
+      color: C.accentD,
       features: [
         { title: 'Natural-language search', desc: 'No Boolean strings. Just describe who you need and the agent finds them.' },
         { title: 'Signal-based scoring',    desc: 'Profiles ranked by real signals — skills, impact, tenure, team growth indicators.' },
@@ -181,10 +165,10 @@ export default function CompaniesPageClient() {
         { title: 'Candidate enrichment',    desc: 'Verified email, LinkedIn, GitHub, and direct contact data appended automatically.' },
       ],
       mockup: (
-        <div style={{ background: C.white, borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow }}>
+        <div style={{ background: C.white, borderRadius: NH_PANEL.r, overflow: 'hidden', boxShadow: NH_PANEL.shadow }}>
           <div style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 8, background: NH_PANEL.inner }}>
             <div style={{ display: 'flex', gap: 6 }}>
-              {[C.dark, C.muted, C.accent].map(c => <span key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, display: 'inline-block' }} />)}
+              {[C.dark, C.muted, C.accentD].map(c => <span key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, display: 'inline-block' }} />)}
             </div>
             <span style={{ fontSize: FONT.xs, color: C.muted, marginLeft: 6, fontWeight: WEIGHT.medium }}>AI Sourcing Agent · Live</span>
             <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -193,7 +177,7 @@ export default function CompaniesPageClient() {
             </span>
           </div>
           <div style={{ padding: '20px' }}>
-            <div style={{ background: NH_PANEL.inner, border: 'none', borderRadius: NH_PANEL.rowR, padding: '12px 14px', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ background: NH_PANEL.inner, borderRadius: NH_PANEL.rowR, padding: '12px 14px', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ fontSize: FONT.sm }}>🔍</span>
               <span style={{ fontSize: FONT.xs, color: C.accentD, fontWeight: WEIGHT.medium }}>&quot;Senior Product Manager, fintech, Series B+, remote&quot;</span>
             </div>
@@ -202,19 +186,19 @@ export default function CompaniesPageClient() {
               { name: 'Arjun Sharma',  role: 'Product Lead · CRED',     score: 94, delay: '0.1s' },
               { name: 'Nisha Kapoor',  role: 'Group PM · PhonePe',      score: 91, delay: '0.2s' },
             ].map(p => (
-              <div key={p.name} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', background: C.white, border: 'none', borderRadius: NH_PANEL.rowR, marginBottom: 8, boxShadow: '0 2px 12px rgba(37,62,66,0.05)', animation: `fcSlideL 0.4s ease ${p.delay} both` }}>
-                <div style={{ width: 30, height: 30, borderRadius: '50%', background: NH_PANEL.inner, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accent, flexShrink: 0 }}>{p.name[0]}</div>
+              <div key={p.name} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', background: C.white, borderRadius: NH_PANEL.rowR, marginBottom: 8, boxShadow: '0 2px 12px rgba(37,62,66,0.05)', animation: `fcSlideL 0.4s ease ${p.delay} both` }}>
+                <div style={{ width: 30, height: 30, borderRadius: '50%', background: NH_PANEL.inner, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accentD, flexShrink: 0 }}>{p.name[0]}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: C.dark }}>{p.name}</div>
                   <div style={{ fontSize: FONT.xs, color: C.muted, marginTop: 1 }}>{p.role}</div>
                 </div>
-                <div style={{ background: `${C.accent}18`, border: 'none', borderRadius: 8, padding: '3px 8px', fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accent }}>{p.score}%</div>
+                <div style={{ background: `${C.accentD}18`, borderRadius: 8, padding: '3px 8px', fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accentD }}>{p.score}%</div>
               </div>
             ))}
             <div style={{ marginTop: 14, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {[{ n: '428', l: 'Profiles found' }, { n: '4h', l: 'Shortlist ready' }].map(s => (
-                <div key={s.l} style={{ background: NH_PANEL.inner, border: 'none', borderRadius: NH_PANEL.rowR, padding: '12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: C.accent }}>{s.n}</div>
+                <div key={s.l} style={{ background: NH_PANEL.inner, borderRadius: NH_PANEL.rowR, padding: '12px', textAlign: 'center' }}>
+                  <div style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: C.accentD }}>{s.n}</div>
                   <div style={{ fontSize: FONT.xs, color: C.muted, marginTop: 2 }}>{s.l}</div>
                 </div>
               ))}
@@ -227,8 +211,7 @@ export default function CompaniesPageClient() {
       tag: 'SCREEN AT SCALE',
       heading: 'Interview only the best — automatically.',
       body: 'Every matched candidate gets a live AI phone screen the moment they apply. Structured questions, automatic scoring, full transcript. Your team receives a ranked shortlist with hire/no-hire signals — zero recruiter hours spent on early screening.',
-      icon: '📞',
-      color: C.accentD,
+      color: C.accent,
       features: [
         { title: 'AI phone screening',     desc: 'Outbound call triggered on match or application. Structured, role-calibrated questions.' },
         { title: 'AI video interviewer',   desc: 'Async video interviews with transcript, body language, and confidence scoring.' },
@@ -236,9 +219,9 @@ export default function CompaniesPageClient() {
         { title: 'Scored transcripts',     desc: 'Every response scored and ranked. Flag red flags automatically before your team reviews.' },
       ],
       mockup: (
-        <div style={{ background: C.white, borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow }}>
+        <div style={{ background: C.white, borderRadius: NH_PANEL.r, overflow: 'hidden', boxShadow: NH_PANEL.shadow }}>
           <div style={{ background: C.dark, padding: '15px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accent, letterSpacing: '1px' }}>AI PHONE SCREEN · LIVE</span>
+            <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.sage, letterSpacing: '1px' }}>AI PHONE SCREEN · LIVE</span>
             <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.green, animation: 'fcPulse 1.8s ease infinite', display: 'inline-block' }} />
               <span style={{ fontSize: FONT.xs, color: 'rgba(255,255,255,0.55)', fontWeight: WEIGHT.semi }}>In progress</span>
@@ -250,7 +233,7 @@ export default function CompaniesPageClient() {
               { q: 'How do you prioritise between engineering debt and features?', score: 87, tag: 'Strong', c: C.green },
               { q: 'Describe a time you disagreed with a stakeholder.', score: 74, tag: 'Good', c: C.accentD },
             ].map((item, i) => (
-              <div key={i} style={{ marginBottom: 12, padding: '14px 16px', background: C.white, borderRadius: NH_PANEL.rowR, border: 'none', boxShadow: '0 2px 14px rgba(37,62,66,0.05)' }}>
+              <div key={i} style={{ marginBottom: 12, padding: '14px 16px', background: C.white, borderRadius: NH_PANEL.rowR, boxShadow: '0 2px 14px rgba(37,62,66,0.05)' }}>
                 <div style={{ fontSize: FONT.xs, color: C.mid, lineHeight: 1.5, marginBottom: 8 }}>{item.q}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ flex: 1, height: 5, background: 'rgba(200,223,214,0.45)', borderRadius: 4, overflow: 'hidden' }}>
@@ -261,9 +244,9 @@ export default function CompaniesPageClient() {
                 </div>
               </div>
             ))}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4, padding: '14px 18px', background: `linear-gradient(165deg, ${C.mint} 0%, ${NH_PANEL.inner} 100%)`, border: 'none', borderRadius: NH_PANEL.rowR, boxShadow: '0 2px 12px rgba(37,62,66,0.04)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4, padding: '14px 18px', background: `linear-gradient(165deg, ${C.mint} 0%, ${NH_PANEL.inner} 100%)`, borderRadius: NH_PANEL.rowR, boxShadow: '0 2px 12px rgba(37,62,66,0.04)' }}>
               <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.semi, color: C.dark }}>Overall score</span>
-              <span style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: C.accent }}>84 / 100</span>
+              <span style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: C.accentD }}>84 / 100</span>
             </div>
           </div>
         </div>
@@ -273,7 +256,6 @@ export default function CompaniesPageClient() {
       tag: 'ENGAGE & REACH',
       heading: 'Personalised outreach that actually gets replies.',
       body: 'The outreach agent writes a context-aware message for every candidate — based on their actual experience, projects, and career signals. Multi-step email and LinkedIn sequences run automatically, with open/reply tracking and smart follow-ups.',
-      icon: '✉️',
       color: C.accentD,
       features: [
         { title: 'Per-candidate copy',     desc: 'Each message references real work history and signals from their profile.' },
@@ -282,7 +264,7 @@ export default function CompaniesPageClient() {
         { title: 'A/B message testing',    desc: 'Test subject lines and message variants. Agent learns what performs and adapts.' },
       ],
       mockup: (
-        <div style={{ background: C.white, borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow }}>
+        <div style={{ background: C.white, borderRadius: NH_PANEL.r, overflow: 'hidden', boxShadow: NH_PANEL.shadow }}>
           <div style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 10, background: NH_PANEL.inner }}>
             <div style={{ width: 28, height: 28, borderRadius: '50%', background: `${C.accentD}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: FONT.sm }}>✉️</div>
             <div>
@@ -292,12 +274,12 @@ export default function CompaniesPageClient() {
           </div>
           <div style={{ padding: '20px' }}>
             <div style={{ fontSize: FONT.xs, color: C.mid, marginBottom: 4 }}>To: priya@razorpay.com</div>
-            <div style={{ fontSize: FONT.sm, color: C.dark, lineHeight: 1.65, padding: '14px 16px', background: NH_PANEL.inner, borderRadius: NH_PANEL.rowR, marginBottom: 14, border: 'none' }}>
+            <div style={{ fontSize: FONT.sm, color: C.dark, lineHeight: 1.65, padding: '14px 16px', background: NH_PANEL.inner, borderRadius: NH_PANEL.rowR, marginBottom: 14 }}>
               Hi Priya, I noticed Razorpay&apos;s PM team expanded 22% this quarter — usually a signal you&apos;re scaling a new product surface. I&apos;ve been working with teams at that stage and would love to share what we&apos;ve seen work…
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {[{ n: '64%', l: 'Open rate', c: C.accentD }, { n: '31%', l: 'Reply rate', c: C.green }].map(s => (
-                <div key={s.l} style={{ padding: '12px', background: NH_PANEL.inner, borderRadius: NH_PANEL.rowR, textAlign: 'center', border: 'none' }}>
+                <div key={s.l} style={{ padding: '12px', background: NH_PANEL.inner, borderRadius: NH_PANEL.rowR, textAlign: 'center' }}>
                   <div style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: s.c }}>{s.n}</div>
                   <div style={{ fontSize: FONT.xs, color: C.mid, marginTop: 2, fontWeight: WEIGHT.semi }}>{s.l}</div>
                 </div>
@@ -314,171 +296,140 @@ export default function CompaniesPageClient() {
       <style suppressHydrationWarning>{STYLES}</style>
 
       {/* ════════════════════════════════════════════════════════
-          HERO — same thesis as homepage / pricing (white, centered, no wave)
+          HERO
       ════════════════════════════════════════════════════════ */}
-      <section id="companies-hero" style={{ background: HOME.bg, position: 'relative', overflow: 'hidden' }}>
-        <div style={{
-          maxWidth: 900,
-          margin: '0 auto',
-          padding: '120px clamp(20px, 5vw, 40px) 0',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-        }}>
+      <section id="companies-hero" style={{ background: C.white, position: 'relative', overflow: 'hidden' }}>
+        <div className="nh-container">
+          <div style={{
+            maxWidth: 900,
+            margin: '0 auto',
+            padding: 'clamp(80px, 12vw, 120px) 0 0',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+          }}>
+            <Reveal delay={0.06}>
+              <div style={{ width: '100%', margin: '0 0 28px' }}>
+                <h1 style={{ margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22 }}>
+                  <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
+                    Hire the right people.
+                  </span>
+                  <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
+                    <Typewriter texts={['In days, not months.', 'At 10× the speed.', 'With zero wasted hours.']} />
+                  </span>
+                </h1>
+              </div>
+            </Reveal>
 
+            <Reveal delay={0.12}>
+              <p style={{ color: C.mid, fontSize: 17, lineHeight: 1.72, margin: 0, maxWidth: 560, fontWeight: WEIGHT.normal }}>
+                Five AI agents — sourcing, phone screening, SMS engagement, video interviewing, and personalised outreach — running in parallel so your team only meets pre-qualified finalists.
+              </p>
+            </Reveal>
 
-          <Reveal delay={0.06}>
-            <div style={{ width: '100%', margin: '0 0 32px', paddingBottom: '0.15em' }}>
-              <h1 style={{ fontFamily: "'Droid Serif', Georgia, serif", margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-                <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark }}>
-                  Hire the right people.
-                </span>
-                <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: HOME.dark }}>
-                  <Typewriter texts={['In days, not months.', 'At 10× the speed.', 'With zero wasted hours.']} />
-                </span>
-              </h1>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <p style={{
-              color: HOME.subtext,
-              fontSize: 17,
-              lineHeight: 1.72,
-              margin: 0,
-              maxWidth: 560,
-              fontWeight: WEIGHT.normal,
-            }}>
-              Five AI agents — sourcing, phone screening, SMS engagement, video interviewing, and personalised outreach — running in parallel so your team only meets pre-qualified finalists.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 28 }}>
-              <a
-                href="https://app.nexthireconsulting.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '14px 28px',
-                  borderRadius: 9999,
-                  background: HOME.ctaMint,
-                  color: HOME.dark,
-                  fontSize: 16,
-                  fontWeight: WEIGHT.bold,
-                  textDecoration: 'none',
-                  border: 'none',
-                }}
-              >
-                Start hiring free →
-              </a>
-              <a
-                href="/contact-us"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '14px 28px',
-                  borderRadius: 9999,
-                  background: '#f9fafb',
-                  color: '#374151',
-                  fontSize: 16,
-                  fontWeight: WEIGHT.semi,
-                  textDecoration: 'none',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-                }}
-              >
-                Book a demo
-              </a>
-            </div>
-          </Reveal>
-
-          <div style={{ marginTop: 72, paddingBottom: 72, width: '100%' }}>
-            <p style={{
-              fontSize: 11,
-              color: HOME.muted,
-              letterSpacing: '2.5px',
-              textTransform: 'uppercase',
-              marginBottom: 36,
-              fontWeight: WEIGHT.semi,
-              textAlign: 'center',
-            }}>
-              By the numbers
-            </p>
-            {/* Full-width 4-col stat tiles — premium editorial layout */}
-            <div
-              className="companies-hero-stats"
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, maxWidth: 900, margin: '0 auto', border: '1px solid rgba(200,223,214,0.5)', borderRadius: 24, overflow: 'hidden', background: C.white, boxShadow: '0 20px 60px rgba(37,62,66,0.08), 0 2px 10px rgba(37,62,66,0.04)' }}
-            >
-              {STATS.map((s, i) => (
-                <div
-                  key={s.l}
+            <Reveal delay={0.16}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 32 }}>
+                <a
+                  href="https://app.nexthireconsulting.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    textAlign: 'center',
-                    padding: 'clamp(28px, 4vw, 44px) clamp(16px, 2.5vw, 28px)',
-                    borderRight: i < STATS.length - 1 ? '1px solid rgba(200,223,214,0.5)' : 'none',
-                    background: i % 2 === 0 ? C.white : '#fafcfb',
-                    animation: `fcCountUp 0.5s ease ${0.12 + i * 0.08}s both`,
-                    position: 'relative',
-                    overflow: 'hidden',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '16px 36px',
+                    borderRadius: 9999,
+                    background: C.dark,
+                    color: C.white,
+                    fontSize: 17,
+                    fontWeight: WEIGHT.bold,
+                    textDecoration: 'none',
+                    border: 'none',
+                    letterSpacing: '-0.2px',
                   }}
                 >
-                  {/* Top accent bar */}
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.accent}, ${C.accentD})`, opacity: 0.7 }} />
-                  <div style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: WEIGHT.extra, color: C.dark, lineHeight: 1, letterSpacing: '-1.5px', marginBottom: 10, fontFamily: "'Inter',system-ui,sans-serif" }}>{s.n}</div>
-                  <div style={{ fontSize: FONT.sm, color: C.muted, lineHeight: 1.5, fontWeight: WEIGHT.medium }}>{s.l}</div>
-                </div>
-              ))}
+                  Book a discovery call
+                </a>
+                <a
+                  href="/contact-us"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '15px 35px',
+                    borderRadius: 9999,
+                    background: 'transparent',
+                    color: C.dark,
+                    fontSize: 17,
+                    fontWeight: WEIGHT.semi,
+                    textDecoration: 'none',
+                    border: `1.5px solid ${C.dark}`,
+                    letterSpacing: '-0.2px',
+                  }}
+                >
+                  Take AI Maturity Assessment
+                </a>
+              </div>
+            </Reveal>
+
+            {/* Stats grid */}
+            <div style={{ marginTop: 72, paddingBottom: 72, width: '100%' }}>
+              <p style={{ fontSize: FONT.xs, color: C.muted, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: 36, fontWeight: WEIGHT.semi, textAlign: 'center' }}>
+                By the numbers
+              </p>
+              <div className="companies-hero-stats">
+                {STATS.map((s, i) => (
+                  <div
+                    key={s.l}
+                    style={{
+                      textAlign: 'center',
+                      padding: 'clamp(28px, 4vw, 44px) clamp(16px, 2.5vw, 28px)',
+                      borderRight: i < STATS.length - 1 ? '1px solid rgba(200,223,214,0.5)' : 'none',
+                      animation: `fcCountUp 0.5s ease ${0.12 + i * 0.08}s both`,
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.accentD}, ${C.accent})`, opacity: 0.7 }} />
+                    <div style={{ fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: WEIGHT.extra, color: C.dark, lineHeight: 1, letterSpacing: '-1.5px', marginBottom: 10 }}>{s.n}</div>
+                    <div style={{ fontSize: FONT.sm, color: C.muted, lineHeight: 1.5, fontWeight: WEIGHT.medium }}>{s.l}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          PLATFORM FEATURES — Structured numbered cards (CEO-grade)
+          PLATFORM FEATURES
       ════════════════════════════════════════════════════════ */}
-      <section id="companies-platform" style={{ background: '#f7faf9', padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+      <section id="companies-platform" style={{ background: C.surface, padding: '96px 0' }}>
+        <div className="nh-container">
 
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 72 }}>
-              <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
+              <h2 style={{ fontSize: 54, fontWeight: WEIGHT.normal, color: C.dark, margin: 0, letterSpacing: '-1.2px', lineHeight: 1.2 }}>
                 Five agents. One pipeline.
               </h2>
             </div>
           </Reveal>
 
-          {/* Numbered feature cards — big, spacious, structured */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
             {PLATFORM_FEATURES.map((feat, idx) => (
               <Reveal key={feat.tag} delay={idx * 0.06} dir={idx % 2 === 0 ? 'left' : 'right'}>
                 <div
-                  className="fc-card fc-feature-card-row"
+                  className={`fc-card fc-feature-card ${idx % 2 === 0 ? 'companies-feature-row' : 'companies-feature-row-rev'}`}
                   style={{
                     background: C.white,
                     borderRadius: 28,
                     boxShadow: '0 8px 40px rgba(37,62,66,0.07), 0 2px 10px rgba(37,62,66,0.04)',
                     overflow: 'hidden',
-                    display: 'grid',
-                    gridTemplateColumns: idx % 2 === 0 ? '1fr 420px' : '420px 1fr',
-                    minHeight: 360,
                   }}
                 >
                   {/* Text side */}
-                  <div
-                    style={{
-                      padding: 'clamp(36px, 5vw, 60px)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      order: idx % 2 === 0 ? 0 : 1,
-                    }}
-                  >
-                    {/* Number + tag */}
+                  <div style={{ padding: 'clamp(36px, 5vw, 60px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: idx % 2 === 0 ? 0 : 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
                       <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.muted, background: C.surface, border: `1px solid ${C.sage}`, borderRadius: 8, padding: '4px 10px', letterSpacing: '0.5px' }}>
                         {String(idx + 1).padStart(2, '0')}
@@ -487,15 +438,12 @@ export default function CompaniesPageClient() {
                         {feat.tag}
                       </span>
                     </div>
-                    {/* Heading */}
-                    <h3 style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: 400, color: '#132128', margin: '0 0 16px', lineHeight: 1.28, letterSpacing: '-0.3px', fontSynthesis: 'none' }}>
+                    <h3 style={{ fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: WEIGHT.normal, color: C.dark, margin: '0 0 16px', lineHeight: 1.28, letterSpacing: '-0.3px' }}>
                       {feat.heading}
                     </h3>
-                    {/* Body */}
                     <p style={{ fontSize: FONT.base, color: C.mid, lineHeight: 1.78, margin: '0 0 28px', maxWidth: 440 }}>
                       {feat.body}
                     </p>
-                    {/* Feature bullets — 2-col grid */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                       {feat.features.map(f => (
                         <div key={f.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
@@ -512,19 +460,7 @@ export default function CompaniesPageClient() {
                   </div>
 
                   {/* Mockup side */}
-                  <div
-                    style={{
-                      background: `linear-gradient(145deg, ${C.light} 0%, ${C.mint} 100%)`,
-                      padding: 'clamp(24px, 4vw, 40px)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      order: idx % 2 === 0 ? 1 : 0,
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {/* Decorative orb */}
+                  <div style={{ background: `linear-gradient(145deg, ${C.light} 0%, ${C.mint} 100%)`, padding: 'clamp(24px, 4vw, 40px)', display: 'flex', alignItems: 'center', justifyContent: 'center', order: idx % 2 === 0 ? 1 : 0, position: 'relative', overflow: 'hidden' }}>
                     <div style={{ position: 'absolute', width: 240, height: 240, borderRadius: '50%', background: `radial-gradient(circle, ${feat.color}20 0%, transparent 65%)`, top: -60, right: -40, pointerEvents: 'none' }} />
                     <div style={{ width: '100%', maxWidth: 340, position: 'relative', zIndex: 1 }}>
                       {feat.mockup}
@@ -538,62 +474,61 @@ export default function CompaniesPageClient() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          COMPARISON TABLE — animated rows
+          COMPARISON TABLE
       ════════════════════════════════════════════════════════ */}
-      <section id="companies-compare" style={{ background: C.surface, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
-        <div style={{ maxWidth: 940, margin: '0 auto' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 52 }}>
-              <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0 0 12px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-                Traditional recruiting vs. NextHire
-              </h2>
-              <p style={{ fontSize: FONT.base, color: C.muted, margin: 0 }}>Same outcome. Completely different experience.</p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div style={{ borderRadius: NH_PANEL.r, overflow: 'hidden', border: 'none', boxShadow: NH_PANEL.shadow, background: C.white }}>
-              {/* Header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 24px' }} className="companies-compare-header">
-                <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: C.muted, letterSpacing: '1px', textTransform: 'uppercase' }}>Metric</div>
-                <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: C.muted, letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>Traditional</div>
-                <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accent, letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>NextHire ✓</div>
+      <section id="companies-compare" style={{ background: C.light, padding: '96px 0' }}>
+        <div className="nh-container">
+          <div style={{ maxWidth: 940, margin: '0 auto' }}>
+            <Reveal>
+              <div style={{ textAlign: 'center', marginBottom: 52 }}>
+                <h2 style={{ fontSize: 54, fontWeight: WEIGHT.normal, color: C.dark, margin: '0 0 12px', letterSpacing: '-1.2px', lineHeight: 1.2 }}>
+                  Traditional recruiting vs. NextHire
+                </h2>
+                <p style={{ fontSize: FONT.base, color: C.muted, margin: 0 }}>Same outcome. Completely different experience.</p>
               </div>
-              {COMPARE_ROWS.map((row, i) => (
-                <div key={row.feature} className="fc-compare-row companies-compare-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '15px 24px', background: i % 2 === 1 ? 'rgba(243,248,246,0.65)' : C.white, alignItems: 'center' }}>
-                  <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: C.dark }}>{row.feature}</div>
-                  <div style={{ fontSize: FONT.sm, color: C.muted, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                    <span style={{ color: C.muted, fontSize: FONT.xs, fontWeight: WEIGHT.extra }}>✕</span> {row.old}
-                  </div>
-                  <div style={{ fontSize: FONT.sm, color: C.dark, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                    <span style={{ color: C.accent, fontSize: FONT.xs, fontWeight: WEIGHT.extra }}>✓</span> <strong>{row.nh}</strong>
-                  </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div style={{ borderRadius: NH_PANEL.r, overflow: 'hidden', boxShadow: NH_PANEL.shadow, background: C.white }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', background: NH_PANEL.inner, padding: '16px 24px' }}>
+                  <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: C.muted, letterSpacing: '1px', textTransform: 'uppercase' }}>Metric</div>
+                  <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: C.muted, letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>Traditional</div>
+                  <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.accent, letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>NextHire ✓</div>
                 </div>
-              ))}
-            </div>
-          </Reveal>
+                {COMPARE_ROWS.map((row, i) => (
+                  <div key={row.feature} className="fc-compare-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '15px 24px', background: i % 2 === 1 ? 'rgba(237,245,241,0.65)' : C.white, alignItems: 'center' }}>
+                    <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: C.dark }}>{row.feature}</div>
+                    <div style={{ fontSize: FONT.sm, color: C.muted, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                      <span style={{ color: C.muted, fontSize: FONT.xs, fontWeight: WEIGHT.extra }}>✕</span> {row.old}
+                    </div>
+                    <div style={{ fontSize: FONT.sm, color: C.dark, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                      <span style={{ color: C.accent, fontSize: FONT.xs, fontWeight: WEIGHT.extra }}>✓</span> <strong>{row.nh}</strong>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          VISUAL METRIC ROW — Andela-style large numbers
+          METRICS ROW — dark band
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: C.dark, padding: '72px clamp(20px, 5vw, 40px)', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: '#1a3338', padding: '72px 0', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(200,223,214,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,223,214,0.04) 1px,transparent 1px)`, backgroundSize: '40px 40px', animation: 'fcMarch 14s linear infinite' }} />
-        <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${C.accent}15 0%, transparent 65%)`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
-
-        <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }} className="companies-metrics-grid">
+        <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${C.accentD}15 0%, transparent 65%)`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
+        <div className="nh-container" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="companies-metrics-grid">
             {[
-              { target: 800, suffix: 'M+', label: 'Profiles in talent graph', icon: '🌐', color: C.accent },
-              { target: 70, suffix: '%', label: 'Reduction in recruiter hours', icon: '⏱️', color: C.green },
-              { target: 10, suffix: '×', label: 'Faster shortlist delivery', icon: '⚡', color: C.accentD },
-              { target: 80, suffix: '%', label: 'Interview completion rate', icon: '🎯', color: C.accentD },
+              { target: 800, suffix: 'M+', label: 'Profiles in talent graph',       color: C.sage    },
+              { target: 70,  suffix: '%',  label: 'Reduction in recruiter hours',   color: C.green   },
+              { target: 10,  suffix: '×',  label: 'Faster shortlist delivery',      color: C.sage    },
+              { target: 80,  suffix: '%',  label: 'Interview completion rate',      color: C.sage    },
             ].map((s, i) => (
               <Reveal key={s.label} delay={i * 0.08} dir="scale">
-                <div style={{ textAlign: 'center', padding: '28px 18px', background: 'rgba(255,255,255,0.05)', border: 'none', borderRadius: NH_PANEL.innerR, position: 'relative', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.2)' }}>
+                <div style={{ textAlign: 'center', padding: '28px 18px', background: 'rgba(255,255,255,0.05)', borderRadius: NH_PANEL.innerR, position: 'relative', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.2)' }}>
                   <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at 50% 0%, ${s.color}12 0%, transparent 60%)` }} />
-                  <div style={{ fontSize: FONT.lg, marginBottom: 10, position: 'relative' }}>{s.icon}</div>
                   <div style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: s.color, lineHeight: 1, letterSpacing: '-1.5px', position: 'relative' }}>
                     <Counter target={s.target} suffix={s.suffix} />
                   </div>
@@ -606,7 +541,6 @@ export default function CompaniesPageClient() {
       </section>
 
       <FloatingIntegrations />
-
     </>
   )
 }

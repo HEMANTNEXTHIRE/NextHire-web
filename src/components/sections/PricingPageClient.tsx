@@ -1,9 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FONT, WEIGHT } from '@/constants/typography'
 import AccordionFaq from '@/components/ui/AccordionFaq'
+import PricingPlanTabs from '@/components/sections/PricingPlanTabs'
+import WithWithoutSection from '@/components/sections/WithWithoutSection'
 
 
 /* ── Palette ──────────────────────────────────────────────────── */
@@ -26,62 +28,62 @@ const P = {
 type PricingTab = 'candidates' | 'companies'
 type BillingCycle = 'monthly' | 'quarterly'
 
-/* ── Plan data ─────────────────────────────────────────────────── */
-const CANDIDATE_PLANS = [
+/* ── Plan data — dual INR / USD pricing (from app repo) ────────── */
+const CANDIDATE_PLANS_BASE = [
   {
-    id: 'max', name: 'Max', monthly: 135, badge: null, popular: false,
-    color: P.accentD, cta: 'Start Max', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Full-stack AI job search. Maximum firepower.',
-    icon: '🔥',
-    features: [
-      { label: 'Resume Builder', included: true },
-      { label: 'Job Tracker', included: true },
-      { label: '20 hrs / mo — Interview Coach', included: true },
-      { label: 'Unlimited AI Auto Apply', included: true },
-      { label: 'Unlimited Direct Recruiter InMails', included: true },
-      { label: '3,000 AI Outreach Agent credits / mo', included: true },
-    ],
-  },
-  {
-    id: 'pro', name: 'Pro', monthly: 49, badge: 'Best value', popular: false,
-    color: P.accentD, cta: 'Start Pro', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Serious candidates who want every edge.',
-    icon: '🚀',
-    features: [
-      { label: 'Resume Builder', included: true },
-      { label: 'Job Tracker', included: true },
-      { label: '20 hrs / mo — Interview Coach', included: true },
-      { label: 'Unlimited AI Auto Apply', included: true },
-      { label: '200 Direct Recruiter InMails / mo', included: true },
-      { label: 'AI Outreach Agent credits', included: false },
-    ],
-  },
-  {
-    id: 'lite', name: 'Lite', monthly: 19.9, badge: 'Most popular', popular: true,
-    color: P.accent, cta: 'Start Lite', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'For active job seekers who need reach at scale.',
-    icon: '⚡',
-    features: [
-      { label: 'Resume Builder', included: true },
-      { label: 'Job Tracker', included: true },
-      { label: '30 min — Interview Coach', included: true },
-      { label: 'Unlimited AI Auto Apply', included: true },
-      { label: '50 Direct Recruiter InMails / mo', included: true },
-      { label: 'AI Outreach Agent credits', included: false },
-    ],
-  },
-  {
-    id: 'free', name: 'Free', monthly: 0, badge: null, popular: false,
+    id: 'free', name: 'Free', badge: null, popular: false,
     color: P.muted, cta: 'Get started free', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Try the core tools. Zero commitment.',
+    description: 'Join the talent network',
+    tagline: 'Get visible to top recruiters for free',
     icon: '🔓',
+    inr:  { monthly: 0, quarterly: 0, quarterlyTotal: 0 },
+    usd:  { monthly: 0, quarterly: 0, quarterlyTotal: 0 },
     features: [
-      { label: 'Resume Builder', included: true },
-      { label: 'Job Tracker', included: true },
-      { label: '30 min — Interview Coach', included: true },
-      { label: '5 AI Auto Apply per day', included: true },
-      { label: 'Direct Recruiter InMail', included: false },
-      { label: 'AI Outreach Agent credits', included: false },
+      { label: 'Resume and cover letter builders', included: true },
+      { label: 'Job Tracker and profile optimization', included: true },
+      { label: 'Try AI tools and automate your job search', included: true },
+    ],
+  },
+  {
+    id: 'lite', name: 'Lite', badge: null, popular: true,
+    color: P.accent, cta: 'Start Lite', ctaHref: 'https://app.nexthireconsulting.com',
+    description: 'Speed up your job search',
+    tagline: 'Let AI apply to jobs for you',
+    icon: '⚡',
+    inr:  { monthly: 1850, quarterly: 1665, quarterlyTotal: 4995 },
+    usd:  { monthly: 19.99, quarterly: 17.99, quarterlyTotal: 53.97 },
+    features: [
+      { label: 'Unlimited AI Auto Apply for career page jobs', included: true },
+      { label: 'Optimize your portals for better visibility', included: true },
+      { label: '2 hours of AI Interview Coach', included: true },
+    ],
+  },
+  {
+    id: 'pro', name: 'Pro', badge: null, popular: false,
+    color: P.accentD, cta: 'Start Pro', ctaHref: 'https://app.nexthireconsulting.com',
+    description: 'Master every job interview',
+    tagline: 'AI helps you clear your interviews',
+    icon: '🚀',
+    inr:  { monthly: 4500, quarterly: 4050, quarterlyTotal: 12150 },
+    usd:  { monthly: 49.99, quarterly: 44.99, quarterlyTotal: 134.97 },
+    features: [
+      { label: 'Real-time AI Interview Coach', included: true },
+      { label: 'Unlimited AI Auto Apply to all platforms', included: true },
+      { label: 'Direct recruiter Inmails to get noticed', included: true },
+    ],
+  },
+  {
+    id: 'max', name: 'Max', badge: null, popular: false,
+    color: P.accentD, cta: 'Start Max', ctaHref: 'https://app.nexthireconsulting.com',
+    description: 'Put everything on autopilot',
+    tagline: 'AI finds and messages companies for you',
+    icon: '🔥',
+    inr:  { monthly: 12000, quarterly: 10800, quarterlyTotal: 32400 },
+    usd:  { monthly: 349.99, quarterly: 314.99, quarterlyTotal: 944.97 },
+    features: [
+      { label: 'Autonomous AI Outreach Agent', included: true },
+      { label: 'Exclusive access to hidden job markets', included: true },
+      { label: 'Unlimited AI Auto Apply and Interview Coach', included: true },
     ],
   },
 ]
@@ -130,13 +132,23 @@ const COMPANY_PLANS = [
 ]
 
 /* ── Helpers ───────────────────────────────────────────────────── */
-function priceFmt(monthly: number, cycle: BillingCycle) {
-  if (monthly === 0) return { display: '$0', sub: 'Free forever' }
+type PlanBase = typeof CANDIDATE_PLANS_BASE[number]
+
+function priceFmt(plan: PlanBase, cycle: BillingCycle, isIndia: boolean) {
+  const tier = isIndia ? plan.inr : plan.usd
+  const sym  = isIndia ? '₹' : '$'
+  if (tier.monthly === 0) return { display: `${sym}0`, sub: 'Free forever', note: ' ' }
   if (cycle === 'quarterly') {
-    return { display: `$${(monthly * 0.8).toFixed(0)}`, sub: '/mo · billed quarterly' }
+    const q = isIndia ? tier.quarterly.toLocaleString('en-IN') : tier.quarterly.toFixed(2)
+    const t = isIndia ? tier.quarterlyTotal.toLocaleString('en-IN') : tier.quarterlyTotal.toFixed(2)
+    return { display: `${sym}${q}`, sub: '/mo · billed quarterly', note: `${sym}${t} billed quarterly` }
   }
-  return { display: `$${monthly}`, sub: '/mo · billed monthly' }
+  const m = isIndia ? tier.monthly.toLocaleString('en-IN') : tier.monthly.toFixed(2)
+  return { display: `${sym}${m}`, sub: '/mo · billed monthly', note: ' ' }
 }
+
+/* Flatten base plans for PricingPlanTabs (it only needs non-price fields) */
+const CANDIDATE_PLANS = CANDIDATE_PLANS_BASE.map(p => ({ ...p, monthly: p.usd.monthly }))
 
 /* ── Hero palette ──────────────────────────────────────────────── */
 const HOME = {
@@ -149,15 +161,7 @@ const HOME = {
 }
 
 /* ── Panel constants — used by ROI / table sections below ─────── */
-const NH_PANEL = {
-  r: 28,
-  shadow: '0 16px 56px rgba(37, 62, 66, 0.10), 0 2px 10px rgba(37, 62, 66, 0.05)' as const,
-  shadowPopular: '0 18px 58px rgba(95, 168, 158, 0.12), 0 2px 10px rgba(37, 62, 66, 0.05), 0 0 0 1px rgba(95, 168, 158, 0.18)' as const,
-  shadowEnterprise: '0 18px 58px rgba(61, 122, 114, 0.12), 0 2px 10px rgba(37, 62, 66, 0.05), 0 0 0 1px rgba(61, 122, 114, 0.2)' as const,
-  inner: '#f3f8f6',
-  innerR: 16,
-  rowR: 14,
-}
+
 
 const STYLES = `
 .nh-plans-grid-4 {
@@ -197,14 +201,81 @@ const STYLES = `
 @keyframes pSlideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 `
 
-/* ── Luma-style check icon ─────────────────────────────────────── */
-function PlanCheckIcon({ dark }: { dark: boolean }) {
-  return (
-    <svg width="16" viewBox="0 0 16 16" style={{ height: 16, fill: 'none', flexShrink: 0, marginTop: 2 }}>
-      <circle cx="8" cy="8" r="8" fill={dark ? '#ffffff' : '#000000'} />
-      <path d="M5 8L7 10L11 6" stroke={dark ? '#000000' : '#ffffff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
+/* ── Per-tier card themes ─────────────────────────────────────── */
+const CARD_THEMES: Record<string, {
+  bg: string; border: string; badgeBg: string; badgeColor: string;
+  nameColor: string; descColor: string; priceColor: string; priceMuted: string;
+  ctaBg: string; ctaColor: string; ctaBorder: string;
+  divider: string; labelColor: string; featureColor: string; checkColor: string;
+}> = {
+  free: {
+    bg: '#f9faf9',
+    border: '1px solid rgba(19,33,40,0.12)',
+    badgeBg: 'rgba(19,33,40,0.07)',
+    badgeColor: '#6b7280',
+    nameColor: '#132128',
+    descColor: '#6b7280',
+    priceColor: '#132128',
+    priceMuted: '#9ca3af',
+    ctaBg: 'transparent',
+    ctaColor: '#132128',
+    ctaBorder: '1.5px solid rgba(19,33,40,0.28)',
+    divider: 'rgba(19,33,40,0.10)',
+    labelColor: '#9ca3af',
+    featureColor: 'rgba(19,33,40,0.62)',
+    checkColor: '#5fa89e',
+  },
+  lite: {
+    bg: '#e8f5ee',
+    border: '1.5px solid rgba(46,125,79,0.45)',
+    badgeBg: 'rgba(46,125,79,0.14)',
+    badgeColor: '#2e7d4f',
+    nameColor: '#132128',
+    descColor: '#4b5563',
+    priceColor: '#132128',
+    priceMuted: '#6b7280',
+    ctaBg: '#338632',
+    ctaColor: '#ffffff',
+    ctaBorder: 'none',
+    divider: 'rgba(19,33,40,0.12)',
+    labelColor: '#6b7280',
+    featureColor: 'rgba(19,33,40,0.68)',
+    checkColor: '#338632',
+  },
+  pro: {
+    bg: '#eef7f3',
+    border: '1px solid rgba(46,125,79,0.28)',
+    badgeBg: 'rgba(61,122,114,0.12)',
+    badgeColor: '#3d7a72',
+    nameColor: '#132128',
+    descColor: '#4b5563',
+    priceColor: '#132128',
+    priceMuted: '#6b7280',
+    ctaBg: '#132128',
+    ctaColor: '#ffffff',
+    ctaBorder: 'none',
+    divider: 'rgba(19,33,40,0.10)',
+    labelColor: '#6b7280',
+    featureColor: 'rgba(19,33,40,0.68)',
+    checkColor: '#2e7d4f',
+  },
+  max: {
+    bg: '#132128',
+    border: '1px solid rgba(95,168,158,0.20)',
+    badgeBg: 'rgba(255,255,255,0.10)',
+    badgeColor: '#5fa89e',
+    nameColor: 'rgba(255,255,255,0.55)',
+    descColor: 'rgba(255,255,255,0.40)',
+    priceColor: '#ffffff',
+    priceMuted: 'rgba(255,255,255,0.40)',
+    ctaBg: 'rgba(255,255,255,0.90)',
+    ctaColor: '#132128',
+    ctaBorder: 'none',
+    divider: 'rgba(255,255,255,0.10)',
+    labelColor: 'rgba(255,255,255,0.38)',
+    featureColor: 'rgba(255,255,255,0.72)',
+    checkColor: '#5fa89e',
+  },
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -213,6 +284,14 @@ function PlanCheckIcon({ dark }: { dark: boolean }) {
 export default function PricingPageClient() {
   const [tab, setTab] = useState<PricingTab>('candidates')
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
+  const [isIndia, setIsIndia] = useState(false)
+
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then(r => r.json())
+      .then((d: { country_code?: string }) => { if (d.country_code === 'IN') setIsIndia(true) })
+      .catch(() => {/* default USD */})
+  }, [])
 
   return (
     <div style={{ background: '#ffffff', minHeight: '100vh', fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -235,7 +314,7 @@ export default function PricingPageClient() {
 
           {/* Description */}
           <p style={{ color: HOME.subtext, fontSize: 17, lineHeight: 1.7, margin: 0, maxWidth: 520, fontWeight: WEIGHT.normal, letterSpacing: '-0.2px' }}>
-            Whether you&apos;re a professional landing your next role or a company building your next team &mdash; there&apos;s a plan built for you.
+            Whether you&apos;re a professional landing your next role or a company building your next team, there&apos;s a plan built for you.
           </p>
 
           {/* Plans & billing label + toggles */}
@@ -250,7 +329,7 @@ export default function PricingPageClient() {
             borderRadius: 9999,
             border: '1px solid #e5e7eb',
             background: '#ffffff',
-            padding: 4,
+            padding: 5,
           }}>
             {(['candidates', 'companies'] as PricingTab[]).map(t => (
               <button
@@ -260,15 +339,15 @@ export default function PricingPageClient() {
                 style={{
                   position: 'relative',
                   borderRadius: 9999,
-                  padding: '8px 20px',
-                  fontSize: FONT.base,
-                  fontWeight: WEIGHT.medium,
+                  padding: '11px 28px',
+                  fontSize: 16,
+                  fontWeight: WEIGHT.semi,
                   border: 'none',
                   cursor: 'pointer',
                   background: 'transparent',
                   outline: 'none',
                   transition: 'all 0.15s ease',
-                  letterSpacing: '-0.4px',
+                  letterSpacing: '-0.3px',
                 }}
               >
                 {tab === t && (
@@ -293,7 +372,7 @@ export default function PricingPageClient() {
               borderRadius: 9999,
               border: '1px solid #e5e7eb',
               background: '#ffffff',
-              padding: 4,
+              padding: 5,
             }}>
               {(['monthly', 'quarterly'] as BillingCycle[]).map(c => (
                 <button
@@ -303,15 +382,15 @@ export default function PricingPageClient() {
                   style={{
                     position: 'relative',
                     borderRadius: 9999,
-                    padding: '8px 20px',
-                    fontSize: FONT.base,
-                    fontWeight: WEIGHT.medium,
+                    padding: '11px 28px',
+                    fontSize: 16,
+                    fontWeight: WEIGHT.semi,
                     border: 'none',
                     cursor: 'pointer',
                     background: 'transparent',
                     outline: 'none',
                     transition: 'all 0.15s ease',
-                    letterSpacing: '-0.4px',
+                    letterSpacing: '-0.3px',
                   }}
                 >
                   {cycle === c && (
@@ -335,77 +414,81 @@ export default function PricingPageClient() {
         </div>{/* end maxWidth 900 hero wrapper */}
 
         {/* ── Plan grids ── */}
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(24px, 5vw, 32px) 80px' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 clamp(20px, 2.5vw, 30px) 80px' }}>
 
           {/* Candidate plans */}
           {tab === 'candidates' && (
             <div>
               <h3 className="nh-plans-section-label"></h3>
               <div className="nh-plans-grid-4">
-                {CANDIDATE_PLANS.map(plan => {
-                  const isDark = plan.popular
-                  const p = priceFmt(plan.monthly, cycle)
-                  const billingNote = (cycle === 'quarterly' && plan.monthly > 0)
-                    ? `$${(plan.monthly * 3 * 0.8).toFixed(0)} billed quarterly`
-                    : '\u00a0'
+                {CANDIDATE_PLANS_BASE.map(plan => {
+                  const p = priceFmt(plan, cycle, isIndia)
+                  const t = CARD_THEMES[plan.id] ?? CARD_THEMES.free
                   return (
                     <div
                       key={plan.id}
                       style={{
-                        background: isDark ? '#000000' : '#e5e7eb',
-                        color: isDark ? '#ffffff' : '#000000',
-                        borderRadius: 16,
-                        border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.06)',
-                        padding: '20px 20px 56px',
+                        background: t.bg,
+                        borderRadius: 20,
+                        border: t.border,
+                        padding: '28px 24px 32px',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 12,
                       }}
                     >
-                      {/* Plan name — no emoji, muted */}
-                      <div style={{
-                        fontSize: FONT.base,
-                        fontWeight: WEIGHT.medium,
-                        color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280',
-                        lineHeight: 1,
-                        letterSpacing: '-0.4px',
-                      }}>
-                        {plan.name}
-                      </div>
+                      {/* Badge */}
+                      {plan.badge && (
+                        <div style={{ marginBottom: 10 }}>
+                          <span style={{
+                            fontSize: 11, fontWeight: 700, letterSpacing: '0.7px',
+                            textTransform: 'uppercase',
+                            background: t.badgeBg, color: t.badgeColor,
+                            borderRadius: 9999, padding: '4px 11px',
+                            display: 'inline-block',
+                          }}>
+                            {plan.badge}
+                          </span>
+                        </div>
+                      )}
 
-                      {/* Price block */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <p style={{ margin: 0, lineHeight: 1 }}>
-                          <span style={{
-                            fontSize: 42,
-                            fontWeight: WEIGHT.bold,
-                            letterSpacing: '-0.04em',
-                            lineHeight: 1.1,
-                          }}>
-                            {p.display}
-                          </span>
-                          <span style={{
-                            fontSize: FONT.sm,
-                            fontWeight: WEIGHT.medium,
-                            color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280',
-                            lineHeight: 1.4,
-                          }}>
-                            {plan.monthly > 0 ? '/month' : ''}
-                          </span>
-                        </p>
-                        {/* Invisible placeholder preserves height when not needed */}
-                        <p style={{
-                          margin: 0,
-                          fontSize: FONT.sm,
-                          lineHeight: 1.4,
-                          color: isDark ? 'rgba(255,255,255,0.45)' : '#6b7280',
-                          visibility: billingNote === '\u00a0' ? 'hidden' : 'visible',
+                      {/* Plan name + description */}
+                      <div style={{ marginBottom: 20 }}>
+                        <div style={{
+                          fontSize: 18, fontWeight: 600, color: t.nameColor,
+                          letterSpacing: '-0.4px', lineHeight: 1, marginBottom: 6,
                         }}>
-                          {billingNote}
-                        </p>
+                          {plan.name}
+                        </div>
+                        <div style={{ fontSize: 13, color: t.descColor, lineHeight: 1.4, letterSpacing: '-0.1px' }}>
+                          {plan.description}
+                        </div>
                       </div>
 
-                      {/* CTA — white pill on all cards */}
+                      {/* Price */}
+                      <div style={{ marginBottom: 4 }}>
+                        <span style={{
+                          fontSize: 36, fontWeight: 700, color: t.priceColor,
+                          letterSpacing: '-0.04em', lineHeight: 1,
+                        }}>
+                          {p.display}
+                        </span>
+                        {plan.usd.monthly > 0 && (
+                          <span style={{ fontSize: 15, color: t.priceMuted, marginLeft: 4 }}>
+                            /month
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Billing note — invisible placeholder preserves height */}
+                      <div style={{
+                        fontSize: 12, color: t.priceMuted, lineHeight: 1.4,
+                        marginBottom: 20,
+                        visibility: p.note.trim() === '' ? 'hidden' : 'visible',
+                      }}>
+                        {p.note.trim() === '' ? ' ' : p.note}
+                      </div>
+
+                      {/* CTA */}
                       <a
                         href={plan.ctaHref}
                         target="_blank"
@@ -415,57 +498,57 @@ export default function PricingPageClient() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          height: 36,
-                          borderRadius: 9999,
-                          border: '1px solid transparent',
-                          background: '#ffffff',
-                          color: '#000000',
-                          fontSize: FONT.sm,
-                          fontWeight: WEIGHT.medium,
+                          width: '100%',
+                          padding: '13px 0',
+                          borderRadius: 40,
+                          border: t.ctaBorder,
+                          background: t.ctaBg,
+                          color: t.ctaColor,
+                          fontSize: 15,
+                          fontWeight: 600,
                           textDecoration: 'none',
+                          letterSpacing: '-0.3px',
+                          marginBottom: 22,
+                          boxSizing: 'border-box',
                           transition: 'opacity 0.15s ease',
-                          letterSpacing: '-0.4px',
                         }}
                       >
                         {plan.cta}
                       </a>
 
                       {/* Divider */}
+                      <div style={{ height: 1, background: t.divider, marginBottom: 14, flexShrink: 0 }} />
+
+                      {/* Key features label */}
                       <div style={{
-                        height: 1,
-                        background: isDark ? '#ffffff' : '#000000',
-                        flexShrink: 0,
-                      }} />
+                        fontSize: 11, fontWeight: 600, letterSpacing: '0.8px',
+                        textTransform: 'uppercase', color: t.labelColor,
+                        marginBottom: 12,
+                      }}>
+                        Key features
+                      </div>
 
                       {/* Feature list */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
                         {plan.features.map(f => (
-                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                             {f.included ? (
-                              <PlanCheckIcon dark={isDark} />
+                              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" style={{ flexShrink: 0, marginTop: 4 }}>
+                                <path d="M1.5 5L5 8.5L12.5 1.5" stroke={t.checkColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
                             ) : (
-                              <span style={{
-                                color: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.3)',
-                                fontSize: 15,
-                                lineHeight: 1,
-                                flexShrink: 0,
-                                marginTop: 2,
-                              }}>–</span>
+                              <span style={{ color: t.priceMuted, fontSize: 14, lineHeight: 1, flexShrink: 0, marginTop: 3 }}>–</span>
                             )}
                             <span style={{
-                              fontSize: FONT.sm,
-                              fontWeight: WEIGHT.medium,
-                              lineHeight: 1.4,
-                              letterSpacing: '-0.4px',
-                              color: isDark
-                                ? (f.included ? 'rgba(255,255,255,0.88)' : 'rgba(255,255,255,0.3)')
-                                : (f.included ? '#000000' : 'rgba(0,0,0,0.4)'),
+                              fontSize: 14, fontWeight: 400, lineHeight: 1.45,
+                              letterSpacing: '-0.2px', color: t.featureColor,
                             }}>
                               {f.label}
                             </span>
                           </div>
                         ))}
                       </div>
+
                     </div>
                   )
                 })}
@@ -484,37 +567,62 @@ export default function PricingPageClient() {
                     <div
                       key={plan.id}
                       style={{
-                        background: isDark ? '#000000' : '#e5e7eb',
-                        color: isDark ? '#ffffff' : '#000000',
-                        borderRadius: 16,
-                        border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.06)',
-                        padding: '20px 20px 56px',
+                        background: isDark ? '#132128' : '#f9faf9',
+                        borderRadius: 20,
+                        border: isDark ? '1px solid rgba(95,168,158,0.20)' : '1px solid rgba(19,33,40,0.12)',
+                        padding: '28px 24px 32px',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 12,
                       }}
                     >
-                      {/* Plan name */}
-                      <div style={{
-                        fontSize: FONT.base,
-                        fontWeight: WEIGHT.medium,
-                        color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280',
-                        lineHeight: 1,
-                        letterSpacing: '-0.4px',
-                      }}>
-                        {plan.name}
+                      {/* Badge */}
+                      {plan.badge && (
+                        <div style={{ marginBottom: 10 }}>
+                          <span style={{
+                            fontSize: 11, fontWeight: 700, letterSpacing: '0.7px',
+                            textTransform: 'uppercase',
+                            background: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(46,125,79,0.12)',
+                            color: isDark ? '#5fa89e' : '#2e7d4f',
+                            borderRadius: 9999, padding: '4px 11px',
+                            display: 'inline-block',
+                          }}>
+                            {plan.badge}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Plan name + description */}
+                      <div style={{ marginBottom: 20 }}>
+                        <div style={{
+                          fontSize: 18, fontWeight: 600,
+                          color: isDark ? 'rgba(255,255,255,0.55)' : '#132128',
+                          letterSpacing: '-0.4px', lineHeight: 1, marginBottom: 6,
+                        }}>
+                          {plan.name}
+                        </div>
+                        <div style={{ fontSize: 13, color: isDark ? 'rgba(255,255,255,0.40)' : '#6b7280', lineHeight: 1.4 }}>
+                          {plan.description}
+                        </div>
                       </div>
 
                       {/* Price */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <p style={{ margin: 0, lineHeight: 1 }}>
-                          <span style={{ fontSize: 42, fontWeight: WEIGHT.bold, letterSpacing: '-0.04em', lineHeight: 1.1 }}>
-                            {plan.priceLine}
-                          </span>
-                        </p>
-                        <p style={{ margin: 0, fontSize: FONT.sm, lineHeight: 1.4, color: isDark ? 'rgba(255,255,255,0.45)' : '#6b7280' }}>
-                          {plan.priceSub}
-                        </p>
+                      <div style={{ marginBottom: 4 }}>
+                        <span style={{
+                          fontSize: 36, fontWeight: 700,
+                          color: isDark ? '#ffffff' : '#132128',
+                          letterSpacing: '-0.04em', lineHeight: 1,
+                        }}>
+                          {plan.priceLine}
+                        </span>
+                      </div>
+
+                      {/* Price sub */}
+                      <div style={{
+                        fontSize: 12,
+                        color: isDark ? 'rgba(255,255,255,0.40)' : '#9ca3af',
+                        lineHeight: 1.4, marginBottom: 20,
+                      }}>
+                        {plan.priceSub}
                       </div>
 
                       {/* CTA */}
@@ -524,11 +632,13 @@ export default function PricingPageClient() {
                           className="nh-plan-cta"
                           style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            height: 36, borderRadius: 9999, border: '1px solid transparent',
-                            background: '#ffffff', color: '#000000',
-                            fontSize: FONT.sm, fontWeight: WEIGHT.medium,
-                            textDecoration: 'none', transition: 'opacity 0.15s ease',
-                            letterSpacing: '-0.4px',
+                            width: '100%', padding: '13px 0', borderRadius: 40,
+                            background: 'rgba(255,255,255,0.90)', color: '#132128',
+                            border: 'none',
+                            fontSize: 15, fontWeight: 600,
+                            textDecoration: 'none', letterSpacing: '-0.3px',
+                            marginBottom: 22, boxSizing: 'border-box',
+                            transition: 'opacity 0.15s ease',
                           }}
                         >
                           {plan.cta}
@@ -541,11 +651,13 @@ export default function PricingPageClient() {
                           className="nh-plan-cta"
                           style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            height: 36, borderRadius: 9999, border: '1px solid transparent',
-                            background: '#ffffff', color: '#000000',
-                            fontSize: FONT.sm, fontWeight: WEIGHT.medium,
-                            textDecoration: 'none', transition: 'opacity 0.15s ease',
-                            letterSpacing: '-0.4px',
+                            width: '100%', padding: '13px 0', borderRadius: 40,
+                            background: 'transparent', color: '#132128',
+                            border: '1.5px solid rgba(19,33,40,0.28)',
+                            fontSize: 15, fontWeight: 600,
+                            textDecoration: 'none', letterSpacing: '-0.3px',
+                            marginBottom: 22, boxSizing: 'border-box',
+                            transition: 'opacity 0.15s ease',
                           }}
                         >
                           {plan.cta}
@@ -553,21 +665,33 @@ export default function PricingPageClient() {
                       )}
 
                       {/* Divider */}
-                      <div style={{ height: 1, background: isDark ? '#ffffff' : '#000000', flexShrink: 0 }} />
+                      <div style={{ height: 1, background: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(19,33,40,0.10)', marginBottom: 14, flexShrink: 0 }} />
+
+                      {/* Key features label */}
+                      <div style={{
+                        fontSize: 11, fontWeight: 600, letterSpacing: '0.8px',
+                        textTransform: 'uppercase',
+                        color: isDark ? 'rgba(255,255,255,0.38)' : '#9ca3af',
+                        marginBottom: 12,
+                      }}>
+                        Key features
+                      </div>
 
                       {/* Features */}
-                      <div style={{ display: 'grid', gridTemplateColumns: plan.id === 'enterprise' ? '1fr 1fr' : '1fr', gap: '8px 12px' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: plan.id === 'enterprise' ? '1fr 1fr' : '1fr', gap: '10px 12px', flex: 1 }}>
                         {plan.features.map(f => (
-                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                          <div key={f.label} style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                             {f.included ? (
-                              <PlanCheckIcon dark={isDark} />
+                              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" style={{ flexShrink: 0, marginTop: 4 }}>
+                                <path d="M1.5 5L5 8.5L12.5 1.5" stroke={isDark ? '#5fa89e' : '#2e7d4f'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
                             ) : (
-                              <span style={{ color: 'rgba(0,0,0,0.3)', fontSize: 15, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>–</span>
+                              <span style={{ color: isDark ? 'rgba(255,255,255,0.30)' : 'rgba(0,0,0,0.3)', fontSize: 14, lineHeight: 1, flexShrink: 0, marginTop: 3 }}>–</span>
                             )}
                             <span style={{
-                              fontSize: FONT.sm, fontWeight: WEIGHT.medium, lineHeight: 1.4,
-                              letterSpacing: '-0.4px',
-                              color: isDark ? 'rgba(255,255,255,0.85)' : '#000000',
+                              fontSize: 14, fontWeight: 400, lineHeight: 1.45,
+                              letterSpacing: '-0.2px',
+                              color: isDark ? 'rgba(255,255,255,0.72)' : 'rgba(19,33,40,0.62)',
                             }}>
                               {f.label}
                             </span>
@@ -595,156 +719,29 @@ export default function PricingPageClient() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          VISUAL INFOGRAPHIC — "Why pay for NextHire?"
-          Andela-style metrics + visual comparisons
+          WITHOUT vs WITH NEXTHIRE — gravity comparison
       ══════════════════════════════════════════════════════ */}
-      <section id="pricing-numbers" style={{ background: P.surface, padding: '96px clamp(20px, 5vw, 40px) 96px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <div style={{ display: 'inline-block', background: `${P.accent}12`, color: P.accentD, padding: '6px 16px', borderRadius: 100, fontSize: FONT.sm, fontWeight: WEIGHT.extra, letterSpacing: '1.2px', textTransform: 'uppercase', marginBottom: 14 }}>
-              The ROI of NextHire
-            </div>
-            <h2 style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, fontStyle: 'normal', color: '#132128', margin: '0 0 14px', letterSpacing: '-0.5px', lineHeight: 1.22, fontSynthesis: 'none' }}>
-              Numbers that make the decision easy.
-            </h2>
-            <p style={{ fontSize: FONT.md, color: P.mid, maxWidth: 520, margin: '0 auto', lineHeight: 1.65 }}>
-              Compare the cost of NextHire against the average time and money lost in a manual job search.
-            </p>
+      <WithWithoutSection />
+
+      {/* ══════════════════════════════════════════════════════
+          PLAN TABS — Free → Lite → Pro → Max accordion
+      ══════════════════════════════════════════════════════ */}
+      {tab === 'candidates' && (
+        <section style={{ background: '#ffffff', padding: '80px 0 48px' }}>
+          <div className="nh-container">
+            <PricingPlanTabs
+              plans={CANDIDATE_PLANS}
+              cycle={cycle}
+            />
           </div>
-
-          {/* Infographic grid — 3 columns */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }} className="pricing-infographic-grid">
-
-            {/* Card 1 — Time saved */}
-            <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, overflow: 'hidden', position: 'relative', boxShadow: NH_PANEL.shadow }}>
-              <div style={{ position: 'absolute', width: 120, height: 120, borderRadius: '50%', background: `${P.accent}08`, top: -30, right: -30 }} />
-              <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accent, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>Time saved</div>
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, marginBottom: 20 }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: FONT.sm, color: P.muted, marginBottom: 6 }}>Manual</div>
-                  <div style={{ width: 40, background: `${P.mid}20`, borderRadius: '6px 6px 0 0', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', height: 100 }}>
-                    <div style={{ width: '100%', background: P.mid, borderRadius: '4px 4px 0 0', height: '100%' }} />
-                  </div>
-                  <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.extra, color: P.mid, marginTop: 5 }}>40 hrs</div>
-                </div>
-                <div style={{ fontSize: FONT.md, color: P.muted, paddingBottom: 30 }}>→</div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: FONT.sm, color: P.muted, marginBottom: 6 }}>NextHire</div>
-                  <div style={{ width: 40, background: `${P.accent}20`, borderRadius: '6px 6px 0 0', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', height: 100 }}>
-                    <div style={{ width: '100%', background: P.accent, borderRadius: '4px 4px 0 0', height: '12%' }} />
-                  </div>
-                  <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.extra, color: P.accent, marginTop: 5 }}>~5 hrs</div>
-                </div>
-              </div>
-              <p style={{ fontSize: FONT.base, color: P.mid, lineHeight: 1.6, margin: 0 }}>Average weekly hours saved vs manual job searching across boards, applications, and outreach.</p>
-            </div>
-
-            {/* Card 2 — Application reach */}
-            <div style={{ background: P.dark, border: 'none', borderRadius: NH_PANEL.r, padding: 32, overflow: 'hidden', position: 'relative', boxShadow: NH_PANEL.shadow }}>
-              <div style={{ position: 'absolute', width: 140, height: 140, borderRadius: '50%', background: `${P.accent}15`, top: -40, right: -40 }} />
-              <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accent, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>Application reach</div>
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.white, lineHeight: 1, letterSpacing: '-1px' }}>
-                  40<span style={{ color: P.accent }}>×</span>
-                </div>
-                <div style={{ fontSize: FONT.base, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>more roles vs manual applying</div>
-              </div>
-              {[
-                { label: 'Manual (per week)', value: 12, max: 480, color: 'rgba(255,255,255,0.15)' },
-                { label: 'NextHire (per week)', value: 480, max: 480, color: P.accent },
-              ].map(r => (
-                <div key={r.label} style={{ marginBottom: 10 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: FONT.sm, color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>
-                    <span>{r.label}</span><span style={{ color: r.color === P.accent ? P.accent : 'rgba(255,255,255,0.6)', fontWeight: WEIGHT.bold }}>{r.value}</span>
-                  </div>
-                  <div style={{ height: 6, background: 'rgba(255,255,255,0.08)', borderRadius: 4, overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${(r.value / r.max) * 100}%`, background: r.color, borderRadius: 4 }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Card 3 — Reply rate */}
-            <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, overflow: 'hidden', position: 'relative', boxShadow: NH_PANEL.shadow }}>
-              <div style={{ position: 'absolute', width: 100, height: 100, borderRadius: '50%', background: `${P.green}10`, bottom: -20, right: -20 }} />
-              <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.green, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 14 }}>Reply rate</div>
-              <div style={{ display: 'flex', gap: 16, marginBottom: 20, alignItems: 'center' }}>
-                {[{ label: 'Cold email avg', v: 4, c: P.muted }, { label: 'NextHire avg', v: 31, c: P.green }].map(s => (
-                  <div key={s.label} style={{ flex: 1 }}>
-                    <div style={{ fontSize: FONT.sm, color: P.muted, marginBottom: 6 }}>{s.label}</div>
-                    <div style={{ position: 'relative', height: 80 }}>
-                      <svg viewBox="0 0 80 80" style={{ width: 80, height: 80 }}>
-                        <circle cx="40" cy="40" r="32" fill="none" stroke={P.mint} strokeWidth="8" />
-                        <circle cx="40" cy="40" r="32" fill="none" stroke={s.c} strokeWidth="8"
-                          strokeDasharray={`${(s.v / 100) * 201} 201`}
-                          strokeLinecap="round"
-                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }} />
-                        <text x="40" y="44" textAnchor="middle" fontSize={FONT.base} fontWeight={WEIGHT.extra} fill={s.c}>{s.v}%</text>
-                      </svg>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p style={{ fontSize: FONT.base, color: P.mid, lineHeight: 1.6, margin: 0 }}>NextHire outreach averages 31% reply rate vs 4% cold email industry average.</p>
-            </div>
-          </div>
-
-          {/* Second row — 2 wide cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }} className="pricing-roi-bottom">
-
-            {/* Cost comparison */}
-            <div style={{ background: P.white, border: 'none', borderRadius: NH_PANEL.r, padding: 32, boxShadow: NH_PANEL.shadow }}>
-              <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accentD, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 16 }}>Cost comparison</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {[
-                  { label: 'Recruiter agency fee (avg)', cost: '$8,000–15,000', note: 'per hire', color: P.mid },
-                  { label: 'Job board subscriptions', cost: '$200–600', note: '/month', color: P.muted },
-                  { label: 'Resume writing service', cost: '$300–800', note: 'one-time', color: P.muted },
-                  { label: 'NextHire Lite plan', cost: '$19.90', note: '/month — all tools included', color: P.accent },
-                ].map(r => (
-                  <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: r.label.includes('NextHire') ? `${P.accent}10` : NH_PANEL.inner, border: 'none', borderRadius: NH_PANEL.rowR }}>
-                    <span style={{ fontSize: FONT.base, color: P.mid, fontWeight: WEIGHT.medium }}>{r.label}</span>
-                    <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.extra, color: r.color }}>{r.cost}</span>
-                      <span style={{ fontSize: FONT.sm, color: P.muted, display: 'block' }}>{r.note}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Timeline to first offer */}
-            <div style={{ background: `linear-gradient(165deg, ${P.mint} 0%, #f3f8f6 100%)`, border: 'none', borderRadius: NH_PANEL.r, padding: 32, boxShadow: NH_PANEL.shadow }}>
-              <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: P.accentD, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 16 }}>Timeline to offer</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
-                <div style={{ position: 'absolute', left: 19, top: 24, bottom: 24, width: 2, background: P.sage }} />
-                {[
-                  { day: 'Day 1', event: 'Agent starts scanning & applying', color: P.accent },
-                  { day: '48–72h', event: 'First outreach replies arrive', color: P.green },
-                  { day: 'Week 2', event: 'First interview calls booked', color: P.accentD },
-                  { day: 'Week 4–8', event: 'Offer received', color: P.accent },
-                ].map((step, i) => (
-                  <div key={step.day} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: i < 3 ? 18 : 0, position: 'relative', zIndex: 1 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: '50%', background: `${step.color}20`, border: `2px solid ${step.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <div style={{ width: 10, height: 10, borderRadius: '50%', background: step.color }} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: step.color, letterSpacing: 0.5 }}>{step.day}</div>
-                      <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: P.dark, lineHeight: 1.4 }}>{step.event}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ══════════════════════════════════════════════════════
           COMPARISON TABLE — candidates
       ══════════════════════════════════════════════════════ */}
       {tab === 'candidates' && (
-        <section id="pricing-included" style={{ background: '#fbfaf4', padding: '60px 0 90px' }}>
+        <section id="pricing-included" style={{ background: '#fbfaf4', padding: '32px 0 90px' }}>
           <div className="ct-scroll-wrap">
             <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 30px', minWidth: 700 }}>
 
@@ -859,7 +856,7 @@ export default function PricingPageClient() {
       ══════════════════════════════════════════════════════ */}
       <section id="pricing-faq" style={{ background: '#ffffff', padding: '96px 0' }}>
         <AccordionFaq
-          title="Pricing questions"
+          title="Frequently asked questions"
           items={tab === 'candidates' ? [
             { question: 'Can I upgrade or downgrade anytime?', answer: 'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; downgrades apply at the next billing cycle.' },
             { question: 'What happens when I hit my InMail or Apply limit?', answer: "On Free you'll be prompted to upgrade. On Lite and Pro, you can purchase additional credits as add-ons at any time." },

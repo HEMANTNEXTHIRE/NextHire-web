@@ -70,15 +70,15 @@ export default function Footer() {
 
           {/* Col 1: For Candidates */}
           <div className="nh-footer-col">
-            <Link href="/candidates" className="nh-footer-heading nh-footer-heading--link">For Candidates</Link>
+            <Link href="/" className="nh-footer-heading nh-footer-heading--link">For Candidates</Link>
             <ul className="nh-footer-list" role="list">
               {FOOTER_CANDIDATE_TOOLS.map(({ label, href }) => (
                 <li key={label}><Link href={href} className="nh-footer-link">{label}</Link></li>
               ))}
               <li className="nh-footer-gap">
-                <Link href="/candidates#candidates-how" className="nh-footer-link">How it works</Link>
+                <Link href="/#how-it-works" className="nh-footer-link">How it works</Link>
               </li>
-              <li><Link href="/candidates#candidates-faq" className="nh-footer-link">FAQ</Link></li>
+              <li><Link href="/#home-faq" className="nh-footer-link">FAQ</Link></li>
             </ul>
           </div>
 
@@ -107,8 +107,9 @@ export default function Footer() {
 
           {/* Col 4: About + Pricing */}
           <div className="nh-footer-col">
-            <Link href="/about-nexthire" className="nh-footer-heading nh-footer-heading--link">About</Link>
+            <Link href="/blog" className="nh-footer-heading nh-footer-heading--link">Blog</Link>
             <ul className="nh-footer-list" role="list">
+              <li><Link href="/success-story" className="nh-footer-link">Success Stories</Link></li>
               <li><a href="https://nexthire.breezy.hr/" target="_blank" rel="noopener noreferrer" className="nh-footer-link">Careers</a></li>
               <li><Link href="/contact-us" className="nh-footer-link">Contact Us</Link></li>
             </ul>

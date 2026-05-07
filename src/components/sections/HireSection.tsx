@@ -26,6 +26,7 @@ const CARDS = [
   {
     bg: '#eef7f3',
     tag: 'AI Auto Apply',
+    href: 'https://app.nexthireconsulting.com/auto-apply',
     title: 'Apply to hundreds of\njobs while you sleep',
     features: [
       'ATS-optimised resumes tailored to every job description before sending',
@@ -39,6 +40,7 @@ const CARDS = [
   {
     bg: '#eef7f3',
     tag: 'AI Outreach Agent',
+    href: 'https://app.nexthireconsulting.com/ai-outreach',
     title: 'Reach hiring managers\nbefore roles go live',
     features: [
       'Detects team growth, tenure gaps, and LinkedIn hiring signals in real time',
@@ -52,6 +54,7 @@ const CARDS = [
   {
     bg: '#eef7f3',
     tag: 'Resume Builder',
+    href: 'https://app.nexthireconsulting.com/resume/builder',
     title: 'A new resume for\nevery role in seconds',
     features: [
       'Every resume aligned to the role\'s exact required skills and language',
@@ -64,39 +67,26 @@ const CARDS = [
   },
   {
     bg: '#eef7f3',
-    tag: 'Interview Coach',
-    title: 'Walk into every interview\nalready prepared',
+    tag: 'Job Portal Optimization',
+    href: 'https://app.nexthireconsulting.com/portal-optimization',
+    title: 'More visibility,\nmore interviews',
     features: [
-      'Mock rounds built from real interview patterns at your target companies',
-      'Live call copilot surfaces the right answers and examples in real time',
-      'Structured score and debrief after every session — clarity, confidence, quality',
+      'AI-optimises your LinkedIn, Indeed, and Naukri profiles for recruiter search algorithms',
+      'Keyword-tuned headlines and summaries matched to your target roles and companies',
+      'Weekly reports on profile views, search appearances, and direct recruiter outreach',
     ],
-    stat1: { n: '3×', l: 'more offers after coaching' },
-    stat2: { n: '500+', l: 'interview scenarios' },
-    imgContent: 'interview',
+    stat1: { n: '5×', l: 'more profile views' },
+    stat2: { n: '64%', l: 'more interviews booked' },
+    imgContent: 'portalopt',
   },
   {
     bg: '#eef7f3',
-
-    tag: 'AI Interviewer',
-    title: 'Full interview simulation —\nvoice, pressure, feedback',
-    features: [
-      'Questions calibrated to real interview loops at Stripe, Google, Notion and more',
-      'Speaks, listens, and adapts — mimicking a real interviewer\'s pacing',
-      'Intentionally challenging follow-ups to stress-test your answers under pressure',
-    ],
-    stat1: { n: '91%', l: 'confidence improvement' },
-    stat2: { n: '200+', l: 'company profiles' },
-    imgContent: 'aiinterviewer',
-  },
-  {
-    bg: '#eef7f3',
-
     tag: 'Job Tracker',
+    href: 'https://app.nexthireconsulting.com/tracker',
     title: 'Never lose track of\nwhere you stand',
     features: [
       'Kanban pipeline: Applied → Screening → Interview → Offer, auto-populated',
-      'Nudges sent before ghosting windows close — zero missed follow-ups',
+      'Nudges sent before ghosting windows close so no follow ups get missed',
       'Side-by-side offer comparison on comp, role, and team to help you decide',
     ],
     stat1: { n: '0', l: 'missed follow-ups' },
@@ -111,61 +101,103 @@ const CARDS = [
 
 /* Shared micro-components */
 const Badge = ({ color, bg, children }: { color: string; bg: string; children: React.ReactNode }) => (
-  <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color, background: bg, borderRadius: 5, padding: '2px 8px', whiteSpace: 'nowrap' }}>
+  <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color, background: bg, borderRadius: 7, padding: '4px 11px', whiteSpace: 'nowrap' }}>
     {children}
   </span>
 )
-const Label = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.accent, letterSpacing: 1.4, textTransform: 'uppercase' as const, marginBottom: 10 }}>
-    {children}
+const Divider = () => <div style={{ height: 1, background: P.border, margin: '4px 0' }} />
+
+/* Mockup panel header — replaces the old tiny Label */
+const PanelHeader = ({ dot, label, right }: { dot?: boolean; label: string; right?: React.ReactNode }) => (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 14, borderBottom: `1px solid ${P.border}`, marginBottom: 6 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      {dot && <div style={{ width: 9, height: 9, borderRadius: '50%', background: P.green, boxShadow: `0 0 0 3px rgba(51,134,50,0.18)`, flexShrink: 0 }} />}
+      <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, letterSpacing: 1.1, textTransform: 'uppercase' as const }}>{label}</span>
+    </div>
+    {right}
   </div>
 )
-const Divider = () => <div style={{ height: 1, background: P.border, margin: '4px 0' }} />
 
 /* 01 — Auto Apply */
 function AutoApplyMockup() {
-  const rows = [
-    { company: 'Stripe',  role: 'Senior Engineer',    status: 'Applied',   statusColor: P.green,  statusBg: P.mint },
-    { company: 'Notion',  role: 'AI Product Manager', status: 'Applying…', statusColor: P.accent, statusBg: P.mint   },
-    { company: 'Linear',  role: 'Staff Frontend',     status: 'In Queue',  statusColor: P.muted,  statusBg: P.mint },
-    { company: 'Figma',   role: 'Design Systems',     status: 'In Queue',  statusColor: P.muted,  statusBg: P.mint },
+  const jobs = [
+    { company: 'Stripe',  role: 'Senior Engineer',    status: 'Applied',   sc: P.green,  sb: P.mint   },
+    { company: 'Notion',  role: 'AI Product Manager', status: 'Applying…', sc: P.accent, sb: P.mint   },
+    { company: 'Linear',  role: 'Staff Frontend',     status: 'In Queue',  sc: P.muted,  sb: '#f3f4f6' },
+    { company: 'Figma',   role: 'Design Systems',     status: 'In Queue',  sc: P.muted,  sb: '#f3f4f6' },
   ]
+  const r = 34, circ = 2 * Math.PI * r, ats = 82
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, height: '100%' }}>
-      <Label>Agent Applying · Live</Label>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 14 }}>
+      <PanelHeader dot label="AI Auto Apply · Live"
+        right={<Badge color={P.accentD} bg={P.mint}>847 scanned</Badge>}
+      />
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {rows.map(r => (
-          <div key={r.company} style={{
-            background: P.surface, border: `1px solid ${P.border}`,
-            borderRadius: 10, padding: '10px 14px',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          }}>
-            <div>
-              <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: P.dark }}>{r.company}</div>
-              <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 2 }}>{r.role}</div>
+      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, overflow: 'hidden', minHeight: 0 }}>
+
+        {/* Left column: feature cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.muted, letterSpacing: 0.8, textTransform: 'uppercase' as const }}>Features</span>
+
+          <div style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 10, padding: '10px 12px' }}>
+            <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.dark, marginBottom: 3 }}>ATS-Tailored Resumes</div>
+            <div style={{ fontSize: FONT.xs, color: P.muted, lineHeight: 1.45 }}>AI creates custom resumes for each JD.</div>
+          </div>
+
+          <div style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 10, padding: '10px 12px' }}>
+            <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.dark, marginBottom: 3 }}>Portal Coverage</div>
+            <div style={{ fontSize: FONT.xs, color: P.muted, lineHeight: 1.45 }}>LinkedIn, Indeed, Naukri, and 60+ portals.</div>
+          </div>
+
+          <div style={{ background: P.mint, border: `1.5px solid ${P.sage}`, borderRadius: 10, padding: '10px 12px' }}>
+            <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, marginBottom: 3 }}>Auto Job Tracker</div>
+            <div style={{ fontSize: FONT.xs, color: P.mid, lineHeight: 1.45 }}>Every application logged, every follow-up scheduled, automatically.</div>
+          </div>
+        </div>
+
+        {/* Right column: performance + job list */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflow: 'hidden', minHeight: 0 }}>
+          <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.muted, letterSpacing: 0.8, textTransform: 'uppercase' as const }}>Global Performance</span>
+
+          {/* Stats row with ring */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+            <div style={{ textAlign: 'center' as const }}>
+              <div style={{ fontSize: '20px', fontWeight: WEIGHT.extra, color: P.dark, lineHeight: 1 }}>847</div>
+              <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 2, lineHeight: 1.3 }}>Jobs scanned</div>
             </div>
-            <Badge color={r.statusColor} bg={r.statusBg}>{r.status}</Badge>
+            <svg width="76" height="76" viewBox="0 0 76 76" style={{ flexShrink: 0 }}>
+              <circle cx="38" cy="38" r={r} fill="none" stroke={P.mint} strokeWidth="7" />
+              <circle cx="38" cy="38" r={r} fill="none" stroke={P.accent} strokeWidth="7"
+                strokeDasharray={`${(ats / 100) * circ} ${circ}`} strokeLinecap="round"
+                transform="rotate(-90 38 38)" />
+              <text x="38" y="35" textAnchor="middle" fontSize="16" fontWeight="800" fill={P.dark}>{ats}%</text>
+              <text x="38" y="48" textAnchor="middle" fontSize="8" fill={P.muted}>ATS pass</text>
+            </svg>
+            <div style={{ textAlign: 'center' as const }}>
+              <div style={{ fontSize: '20px', fontWeight: WEIGHT.extra, color: P.dark, lineHeight: 1 }}>40×</div>
+              <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 2, lineHeight: 1.3 }}>More reach</div>
+            </div>
           </div>
-        ))}
-      </div>
 
-      <div style={{ marginTop: 'auto' }}>
-        <Divider />
-        <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10 }}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.dark, lineHeight: 1 }}>847</div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 3 }}>Jobs scanned</div>
-          </div>
-          <div style={{ width: 1, background: P.border }} />
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.accent, lineHeight: 1 }}>312</div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 3 }}>Applications sent</div>
-          </div>
-          <div style={{ width: 1, background: P.border }} />
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: P.green, lineHeight: 1 }}>82%</div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 3 }}>ATS pass rate</div>
+          <Divider />
+
+          <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, flexShrink: 0 }}>Agent Applying · Live</div>
+
+          {/* Job rows */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 5, overflow: 'hidden' }}>
+            {jobs.map(j => (
+              <div key={j.company} style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                background: P.surface, border: `1px solid ${P.border}`, borderRadius: 8, padding: '7px 10px',
+              }}>
+                <div>
+                  <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.semi, color: P.dark }}>{j.company}</div>
+                  <div style={{ fontSize: 10, color: P.muted }}>{j.role}</div>
+                </div>
+                <Badge color={j.sc} bg={j.sb}>{j.status}</Badge>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -188,48 +220,44 @@ const OUTREACH_LOGOS: Record<string, string> = {
 }
 
 const OUTREACH_ROWS = [
-  { name: 'James Smith',       company: 'Stripe',     title: 'Talent Acquisition Manager', status: 'Replied',  statusColor: '#338632', statusBg: '#e8f5ee' },
-  { name: 'Maria Martinez',    company: 'Paypal',     title: 'Talent Acquisition Specialist', status: 'Opened', statusColor: '#1d6fb8', statusBg: '#e8f0fb' },
-  { name: 'Charles Wilson',    company: 'Razorpay',   title: 'HR Business Partner',        status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
-  { name: 'Atul Chaturvedi',   company: 'Visa',       title: 'Executive Manager HR',       status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
-  { name: 'Adhishree Gupta',   company: 'Ramp',       title: 'Senior Talent Acquisition',  status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
-  { name: 'Manish Sharma',     company: 'Brex',       title: 'Manager HRBP',               status: 'Sending', statusColor: '#b45309', statusBg: '#fef3c7' },
-  { name: 'Linda Jones',       company: 'Coinbase',   title: 'AVP - HRBP',                 status: 'Queued',  statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'James Smith',       company: 'Stripe',     title: 'Talent Acquisition Manager',    status: 'Replied',  statusColor: '#338632', statusBg: '#e8f5ee' },
+  { name: 'Maria Martinez',    company: 'Paypal',     title: 'Talent Acquisition Specialist',  status: 'Opened',   statusColor: '#1d6fb8', statusBg: '#e8f0fb' },
+  { name: 'Charles Wilson',    company: 'Razorpay',   title: 'HR Business Partner',            status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'Atul Chaturvedi',   company: 'Visa',       title: 'Executive Manager HR',           status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'Adhishree Gupta',   company: 'Ramp',       title: 'Senior Talent Acquisition',      status: 'Sent',     statusColor: '#8aada8', statusBg: '#f0f6f4' },
+  { name: 'Manish Sharma',     company: 'Brex',       title: 'Manager HRBP',                   status: 'Sending',  statusColor: '#b45309', statusBg: '#fef3c7' },
+  { name: 'Linda Jones',       company: 'Coinbase',   title: 'AVP - HRBP',                     status: 'Queued',   statusColor: '#8aada8', statusBg: '#f0f6f4' },
 ]
 
 function OutreachMockup() {
   const li = '/company-logos/linkedin.svg'
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 0 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
 
-      {/* Header */}
-      <div style={{ padding: '0 0 12px', borderBottom: `1px solid ${P.border}`, marginBottom: 8 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.green, letterSpacing: 1.4, textTransform: 'uppercase' as const }}>
-            Agent Outreach · Live
+      <PanelHeader dot label="Agent Outreach · Live"
+        right={
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
+            <span style={{ fontSize: '28px', fontWeight: WEIGHT.extra, color: P.dark, lineHeight: 1 }}>50</span>
+            <span style={{ fontSize: FONT.sm, color: P.muted }}>contacts found</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: P.green, boxShadow: `0 0 6px ${P.green}` }} />
-            <span style={{ fontSize: FONT.xs, color: P.muted }}>50 contacts found</span>
-          </div>
-        </div>
-      </div>
+        }
+      />
 
       {/* Rows */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 5, overflow: 'hidden' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7, overflow: 'hidden' }}>
         {OUTREACH_ROWS.map((r) => (
           <div key={r.name} style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            padding: '8px 10px',
+            display: 'flex', alignItems: 'center', gap: 12,
+            padding: '11px 14px',
             background: P.surface, border: `1px solid ${P.border}`,
-            borderRadius: 10,
+            borderRadius: 12,
           }}>
-            {/* Avatar initial */}
+            {/* Avatar */}
             <div style={{
-              width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
-              background: P.mint, border: `1px solid ${P.sage}`,
+              width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
+              background: P.mint, border: `1.5px solid ${P.sage}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '11px', fontWeight: WEIGHT.bold, color: P.green,
+              fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.accent,
             }}>
               {r.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
             </div>
@@ -237,39 +265,39 @@ function OutreachMockup() {
             {/* Name + title */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.semi, color: P.dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</span>
+                <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.semi, color: P.dark, whiteSpace: 'nowrap' as const, overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={li} alt="LinkedIn" width={11} height={11} style={{ flexShrink: 0, opacity: 0.7 }} />
+                <img src={li} alt="LinkedIn" width={13} height={13} style={{ flexShrink: 0, opacity: 0.65 }} />
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 2 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
                 {OUTREACH_LOGOS[r.company] && (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={OUTREACH_LOGOS[r.company]} alt={r.company} height={10} style={{ objectFit: 'contain', flexShrink: 0, maxWidth: 32, opacity: 0.75 }} />
+                  <img src={OUTREACH_LOGOS[r.company]} alt={r.company} height={13} style={{ objectFit: 'contain', flexShrink: 0, maxWidth: 40, opacity: 0.8 }} />
                 )}
-                <span style={{ fontSize: '10px', color: P.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.title}</span>
+                <span style={{ fontSize: FONT.sm, color: P.muted, whiteSpace: 'nowrap' as const, overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.title}</span>
               </div>
             </div>
 
             {/* Status badge */}
             <span style={{
-              fontSize: '10px', fontWeight: WEIGHT.bold,
+              fontSize: FONT.sm, fontWeight: WEIGHT.bold,
               color: r.statusColor, background: r.statusBg,
-              borderRadius: 5, padding: '2px 7px', flexShrink: 0, whiteSpace: 'nowrap',
+              borderRadius: 7, padding: '4px 10px', flexShrink: 0, whiteSpace: 'nowrap' as const,
             }}>{r.status}</span>
           </div>
         ))}
       </div>
 
       {/* Stats bar */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 12, paddingTop: 12, borderTop: `1px solid ${P.border}` }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 14, paddingTop: 14, borderTop: `1px solid ${P.border}` }}>
         {[
-          { v: '50', l: 'Contacted',  c: P.dark },
-          { v: '64%', l: 'Open rate', c: '#1d6fb8' },
-          { v: '31%', l: 'Reply rate', c: P.green },
+          { v: '50',  l: 'Contacted',  c: P.dark    },
+          { v: '64%', l: 'Open rate',  c: '#1d6fb8' },
+          { v: '31%', l: 'Reply rate', c: P.green   },
         ].map(s => (
           <div key={s.l} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: s.c, lineHeight: 1 }}>{s.v}</div>
-            <div style={{ fontSize: '10px', color: P.muted, marginTop: 3 }}>{s.l}</div>
+            <div style={{ fontSize: '28px', fontWeight: WEIGHT.extra, color: s.c, lineHeight: 1 }}>{s.v}</div>
+            <div style={{ fontSize: FONT.sm, color: P.muted, marginTop: 5 }}>{s.l}</div>
           </div>
         ))}
       </div>
@@ -285,88 +313,145 @@ function ResumeMockup() {
     { label: 'TypeScript / Go',     match: 92 },
   ]
   const sections = ['Experience', 'Skills', 'Impact Metrics', 'Projects']
+  const atsScore = 94
+  const r = 44
+  const circumference = 2 * Math.PI * r
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
-      <Label>Resume Builder · Generating</Label>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, height: '100%' }}>
 
-      <div style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 12, padding: 16, flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* Target row */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.dark }}>Tailored for: Stripe · Senior Engineer</div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 2 }}>Generated in 12s · 3 variants ready</div>
-          </div>
-          <Badge color={P.accentD} bg={P.mint}>Expert reviewing</Badge>
+      <PanelHeader dot label="Resume Builder · Generating"
+        right={<Badge color={P.accentD} bg={P.mint}>Expert reviewing</Badge>}
+      />
+
+      {/* Target row */}
+      <div style={{ background: '#eef7ed', border: `1px solid ${P.border}`, borderRadius: 13, padding: '14px 18px' }}>
+        <div style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: P.dark }}>Tailored for: Stripe · Senior Engineer</div>
+        <div style={{ fontSize: FONT.sm, color: P.muted, marginTop: 4 }}>Generated in 12s · 3 variants ready</div>
+      </div>
+
+      {/* ATS ring + keyword bars */}
+      <div style={{ display: 'flex', gap: 22, alignItems: 'center', flex: 1 }}>
+
+        {/* ATS ring — larger, dominant focal point */}
+        <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+          <svg width="112" height="112" viewBox="0 0 112 112">
+            <circle cx="56" cy="56" r={r} fill="none" stroke={P.mint} strokeWidth="9" />
+            <circle cx="56" cy="56" r={r} fill="none" stroke={P.accent} strokeWidth="9"
+              strokeDasharray={`${(atsScore / 100) * circumference} ${circumference}`}
+              strokeLinecap="round"
+              transform="rotate(-90 56 56)" />
+            <text x="56" y="50" textAnchor="middle" fontSize="28" fontWeight="800" fill={P.dark}>{atsScore}</text>
+            <text x="56" y="68" textAnchor="middle" fontSize="12" fill={P.muted}>ATS Score</text>
+          </svg>
+          <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, background: P.mint, borderRadius: 8, padding: '5px 13px' }}>Pass ✓</span>
         </div>
-        <Divider />
-        {/* Keyword match bars */}
-        {skills.map(kw => (
-          <div key={kw.label}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: FONT.xs }}>
-              <span style={{ color: P.mid, fontWeight: WEIGHT.medium }}>{kw.label}</span>
-              <span style={{ color: P.accent, fontWeight: WEIGHT.bold }}>{kw.match}% match</span>
+
+        {/* Keyword bars */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.muted, letterSpacing: 0.8, textTransform: 'uppercase' as const }}>Keyword Match</span>
+          {skills.map(kw => (
+            <div key={kw.label}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
+                <span style={{ fontSize: FONT.sm, color: P.mid, fontWeight: WEIGHT.medium }}>{kw.label}</span>
+                <span style={{ fontSize: FONT.base, color: P.accent, fontWeight: WEIGHT.bold }}>{kw.match}%</span>
+              </div>
+              <div style={{ height: 10, background: P.mint, borderRadius: 7 }}>
+                <div style={{ height: '100%', width: `${kw.match}%`, background: P.accent, borderRadius: 7 }} />
+              </div>
             </div>
-            <div style={{ height: 5, background: P.mint, borderRadius: 4 }}>
-              <div style={{ height: '100%', width: `${kw.match}%`, background: P.accent, borderRadius: 4 }} />
-            </div>
-          </div>
-        ))}
-        <Divider />
-        {/* Section checklist */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {sections.map(s => (
-            <span key={s} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: FONT.xs, color: P.mid, background: P.mint, border: `1px solid ${P.sage}`, borderRadius: 6, padding: '3px 9px' }}>
-              <span style={{ color: P.green, fontWeight: WEIGHT.bold }}>✓</span> {s}
-            </span>
           ))}
         </div>
+      </div>
+
+      <Divider />
+
+      {/* Section checklist */}
+      <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 8 }}>
+        {sections.map(s => (
+          <span key={s} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: FONT.sm, color: P.mid, background: P.mint, border: `1px solid ${P.sage}`, borderRadius: 8, padding: '6px 13px' }}>
+            <span style={{ color: P.green, fontWeight: WEIGHT.bold }}>✓</span> {s}
+          </span>
+        ))}
       </div>
     </div>
   )
 }
 
-/* 04 — Interview Coach */
-function InterviewMockup() {
-  const scores = [
-    { l: 'Structure',   v: 88, color: P.accent },
-    { l: 'Clarity',     v: 74, color: P.accentD  },
-    { l: 'Confidence',  v: 91, color: P.green  },
+/* 04 — Job Portal Optimization */
+function PortalOptMockup() {
+  const platforms = [
+    { name: 'LinkedIn',  score: 94, color: '#0a66c2', bg: '#e8f0fb' },
+    { name: 'Indeed',    score: 88, color: '#2164f3', bg: '#eef2ff' },
+    { name: 'Naukri',    score: 91, color: '#ff7555', bg: '#fff1ee' },
   ]
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
-      <Label>Mock Interview · Stripe PM</Label>
+  const r = 44
+  const circumference = 2 * Math.PI * r
+  const overallScore = 91
 
-      {/* Question card */}
-      <div style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 12, padding: 16, flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
-          <div style={{ width: 8, height: 8, borderRadius: '50%', background: P.green, boxShadow: `0 0 6px ${P.green}` }} />
-          <span style={{ fontSize: FONT.xs, color: P.muted }}>Round 2 of 3 · Behavioural</span>
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14, height: '100%' }}>
+
+      <PanelHeader dot label="Profile Optimization · Active"
+        right={<Badge color={P.accentD} bg={P.mint}>3 portals synced</Badge>}
+      />
+
+      {/* Score ring + platform bars */}
+      <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+
+        {/* Overall score ring */}
+        <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+          <svg width="112" height="112" viewBox="0 0 112 112">
+            <circle cx="56" cy="56" r={r} fill="none" stroke={P.mint} strokeWidth="9" />
+            <circle cx="56" cy="56" r={r} fill="none" stroke={P.accent} strokeWidth="9"
+              strokeDasharray={`${(overallScore / 100) * circumference} ${circumference}`}
+              strokeLinecap="round"
+              transform="rotate(-90 56 56)" />
+            <text x="56" y="50" textAnchor="middle" fontSize="28" fontWeight="800" fill={P.dark}>{overallScore}</text>
+            <text x="56" y="68" textAnchor="middle" fontSize="11" fill={P.muted}>Visibility</text>
+          </svg>
+          <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, background: P.mint, borderRadius: 8, padding: '5px 13px' }}>Optimised ✓</span>
         </div>
-        <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.accent, letterSpacing: 0.5 }}>Q2</div>
-        <div style={{ fontSize: FONT.sm, color: P.dark, lineHeight: 1.6, fontWeight: WEIGHT.medium }}>
-          &quot;Tell me about a product you launched from 0→1.&quot;
-        </div>
-        <div style={{ background: P.mint, border: `1px solid ${P.sage}`, borderRadius: 8, padding: '10px 14px' }}>
-          <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.accent, marginBottom: 5 }}>Coaching Tip</div>
-          <div style={{ fontSize: FONT.xs, color: P.mid, lineHeight: 1.55 }}>Use STAR format — lead with the constraint, not the solution. Mention tradeoffs explicitly.</div>
+
+        {/* Platform scores */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {platforms.map(p => (
+            <div key={p.name}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
+                <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.semi, color: P.mid }}>{p.name}</span>
+                <span style={{ fontSize: FONT.base, fontWeight: WEIGHT.bold, color: p.color }}>{p.score}%</span>
+              </div>
+              <div style={{ height: 10, background: p.bg, borderRadius: 7 }}>
+                <div style={{ height: '100%', width: `${p.score}%`, background: p.color, borderRadius: 7 }} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Score bars */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-        {scores.map(s => (
-          <div key={s.l} style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 10, padding: '12px 10px' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, marginBottom: 6 }}>
-              <div style={{ fontSize: FONT.lg, fontWeight: WEIGHT.extra, color: s.color, lineHeight: 1 }}>{s.v}</div>
-              <div style={{ fontSize: FONT.xs, color: P.muted, paddingBottom: 2 }}>/100</div>
-            </div>
-            <div style={{ height: 3, background: P.mint, borderRadius: 2 }}>
-              <div style={{ height: '100%', width: `${s.v}%`, background: s.color, borderRadius: 2 }} />
-            </div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 5 }}>{s.l}</div>
+      <Divider />
+
+      {/* Weekly impact stats */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+        {[
+          { v: '5×',  l: 'Profile views',       c: P.dark    },
+          { v: '64%', l: 'More interviews',      c: '#1d6fb8' },
+          { v: '31',  l: 'Recruiter messages',   c: P.green   },
+        ].map(s => (
+          <div key={s.l} style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 13, padding: '14px 12px', textAlign: 'center' }}>
+            <div style={{ fontSize: '26px', fontWeight: WEIGHT.extra, color: s.c, lineHeight: 1 }}>{s.v}</div>
+            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 6, lineHeight: 1.3 }}>{s.l}</div>
           </div>
         ))}
       </div>
+
+      {/* Keyword tip */}
+      <div style={{ background: P.mint, border: `1.5px solid ${P.sage}`, borderRadius: 12, padding: '14px 16px' }}>
+        <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.accent, marginBottom: 6, letterSpacing: 0.3 }}>✦ Latest Suggestion</div>
+        <div style={{ fontSize: FONT.sm, color: P.mid, lineHeight: 1.6 }}>
+          Add &quot;cross-functional&quot; and &quot;stakeholder alignment&quot; to your LinkedIn headline — 3× more recruiter hits.
+        </div>
+      </div>
+
     </div>
   )
 }
@@ -380,7 +465,7 @@ function AIInterviewerMockup() {
   ]
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
-      <Label>AI Interviewer · Product Manager</Label>
+      <PanelHeader dot label="AI Interviewer · Product Manager" />
 
       {/* Interviewer card */}
       <div style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 12, padding: 16, display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -407,8 +492,8 @@ function AIInterviewerMockup() {
             borderRadius: 10, padding: '10px 14px',
             display: 'flex', gap: 10, alignItems: 'flex-start',
           }}>
-            <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: q.active ? P.accent : P.muted, minWidth: 16 }}>{q.q}</span>
-            <span style={{ fontSize: FONT.sm, color: q.active ? P.dark : P.muted, lineHeight: 1.5 }}>{q.text}</span>
+            <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.extra, color: q.active ? P.accent : P.muted, minWidth: 22 }}>{q.q}</span>
+            <span style={{ fontSize: FONT.base, color: q.active ? P.dark : P.muted, lineHeight: 1.5 }}>{q.text}</span>
           </div>
         ))}
       </div>
@@ -418,7 +503,7 @@ function AIInterviewerMockup() {
         <div style={{ flex: 1, height: 4, background: P.mint, borderRadius: 4 }}>
           <div style={{ width: `${(1/5)*100}%`, height: '100%', background: P.accent, borderRadius: 4 }} />
         </div>
-        <span style={{ fontSize: FONT.xs, color: P.muted, marginLeft: 12 }}>1 / 5</span>
+        <span style={{ fontSize: FONT.sm, color: P.muted, marginLeft: 12 }}>1 / 5</span>
       </div>
     </div>
   )
@@ -426,49 +511,75 @@ function AIInterviewerMockup() {
 
 /* 06 — Job Tracker */
 function JobTrackerMockup() {
-  const cols = [
-    { label: 'Applied',    color: P.accent, jobs: ['Stripe · Eng',   'Notion · PM'  ] },
-    { label: 'Screening',  color: P.muted,  jobs: ['Linear · Design'               ] },
-    { label: 'Interview',  color: P.accentD, jobs: ['Figma · Systems'              ] },
-    { label: 'Offer',      color: P.green,  jobs: ['Vercel · Staff'                ] },
+  const tabs = [
+    { label: 'All Jobs',   count: 4, active: true  },
+    { label: 'Bookmarked', count: 1, active: false  },
+    { label: 'Applying',   count: 0, active: false  },
+    { label: 'Applied',    count: 1, active: false  },
   ]
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
-      <Label>Job Tracker · Pipeline</Label>
+  const rows = [
+    { position: 'SDE 3',                     company: 'Google', salary: 'N/A' },
+    { position: 'Senior Software Engineer',  company: 'Stripe', salary: 'N/A' },
+    { position: 'Tech Lead',                 company: 'Amazon', salary: 'N/A' },
+    { position: 'Member of Technical Staff', company: 'Tesla',  salary: 'N/A' },
+  ]
 
-      {/* Kanban */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8, flex: 1 }}>
-        {cols.map(col => (
-          <div key={col.label} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            {/* Column header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 4 }}>
-              <div style={{ width: 7, height: 7, borderRadius: '50%', background: col.color }} />
-              <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.bold, color: P.mid }}>{col.label}</span>
-            </div>
-            {/* Cards */}
-            {col.jobs.map(j => (
-              <div key={j} style={{ background: P.surface, border: `1px solid ${P.border}`, borderRadius: 8, padding: '8px 10px' }}>
-                <div style={{ fontSize: FONT.xs, fontWeight: WEIGHT.semi, color: P.dark, lineHeight: 1.4 }}>{j.split(' · ')[0]}</div>
-                <div style={{ fontSize: FONT.xs, color: P.muted }}>{j.split(' · ')[1]}</div>
-              </div>
-            ))}
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 0 }}>
+      <PanelHeader label="Job Tracker"
+        right={<Badge color={P.accentD} bg={P.mint}>Auto-tracked</Badge>}
+      />
+
+      {/* Tab bar */}
+      <div style={{ display: 'flex', borderBottom: `1px solid ${P.border}`, marginBottom: 0, flexShrink: 0, gap: 0 }}>
+        {tabs.map(t => (
+          <div key={t.label} style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '9px 14px',
+            borderBottom: t.active ? `2px solid ${P.dark}` : '2px solid transparent',
+            marginBottom: -1, cursor: 'pointer',
+          }}>
+            <span style={{ fontSize: FONT.sm, fontWeight: t.active ? WEIGHT.semi : WEIGHT.normal, color: t.active ? P.dark : P.muted, whiteSpace: 'nowrap' as const }}>{t.label}</span>
+            <span style={{ fontSize: 10, fontWeight: WEIGHT.bold, color: t.active ? '#fff' : P.muted, background: t.active ? P.dark : P.border, borderRadius: 99, padding: '1px 6px', minWidth: 18, textAlign: 'center' as const }}>{t.count}</span>
           </div>
         ))}
       </div>
 
-      <Divider />
+      {/* Toolbar */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 10px', borderBottom: `1px solid ${P.border}`, flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 15, height: 15, borderRadius: 4, border: `1.5px solid ${P.muted}`, flexShrink: 0 }} />
+          <span style={{ fontSize: FONT.sm, color: P.muted }}>Select all</span>
+        </div>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, border: `1px solid ${P.border}`, borderRadius: 99, padding: '4px 11px', cursor: 'pointer' }}>
+            <span style={{ fontSize: FONT.xs, color: P.mid }}>≡ Columns</span>
+          </div>
+          <div style={{ border: `1px solid ${P.border}`, borderRadius: 99, padding: '4px 10px', cursor: 'pointer' }}>
+            <span style={{ fontSize: FONT.xs, color: P.mid }}>···</span>
+          </div>
+        </div>
+      </div>
 
-      {/* Summary stats */}
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        {[
-          { n: '312', l: 'Applied',     c: P.accent },
-          { n: '28',  l: 'Screening',   c: P.muted  },
-          { n: '11',  l: 'Interviews',  c: P.accentD },
-          { n: '3',   l: 'Offers',      c: P.green  },
-        ].map(s => (
-          <div key={s.l} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: FONT.md, fontWeight: WEIGHT.extra, color: s.c, lineHeight: 1 }}>{s.n}</div>
-            <div style={{ fontSize: FONT.xs, color: P.muted, marginTop: 3 }}>{s.l}</div>
+      {/* Table header */}
+      <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr 90px 76px', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${P.border}`, flexShrink: 0 }}>
+        <div style={{ width: 15, height: 15, borderRadius: 4, border: `1.5px solid ${P.muted}` }} />
+        <span style={{ fontSize: FONT.xs, color: P.muted, fontWeight: WEIGHT.semi }}>Job Position</span>
+        <span style={{ fontSize: FONT.xs, color: P.muted, fontWeight: WEIGHT.semi }}>Company</span>
+        <span style={{ fontSize: FONT.xs, color: P.muted, fontWeight: WEIGHT.semi }}>Min Salary</span>
+      </div>
+
+      {/* Table rows */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {rows.map((row, i) => (
+          <div key={i} style={{
+            display: 'grid', gridTemplateColumns: '24px 1fr 90px 76px', alignItems: 'center',
+            padding: '12px 0', borderBottom: `1px solid ${P.border}`,
+          }}>
+            <div style={{ width: 15, height: 15, borderRadius: 4, border: `1.5px solid ${P.muted}` }} />
+            <span style={{ fontSize: FONT.sm, color: P.dark }}>{row.position}</span>
+            <span style={{ fontSize: FONT.sm, color: P.mid }}>{row.company}</span>
+            <span style={{ fontSize: FONT.sm, color: P.muted }}>{row.salary}</span>
           </div>
         ))}
       </div>
@@ -480,10 +591,12 @@ const MOCKUPS: Record<string, React.ReactNode> = {
   autoapply:    <AutoApplyMockup />,
   outreach:     <OutreachMockup />,
   resume:       <ResumeMockup />,
-  interview:    <InterviewMockup />,
+  portalopt:    <PortalOptMockup />,
   aiinterviewer:<AIInterviewerMockup />,
   jobtracker:   <JobTrackerMockup />,
 }
+
+// All cards now rendered via MOCKUPS — no image-based special cases
 
 /* ─── Scroll state (all DOM-imperative, no React re-renders on scroll) ── */
 interface ScrollState {
@@ -641,8 +754,8 @@ export default function HireSection() {
   })
 
   return (
-    <section id="features" style={{ background: '#f5faf7', padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px)' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <section id="features" style={{ background: '#f5faf7', padding: 'clamp(72px, 10vw, 110px) 0' }}>
+      <div className="nh-container">
 
         {/* Section header */}
         <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 80px' }}>
@@ -660,6 +773,9 @@ export default function HireSection() {
             <span style={{ display: 'block', color: '#132128' }}>While you focus on</span>
             <span style={{ display: 'block', color: '#132128' }}>what matters.</span>
           </h2>
+          <p style={{ fontSize: FONT.md, color: P.mid, maxWidth: '520px', margin: '0 auto', lineHeight: '27px', letterSpacing: '-0.3px' }}>
+            The agent works 24/7, discovering opportunities, reaching decision makers, and tracking every touchpoint
+          </p>
         </div>
 
         {/* Sticky stacked cards */}
@@ -739,7 +855,9 @@ export default function HireSection() {
 
                 {/* Learn more */}
                 <a
-                  href="https://app.nexthireconsulting.com"
+                  href={card.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
                     fontSize: '16px', fontWeight: WEIGHT.normal, letterSpacing: '-0.3px',
@@ -753,32 +871,26 @@ export default function HireSection() {
                 </a>
               </div>
 
-              {/* ── Right: white panel, flush to card edge ── */}
+              {/* ── Right: panel — all cards share the same padded-frame treatment ── */}
               <div style={{
                 flex: '0 0 50%', position: 'relative',
                 borderRadius: '0 28px 28px 0',
                 overflow: 'hidden',
-                background: card.imgContent === 'autoapply' ? '#EEF7ED' : '#ffffff',
+                background: '#f5f5f5',
                 boxShadow: '-12px 0 48px rgba(19,33,40,0.08)',
               }}>
-                {card.imgContent === 'autoapply' ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src="/hire-autoapply.png"
-                    alt="AI Auto Apply"
-                    style={{
-                      position: 'absolute',
-                      top: '50%', left: '50%',
-                      transform: 'translate(-60%, -50%) scale(1.2)',
-                      width: '100%', height: '100%',
-                      objectFit: 'contain',
-                    }}
-                  />
-                ) : (
-                  <div className="nh-card-mockup" style={{ position: 'absolute', inset: 0, padding: 32, display: 'flex', flexDirection: 'column' }}>
-                    {MOCKUPS[card.imgContent]}
+                <div style={{ position: 'absolute', inset: 0, padding: '44px 56px' }}>
+                  <div style={{
+                    position: 'relative', width: '100%', height: '100%',
+                    overflow: 'hidden', borderRadius: 12,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.13)',
+                    background: '#ffffff',
+                  }}>
+                    <div style={{ position: 'absolute', inset: 0, padding: '28px 32px', display: 'flex', flexDirection: 'column' }}>
+                      {MOCKUPS[card.imgContent]}
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             </div>
           ))}

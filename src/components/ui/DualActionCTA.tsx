@@ -67,13 +67,14 @@ export default function DualActionCTA({
       id="dual-action-cta"
       style={{
         background: '#162127',
-        padding: 'clamp(72px, 10vw, 110px) clamp(20px, 5vw, 40px) 0',
+        padding: 'clamp(72px, 10vw, 110px) 0 0',
       }}
     >
+      {/* Wrapper aligned to nav (1320px / 30px) */}
+      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 clamp(20px, 2.5vw, 30px)' }}>
+
       {/* One card, two halves */}
       <div style={{
-        maxWidth: '1160px',
-        margin: '0 auto',
         background: '#eef7f3',
         borderRadius: '28px',
         boxShadow: '0 8px 48px rgba(19,33,40,0.10)',
@@ -171,7 +172,8 @@ export default function DualActionCTA({
           )}
         </div>
 
-      </div>
+      </div>{/* end card */}
+      </div>{/* end 1320px wrapper */}
     </section>
   )
 }

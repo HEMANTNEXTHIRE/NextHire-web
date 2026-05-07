@@ -41,7 +41,7 @@ export default async function OrganizationPage({ params }: Props) {
           Explore opportunities and get connected with verified jobs at top companies through NextHire For Candidates.
         </p>
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/candidates/" className="button-primary">
+          <Link href="/" className="button-primary">
             Explore For Candidates
           </Link>
           <Link href="/contact-us/" className="button-secondary">

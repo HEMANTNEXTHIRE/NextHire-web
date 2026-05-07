@@ -81,21 +81,23 @@ export default function AccordionFaq({ title, items }: AccordionFaqProps) {
 
   return (
     <div className="nh-accordion-faq">
-      {title && (
-        <div className="nh-accordion-header">
-          <h2 className="nh-accordion-title">{title}</h2>
+      <div className="nh-accordion-inner">
+        {title && (
+          <div className="nh-accordion-sidebar">
+            <h2 className="nh-accordion-title">{title}</h2>
+          </div>
+        )}
+        <div className="nh-accordion-list">
+          {items.map((item, i) => (
+            <AccordionItem
+              key={i}
+              item={item}
+              open={openIndex === i}
+              onToggle={() => toggle(i)}
+              index={i}
+            />
+          ))}
         </div>
-      )}
-      <div className="nh-accordion-list">
-        {items.map((item, i) => (
-          <AccordionItem
-            key={i}
-            item={item}
-            open={openIndex === i}
-            onToggle={() => toggle(i)}
-            index={i}
-          />
-        ))}
       </div>
     </div>
   )

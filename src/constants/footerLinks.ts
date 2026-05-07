@@ -9,11 +9,12 @@ export const FOOTER_COMPANY_TOOLS = [
 ] as const
 
 export const FOOTER_CANDIDATE_TOOLS = [
-  { label: 'AI Outreach Agent', href: '/candidates#candidates-tools' },
-  { label: 'AI Auto Apply', href: '/candidates#candidates-tools' },
-  { label: 'Resume Builder', href: '/candidates#candidates-tools' },
-  { label: 'AI Interview Coach', href: '/candidates#candidates-tools' },
-  { label: 'Portal Optimization', href: '/candidates#candidates-tools' },
-  { label: 'Job Tracker', href: '/candidates#candidates-tools' },
-  { label: 'InMail', href: '/candidates#candidates-tools' },
+  { label: 'AI Outreach Agent',  href: 'https://app.nexthireconsulting.com/ai-outreach' },
+  { label: 'AI Auto Apply',      href: 'https://app.nexthireconsulting.com/auto-apply' },
+  { label: 'Resume Builder',     href: 'https://app.nexthireconsulting.com/resume/builder' },
+  { label: 'AI Interview Coach', href: 'https://app.nexthireconsulting.com/interview-copilot' },
+  { label: 'LinkedIn Optimizer', href: 'https://app.nexthireconsulting.com/profile/linkedin' },
+  { label: 'Naukri Optimizer',   href: 'https://app.nexthireconsulting.com/profile/naukri' },
+  { label: 'Job Tracker',        href: 'https://app.nexthireconsulting.com/tracker' },
+  { label: 'InMail',             href: 'https://app.nexthireconsulting.com/inmail' },
 ] as const

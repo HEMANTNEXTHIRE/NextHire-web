@@ -4,21 +4,6 @@ import React, { useState, useRef, useCallback } from 'react'
 import { WEIGHT } from '@/constants/typography'
 import { MagicText } from '@/components/ui/MagicText'
 
-/* ─── Colour tokens ──────────────────────────────────────── */
-const C = {
-  bg:      '#edf5f1',
-  surface: '#ffffff',
-  mint:    '#e4f0eb',
-  sage:    '#c8dfd6',
-  accent:  '#338632',
-  dark:    '#132128',
-  mid:     '#4b5563',
-  muted:   '#9ca3af',
-  border:  '#d1e8dc',
-  logo:    '#9db4af',
-}
-
-
 
 function DreamInput() {
   const [value, setValue] = useState('')
