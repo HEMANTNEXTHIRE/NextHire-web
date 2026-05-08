@@ -12,7 +12,7 @@ import CalBookingButton from '@/components/ui/CalBookingButton'
 const HOME_FAQS = [
   {
     question: 'How is this different from just applying myself?',
-    answer: 'The agent applies to 40× more roles than you could manually, finds unposted opportunities, and simultaneously reaches out directly to the hiring manager — not just submitting to an ATS black hole.',
+    answer: 'The agent applies to 40× more roles than humanly possible, discovers opportunities that are never publicly posted, and reaches out directly to the hiring manager at the same time, bypassing the ATS black hole altogether.',
   },
   {
     question: 'Is the outreach really from my email?',
@@ -20,11 +20,11 @@ const HOME_FAQS = [
   },
   {
     question: 'When do I pay?',
-    answer: 'NextHire has simple fixed pricing — no success fees, no hidden charges. You know exactly what you pay upfront, and our team is fully incentivised to get you placed fast.',
+    answer: 'NextHire keeps pricing simple and fixed, with no success fees and no hidden charges. You know exactly what you pay upfront, and our team is fully incentivised to get you placed as fast as possible.',
   },
   {
     question: 'What roles and industries does this work for?',
-    answer: 'The platform works across all professional roles — tech, product, design, finance, marketing, operations. The outreach and application strategy is tailored to each industry and seniority level.',
+    answer: 'Whether you are in tech, product, design, finance, marketing, or operations, the platform has you covered. The outreach and application approach is customised to fit your industry and where you are in your career.',
   },
   {
     question: 'How long until I see results?',
