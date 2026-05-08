@@ -120,9 +120,9 @@ export default function HeroSection() {
       }}>
 
         {/* ── Headline ── */}
-        <div style={{
+        <div className="nh-hero-headline" style={{
           width: 'fit-content',
-          maxWidth: '100vw',
+          maxWidth: '100%',
           margin: '0 auto 32px',
           paddingBottom: '0.15em',
         }}>
@@ -133,27 +133,25 @@ export default function HeroSection() {
             fontSynthesis: 'none',
           }}>
           {/* First line */}
-          <span style={{
+          <span className="nh-hero-line" style={{
             display: 'block',
-            fontSize: '72px',
+            fontSize: 'clamp(34px, 9vw, 72px)',
             fontWeight: 450,
             fontStyle: 'normal',
             color: '#132128',
-            lineHeight: '86.4px',
-            whiteSpace: 'nowrap',
+            lineHeight: 1.2,
             fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
           }}>
             The Unfair Advantage
           </span>
           {/* Second line */}
-          <span style={{
+          <span className="nh-hero-line" style={{
             display: 'block',
-            fontSize: '72px',
+            fontSize: 'clamp(34px, 9vw, 72px)',
             fontWeight: 450,
             fontStyle: 'normal',
             color: '#338632',
-            lineHeight: '86.4px',
-            whiteSpace: 'nowrap',
+            lineHeight: 1.2,
             fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
           }}>
             Every Job Seeker Deserves

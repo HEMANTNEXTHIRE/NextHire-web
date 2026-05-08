@@ -64,20 +64,18 @@ export default async function BlogIndexPage() {
           {/* Headline */}
           <div style={{ marginBottom: 32 }}>
             <h1 style={{ margin: 0, letterSpacing: '-0.7px', fontSynthesis: 'none' }}>
-              <span style={{
+              <span className="nh-hero-line" style={{
                 display: 'block',
-                fontSize: '72px', fontWeight: 450,
-                color: '#132128', lineHeight: '86.4px',
-                whiteSpace: 'nowrap',
+                fontSize: 'clamp(34px, 9vw, 72px)', fontWeight: 450,
+                color: '#132128', lineHeight: 1.2,
                 fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
               }}>
                 Career Insights
               </span>
-              <span style={{
+              <span className="nh-hero-line" style={{
                 display: 'block',
-                fontSize: '72px', fontWeight: 450,
-                color: '#338632', lineHeight: '86.4px',
-                whiteSpace: 'nowrap',
+                fontSize: 'clamp(34px, 9vw, 72px)', fontWeight: 450,
+                color: '#338632', lineHeight: 1.2,
                 fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
               }}>
                 &amp; Expert Advice
@@ -129,14 +127,14 @@ export default async function BlogIndexPage() {
         <section style={{ background: P.surface, padding: '72px 0 0' }}>
           <div className="nh-container">
             <Link href={`/blog/${featured.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
-              <article style={{
+              <article className="nh-blog-featured" style={{
                 display: 'grid', gridTemplateColumns: '1fr 1fr',
                 border: `2px solid ${P.border}`, borderRadius: 20,
                 overflow: 'hidden', background: P.surface,
                 transition: 'box-shadow 0.25s',
               }}>
                 {/* Image */}
-                <div style={{ height: 420, background: P.mint, overflow: 'hidden', position: 'relative' }}>
+                <div className="nh-blog-featured__img" style={{ height: 420, background: P.mint, overflow: 'hidden', position: 'relative' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={featured.heroImage}
@@ -147,7 +145,7 @@ export default async function BlogIndexPage() {
                 </div>
 
                 {/* Content */}
-                <div style={{ padding: '52px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 20 }}>
+                <div className="nh-blog-featured__body" style={{ padding: '52px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 20 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <span style={{
                       fontSize: '11px', fontWeight: 700, letterSpacing: '1.2px',
@@ -162,7 +160,7 @@ export default async function BlogIndexPage() {
                   </div>
 
                   <h2 style={{
-                    fontSize: '30px', fontWeight: 700,
+                    fontSize: 'clamp(22px, 4vw, 30px)', fontWeight: 700,
                     color: P.dark, margin: 0, lineHeight: 1.25,
                   }}>
                     {featured.title}

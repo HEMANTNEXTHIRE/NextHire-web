@@ -74,21 +74,20 @@ export default function DualActionCTA({
       <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 clamp(20px, 2.5vw, 30px)' }}>
 
       {/* One card, two halves */}
-      <div style={{
+      <div className="nh-dual-action-card" style={{
         background: '#eef7f3',
         borderRadius: '28px',
         boxShadow: '0 8px 48px rgba(19,33,40,0.10)',
         display: 'flex',
         alignItems: 'stretch',
         overflow: 'hidden',
-        minHeight: '600px',
       }}>
 
         {/* ── Left half ── */}
         <div style={{
-          flex: '0 0 50%',
+          flex: '1 1 50%',
           minWidth: 0,
-          padding: '72px',
+          padding: 'clamp(32px, 6vw, 72px)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -107,7 +106,7 @@ export default function DualActionCTA({
 
           <h2 style={{
             fontFamily: "'Droid Serif', Georgia, serif",
-            fontSize: '54px', fontWeight: 400, lineHeight: '64.8px', letterSpacing: '-1.2px',
+            fontSize: 'clamp(32px, 5vw, 54px)', fontWeight: 400, lineHeight: 1.2, letterSpacing: '-1.2px',
             color: '#132128', margin: '0 0 16px',
           }}>
             {leftSubtitle}
@@ -130,9 +129,9 @@ export default function DualActionCTA({
 
         {/* ── Right half ── */}
         <div style={{
-          flex: '0 0 50%',
+          flex: '1 1 50%',
           minWidth: 0,
-          padding: '72px',
+          padding: 'clamp(32px, 6vw, 72px)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -151,7 +150,7 @@ export default function DualActionCTA({
 
           <h2 style={{
             fontFamily: "'Droid Serif', Georgia, serif",
-            fontSize: '54px', fontWeight: 400, lineHeight: '64.8px', letterSpacing: '-1.2px',
+            fontSize: 'clamp(32px, 5vw, 54px)', fontWeight: 400, lineHeight: 1.2, letterSpacing: '-1.2px',
             color: '#132128', margin: '0 0 16px',
           }}>
             {rightSubtitle}

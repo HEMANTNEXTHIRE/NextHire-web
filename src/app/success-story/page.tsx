@@ -219,9 +219,9 @@ export default function SuccessStoryPage() {
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#5fa89e', display: 'inline-block', boxShadow: '0 0 8px #5fa89e' }} />
             <span style={{ color: '#3d7a72', fontSize: FONT.sm, fontWeight: WEIGHT.semi, letterSpacing: '0.5px' }}>Real people. Real results.</span>
           </div>
-          <h1 style={{ color: '#132128', fontSize: 'clamp(36px, 6vw, 76px)', fontWeight: 400, lineHeight: 1.22, margin: '0 0 20px', letterSpacing: '-0.5px' }}>
-            <span style={{ display: 'block', whiteSpace: 'nowrap' }}>Stories from candidates</span>
-            <span style={{ display: 'block', color: '#338632', whiteSpace: 'nowrap' }}>who stopped waiting.</span>
+          <h1 style={{ color: '#132128', fontSize: 'clamp(30px, 6vw, 76px)', fontWeight: 400, lineHeight: 1.22, margin: '0 0 20px', letterSpacing: '-0.5px' }}>
+            <span className="nh-hero-line" style={{ display: 'block' }}>Stories from candidates</span>
+            <span className="nh-hero-line" style={{ display: 'block', color: '#338632' }}>who stopped waiting.</span>
           </h1>
           <p style={{ color: '#3d5a56', fontSize: FONT.base, lineHeight: 1.75, margin: '0 0 44px', maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
             From first AI application to signed offer — see how professionals across every role and industry used NextHire to change their trajectory.

@@ -120,6 +120,70 @@ main {
   box-sizing: border-box;
 }
 
+/* DualActionCTA: stack the two halves vertically on small screens */
+@media (max-width: 767px) {
+  .nh-dual-action-card {
+    flex-direction: column !important;
+  }
+  .nh-dual-action-card > div {
+    flex: 1 1 auto !important;
+    border-right: none !important;
+  }
+}
+
+/* WithWithoutSection: physics chips on desktop, static chips on mobile */
+.nh-ww-static { display: none; }
+
+@media (max-width: 767px) {
+  .nh-with-without-card {
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+  .nh-with-without-card .nh-ww-left,
+  .nh-with-without-card .nh-ww-right {
+    flex: 1 1 auto !important;
+    border-right: none !important;
+  }
+  .nh-with-without-card .nh-ww-left {
+    min-height: 320px;
+  }
+  /* Hide physics simulation + drag hint on mobile, show static chip arrangement */
+  .nh-ww-physics { display: none !important; }
+  .nh-ww-draghint { display: none !important; }
+  .nh-ww-static {
+    display: flex !important;
+    position: absolute;
+    top: 60px;
+    left: 16px;
+    right: 16px;
+    bottom: 36px;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 8px 6px;
+  }
+}
+
+/* Hero headline: keep on one line per phrase on desktop, allow wrap on mobile */
+@media (min-width: 768px) {
+  .nh-hero-line {
+    white-space: nowrap;
+  }
+}
+
+/* Blog featured post: stack image + body vertically on mobile */
+@media (max-width: 767px) {
+  .nh-blog-featured {
+    grid-template-columns: 1fr !important;
+  }
+  .nh-blog-featured__img {
+    height: 220px !important;
+  }
+  .nh-blog-featured__body {
+    padding: 28px 24px !important;
+  }
+}
+
 /* Swiper CSS — loaded globally so all slider pages have styles available */
 @import 'swiper/css';
 @import 'swiper/css/navigation';
@@ -923,7 +987,7 @@ dialog::backdrop {
    Mobile top values override the desktop inline-style values via !important.
    Cards are compact on mobile (features hidden) so stacking is visible.
    ══════════════════════════════════════════════════════════════════════ */
-@media (max-width: 860px) {
+@media (max-width: 991px) {
   /* Override desktop top values (88*i+100) with mobile values (68 + 44*i) */
   html body .nh-sticky-card:nth-child(1) { top: 68px  !important; }
   html body .nh-sticky-card:nth-child(2) { top: 112px !important; }
@@ -2628,7 +2692,47 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* ── Pricing comparison table ── */
-.ct-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.ct-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  /* Fit all 4 plans in viewport without horizontal scroll */
+  .ct-scroll-wrap { overflow-x: visible !important; }
+  .ct-table {
+    padding: 0 12px !important;
+    min-width: 0 !important;
+  }
+  .ct-table .ct-row {
+    gap: 8px !important;
+  }
+  .ct-table .ct-row-label {
+    flex: 1.1 0 0 !important;
+  }
+  .ct-table .ct-row-values {
+    flex: 4 0 0 !important;
+    gap: 4px !important;
+  }
+  .ct-table .ct-row-values > div { min-width: 0 !important; }
+  .ct-table .ct-row-label span { font-size: 12px !important; line-height: 1.3 !important; }
+  .ct-table .ct-plan-name { font-size: 13px !important; }
+  /* Equal-size CTA buttons across all 4 plans */
+  .ct-table .ct-plan-cta {
+    width: 100% !important;
+    padding: 8px 2px !important;
+    font-size: 11px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+  /* Heading "Features" can shrink on mobile to give plans more room */
+  .ct-table h2 { font-size: 18px !important; }
+  /* Compact value cells: smaller icons + text */
+  .ct-table .ct-row-values svg { width: 18px !important; height: 18px !important; }
+  .ct-table .ct-row-values span { font-size: 11px !important; }
+}
 
 /* ── Orbital Feature Map ────────────────────────────────────── */
 @keyframes nh-orbital-center-pulse {

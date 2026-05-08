@@ -743,51 +743,51 @@ export default function PricingPageClient() {
       {tab === 'candidates' && (
         <section id="pricing-included" style={{ background: '#fbfaf4', padding: '32px 0 90px' }}>
           <div className="ct-scroll-wrap">
-            <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 30px', minWidth: 700 }}>
+            <div className="ct-table" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 30px' }}>
 
               {/* ── Sticky header: heading left + plan cols right ── */}
-              <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'flex-end', gap: 22, paddingBottom: 20 }}>
+              <div className="ct-row" style={{ display: 'flex', flexFlow: 'row', alignItems: 'flex-end', gap: 22, paddingBottom: 20 }}>
 
                 {/* Heading */}
-                <div style={{ flex: '2 0 0' }}>
+                <div className="ct-row-label" style={{ flex: '2 0 0' }}>
                   <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: 'clamp(22px, 2.8vw, 38px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.042em', lineHeight: 1.15, margin: 0 }}>
                     Features
                   </h2>
                 </div>
 
                 {/* Plan columns */}
-                <div style={{ flex: '4 0 0', display: 'flex', flexFlow: 'row', gap: 12, alignItems: 'flex-end' }}>
+                <div className="ct-row-values" style={{ flex: '4 0 0', display: 'flex', flexFlow: 'row', gap: 12, alignItems: 'flex-end' }}>
 
                   {/* Free */}
-                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                  <div className="ct-plan-col" style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Free</span>
+                      <span className="ct-plan-name" style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Free</span>
                     </div>
-                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: 'transparent', color: '#091717', border: '1.5px solid rgba(9,23,23,0.28)', transition: 'opacity 0.15s' }}>Get started</a>
+                    <a className="ct-plan-cta" href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: 'transparent', color: '#091717', border: '1.5px solid rgba(9,23,23,0.28)', transition: 'opacity 0.15s' }}>Get started</a>
                   </div>
 
                   {/* Lite */}
-                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                  <div className="ct-plan-col" style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Lite</span>
+                      <span className="ct-plan-name" style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Lite</span>
                     </div>
-                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: 'transparent', color: '#091717', border: '1.5px solid rgba(9,23,23,0.28)', transition: 'opacity 0.15s' }}>Start Lite</a>
+                    <a className="ct-plan-cta" href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: 'transparent', color: '#091717', border: '1.5px solid rgba(9,23,23,0.28)', transition: 'opacity 0.15s' }}>Start Lite</a>
                   </div>
 
                   {/* Pro — BEST VALUE */}
-                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                  <div className="ct-plan-col" style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Pro</span>
+                      <span className="ct-plan-name" style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Pro</span>
                     </div>
-                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: '#338632', color: '#fbfaf4', border: 'none', transition: 'opacity 0.15s' }}>Start Pro</a>
+                    <a className="ct-plan-cta" href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: '#338632', color: '#fbfaf4', border: 'none', transition: 'opacity 0.15s' }}>Start Pro</a>
                   </div>
 
                   {/* Max */}
-                  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
+                  <div className="ct-plan-col" style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 22 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Max</span>
+                      <span className="ct-plan-name" style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(16px,1.8vw,22px)', fontWeight: 400, color: '#091717', letterSpacing: '-0.027em', lineHeight: 1.2 }}>Max</span>
                     </div>
-                    <a href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: '#091717', color: '#fbfaf4', border: 'none', transition: 'opacity 0.15s' }}>Start Max</a>
+                    <a className="ct-plan-cta" href="https://app.nexthireconsulting.com" style={{ display: 'block', width: '80%', padding: '10px 0', borderRadius: 8, fontSize: 15, fontWeight: 500, letterSpacing: '-0.013em', textDecoration: 'none', textAlign: 'center', background: '#091717', color: '#fbfaf4', border: 'none', transition: 'opacity 0.15s' }}>Start Max</a>
                   </div>
 
                 </div>
@@ -806,15 +806,15 @@ export default function PricingPageClient() {
                 { label: 'AI Outreach Agent',        vals: [{ v: false }, { v: false }, { v: false }, { v: '3,000 / mo', note: "Don't wait to be found" }] },
               ] as Array<{ label: string; vals: Array<{ v: boolean | string; note?: string }> }>).map((row, rowIdx, arr) => (
                 <div key={row.label}>
-                  <div style={{ display: 'flex', flexFlow: 'row', gap: 22, padding: '22px 0', alignItems: 'stretch' }}>
+                  <div className="ct-row" style={{ display: 'flex', flexFlow: 'row', gap: 22, padding: '22px 0', alignItems: 'stretch' }}>
 
                     {/* Feature label */}
-                    <div style={{ flex: '2 0 0', display: 'flex', alignItems: 'center' }}>
+                    <div className="ct-row-label" style={{ flex: '2 0 0', display: 'flex', alignItems: 'center' }}>
                       <span style={{ fontFamily: "'Inter',system-ui,sans-serif", fontSize: 'clamp(14px,1.5vw,18px)', fontWeight: WEIGHT.medium, color: '#091717', letterSpacing: '-0.038em', lineHeight: 1.4 }}>{row.label}</span>
                     </div>
 
                     {/* Value cells */}
-                    <div style={{ flex: '4 0 0', display: 'flex', flexFlow: 'row', gap: 10, alignItems: 'stretch' }}>
+                    <div className="ct-row-values" style={{ flex: '4 0 0', display: 'flex', flexFlow: 'row', gap: 10, alignItems: 'stretch' }}>
                       {[0, 1, 2, 3].map((colIdx) => {
                         const cell = row.vals[colIdx]
                         const isPro = colIdx === 2

@@ -312,10 +312,10 @@ export default function CompaniesPageClient() {
             <Reveal delay={0.06}>
               <div style={{ width: '100%', margin: '0 0 28px' }}>
                 <h1 style={{ margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22 }}>
-                  <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
+                  <span style={{ display: 'block', fontSize: 'clamp(30px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
                     Hire the right people.
                   </span>
-                  <span style={{ display: 'block', fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
+                  <span style={{ display: 'block', fontSize: 'clamp(30px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
                     <Typewriter texts={['In days, not months.', 'At 10× the speed.', 'With zero wasted hours.']} />
                   </span>
                 </h1>

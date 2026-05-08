@@ -52,7 +52,7 @@ export default function WithWithoutSection() {
         </div>
 
         {/* Card */}
-        <div style={{
+        <div className="nh-with-without-card" style={{
           background: '#eef7f3',
           borderRadius: 28,
           boxShadow: '0 8px 48px rgba(19,33,40,0.10)',
@@ -63,8 +63,8 @@ export default function WithWithoutSection() {
         }}>
 
           {/* ── LEFT: Without NextHire ────────────────────────── */}
-          <div style={{
-            flex: '0 0 50%',
+          <div className="nh-ww-left" style={{
+            flex: '1 1 50%',
             minWidth: 0,
             position: 'relative',
             backgroundImage: 'radial-gradient(circle, rgba(19,33,40,0.09) 1px, transparent 1px)',
@@ -96,8 +96,8 @@ export default function WithWithoutSection() {
               </span>
             </div>
 
-            {/* Physics world — inset so pills can't clip the panel edges */}
-            <div style={{
+            {/* Physics world — desktop/tablet only. Inset so pills can't clip the panel edges */}
+            <div className="nh-ww-physics" style={{
               position: 'absolute',
               /* inset 20px on every side — physics walls live here, not at the raw edge */
               top: 20, left: 20, right: 20, bottom: 20,
@@ -114,7 +114,7 @@ export default function WithWithoutSection() {
                     bodyType="rectangle"
                     isDraggable
                   >
-                    <div style={{
+                    <div className="nh-ww-chip" style={{
                       background: chip.bg,
                       borderRadius: 9999,
                       padding: '16px 32px',
@@ -135,8 +135,34 @@ export default function WithWithoutSection() {
               </Gravity>
             </div>
 
-            {/* Drag hint */}
-            <div style={{
+            {/* Mobile static chips — flex-wrap arrangement, no physics dependency.
+                Always renders so users never see an empty dotted panel. */}
+            <div className="nh-ww-static" aria-hidden="true">
+              {CHIPS.map((chip) => (
+                <span
+                  key={chip.text}
+                  style={{
+                    background: chip.bg,
+                    borderRadius: 9999,
+                    padding: '8px 14px',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: '#ffffff',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 4px 16px rgba(19,33,40,0.20)',
+                    letterSpacing: '-0.3px',
+                    lineHeight: 1,
+                    transform: `rotate(${chip.angle ?? 0}deg)`,
+                    display: 'inline-block',
+                  }}
+                >
+                  {chip.text}
+                </span>
+              ))}
+            </div>
+
+            {/* Drag hint — only relevant for the physics layout (desktop) */}
+            <div className="nh-ww-draghint" style={{
               position: 'absolute', bottom: 22, left: 0, right: 0,
               textAlign: 'center', zIndex: 20, pointerEvents: 'none',
             }}>
@@ -147,11 +173,11 @@ export default function WithWithoutSection() {
           </div>
 
           {/* ── RIGHT: With NextHire ──────────────────────────── */}
-          <div style={{
-            flex: '0 0 50%',
+          <div className="nh-ww-right" style={{
+            flex: '1 1 50%',
             minWidth: 0,
             background: '#132128',
-            padding: '56px 64px',
+            padding: 'clamp(40px, 6vw, 56px) clamp(24px, 6vw, 64px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',

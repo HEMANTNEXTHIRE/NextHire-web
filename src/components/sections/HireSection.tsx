@@ -825,12 +825,12 @@ export default function HireSection() {
 
                 {/* Title */}
                 <h3 style={{
-                  fontSize: '32px',
+                  fontSize: 'clamp(24px, 3.2vw, 32px)',
                   fontWeight: WEIGHT.normal,
                   fontFamily: "'Inter', system-ui, sans-serif",
                   color: '#132128',
                   margin: '0 0 36px',
-                  lineHeight: '41.6px',
+                  lineHeight: 1.25,
                   letterSpacing: '-0.3px',
                   whiteSpace: 'pre-line',
                 }}>
