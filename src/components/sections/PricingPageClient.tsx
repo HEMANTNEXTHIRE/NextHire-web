@@ -799,7 +799,9 @@ export default function PricingPageClient() {
               {/* ── Feature rows ── */}
               {([
                 { label: 'Resume Builder',          vals: [{ v: true }, { v: true }, { v: true }, { v: true }] },
+                { label: 'Cover Letter',             vals: [{ v: false }, { v: true }, { v: true }, { v: true }] },
                 { label: 'Job Tracker',              vals: [{ v: true }, { v: true }, { v: true }, { v: true }] },
+                { label: 'Portal Optimization',      vals: [{ v: false }, { v: true }, { v: true }, { v: true }] },
                 { label: 'Interview Coach',          vals: [{ v: '30 min' }, { v: '30 min' }, { v: '20 hrs / mo', note: 'AI listens & answers in real time' }, { v: '20 hrs / mo' }] },
                 { label: 'AI Auto Apply',            vals: [{ v: '5 / day' }, { v: 'Unlimited' }, { v: 'Unlimited' }, { v: 'Unlimited' }] },
                 { label: 'Direct Recruiter InMail',  vals: [{ v: false }, { v: '50 / mo' }, { v: '200 / mo' }, { v: 'Unlimited' }] },
