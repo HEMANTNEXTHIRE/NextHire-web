@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { useScroll, useMotionValueEvent } from 'motion/react'
 import { FONT, WEIGHT } from '@/constants/typography'
 import { FloatingIntegrations } from '@/components/sections/FloatingIntegrations'
 
@@ -28,13 +29,6 @@ const NH_PANEL = {
 }
 
 /* ── Data ─────────────────────────────────────────────────────── */
-const STATS = [
-  { n: '800M+', l: 'Candidate profiles indexed' },
-  { n: '10×',   l: 'Faster shortlist delivery'  },
-  { n: '70%',   l: 'Reduction in recruiter hours' },
-  { n: '80%',   l: 'AI interview completion rate' },
-]
-
 const COMPARE_ROWS = [
   { feature: 'Time to first shortlist',       old: '2–3 weeks',               nh: '4 hours'                     },
   { feature: 'Candidate screening',           old: 'Manual recruiter calls',  nh: 'AI phone agent, 24/7'         },
@@ -64,7 +58,10 @@ const STYLES = `
 .fc-compare-row { transition: background 0.15s ease !important; }
 .fc-compare-row:hover { background: rgba(243,248,246,0.92) !important; }
 
-.companies-hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid rgba(200,223,214,0.5); border-radius: 24px; overflow: hidden; background: #fff; box-shadow: 0 20px 60px rgba(37,62,66,0.08), 0 2px 10px rgba(37,62,66,0.04); }
+.nh-logo-track { overflow:hidden; mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%); -webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%); }
+.nh-logo-inner { display:flex; align-items:center; width:max-content; animation:marquee-scroll 45s linear infinite; }
+.nh-logo-inner:hover { animation-play-state:paused; }
+.nh-logo-item { padding:0 44px; flex-shrink:0; display:flex; align-items:center; color:#9ca3af; font-size:17px; font-weight:500; letter-spacing:-0.2px; white-space:nowrap; }
 
 .companies-feature-row { display: grid; grid-template-columns: 1fr 420px; min-height: 360px; }
 .companies-feature-row-rev { display: grid; grid-template-columns: 420px 1fr; min-height: 360px; }
@@ -72,10 +69,6 @@ const STYLES = `
 .companies-metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
 
 @media (max-width: 900px) {
-  .companies-hero-stats { grid-template-columns: repeat(2, 1fr) !important; }
-  .companies-hero-stats > div:nth-child(2) { border-right: none !important; }
-  .companies-hero-stats > div:nth-child(1),
-  .companies-hero-stats > div:nth-child(2) { border-bottom: 1px solid rgba(200,223,214,0.5); }
   .companies-feature-row,
   .companies-feature-row-rev { grid-template-columns: 1fr !important; }
   .companies-feature-row > div,
@@ -119,32 +112,52 @@ function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
   return <span ref={ref}>{v.toLocaleString()}{suffix}</span>
 }
 
-/* ── Typewriter ───────────────────────────────────────────────── */
-function Typewriter({ texts }: { texts: string[] }) {
-  const [idx, setIdx] = useState(0)
-  const [phase, setPhase] = useState<'typing'|'pause'|'deleting'>('typing')
-  const [displayed, setDisplayed] = useState('')
-  useEffect(() => {
-    const target = texts[idx]
-    if (phase === 'typing') {
-      if (displayed.length < target.length) {
-        const t = setTimeout(() => setDisplayed(target.slice(0, displayed.length + 1)), 55)
-        return () => clearTimeout(t)
-      } else { const t = setTimeout(() => setPhase('pause'), 1400); return () => clearTimeout(t) }
-    } else if (phase === 'pause') {
-      const t = setTimeout(() => setPhase('deleting'), 0); return () => clearTimeout(t)
-    } else {
-      if (displayed.length > 0) {
-        const t = setTimeout(() => setDisplayed(d => d.slice(0, -1)), 28); return () => clearTimeout(t)
-      } else { setIdx(i => (i + 1) % texts.length); setPhase('typing') }
-    }
-  }, [displayed, phase, idx, texts])
+
+/* ── Logo Marquee ─────────────────────────────────────────────── */
+const LOGO_LIST: { key: string; label: string; icon?: string }[] = [
+  { key: 'motilal',   label: 'Motilal Oswal'                                    },
+  { key: 'cushman',   label: 'Cushman & Wakefield'                              },
+  { key: 'incred',    label: 'InCred Capital'                                   },
+  { key: 'coralogix', label: 'Coralogix', icon: '/logos/coralogix-bw.svg'       },
+  { key: 'mindbody',  label: 'mindbody', icon: '/logos/mindbody-bw.png'         },
+  { key: 'avl',       label: 'AVL',      icon: '/logos/avl-icon.png'            },
+  { key: 'danone',    label: 'Danone',   icon: '/logos/danone-bw.png'            },
+  { key: 'hexaware',  label: 'Hexaware',  icon: '/logos/hexaware-bw.png'          },
+  { key: 'forbes',    label: 'Forbes'                                           },
+]
+
+function LogoMarquee() {
+  const items = [...LOGO_LIST, ...LOGO_LIST]
   return (
-    <span style={{ color: C.dark }}>
-      {displayed}
-      <span style={{ display: 'inline-block', width: 2, height: '0.85em', background: C.dark, verticalAlign: 'text-bottom', marginLeft: 2, animation: 'fcBlink 1s step-end infinite' }} />
-    </span>
+    <div className="nh-logo-track">
+      <div className="nh-logo-inner" aria-hidden="true">
+        {items.map((logo, i) => (
+          <div key={`${logo.key}-${i}`} className="nh-logo-item">
+            {logo.label}
+            {logo.icon && (
+              <img
+                src={logo.icon}
+                alt=""
+                style={{ height: 20, width: 'auto', marginLeft: 7, display: 'block', mixBlendMode: 'multiply', opacity: 0.45 }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   )
+}
+
+/* ── Sticky scroll helpers ────────────────────────────────────── */
+interface ScrollState {
+  thresholds: Array<{ enterY: number; leaveY: number }>
+  topGap: number
+  wrapperH: number
+}
+function absoluteTop(el: HTMLElement): number {
+  let top = 0; let curr: HTMLElement | null = el
+  while (curr) { top += curr.offsetTop; curr = curr.offsetParent as HTMLElement | null }
+  return top
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -291,6 +304,78 @@ export default function CompaniesPageClient() {
     },
   ]
 
+  /* ── Sticky scroll refs & logic ── */
+  const wrapperRef     = useRef<HTMLDivElement>(null)
+  const cardRefs       = useRef<(HTMLDivElement | null)[]>([])
+  const nextSiblingRef = useRef<HTMLDivElement>(null)
+  const stateRef       = useRef<ScrollState>({ thresholds: [], topGap: 0, wrapperH: 0 })
+  const { scrollY } = useScroll()
+
+  const init = useCallback(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+    const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+    if (!cards.length) return
+    const isMobileView = window.matchMedia('(max-width: 860px)').matches
+    const topBase = isMobileView ? 68 : 100
+    const topGap  = isMobileView ? 44 : 0
+    cards.forEach(c => c.style.removeProperty('height'))
+    let maxH = 0
+    if (!isMobileView) {
+      const naturalMax = Math.max(...cards.map(c => c.offsetHeight))
+      maxH = Math.min(naturalMax, Math.max(window.innerHeight - topBase - 50, 480))
+      cards.forEach(c => { c.style.height = `${maxH}px` })
+    }
+    if (nextSiblingRef.current) nextSiblingRef.current.style.height = isMobileView ? '0px' : `${maxH}px`
+    const wrapperH = wrapper.offsetHeight
+    const thresholds = cards.map((card, i) => {
+      const topOffset  = topGap * i + topBase
+      const cardAbsTop = absoluteTop(card)
+      const enterY     = cardAbsTop - topOffset
+      return { enterY, leaveY: enterY + card.offsetHeight }
+    })
+    stateRef.current = { thresholds, topGap, wrapperH }
+  }, [])
+
+  useEffect(() => {
+    const run = () => {
+      if (document.fonts?.ready) document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(init)))
+      else requestAnimationFrame(() => requestAnimationFrame(init))
+    }
+    run()
+    const onResize = () => {
+      const wrapper = wrapperRef.current
+      const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+      cards.forEach(c => { c.style.removeProperty('height'); c.classList.remove('nh-card-moveup') })
+      if (wrapper) { wrapper.style.removeProperty('transform'); wrapper.style.removeProperty('height'); wrapper.classList.remove('nh-sticky-remove') }
+      if (nextSiblingRef.current) nextSiblingRef.current.style.height = '0px'
+      run()
+    }
+    window.addEventListener('resize', onResize)
+    return () => { window.removeEventListener('resize', onResize) }
+  }, [init])
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const { thresholds, topGap, wrapperH } = stateRef.current
+    if (!thresholds.length) return
+    const wrapper = wrapperRef.current
+    const cards   = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+    let maxActive = -1
+    thresholds.forEach(({ enterY }, i) => { if (latest >= enterY) maxActive = i })
+    const shift = maxActive > 2 ? topGap * (maxActive - 2) : 0
+    if (wrapper) wrapper.style.transform = shift > 0 ? `translateY(-${shift}px)` : ''
+    if (nextSiblingRef.current && shift > 0) nextSiblingRef.current.style.marginTop = `-${shift}px`
+    cards.forEach((card, i) => {
+      if (i <= maxActive - 3) card.classList.add('nh-card-moveup')
+      else card.classList.remove('nh-card-moveup')
+    })
+    const last = thresholds[thresholds.length - 1]
+    if (wrapper && last) {
+      if (latest >= last.leaveY) { wrapper.classList.add('nh-sticky-remove'); wrapper.style.height = `${wrapperH}px` }
+      else { wrapper.classList.remove('nh-sticky-remove'); wrapper.style.height = 'auto' }
+    }
+  })
+
   return (
     <>
       <style suppressHydrationWarning>{STYLES}</style>
@@ -313,10 +398,10 @@ export default function CompaniesPageClient() {
               <div style={{ width: '100%', margin: '0 0 28px' }}>
                 <h1 style={{ margin: 0, letterSpacing: '-0.5px', lineHeight: 1.22 }}>
                   <span style={{ display: 'block', fontSize: 'clamp(30px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
-                    Hire the right people.
+                    Hire the right people
                   </span>
                   <span style={{ display: 'block', fontSize: 'clamp(30px, 6vw, 72px)', fontWeight: WEIGHT.normal, color: C.dark }}>
-                    <Typewriter texts={['In days, not months.', 'At 10× the speed.', 'With zero wasted hours.']} />
+                    In days, not months
                   </span>
                 </h1>
               </div>
@@ -324,7 +409,7 @@ export default function CompaniesPageClient() {
 
             <Reveal delay={0.12}>
               <p style={{ color: C.mid, fontSize: 17, lineHeight: 1.72, margin: 0, maxWidth: 560, fontWeight: WEIGHT.normal }}>
-                Five AI agents — sourcing, phone screening, SMS engagement, video interviewing, and personalised outreach — running in parallel so your team only meets pre-qualified finalists.
+              An AI recruiting platform with sourcing, screening, outreach, and interviewing agents working in parallel so your team only meets pre qualified finalists
               </p>
             </Reveal>
 
@@ -351,52 +436,12 @@ export default function CompaniesPageClient() {
                 >
                   Book a discovery call
                 </a>
-                <a
-                  href="/contact-us"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '15px 35px',
-                    borderRadius: 9999,
-                    background: 'transparent',
-                    color: C.dark,
-                    fontSize: 17,
-                    fontWeight: WEIGHT.semi,
-                    textDecoration: 'none',
-                    border: `1.5px solid ${C.dark}`,
-                    letterSpacing: '-0.2px',
-                  }}
-                >
-                  Take AI Maturity Assessment
-                </a>
               </div>
             </Reveal>
 
-            {/* Stats grid */}
+            {/* Logo marquee */}
             <div style={{ marginTop: 72, paddingBottom: 72, width: '100%' }}>
-              <p style={{ fontSize: FONT.xs, color: C.muted, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: 36, fontWeight: WEIGHT.semi, textAlign: 'center' }}>
-                By the numbers
-              </p>
-              <div className="companies-hero-stats">
-                {STATS.map((s, i) => (
-                  <div
-                    key={s.l}
-                    style={{
-                      textAlign: 'center',
-                      padding: 'clamp(28px, 4vw, 44px) clamp(16px, 2.5vw, 28px)',
-                      borderRight: i < STATS.length - 1 ? '1px solid rgba(200,223,214,0.5)' : 'none',
-                      animation: `fcCountUp 0.5s ease ${0.12 + i * 0.08}s both`,
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.accentD}, ${C.accent})`, opacity: 0.7 }} />
-                    <div style={{ fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: WEIGHT.extra, color: C.dark, lineHeight: 1, letterSpacing: '-1.5px', marginBottom: 10 }}>{s.n}</div>
-                    <div style={{ fontSize: FONT.sm, color: C.muted, lineHeight: 1.5, fontWeight: WEIGHT.medium }}>{s.l}</div>
-                  </div>
-                ))}
-              </div>
+              <LogoMarquee />
             </div>
           </div>
         </div>
@@ -405,70 +450,119 @@ export default function CompaniesPageClient() {
       {/* ════════════════════════════════════════════════════════
           PLATFORM FEATURES
       ════════════════════════════════════════════════════════ */}
-      <section id="companies-platform" style={{ background: C.surface, padding: '96px 0' }}>
+      <section id="companies-platform" style={{ background: C.white, padding: 'clamp(72px, 10vw, 110px) 0' }}>
         <div className="nh-container">
 
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 72 }}>
-              <h2 style={{ fontSize: 54, fontWeight: WEIGHT.normal, color: C.dark, margin: 0, letterSpacing: '-1.2px', lineHeight: 1.2 }}>
-                Five agents. One pipeline.
-              </h2>
-            </div>
-          </Reveal>
+          {/* Section header */}
+          <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 80px' }}>
+            <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: '54px', fontWeight: 400, margin: '0 0 20px', lineHeight: 1.2, letterSpacing: '-1.2px' }}>
+              Five agents. One pipeline.
+            </h2>
+          </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-            {PLATFORM_FEATURES.map((feat, idx) => (
-              <Reveal key={feat.tag} delay={idx * 0.06} dir={idx % 2 === 0 ? 'left' : 'right'}>
-                <div
-                  className={`fc-card fc-feature-card ${idx % 2 === 0 ? 'companies-feature-row' : 'companies-feature-row-rev'}`}
-                  style={{
-                    background: C.white,
-                    borderRadius: 28,
-                    boxShadow: '0 8px 40px rgba(37,62,66,0.07), 0 2px 10px rgba(37,62,66,0.04)',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {/* Text side */}
-                  <div style={{ padding: 'clamp(36px, 5vw, 60px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', order: idx % 2 === 0 ? 0 : 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
-                      <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: C.muted, background: C.surface, border: `1px solid ${C.sage}`, borderRadius: 8, padding: '4px 10px', letterSpacing: '0.5px' }}>
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-                      <span style={{ fontSize: FONT.xs, fontWeight: WEIGHT.extra, color: feat.color, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-                        {feat.tag}
-                      </span>
-                    </div>
-                    <h3 style={{ fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: WEIGHT.normal, color: C.dark, margin: '0 0 16px', lineHeight: 1.28, letterSpacing: '-0.3px' }}>
-                      {feat.heading}
-                    </h3>
-                    <p style={{ fontSize: FONT.base, color: C.mid, lineHeight: 1.78, margin: '0 0 28px', maxWidth: 440 }}>
-                      {feat.body}
-                    </p>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                      {feat.features.map(f => (
-                        <div key={f.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                          <div style={{ width: 18, height: 18, borderRadius: 6, background: `${feat.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
-                            <div style={{ width: 5, height: 5, borderRadius: '50%', background: feat.color }} />
-                          </div>
-                          <div>
-                            <div style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: C.dark, marginBottom: 2 }}>{f.title}</div>
-                            <div style={{ fontSize: FONT.xs, color: C.muted, lineHeight: 1.55 }}>{f.desc}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+          {/* Sticky stacked cards */}
+          <div ref={wrapperRef} className="nh-hire-wrapper" style={{ transition: 'transform 1s, height 1s' }}>
+            {PLATFORM_FEATURES.map((feat, i) => (
+              <div
+                key={feat.tag}
+                ref={el => { cardRefs.current[i] = el }}
+                className="nh-sticky-card"
+                style={{
+                  background: '#eef7f3',
+                  border: 'none',
+                  borderRadius: 28,
+                  minHeight: 600,
+                  marginBottom: 400,
+                  padding: '0',
+                  display: 'flex',
+                  gap: 0,
+                  alignItems: 'stretch',
+                  position: 'sticky',
+                  top: '100px',
+                  zIndex: i + 1,
+                  transition: 'opacity 1s',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* ── Left: text ── */}
+                <div style={{
+                  flex: '0 0 50%', minWidth: 0,
+                  paddingLeft: 72, paddingRight: 64, paddingTop: 72, paddingBottom: 72,
+                  display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start',
+                }}>
+                  {/* Tag badge — "01 FIND TALENT" */}
+                  <div style={{
+                    display: 'inline-block',
+                    fontSize: '16px', fontWeight: WEIGHT.semi, letterSpacing: '0px',
+                    lineHeight: '24px', color: '#424d53',
+                    textTransform: 'uppercase' as const,
+                    background: '#E8E9EA',
+                    borderRadius: '10px',
+                    padding: '8px 18px',
+                    marginBottom: 18,
+                  }}>
+                    {String(i + 1).padStart(2, '0')} &nbsp; {feat.tag}
                   </div>
 
-                  {/* Mockup side */}
-                  <div style={{ background: `linear-gradient(145deg, ${C.light} 0%, ${C.mint} 100%)`, padding: 'clamp(24px, 4vw, 40px)', display: 'flex', alignItems: 'center', justifyContent: 'center', order: idx % 2 === 0 ? 1 : 0, position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', width: 240, height: 240, borderRadius: '50%', background: `radial-gradient(circle, ${feat.color}20 0%, transparent 65%)`, top: -60, right: -40, pointerEvents: 'none' }} />
-                    <div style={{ width: '100%', maxWidth: 340, position: 'relative', zIndex: 1 }}>
-                      {feat.mockup}
+                  {/* Heading */}
+                  <h3 style={{
+                    fontSize: 'clamp(24px, 3.2vw, 32px)', fontWeight: WEIGHT.normal,
+                    fontFamily: "'Inter', system-ui, sans-serif",
+                    color: '#132128', margin: '0 0 36px', lineHeight: 1.25, letterSpacing: '-0.3px',
+                  }}>
+                    {feat.heading}
+                  </h3>
+
+                  {/* Features checklist — title only, matching HireSection single-line style */}
+                  <div className="nh-card-features" style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 44 }}>
+                    {feat.features.map((f, fi) => (
+                      <div key={fi} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                        <span style={{ color: '#338632', fontSize: '18px', lineHeight: '27px', flexShrink: 0, fontWeight: WEIGHT.bold }}>✓</span>
+                        <span style={{ fontSize: '18px', color: '#132128', lineHeight: '27px', letterSpacing: '-0.3px' }}>{f.title}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Learn more */}
+                  <a
+                    href="/contact-us"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 6,
+                      fontSize: '16px', fontWeight: WEIGHT.normal, letterSpacing: '-0.3px',
+                      lineHeight: '24px', color: feat.color, textDecoration: 'none', width: 'fit-content',
+                    }}
+                  >
+                    Learn more
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M3 7h8M8 4l3 3-3 3" stroke={feat.color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </a>
+                </div>
+
+                {/* ── Right: mockup panel ── */}
+                <div style={{
+                  flex: '0 0 50%', position: 'relative',
+                  borderRadius: '0 28px 28px 0',
+                  overflow: 'hidden',
+                  background: '#f5f5f5',
+                  boxShadow: '-12px 0 48px rgba(19,33,40,0.08)',
+                }}>
+                  <div style={{ position: 'absolute', inset: 0, padding: '44px 56px' }}>
+                    <div style={{
+                      position: 'relative', width: '100%', height: '100%',
+                      overflow: 'hidden', borderRadius: 12,
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.13)',
+                      background: '#ffffff',
+                    }}>
+                      <div style={{ position: 'absolute', inset: 0, padding: '28px 32px', display: 'flex', flexDirection: 'column' }}>
+                        {feat.mockup}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </Reveal>
+              </div>
             ))}
+            <div ref={nextSiblingRef} style={{ height: 0 }} />
           </div>
         </div>
       </section>
@@ -476,7 +570,7 @@ export default function CompaniesPageClient() {
       {/* ════════════════════════════════════════════════════════
           COMPARISON TABLE
       ════════════════════════════════════════════════════════ */}
-      <section id="companies-compare" style={{ background: C.light, padding: '96px 0' }}>
+      <section id="companies-compare" style={{ background: C.white, padding: '96px 0' }}>
         <div className="nh-container">
           <div style={{ maxWidth: 940, margin: '0 auto' }}>
             <Reveal>
@@ -515,9 +609,7 @@ export default function CompaniesPageClient() {
       {/* ════════════════════════════════════════════════════════
           METRICS ROW — dark band
       ════════════════════════════════════════════════════════ */}
-      <section style={{ background: '#1a3338', padding: '72px 0', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(200,223,214,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,223,214,0.04) 1px,transparent 1px)`, backgroundSize: '40px 40px', animation: 'fcMarch 14s linear infinite' }} />
-        <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${C.accentD}15 0%, transparent 65%)`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
+      <section style={{ background: C.white, padding: '72px 0', position: 'relative', overflow: 'hidden' }}>
         <div className="nh-container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="companies-metrics-grid">
             {[
@@ -527,12 +619,12 @@ export default function CompaniesPageClient() {
               { target: 80,  suffix: '%',  label: 'Interview completion rate',      color: C.sage    },
             ].map((s, i) => (
               <Reveal key={s.label} delay={i * 0.08} dir="scale">
-                <div style={{ textAlign: 'center', padding: '28px 18px', background: 'rgba(255,255,255,0.05)', borderRadius: NH_PANEL.innerR, position: 'relative', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.2)' }}>
+                <div style={{ textAlign: 'center', padding: '28px 18px', background: C.surface, borderRadius: NH_PANEL.innerR, position: 'relative', overflow: 'hidden', boxShadow: NH_PANEL.shadow }}>
                   <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at 50% 0%, ${s.color}12 0%, transparent 60%)` }} />
-                  <div style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: s.color, lineHeight: 1, letterSpacing: '-1.5px', position: 'relative' }}>
+                  <div style={{ fontSize: FONT.lgClamp, fontWeight: WEIGHT.extra, color: C.accentD, lineHeight: 1, letterSpacing: '-1.5px', position: 'relative' }}>
                     <Counter target={s.target} suffix={s.suffix} />
                   </div>
-                  <div style={{ fontSize: FONT.sm, color: 'rgba(255,255,255,0.5)', marginTop: 10, lineHeight: 1.4, fontWeight: WEIGHT.medium, position: 'relative' }}>{s.label}</div>
+                  <div style={{ fontSize: FONT.sm, color: C.mid, marginTop: 10, lineHeight: 1.4, fontWeight: WEIGHT.medium, position: 'relative' }}>{s.label}</div>
                 </div>
               </Reveal>
             ))}

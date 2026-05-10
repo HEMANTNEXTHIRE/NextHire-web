@@ -167,7 +167,7 @@ export function FloatingIntegrations() {
         display:        'flex',
         alignItems:     'center',
         justifyContent: 'center',
-        background:     'linear-gradient(168deg, #f6fbf9 0%, #ffffff 42%, #f3faf7 100%)',
+        background:     '#ffffff',
         padding:        '48px clamp(20px, 5vw, 40px)',
       }}
     >

@@ -12,7 +12,7 @@ import '@/styles/globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.nexthireconsulting.com'),
   title: {
-    default: 'NextHire | Your AI Job Search Agent — Get Hired Faster',
+    default: 'NextHire | Your AI Job Search Agent. Get Hired Faster',
     template: '%s | NextHire',
   },
   description:
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: 'NextHire',
     locale: 'en_US',
     url: 'https://www.nexthireconsulting.com',
-    title: 'NextHire | Your AI Job Search Agent — Get Hired Faster',
+    title: 'NextHire | Your AI Job Search Agent. Get Hired Faster',
     description:
       'AI scans millions of jobs, applies on your behalf, reaches hiring managers directly, and coaches you through interviews. 200K+ careers transformed.',
     images: [

@@ -754,7 +754,7 @@ export default function HireSection() {
   })
 
   return (
-    <section id="features" style={{ background: '#f5faf7', padding: 'clamp(72px, 10vw, 110px) 0' }}>
+    <section id="features" style={{ background: '#ffffff', padding: 'clamp(72px, 10vw, 110px) 0' }}>
       <div className="nh-container">
 
         {/* Section header */}

@@ -88,48 +88,12 @@ const CANDIDATE_PLANS_BASE = [
   },
 ]
 
-const COMPANY_PLANS = [
-  {
-    id: 'starter', name: 'Starter', badge: 'Free forever', color: P.accent,
-    priceLine: '$0', priceSub: 'No credit card needed',
-    cta: 'Start for free', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Explore the platform before you commit.',
-    icon: '🌱',
-    features: [
-      { label: '1 AI Sourcing credit', included: true },
-      { label: '5 Outreach email credits', included: true },
-      { label: 'Basic candidate profiles', included: true },
-      { label: 'CSV export', included: true },
-      { label: 'Phone screening agent', included: false },
-      { label: 'SMS engagement agent', included: false },
-      { label: 'Video interviewer', included: false },
-      { label: 'ATS integrations', included: false },
-    ],
-  },
-  {
-    id: 'enterprise', name: 'Enterprise', badge: 'Full platform', color: P.accentD,
-    priceLine: 'Custom', priceSub: 'Tailored to your hiring volume',
-    cta: 'Talk to sales', ctaHref: '/contact-us',
-    description: 'Every agent, every integration, at any scale.',
-    icon: '🏢',
-    features: [
-      'AI Talent Sourcing (800M+ profiles)',
-      'AI Phone Screening Agent',
-      'SMS Engagement Agent',
-      'AI Video Interviewer',
-      'AI Outreach Sequences',
-      'ATS / CRM integrations (50+)',
-      'Candidate enrichment & scoring',
-      'Multi-step email + LinkedIn sequences',
-      'Transcript + body language scoring',
-      'Dedicated account manager',
-      'Custom AI interviewer per role',
-      'CASA Level 3 certified privacy',
-      'SLA-backed uptime guarantee',
-      'Team collaboration workspace',
-    ].map(label => ({ label, included: true })),
-  },
-]
+const COMPANY_PLANS: {
+  id: string; name: string; badge: string | null; color: string;
+  priceLine: string; priceSub: string; cta: string; ctaHref: string;
+  description: string; icon: string;
+  features: { label: string; included: boolean }[];
+}[] = []
 
 /* ── Helpers ───────────────────────────────────────────────────── */
 type PlanBase = typeof CANDIDATE_PLANS_BASE[number]
@@ -282,7 +246,7 @@ const CARD_THEMES: Record<string, {
    MAIN COMPONENT
 ════════════════════════════════════════════════════════════════ */
 export default function PricingPageClient() {
-  const [tab, setTab] = useState<PricingTab>('candidates')
+  const tab: PricingTab = 'candidates'
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
   const [isIndia, setIsIndia] = useState(false)
 
@@ -319,60 +283,15 @@ export default function PricingPageClient() {
 
           {/* Plans & billing label + toggles */}
           <div style={{ marginTop: 56, paddingTop: 8, width: '100%' }}>
-            <p style={{ fontSize: 11, color: HOME.muted, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 28, fontWeight: WEIGHT.semi, textAlign: 'center' }}>Plans &amp; billing</p>
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-
-          {/* Tab toggle: For Candidates / For Companies */}
+          {/* Billing toggle: Monthly / Quarterly */}
           <div style={{
-            display: 'inline-flex',
-            borderRadius: 9999,
-            border: '1px solid #e5e7eb',
-            background: '#ffffff',
-            padding: 5,
-          }}>
-            {(['candidates', 'companies'] as PricingTab[]).map(t => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setTab(t)}
-                style={{
-                  position: 'relative',
-                  borderRadius: 9999,
-                  padding: '11px 28px',
-                  fontSize: 16,
-                  fontWeight: WEIGHT.semi,
-                  border: 'none',
-                  cursor: 'pointer',
-                  background: 'transparent',
-                  outline: 'none',
-                  transition: 'all 0.15s ease',
-                  letterSpacing: '-0.3px',
-                }}
-              >
-                {tab === t && (
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    borderRadius: 9999,
-                    background: '#000000',
-                  }} />
-                )}
-                <span style={{ position: 'relative', color: tab === t ? '#ffffff' : '#6b7280' }}>
-                  {t === 'candidates' ? 'For Candidates' : 'For Companies'}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {/* Billing toggle: Monthly / Quarterly — candidates only */}
-          {tab === 'candidates' && (
-            <div style={{
               display: 'inline-flex',
               borderRadius: 9999,
-              border: '1px solid #e5e7eb',
-              background: '#ffffff',
+              background: '#efefef',
               padding: 5,
+              gap: 0,
             }}>
               {(['monthly', 'quarterly'] as BillingCycle[]).map(c => (
                 <button
@@ -382,32 +301,41 @@ export default function PricingPageClient() {
                   style={{
                     position: 'relative',
                     borderRadius: 9999,
-                    padding: '11px 28px',
-                    fontSize: 16,
-                    fontWeight: WEIGHT.semi,
+                    padding: '14px 52px',
+                    fontSize: 17,
+                    fontWeight: cycle === c ? WEIGHT.bold : WEIGHT.normal,
                     border: 'none',
                     cursor: 'pointer',
-                    background: 'transparent',
+                    background: cycle === c ? '#ffffff' : 'transparent',
                     outline: 'none',
-                    transition: 'all 0.15s ease',
+                    transition: 'background 0.18s ease, box-shadow 0.18s ease',
                     letterSpacing: '-0.3px',
+                    color: cycle === c ? '#111827' : '#9ca3af',
+                    boxShadow: cycle === c ? '0 2px 12px rgba(0,0,0,0.10)' : 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    whiteSpace: 'nowrap' as const,
                   }}
                 >
-                  {cycle === c && (
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
+                  {c === 'monthly' ? 'Monthly' : 'Quarterly'}
+                  {c === 'quarterly' && (
+                    <span style={{
+                      fontSize: 13,
+                      fontWeight: WEIGHT.semi,
+                      color: cycle === 'quarterly' ? '#166534' : '#9ca3af',
+                      background: cycle === 'quarterly' ? '#dcfce7' : '#e5e7eb',
                       borderRadius: 9999,
-                      background: '#000000',
-                    }} />
+                      padding: '3px 10px',
+                      letterSpacing: '0px',
+                      transition: 'background 0.18s ease, color 0.18s ease',
+                    }}>
+                      Save 10%
+                    </span>
                   )}
-                  <span style={{ position: 'relative', color: cycle === c ? '#ffffff' : '#6b7280' }}>
-                    {c === 'monthly' ? 'Monthly' : 'Quarterly'}
-                  </span>
                 </button>
               ))}
             </div>
-          )}
 
             </div>{/* end flex column */}
           </div>{/* end Plans & billing wrapper */}
@@ -556,8 +484,8 @@ export default function PricingPageClient() {
             </div>
           )}
 
-          {/* Company plans */}
-          {tab === 'companies' && (
+          {/* Company plans — removed */}
+          {false && (
             <div>
               <h3 className="nh-plans-section-label"></h3>
               <div className="nh-plans-grid-2" style={{ maxWidth: 860, margin: '0 auto' }}>
