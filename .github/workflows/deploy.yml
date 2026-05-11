@@ -37,8 +37,11 @@ jobs:
       - name: Build (static export)
         run: npm run build
         env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_DATASET:    ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          # NEXT_PUBLIC_* values are bundled into the client JS and visible
+          # in every browser — they are public configuration, not secrets.
+          # Hardcoded here so a missing repo-secret can't break the build.
+          NEXT_PUBLIC_SANITY_PROJECT_ID: 5lcdhip2
+          NEXT_PUBLIC_SANITY_DATASET:    production
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
