@@ -15,6 +15,10 @@ jobs:
   deploy:
     name: Build → S3 → CloudFront
     runs-on: ubuntu-latest
+    # AWS deploy credentials live as environment secrets here, not as
+    # repository secrets, so the job must opt into the environment to
+    # see them.
+    environment: nexthire-india
 
     steps:
       - uses: actions/checkout@v4
