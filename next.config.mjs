@@ -5,6 +5,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  eslint: {
+    // Lint runs locally and (optionally) as a separate CI step; don't block
+    // the production build on lint errors.
+    ignoreDuringBuilds: true,
+  },
   webpack: (config) => {
     config.watchOptions = {
       ...config.watchOptions,
