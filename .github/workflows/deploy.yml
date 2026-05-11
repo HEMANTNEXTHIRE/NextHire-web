@@ -27,6 +27,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      # The /studio route hosts Sanity Studio (a SPA). It pulls in `sanity`
+      # which requires React 19's compiler-runtime; the rest of the site is
+      # on React 18. Static export tries to build every route, so we drop
+      # this dev-only route before building. Local `next dev` is unaffected.
+      - name: Strip dev-only Studio route from export build
+        run: rm -rf src/app/studio
+
       - name: Build (static export)
         run: npm run build
         env:
