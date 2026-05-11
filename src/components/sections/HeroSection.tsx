@@ -11,8 +11,15 @@ function DreamInput() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSubmit = useCallback(() => {
-    window.location.href = 'https://app.nexthireconsulting.com'
-  }, [])
+    const query = value.trim()
+    if (query) {
+      const appUrl = new URL('https://app.nexthireconsulting.com/dashboard')
+      appUrl.searchParams.set('q', query)
+      window.location.href = appUrl.toString()
+    } else {
+      window.location.href = 'https://app.nexthireconsulting.com'
+    }
+  }, [value])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
