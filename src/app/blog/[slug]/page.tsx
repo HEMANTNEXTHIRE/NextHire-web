@@ -7,7 +7,7 @@ import PortableTextRenderer from '@/sanity/PortableTextRenderer'
 import DualActionCTA from '@/components/ui/DualActionCTA'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Merge static + Sanity slugs so both work during the transition period
@@ -21,10 +21,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const sanity = await getPostBySlug(params.slug)
+  const { slug } = await params
+  const sanity = await getPostBySlug(slug)
   const post = sanity
     ? { title: sanity.title, excerpt: sanity.excerpt, heroImage: sanity.heroImage, slug: sanity.slug }
-    : getBlogPostBySlug(params.slug)
+    : getBlogPostBySlug(slug)
   if (!post) return {}
   return {
     title: `${post.title} | NextHire Blog`,
@@ -53,9 +54,10 @@ const P = {
 }
 
 export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params
   // Try Sanity first; fall back to static data
-  const sanityPost: SanityPost | null = await getPostBySlug(params.slug)
-  const staticPost = getBlogPostBySlug(params.slug)
+  const sanityPost: SanityPost | null = await getPostBySlug(slug)
+  const staticPost = getBlogPostBySlug(slug)
 
   if (!sanityPost && !staticPost) notFound()
 
@@ -77,10 +79,10 @@ export default async function BlogPostPage({ params }: Props) {
   // Related posts: prefer Sanity, fall back to static
   const allSanity = await getAllPosts()
   const relatedPosts = allSanity.length > 0
-    ? allSanity.filter(p => p.slug !== params.slug).slice(0, 4).map(p => ({
+    ? allSanity.filter(p => p.slug !== slug).slice(0, 4).map(p => ({
         slug: p.slug, title: p.title, category: p.category, readTime: p.readTime,
       }))
-    : blogPosts.filter(p => p.slug !== params.slug).slice(0, 4)
+    : blogPosts.filter(p => p.slug !== slug).slice(0, 4)
 
   return (
     <>

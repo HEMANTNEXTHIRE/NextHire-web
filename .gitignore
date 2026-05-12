@@ -12,6 +12,10 @@ build/
 coverage/
 *.tsbuildinfo
 
+# Sanity Studio build output
+.sanity/
+dist/
+
 # Env & secrets (never commit real secrets)
 .env
 .env*.local

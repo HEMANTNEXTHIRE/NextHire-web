@@ -33,7 +33,7 @@ const HOME_FAQS = [
 ]
 
 export const metadata: Metadata = {
-  title: 'NextHire | Your AI Job Search Agent — Get Hired Faster',
+  title: 'NextHire | Your AI Job Search Agent. Get Hired Faster',
   description:
     'Escape the apply and pray cycle. AI scans millions of jobs, applies on your behalf, and introduces you to hiring managers directly',
   openGraph: {

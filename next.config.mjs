@@ -10,6 +10,12 @@ const nextConfig = {
     // the production build on lint errors.
     ignoreDuringBuilds: true,
   },
+  transpilePackages: [
+    'sanity',
+    '@sanity/vision',
+    '@sanity/ui',
+    '@portabletext/editor',
+  ],
   webpack: (config) => {
     config.watchOptions = {
       ...config.watchOptions,
