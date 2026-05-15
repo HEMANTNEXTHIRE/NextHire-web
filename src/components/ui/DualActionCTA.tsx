@@ -27,6 +27,9 @@ const descStyle: React.CSSProperties = {
   margin: '0 0 40px',
 }
 
+const CAL_LABEL_RE = /^(book a demo|book a discovery call|schedule now|talk to an expert)$/i
+const swallow = (e: React.MouseEvent) => e.preventDefault()
+
 export default function DualActionCTA({
   leftTitle = 'GET STARTED',
   leftSubtitle = 'Kickstart Your Career Journey',
@@ -40,7 +43,9 @@ export default function DualActionCTA({
   rightHref = '/contact-us',
 }: DualActionCTAProps) {
   const isExternalLeft = leftHref.startsWith('http')
-  const isExternalRight = rightHref.startsWith('http')
+  const isCalRight = CAL_LABEL_RE.test(rightLabel.trim())
+  const isExternalRight = !isCalRight && rightHref.startsWith('http')
+  const effectiveRightHref = isCalRight ? '#' : rightHref
 
   const btnStyle: React.CSSProperties = {
     display: 'inline-flex',
@@ -160,17 +165,17 @@ export default function DualActionCTA({
 
           {isExternalRight ? (
             <a href={rightHref} target="_blank" rel="noopener noreferrer" style={btnStyle}
-              data-cal-namespace="30min"
-              data-cal-link="hemant-nexthire/30min"
-              data-cal-config='{"layout":"month_view"}'
               onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
             >{rightLabel}</a>
           ) : (
-            <Link href={rightHref} style={btnStyle}
-              data-cal-namespace="30min"
-              data-cal-link="hemant-nexthire/30min"
-              data-cal-config='{"layout":"month_view"}'
+            <Link href={effectiveRightHref} style={btnStyle}
+              {...(isCalRight ? {
+                'data-cal-namespace': '30min',
+                'data-cal-link': 'hemant-nexthire/30min',
+                'data-cal-config': '{"layout":"month_view"}',
+                onClick: swallow,
+              } : {})}
               onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
             >{rightLabel}</Link>

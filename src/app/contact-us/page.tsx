@@ -346,7 +346,7 @@ export default function ContactUsPage() {
                   Pricing
                 </Link>
                 <span style={{ color: HOME.hairline }}>|</span>
-                <Link href="/contact-us" style={{ color: '#338632', textDecoration: 'none' }}
+                <Link href="#" style={{ color: '#338632', textDecoration: 'none' }}
                   data-cal-namespace="30min"
                   data-cal-link="hemant-nexthire/30min"
                   data-cal-config='{"layout":"month_view"}'

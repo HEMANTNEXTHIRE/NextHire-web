@@ -267,14 +267,19 @@ function NavMegaMenu({
                 'data-cal-link': 'hemant-nexthire/30min',
                 'data-cal-config': '{"layout":"month_view"}',
               } : {}
+              const linkHref = isCal ? '#' : a.href
+              const handleClick = (e: React.MouseEvent) => {
+                if (isCal) e.preventDefault()
+                onNavigate()
+              }
               return a.variant === 'primary' ? (
                 <Link
                   key={a.label}
-                  href={a.href}
+                  href={linkHref}
                   className="nh-mega-menu__promo-btn"
-                  target={a.external ? '_blank' : undefined}
-                  rel={a.external ? 'noopener noreferrer' : undefined}
-                  onClick={onNavigate}
+                  target={isCal ? undefined : (a.external ? '_blank' : undefined)}
+                  rel={isCal ? undefined : (a.external ? 'noopener noreferrer' : undefined)}
+                  onClick={handleClick}
                   {...calAttrs}
                 >
                   {a.label}
@@ -282,9 +287,9 @@ function NavMegaMenu({
               ) : (
                 <Link
                   key={a.label}
-                  href={a.href}
+                  href={linkHref}
                   className="nh-mega-menu__promo-btn-secondary"
-                  onClick={onNavigate}
+                  onClick={handleClick}
                   {...calAttrs}
                 >
                   {a.label} <span aria-hidden>→</span>

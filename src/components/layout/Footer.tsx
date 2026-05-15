@@ -83,7 +83,8 @@ export default function Footer() {
               <li><Link href="#" className="nh-footer-link">RPO Solution</Link></li>
               <li className="nh-footer-gap">
                 <Link
-                  href="/contact-us"
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
                   className="nh-footer-link"
                   data-cal-namespace="30min"
                   data-cal-link="hemant-nexthire/30min"
