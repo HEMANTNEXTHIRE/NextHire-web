@@ -84,6 +84,7 @@ const post = {
           options: { hotspot: true },
           fields: [{ name: 'alt', title: 'Alt text', type: 'string' }],
         },
+        { type: 'table' },
       ],
     },
   ],

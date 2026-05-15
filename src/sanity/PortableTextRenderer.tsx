@@ -56,6 +56,55 @@ const components = {
         />
       )
     },
+    table: ({ value }: any) => {
+      if (!value?.rows?.length) return null
+      const [headerRow, ...bodyRows] = value.rows
+      return (
+        <div style={{ margin: '32px 0', overflowX: 'auto', borderRadius: 10, border: '2px solid #c8dfd6' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 15, color: '#111827' }}>
+            <thead>
+              <tr style={{ background: '#edf5f1' }}>
+                {headerRow?.cells?.map((cell: string, i: number) => (
+                  <th
+                    key={i}
+                    style={{
+                      borderBottom: '2px solid #c8dfd6',
+                      borderRight: i < headerRow.cells.length - 1 ? '1px solid #c8dfd6' : 'none',
+                      padding: '14px 16px',
+                      textAlign: 'left',
+                      fontWeight: 600,
+                      color: '#1a3338',
+                    }}
+                  >
+                    {cell}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {bodyRows.map((row: any, rowIndex: number) => (
+                <tr key={row._key || rowIndex} style={{ background: rowIndex % 2 === 1 ? '#f7faf9' : '#ffffff' }}>
+                  {row.cells?.map((cell: string, cellIndex: number) => (
+                    <td
+                      key={cellIndex}
+                      style={{
+                        borderTop: rowIndex === 0 ? 'none' : '1px solid #e4f0eb',
+                        borderRight: cellIndex < row.cells.length - 1 ? '1px solid #e4f0eb' : 'none',
+                        padding: '12px 16px',
+                        color: '#424d53',
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    },
   },
 }
 

@@ -51,7 +51,14 @@ export const POSTS_QUERY = `
 export const POST_BY_SLUG_QUERY = `
   *[_type == "post" && slug.current == $slug][0] {
     ${POST_FIELDS},
-    body
+    body[]{
+      ...,
+      _type == "table" => {
+        _type,
+        _key,
+        rows[]{ _key, cells }
+      }
+    }
   }
 `
 
