@@ -6,6 +6,14 @@ import { getPostBySlug, getAllSlugs, getAllPosts, formatDate, type SanityPost } 
 import PortableTextRenderer from '@/sanity/PortableTextRenderer'
 import DualActionCTA from '@/components/ui/DualActionCTA'
 
+const SITE = 'https://www.nexthireconsulting.com'
+
+function toIso(input: string | undefined): string | undefined {
+  if (!input) return undefined
+  const d = new Date(input)
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString()
+}
+
 interface Props {
   params: Promise<{ slug: string }>
 }
@@ -23,21 +31,34 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const sanity = await getPostBySlug(slug)
-  const post = sanity
-    ? { title: sanity.title, excerpt: sanity.excerpt, heroImage: sanity.heroImage, slug: sanity.slug }
-    : getBlogPostBySlug(slug)
-  if (!post) return {}
+  const staticPost = getBlogPostBySlug(slug)
+  if (!sanity && !staticPost) return {}
+
+  const baseTitle = sanity?.title ?? staticPost!.title
+  const metaTitle = sanity?.metaTitle ?? baseTitle
+  const description = sanity?.metaDescription ?? sanity?.excerpt ?? staticPost!.excerpt
+  const heroImage = sanity?.ogImage ?? sanity?.heroImage ?? staticPost!.heroImage
+  const author = sanity?.authorRef?.name ?? sanity?.author ?? staticPost!.author
+  const publishedTime = toIso(sanity?.publishedAt ?? staticPost!.date)
+  const modifiedTime = toIso(sanity?.dateModified) ?? publishedTime
+  const noindex = sanity?.noindex === true
+
   return {
-    title: `${post.title} | NextHire Blog`,
-    description: post.excerpt,
+    title: `${metaTitle} | NextHire Blog`,
+    description,
+    ...(noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [post.heroImage],
+      title: metaTitle,
+      description,
+      images: [heroImage],
       type: 'article',
+      url: `${SITE}/blog/${slug}`,
+      ...(publishedTime ? { publishedTime } : {}),
+      ...(modifiedTime ? { modifiedTime } : {}),
+      authors: [author],
     },
-    twitter: { title: post.title, description: post.excerpt, images: [post.heroImage] },
-    alternates: { canonical: `https://www.nexthireconsulting.com/blog/${post.slug}` },
+    twitter: { title: metaTitle, description, images: [heroImage], card: 'summary_large_image' },
+    alternates: { canonical: `${SITE}/blog/${slug}` },
   }
 }
 
@@ -84,8 +105,85 @@ export default async function BlogPostPage({ params }: Props) {
       }))
     : blogPosts.filter(p => p.slug !== slug).slice(0, 4)
 
+  const publishedIso = toIso(sanityPost?.publishedAt ?? staticPost?.date)
+  const modifiedIso = toIso(sanityPost?.dateModified) ?? publishedIso
+  const heroImageAbs = post.heroImage.startsWith('http')
+    ? post.heroImage
+    : `${SITE}${post.heroImage}`
+  const authorName = sanityPost?.authorRef?.name ?? post.author
+  const authorBio = sanityPost?.authorRef?.bio
+  const tldr = sanityPost?.tldr
+  const faqItems = sanityPost?.faqItems ?? []
+
+  const blogPostingSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: [heroImageAbs],
+    ...(publishedIso ? { datePublished: publishedIso } : {}),
+    ...(modifiedIso ? { dateModified: modifiedIso } : {}),
+    author: sanityPost?.authorRef
+      ? {
+          '@type': 'Person',
+          name: sanityPost.authorRef.name,
+          ...(sanityPost.authorRef.linkedinUrl || sanityPost.authorRef.twitterUrl
+            ? {
+                sameAs: [
+                  sanityPost.authorRef.linkedinUrl,
+                  sanityPost.authorRef.twitterUrl,
+                ].filter(Boolean),
+              }
+            : {}),
+        }
+      : { '@type': 'Person', name: authorName },
+    publisher: {
+      '@type': 'Organization',
+      name: 'NextHire Consulting',
+      logo: { '@type': 'ImageObject', url: `${SITE}/Image/Nexthire.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE}/blog/${slug}` },
+    articleSection: post.category,
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `${SITE}/blog/${slug}` },
+    ],
+  }
+
+  const faqSchema = faqItems.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map(({ question, answer }) => ({
+          '@type': 'Question',
+          name: question,
+          acceptedAnswer: { '@type': 'Answer', text: answer },
+        })),
+      }
+    : null
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <style suppressHydrationWarning>{`
         .nh-post-content h2 {
           font-size: 26px;
@@ -234,12 +332,114 @@ export default async function BlogPostPage({ params }: Props) {
                 {post.excerpt}
               </p>
 
+              {/* TL;DR — surfaced to AI search engines via the visible DOM */}
+              {tldr && (
+                <aside style={{
+                  background: P.mint,
+                  border: `1px solid ${P.border}`,
+                  borderRadius: 12,
+                  padding: '20px 24px',
+                  margin: '0 0 36px',
+                  fontSize: 16,
+                  lineHeight: 1.65,
+                  color: P.dark,
+                }}>
+                  <div style={{
+                    fontSize: 11, fontWeight: 700, letterSpacing: '1.4px',
+                    color: P.accent, textTransform: 'uppercase', marginBottom: 8,
+                  }}>
+                    TL;DR
+                  </div>
+                  {tldr}
+                </aside>
+              )}
+
               <article className="nh-post-content">
                 {sanityPost?.body?.length
                   ? <PortableTextRenderer value={sanityPost.body} />
                   : <div dangerouslySetInnerHTML={{ __html: post.content }} />
                 }
               </article>
+
+              {/* FAQ section — visible counterpart of the FAQPage JSON-LD */}
+              {faqItems.length > 0 && (
+                <section style={{ marginTop: 56, paddingTop: 40, borderTop: `1px solid ${P.border}` }}>
+                  <h2 style={{
+                    fontSize: 26, fontWeight: 500, color: P.dark,
+                    margin: '0 0 24px', lineHeight: 1.3, letterSpacing: '-0.4px',
+                  }}>
+                    Frequently asked questions
+                  </h2>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                    {faqItems.map((item, i) => (
+                      <div key={i}>
+                        <h3 style={{
+                          fontSize: 18, fontWeight: 600, color: P.dark,
+                          margin: '0 0 8px', lineHeight: 1.4,
+                        }}>
+                          {item.question}
+                        </h3>
+                        <p style={{
+                          fontSize: 16, color: P.mid, lineHeight: 1.75,
+                          margin: 0,
+                        }}>
+                          {item.answer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Author byline — E-E-A-T signal */}
+              {(authorBio || sanityPost?.authorRef) && (
+                <section style={{
+                  marginTop: 48,
+                  padding: '24px',
+                  background: P.bg,
+                  border: `1px solid ${P.border}`,
+                  borderRadius: 12,
+                  display: 'flex',
+                  gap: 16,
+                  alignItems: 'flex-start',
+                }}>
+                  {sanityPost?.authorRef?.avatar && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={sanityPost.authorRef.avatar}
+                      alt={sanityPost.authorRef.name}
+                      style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+                    />
+                  )}
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: P.dark }}>
+                      {sanityPost?.authorRef?.name ?? authorName}
+                    </div>
+                    {sanityPost?.authorRef?.role && (
+                      <div style={{ fontSize: 13, color: P.muted, marginTop: 2 }}>
+                        {sanityPost.authorRef.role}
+                      </div>
+                    )}
+                    {authorBio && (
+                      <p style={{ fontSize: 14, color: P.mid, lineHeight: 1.6, margin: '10px 0 0' }}>
+                        {authorBio}
+                      </p>
+                    )}
+                    {(sanityPost?.authorRef?.linkedinUrl || sanityPost?.authorRef?.twitterUrl) && (
+                      <div style={{ display: 'flex', gap: 12, marginTop: 10, fontSize: 13 }}>
+                        {sanityPost.authorRef.linkedinUrl && (
+                          <a href={sanityPost.authorRef.linkedinUrl} target="_blank" rel="noopener noreferrer"
+                             style={{ color: P.accent, textDecoration: 'underline' }}>LinkedIn</a>
+                        )}
+                        {sanityPost.authorRef.twitterUrl && (
+                          <a href={sanityPost.authorRef.twitterUrl} target="_blank" rel="noopener noreferrer"
+                             style={{ color: P.accent, textDecoration: 'underline' }}>X / Twitter</a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
             </div>
 
             {/* ── Sidebar ──────────────────────────────────────── */}

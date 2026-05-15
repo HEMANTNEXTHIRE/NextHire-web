@@ -13,17 +13,41 @@ export const sanityClient = createClient({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PortableTextBlock = Record<string, any>
 
+export interface SanityFaqItem {
+  question: string
+  answer:   string
+}
+
+export interface SanityAuthor {
+  name:         string
+  slug:         string
+  role?:        string
+  bio?:         string
+  avatar?:      string
+  linkedinUrl?: string
+  twitterUrl?:  string
+  credentials?: string[]
+}
+
 export interface SanityPost {
   _id:         string
   title:       string
   slug:        string        // flattened: slug.current
   category:    string
   publishedAt: string        // ISO date string
-  author:      string
+  dateModified?: string      // ISO date string, set when post is materially updated
+  author:      string        // legacy free-text fallback
+  authorRef?:  SanityAuthor
   readTime:    string
   heroImage:   string        // flattened: asset url
   heroImageAlt?: string
   excerpt:     string
+  tldr?:       string
+  metaTitle?:  string
+  metaDescription?: string
+  ogImage?:    string
+  noindex?:    boolean
+  faqItems?:   SanityFaqItem[]
   body:        PortableTextBlock[]
 }
 
@@ -35,11 +59,27 @@ const POST_FIELDS = `
   "slug": slug.current,
   category,
   publishedAt,
+  dateModified,
   author,
+  "authorRef": authorRef->{
+    name,
+    "slug": slug.current,
+    role,
+    bio,
+    "avatar": avatar.asset->url,
+    linkedinUrl,
+    twitterUrl,
+    credentials
+  },
   readTime,
   "heroImage": heroImage.asset->url,
   "heroImageAlt": heroImage.alt,
-  excerpt
+  excerpt,
+  tldr,
+  metaTitle,
+  metaDescription,
+  "ogImage": ogImage.asset->url,
+  noindex
 `
 
 export const POSTS_QUERY = `
@@ -51,6 +91,7 @@ export const POSTS_QUERY = `
 export const POST_BY_SLUG_QUERY = `
   *[_type == "post" && slug.current == $slug][0] {
     ${POST_FIELDS},
+    faqItems[]{ question, answer },
     body[]{
       ...,
       _type == "table" => {

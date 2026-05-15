@@ -1,25 +1,79 @@
 # NextHire
 
-NextHire is an AI-powered career growth and job placement platform headquartered in Faridabad, Haryana, India. It helps job seekers get hired faster through automated AI job applications, ATS-optimized resume building, direct recruiter outreach via Gmail, real-time interview coaching, and expert career advisory. For companies and recruiters, NextHire offers an AI sourcing and recruiting platform with candidate pipeline management.
+NextHire is an AI-powered career growth and job placement platform headquartered in Faridabad, Haryana, India. It helps job seekers get hired faster through automated AI job applications, ATS-optimized resume building, direct recruiter outreach from the candidate's own Gmail, real-time AI interview coaching, and expert career advisory. For companies and recruiters, NextHire offers an AI sourcing and recruiting platform with candidate pipeline management, AI phone screening, and SMS/email outreach automation.
+
+> TL;DR: NextHire is an autonomous AI career agent for job seekers. The agent finds matching roles, applies on the candidate's behalf in minutes (not days), runs personalised hiring-manager outreach from the candidate's Gmail, and coaches them through interviews in real time. Used by 200K+ candidates globally.
 
 Website: https://www.nexthireconsulting.com
-App: https://app.nexthireconsulting.com
+App (login): https://app.nexthireconsulting.com
 Contact: support@nexthireconsulting.com
 
 ## Core Pages
 
-- [Home](https://www.nexthireconsulting.com/) — Platform overview, AI job search agent, key features and social proof
-- [For Candidates](https://www.nexthireconsulting.com/candidates/) — AI tools for job seekers: auto-apply, resume builder, interview coaching
+- [Home](https://www.nexthireconsulting.com/) — Platform overview, AI job search agent, key features, social proof
+- [For Candidates](https://www.nexthireconsulting.com/candidates/) — AI tools for job seekers: auto-apply, resume builder, interview coaching, outreach agent
 - [For Companies](https://www.nexthireconsulting.com/companies/) — AI recruiting and sourcing platform for hiring teams
-- [Pricing](https://www.nexthireconsulting.com/pricing/) — Candidate plans (Free, Lite $19.9/mo, Pro $49/mo, Max $135/mo); Company plans (Starter free, Growth, Enterprise)
-- [About NextHire](https://www.nexthireconsulting.com/about-nexthire/) — Mission, values, company milestones, 200K+ careers served
-- [Why NextHire](https://www.nexthireconsulting.com/why-nexthire/) — Differentiators vs. traditional job boards and recruiters
+- [Pricing](https://www.nexthireconsulting.com/pricing/) — Region-aware pricing; see "Pricing" section below
+- [About NextHire](https://www.nexthireconsulting.com/about-nexthire/) — Mission, values, milestones
+- [Why NextHire](https://www.nexthireconsulting.com/why-nexthire/) — Differentiators vs. job boards and traditional recruiters
 - [Why Join NextHire](https://www.nexthireconsulting.com/why-join-nexthire/) — For professionals considering the platform
 - [Success Stories](https://www.nexthireconsulting.com/success-story/) — Customer placement outcomes and testimonials
-- [Blog](https://www.nexthireconsulting.com/blog/) — Career tips, AI in hiring, interview guides, LinkedIn optimization
-- [Jobs](https://www.nexthireconsulting.com/jobs/) — Curated job listings across IT, tech, and professional roles
+- [Blog](https://www.nexthireconsulting.com/blog/) — Career strategy, AI in hiring, interview prep, salary negotiation, LinkedIn optimization, ATS guidance
+- [Jobs](https://www.nexthireconsulting.com/jobs/) — Curated job listings across IT, tech, product, design, and professional roles
 - [Talk to an Expert](https://www.nexthireconsulting.com/talk-to-an-expert/) — Book a 1:1 session with a NextHire career advisor
 - [Contact](https://www.nexthireconsulting.com/contact-us/) — Support and general enquiries
+
+## Key Features
+
+- **AI Auto Apply** — Submits tailored, ATS-optimised applications within minutes of a job posting going live. Available on Lite and above.
+- **AI Outreach Agent** — Identifies hiring managers, monitors hiring signals, sends personalised cold outreach from the candidate's own Gmail. Up to 3,000 contacts/month on the Max plan.
+- **Real-time AI Interview Coach** — Listens during live interviews, surfaces structured answer frameworks. Mock-interview mode with line-by-line feedback. Pro and above.
+- **ATS-Optimised Resume Builder** — Tailors resume per role using job description keywords, scored against ATS systems before submission.
+- **Job Portal Optimisation** — Optimises LinkedIn, Indeed, Naukri profiles to surface in recruiter search.
+- **Job Tracker** — Application status pipeline with reminders. Free.
+
+## Pricing
+
+NextHire uses region-aware pricing. India is billed in INR; the rest of the world in USD. Pricing below is per month, with a ~10% discount when billed quarterly.
+
+### Candidate plans — Global (USD)
+
+| Plan | Monthly | Quarterly (per month) |
+|------|---------|------------------------|
+| Free | $0      | $0                     |
+| Lite | $19.99  | $17.99                 |
+| Pro  | $49.99  | $44.99                 |
+| Max  | $349.99 | $314.99                |
+
+### Candidate plans — India (INR)
+
+| Plan | Monthly | Quarterly (per month) |
+|------|---------|------------------------|
+| Free | ₹0      | ₹0                     |
+| Lite | ₹1,850  | ₹1,665                 |
+| Pro  | ₹4,500  | ₹4,050                 |
+| Max  | ₹12,000 | ₹10,800                |
+
+### What each tier unlocks
+
+- **Free** — Resume + cover letter builders, Job Tracker, profile optimisation, sample AI tools.
+- **Lite** — Unlimited AI Auto Apply for career-page jobs, portal optimisation, 2 hours of AI Interview Coach.
+- **Pro** — Real-time AI Interview Coach, unlimited Auto Apply across all platforms, direct recruiter InMails.
+- **Max** — Autonomous AI Outreach Agent (up to 3,000 personalised emails/month), hidden job market access, unlimited Auto Apply + Interview Coach.
+
+## Target Audience
+
+- Job seekers (entry-level → senior, all functions: tech, product, design, finance, marketing, operations)
+- Active candidates losing the application-speed race on public job boards
+- Senior professionals wanting access to roles before they are publicly posted
+- Hiring teams sourcing across IT, tech, and professional roles (Companies platform)
+
+## Social Profiles
+
+- X / Twitter: https://x.com/Nexthire_
+- Reddit: https://www.reddit.com/r/Nexthire/
+- Instagram: https://www.instagram.com/next.hire/
+- LinkedIn: https://www.linkedin.com/company/nexthire-consulting
 
 ## Legal & Policy
 
@@ -28,6 +82,7 @@ Contact: support@nexthireconsulting.com
 - [Refund Policy](https://www.nexthireconsulting.com/refund-policy/)
 - [Cancellation Policy](https://www.nexthireconsulting.com/cancellation-policy/)
 - [Data Processing Agreement](https://www.nexthireconsulting.com/data-processing-agreement/)
+- [Marketing Disclosure](https://www.nexthireconsulting.com/marketing-disclosure/)
 
 ## Excluded from AI Indexing
 

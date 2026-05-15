@@ -6,6 +6,8 @@ import { FONT, WEIGHT } from '@/constants/typography'
 import AccordionFaq from '@/components/ui/AccordionFaq'
 import PricingPlanTabs from '@/components/sections/PricingPlanTabs'
 import WithWithoutSection from '@/components/sections/WithWithoutSection'
+import { CANDIDATE_TIERS, CHECKOUT_URL } from '@/lib/pricing'
+import { PRICING_FAQS_CANDIDATES } from '@/constants/pricingFaqs'
 
 
 /* ── Palette ──────────────────────────────────────────────────── */
@@ -28,65 +30,22 @@ const P = {
 type PricingTab = 'candidates' | 'companies'
 type BillingCycle = 'monthly' | 'quarterly'
 
-/* ── Plan data — dual INR / USD pricing (from app repo) ────────── */
-const CANDIDATE_PLANS_BASE = [
-  {
-    id: 'free', name: 'Free', badge: null, popular: false,
-    color: P.muted, cta: 'Get started free', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Join the talent network',
-    tagline: 'Get visible to top recruiters for free',
-    icon: '🔓',
-    inr:  { monthly: 0, quarterly: 0, quarterlyTotal: 0 },
-    usd:  { monthly: 0, quarterly: 0, quarterlyTotal: 0 },
-    features: [
-      { label: 'Resume and cover letter builders', included: true },
-      { label: 'Job Tracker and profile optimization', included: true },
-      { label: 'Try AI tools and automate your job search', included: true },
-    ],
-  },
-  {
-    id: 'lite', name: 'Lite', badge: null, popular: true,
-    color: P.accent, cta: 'Start Lite', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Speed up your job search',
-    tagline: 'Let AI apply to jobs for you',
-    icon: '⚡',
-    inr:  { monthly: 1850, quarterly: 1665, quarterlyTotal: 4995 },
-    usd:  { monthly: 19.99, quarterly: 17.99, quarterlyTotal: 53.97 },
-    features: [
-      { label: 'Unlimited AI Auto Apply for career page jobs', included: true },
-      { label: 'Optimize your portals for better visibility', included: true },
-      { label: '2 hours of AI Interview Coach', included: true },
-    ],
-  },
-  {
-    id: 'pro', name: 'Pro', badge: null, popular: false,
-    color: P.accentD, cta: 'Start Pro', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Master every job interview',
-    tagline: 'AI helps you clear your interviews',
-    icon: '🚀',
-    inr:  { monthly: 4500, quarterly: 4050, quarterlyTotal: 12150 },
-    usd:  { monthly: 49.99, quarterly: 44.99, quarterlyTotal: 134.97 },
-    features: [
-      { label: 'Real-time AI Interview Coach', included: true },
-      { label: 'Unlimited AI Auto Apply to all platforms', included: true },
-      { label: 'Direct recruiter Inmails to get noticed', included: true },
-    ],
-  },
-  {
-    id: 'max', name: 'Max', badge: null, popular: false,
-    color: P.accentD, cta: 'Start Max', ctaHref: 'https://app.nexthireconsulting.com',
-    description: 'Put everything on autopilot',
-    tagline: 'AI finds and messages companies for you',
-    icon: '🔥',
-    inr:  { monthly: 12000, quarterly: 10800, quarterlyTotal: 32400 },
-    usd:  { monthly: 349.99, quarterly: 314.99, quarterlyTotal: 944.97 },
-    features: [
-      { label: 'Autonomous AI Outreach Agent', included: true },
-      { label: 'Exclusive access to hidden job markets', included: true },
-      { label: 'Unlimited AI Auto Apply and Interview Coach', included: true },
-    ],
-  },
-]
+/* ── Plan data — sourced from src/lib/pricing.ts (single source of truth) ── */
+const CANDIDATE_PLANS_BASE = CANDIDATE_TIERS.map(t => ({
+  id: t.id,
+  name: t.name,
+  badge: null as string | null,
+  popular: t.id === 'lite',
+  color: t.id === 'free' ? P.muted : t.id === 'lite' ? P.accent : P.accentD,
+  cta: t.id === 'free' ? 'Get started free' : `Start ${t.name}`,
+  ctaHref: CHECKOUT_URL,
+  description: t.description,
+  tagline: t.tagline,
+  icon: t.id === 'free' ? '🔓' : t.id === 'lite' ? '⚡' : t.id === 'pro' ? '🚀' : '🔥',
+  inr: t.inr,
+  usd: t.usd,
+  features: t.features.map(label => ({ label, included: true })),
+}))
 
 const COMPANY_PLANS: {
   id: string; name: string; badge: string | null; color: string;
@@ -787,13 +746,7 @@ export default function PricingPageClient() {
       <section id="pricing-faq" style={{ background: '#ffffff', padding: '96px 0' }}>
         <AccordionFaq
           title="Frequently asked questions"
-          items={tab === 'candidates' ? [
-            { question: 'Can I upgrade or downgrade anytime?', answer: 'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; downgrades apply at the next billing cycle.' },
-            { question: 'What happens when I hit my InMail or Apply limit?', answer: "On Free you'll be prompted to upgrade. On Lite and Pro, you can purchase additional credits as add-ons at any time." },
-            { question: 'Is the quarterly discount applied automatically?', answer: 'Yes — toggle to Quarterly billing at checkout or in account settings. The 20% discount is applied to every month in the quarter.' },
-            { question: 'What is an AI Outreach Agent credit?', answer: 'Each credit powers one personalised outreach email sent to a hiring manager or recruiter from your own Gmail, via the AI Outreach Agent. The Max plan includes 3,000 credits per month.' },
-            { question: 'Do I need a credit card for the Free plan?', answer: 'No credit card required. Sign up, connect your account, and start using the free tools immediately.' },
-          ] : [
+          items={tab === 'candidates' ? PRICING_FAQS_CANDIDATES : [
             { question: "What's included in 1 sourcing credit?", answer: 'One sourcing credit runs a full AI search query — scanning 800M+ profiles and returning an enriched, scored shortlist of up to 20 candidates for your role.' },
             { question: 'Can I try before committing to Enterprise?', answer: 'Yes. The Starter plan lets you run one sourcing search and send five outreach emails at no cost. No credit card required.' },
             { question: 'How is Enterprise pricing structured?', answer: 'Enterprise is custom-priced based on your hiring volume, number of seats, and which agents you need. Talk to our sales team for a tailored quote.' },

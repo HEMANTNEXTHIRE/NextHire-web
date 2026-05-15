@@ -7,7 +7,18 @@ import Footer from '@/components/layout/Footer'
 import NotificationContainer from '@/components/ui/Notification'
 import PostHogProvider from '@/components/PostHogProvider'
 import PageViewTracker from '@/components/PageViewTracker'
+import { CANDIDATE_TIERS, tierPrice } from '@/lib/pricing'
 import '@/styles/globals.css'
+
+const SOCIAL_PROFILES = [
+  'https://x.com/Nexthire_',
+  'https://www.reddit.com/r/Nexthire/',
+  'https://www.instagram.com/next.hire/',
+  'https://www.linkedin.com/company/nexthire-consulting',
+]
+
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+const BING_SITE_VERIFICATION = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.nexthireconsulting.com'),
@@ -49,50 +60,65 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.nexthireconsulting.com',
   },
+  verification: {
+    ...(GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : {}),
+    ...(BING_SITE_VERIFICATION ? { other: { 'msvalidate.01': BING_SITE_VERIFICATION } } : {}),
+  },
+}
+
+const liteUsd = tierPrice(CANDIDATE_TIERS.find(t => t.id === 'lite')!, 'US').monthly
+
+const softwareApplicationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'NextHire',
+  url: 'https://www.nexthireconsulting.com',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description:
+    'AI-powered job search agent and career growth platform. Automates job applications, builds ATS-optimized resumes, reaches hiring managers directly, and coaches candidates through interviews.',
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'USD',
+    lowPrice: '0',
+    highPrice: tierPrice(CANDIDATE_TIERS.find(t => t.id === 'max')!, 'US').monthly.toFixed(2),
+    offerCount: CANDIDATE_TIERS.length,
+    description: `Free plan available. Paid plans from $${liteUsd.toFixed(2)}/month.`,
+  },
+}
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'NextHire Consulting',
+  alternateName: 'NextHire',
+  url: 'https://www.nexthireconsulting.com',
+  logo: 'https://www.nexthireconsulting.com/Image/Nexthire.png',
+  email: 'support@nexthireconsulting.com',
+  description:
+    'AI-powered career growth and job placement platform helping candidates get hired faster through automated applications, ATS-optimized resumes, direct recruiter outreach, and real-time interview coaching.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Faridabad',
+    addressRegion: 'Haryana',
+    addressCountry: 'IN',
+  },
+  sameAs: SOCIAL_PROFILES,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        {/* Schema.org — SoftwareApplication structured data */}
+        {/* Schema.org — SoftwareApplication */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'SoftwareApplication',
-              name: 'NextHire',
-              url: 'https://www.nexthireconsulting.com',
-              applicationCategory: 'BusinessApplication',
-              operatingSystem: 'Web',
-              description:
-                'AI-powered job search agent and career growth platform. Automates job applications, builds ATS-optimized resumes, reaches hiring managers directly, and coaches candidates through interviews.',
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD',
-                description: 'Free plan available. Paid plans from $19.90/month.',
-              },
-              provider: {
-                '@type': 'Organization',
-                name: 'NextHire Consulting',
-                url: 'https://www.nexthireconsulting.com',
-                email: 'support@nexthireconsulting.com',
-                address: {
-                  '@type': 'PostalAddress',
-                  addressLocality: 'Faridabad',
-                  addressRegion: 'Haryana',
-                  addressCountry: 'IN',
-                },
-              },
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                reviewCount: '200000',
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
+        />
+        {/* Schema.org — Organization (separate node so Google Knowledge Graph picks it up cleanly) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
 
         {/* DNS prefetch for analytics and third-party scripts */}

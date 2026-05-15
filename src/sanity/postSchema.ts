@@ -1,21 +1,24 @@
-// Paste this file into studio-blog/schemaTypes/post.ts after running the Sanity CLI
-// Then import and register it in studio-blog/schemaTypes/index.ts
-
 const post = {
   name: 'post',
   title: 'Blog Post',
   type: 'document',
+  groups: [
+    { name: 'content', title: 'Content', default: true },
+    { name: 'seo', title: 'SEO & AI' },
+  ],
   fields: [
     {
       name: 'title',
       title: 'Title',
       type: 'string',
+      group: 'content',
       validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      group: 'content',
       options: { source: 'title', maxLength: 96 },
       validation: (Rule: any) => Rule.required(),
     },
@@ -23,6 +26,7 @@ const post = {
       name: 'category',
       title: 'Category',
       type: 'string',
+      group: 'content',
       options: {
         list: [
           { title: 'Insights',        value: 'INSIGHTS'        },
@@ -39,44 +43,71 @@ const post = {
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
+      group: 'content',
       validation: (Rule: any) => Rule.required(),
     },
     {
+      name: 'dateModified',
+      title: 'Last updated',
+      description: 'Optional. Set when materially updating an older post — surfaces dateModified in Article schema.',
+      type: 'datetime',
+      group: 'content',
+    },
+    {
       name: 'author',
-      title: 'Author',
+      title: 'Author (legacy string)',
+      description: 'Free-text fallback. Prefer the Author reference below for new posts.',
       type: 'string',
+      group: 'content',
       initialValue: 'NextHire Team',
+    },
+    {
+      name: 'authorRef',
+      title: 'Author',
+      type: 'reference',
+      to: [{ type: 'author' }],
+      group: 'content',
     },
     {
       name: 'readTime',
       title: 'Read Time',
       type: 'string',
+      group: 'content',
       placeholder: '5 min read',
     },
     {
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
+      group: 'content',
       options: { hotspot: true },
       fields: [
-        {
-          name: 'alt',
-          title: 'Alt text',
-          type: 'string',
-        },
+        { name: 'alt', title: 'Alt text', type: 'string' },
       ],
     },
     {
       name: 'excerpt',
       title: 'Excerpt',
+      description: 'Used for blog index cards and as default meta description.',
       type: 'text',
+      group: 'content',
       rows: 3,
       validation: (Rule: any) => Rule.required().max(300),
+    },
+    {
+      name: 'tldr',
+      title: 'TL;DR',
+      description: 'Optional 1-2 sentence summary surfaced at the top of the post. AI search engines (Perplexity, ChatGPT) often quote this verbatim.',
+      type: 'text',
+      group: 'content',
+      rows: 2,
+      validation: (Rule: any) => Rule.max(280),
     },
     {
       name: 'body',
       title: 'Body',
       type: 'array',
+      group: 'content',
       of: [
         { type: 'block' },
         {
@@ -86,6 +117,75 @@ const post = {
         },
         { type: 'table' },
       ],
+    },
+    {
+      name: 'faqItems',
+      title: 'FAQ items',
+      description: 'Surfaces an FAQ section at the bottom of the post and emits FAQPage schema. Aim for 3-6 question/answer pairs targeting "People Also Ask" queries.',
+      type: 'array',
+      group: 'content',
+      of: [
+        {
+          type: 'object',
+          name: 'faqItem',
+          fields: [
+            { name: 'question', title: 'Question', type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'answer',   title: 'Answer',   type: 'text', rows: 3, validation: (Rule: any) => Rule.required() },
+          ],
+          preview: { select: { title: 'question' } },
+        },
+      ],
+    },
+    {
+      name: 'relatedPosts',
+      title: 'Related posts',
+      description: 'Optional manual override for sidebar related posts. Leave empty to use automatic selection.',
+      type: 'array',
+      group: 'content',
+      of: [{ type: 'reference', to: [{ type: 'post' }] }],
+      validation: (Rule: any) => Rule.max(4),
+    },
+
+    // ── SEO group ──────────────────────────────────────────────
+    {
+      name: 'metaTitle',
+      title: 'Meta title',
+      description: 'SEO title used in <title> and SERP. Falls back to post title. Aim for 50-60 characters.',
+      type: 'string',
+      group: 'seo',
+      validation: (Rule: any) => Rule.max(70),
+    },
+    {
+      name: 'metaDescription',
+      title: 'Meta description',
+      description: 'SEO description used in SERP and social previews. Falls back to excerpt. Aim for 150-160 characters.',
+      type: 'text',
+      group: 'seo',
+      rows: 3,
+      validation: (Rule: any) => Rule.max(180),
+    },
+    {
+      name: 'ogImage',
+      title: 'Social share image',
+      description: 'Optional override for OpenGraph/Twitter card. Falls back to hero image. Recommended 1200x630.',
+      type: 'image',
+      group: 'seo',
+      options: { hotspot: true },
+    },
+    {
+      name: 'focusKeyword',
+      title: 'Focus keyword',
+      description: 'Editorial only — not rendered. Used by reviewers to verify keyword coverage.',
+      type: 'string',
+      group: 'seo',
+    },
+    {
+      name: 'noindex',
+      title: 'Exclude from search engines',
+      description: 'If on, the post will emit noindex and be excluded from sitemap.',
+      type: 'boolean',
+      group: 'seo',
+      initialValue: false,
     },
   ],
   preview: {
