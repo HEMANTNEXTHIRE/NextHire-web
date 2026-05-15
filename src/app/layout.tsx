@@ -14,7 +14,7 @@ const SOCIAL_PROFILES = [
   'https://x.com/Nexthire_',
   'https://www.reddit.com/r/Nexthire/',
   'https://www.instagram.com/next.hire/',
-  'https://www.linkedin.com/company/nexthire-consulting',
+  'https://www.linkedin.com/company/nexthire-technologies/',
 ]
 
 const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION

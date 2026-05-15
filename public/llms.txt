@@ -73,7 +73,7 @@ NextHire uses region-aware pricing. India is billed in INR; the rest of the worl
 - X / Twitter: https://x.com/Nexthire_
 - Reddit: https://www.reddit.com/r/Nexthire/
 - Instagram: https://www.instagram.com/next.hire/
-- LinkedIn: https://www.linkedin.com/company/nexthire-consulting
+- LinkedIn: https://www.linkedin.com/company/nexthire-technologies/
 
 ## Legal & Policy
 
