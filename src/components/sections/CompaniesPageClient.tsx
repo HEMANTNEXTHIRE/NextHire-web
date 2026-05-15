@@ -416,9 +416,7 @@ export default function CompaniesPageClient() {
             <Reveal delay={0.16}>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 32 }}>
                 <a
-                  href="https://app.nexthireconsulting.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contact-us"
                   data-cal-namespace="30min"
                   data-cal-link="hemant-nexthire/30min"
                   data-cal-config='{"layout":"month_view"}'
