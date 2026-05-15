@@ -7,7 +7,6 @@ import ResumeBuilderShowcase from '@/components/sections/ResumeBuilderShowcase'
 import HireSection from '@/components/sections/HireSection'
 import AccordionFaq from '@/components/ui/AccordionFaq'
 import DualActionCTA from '@/components/ui/DualActionCTA'
-import CalBookingButton from '@/components/ui/CalBookingButton'
 
 const HOME_FAQS = [
   {
@@ -94,9 +93,6 @@ export default function HomePage() {
 
       {/* 8. Dual CTA: Get Started / Talk to an Expert */}
       <DualActionCTA />
-
-      {/* Cal.com floating button */}
-      <CalBookingButton />
     </>
   )
 }
