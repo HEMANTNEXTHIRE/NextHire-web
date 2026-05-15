@@ -46,6 +46,9 @@ jobs:
           # Hardcoded here so a missing repo-secret can't break the build.
           NEXT_PUBLIC_SANITY_PROJECT_ID: 5lcdhip2
           NEXT_PUBLIC_SANITY_DATASET:    production
+          # Search engine site-verification tokens (meta-tag method).
+          # Public values — they appear in every page's <head>.
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: sVimduq0jOM2Yb2SvaSMhgZlpqvJKB2KUbsVcjNxpQE
 
       - name: Debug OIDC token claims (sub / aud / repo)
         run: |
