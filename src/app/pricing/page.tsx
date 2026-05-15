@@ -18,16 +18,21 @@ export const metadata: Metadata = {
   alternates: { canonical: PRICING_URL },
 }
 
-// One Offer node per tier (USD as default currency). India INR pricing is documented
-// in llms.txt and exposed to runtime via geolocation. We emit USD here because Google
-// Rich Results renders a single Offer block.
-const productSchema = {
+// Use Service (not Product) — SaaS subscriptions are services, not physical goods.
+// Avoids Google's "Merchant listings" validator path which requires shipping/returns.
+const serviceSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Product',
+  '@type': 'Service',
   name: 'NextHire — AI Job Search Agent',
   description:
     'AI-powered career platform. Automates job applications, builds ATS-optimized resumes, runs personalised recruiter outreach, and coaches candidates through interviews in real time.',
-  brand: { '@type': 'Brand', name: 'NextHire' },
+  serviceType: 'AI Job Search Platform',
+  provider: {
+    '@type': 'Organization',
+    name: 'NextHire Consulting',
+    url: 'https://www.nexthireconsulting.com',
+  },
+  areaServed: ['IN', 'US', 'GB', 'CA', 'AU', 'AE', 'SG'],
   offers: CANDIDATE_TIERS.map(tier => {
     const usd = tierPrice(tier, 'US')
     return {
@@ -38,6 +43,7 @@ const productSchema = {
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
       url: CHECKOUT_URL,
+      category: 'subscription',
       priceSpecification: {
         '@type': 'UnitPriceSpecification',
         price: usd.monthly.toFixed(2),
@@ -73,7 +79,7 @@ export default function PricingPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       <script
         type="application/ld+json"
