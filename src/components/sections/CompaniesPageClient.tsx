@@ -419,6 +419,9 @@ export default function CompaniesPageClient() {
                   href="https://app.nexthireconsulting.com"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cal-namespace="30min"
+                  data-cal-link="hemant-nexthire/30min"
+                  data-cal-config='{"layout":"month_view"}'
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',

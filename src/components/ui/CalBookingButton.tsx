@@ -2,17 +2,12 @@
 
 import { useEffect } from 'react'
 
-/** Minimal type for the Cal.com embed global */
-interface CalEmbed {
+/** Minimal type for the Cal.com embed global — narrow local alias so we don't
+ * collide with the global Window.Cal type provided by @calcom/embed-react. */
+type CalEmbed = {
   (action: string, namespace: string, options?: Record<string, unknown>): void
   ns: Record<string, (action: string, options?: Record<string, unknown>) => void>
   loaded?: boolean
-}
-
-declare global {
-  interface Window {
-    Cal?: CalEmbed
-  }
 }
 
 interface CalBookingButtonProps {
@@ -33,7 +28,7 @@ export default function CalBookingButton({
 }: CalBookingButtonProps) {
   useEffect(() => {
     const initCal = () => {
-      const Cal = window.Cal
+      const Cal = (window as unknown as { Cal?: CalEmbed }).Cal
       if (!Cal) return
 
       Cal('init', namespace, { origin: 'https://app.cal.com' })

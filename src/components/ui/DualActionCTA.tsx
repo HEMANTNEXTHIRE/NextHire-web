@@ -160,11 +160,17 @@ export default function DualActionCTA({
 
           {isExternalRight ? (
             <a href={rightHref} target="_blank" rel="noopener noreferrer" style={btnStyle}
+              data-cal-namespace="30min"
+              data-cal-link="hemant-nexthire/30min"
+              data-cal-config='{"layout":"month_view"}'
               onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
             >{rightLabel}</a>
           ) : (
             <Link href={rightHref} style={btnStyle}
+              data-cal-namespace="30min"
+              data-cal-link="hemant-nexthire/30min"
+              data-cal-config='{"layout":"month_view"}'
               onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#338632')}
               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#132128')}
             >{rightLabel}</Link>

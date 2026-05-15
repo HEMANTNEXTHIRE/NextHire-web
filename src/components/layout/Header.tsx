@@ -260,8 +260,14 @@ function NavMegaMenu({
                 : undefined
             }
           >
-            {cfg.promoActions.map((a) =>
-              a.variant === 'primary' ? (
+            {cfg.promoActions.map((a) => {
+              const isCal = /^(book a demo|book a discovery call|schedule now|talk to an expert)$/i.test(a.label)
+              const calAttrs = isCal ? {
+                'data-cal-namespace': '30min',
+                'data-cal-link': 'hemant-nexthire/30min',
+                'data-cal-config': '{"layout":"month_view"}',
+              } : {}
+              return a.variant === 'primary' ? (
                 <Link
                   key={a.label}
                   href={a.href}
@@ -269,6 +275,7 @@ function NavMegaMenu({
                   target={a.external ? '_blank' : undefined}
                   rel={a.external ? 'noopener noreferrer' : undefined}
                   onClick={onNavigate}
+                  {...calAttrs}
                 >
                   {a.label}
                 </Link>
@@ -278,11 +285,12 @@ function NavMegaMenu({
                   href={a.href}
                   className="nh-mega-menu__promo-btn-secondary"
                   onClick={onNavigate}
+                  {...calAttrs}
                 >
                   {a.label} <span aria-hidden>→</span>
                 </Link>
               )
-            )}
+            })}
           </div>
         </div>
       </aside>

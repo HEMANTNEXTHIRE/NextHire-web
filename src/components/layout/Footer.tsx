@@ -82,7 +82,13 @@ export default function Footer() {
               <li><Link href="#" className="nh-footer-link">Staffing Solution</Link></li>
               <li><Link href="#" className="nh-footer-link">RPO Solution</Link></li>
               <li className="nh-footer-gap">
-                <Link href="/contact-us" className="nh-footer-link">Book a demo</Link>
+                <Link
+                  href="/contact-us"
+                  className="nh-footer-link"
+                  data-cal-namespace="30min"
+                  data-cal-link="hemant-nexthire/30min"
+                  data-cal-config='{"layout":"month_view"}'
+                >Book a demo</Link>
               </li>
             </ul>
           </div>
