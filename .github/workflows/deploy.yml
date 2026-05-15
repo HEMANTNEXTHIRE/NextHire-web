@@ -91,3 +91,9 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
+
+      # Push all sitemap URLs to IndexNow (Bing, Yandex, Naver, Seznam) so
+      # they re-crawl within minutes. Soft-fails — won't break the deploy.
+      - name: Ping IndexNow
+        run: node scripts/indexnow.mjs
+        continue-on-error: true
