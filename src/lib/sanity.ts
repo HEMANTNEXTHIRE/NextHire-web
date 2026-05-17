@@ -48,6 +48,7 @@ export interface SanityPost {
   ogImage?:    string
   noindex?:    boolean
   faqItems?:   SanityFaqItem[]
+  keyTakeaways?: string[]
   body:        PortableTextBlock[]
 }
 
@@ -92,12 +93,26 @@ export const POST_BY_SLUG_QUERY = `
   *[_type == "post" && slug.current == $slug][0] {
     ${POST_FIELDS},
     faqItems[]{ question, answer },
+    keyTakeaways,
     body[]{
       ...,
       _type == "table" => {
         _type,
         _key,
         rows[]{ _key, cells }
+      },
+      _type == "relatedPostInline" => {
+        _type,
+        _key,
+        label,
+        "post": post->{
+          title,
+          "slug": slug.current,
+          category,
+          readTime,
+          excerpt,
+          "heroImage": heroImage.asset->url
+        }
       }
     }
   }

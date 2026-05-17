@@ -5,6 +5,34 @@ import { getBlogPostBySlug, getAllBlogSlugs, blogPosts } from '@/lib/blogData'
 import { getPostBySlug, getAllSlugs, getAllPosts, formatDate, type SanityPost } from '@/lib/sanity'
 import PortableTextRenderer from '@/sanity/PortableTextRenderer'
 import DualActionCTA from '@/components/ui/DualActionCTA'
+import InlineProductCTA from '@/components/ui/InlineProductCTA'
+import PostTOC, { type TocEntry } from '@/components/ui/PostTOC'
+
+// Mirror of PortableTextRenderer's headingId() — keep them in sync.
+function tocId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .slice(0, 80)
+}
+
+function extractToc(body: any[] | undefined): TocEntry[] {
+  if (!body?.length) return []
+  const out: TocEntry[] = []
+  for (const block of body) {
+    if (block?._type !== 'block') continue
+    if (block.style !== 'h2' && block.style !== 'h3') continue
+    const text = (block.children ?? [])
+      .map((c: any) => (typeof c?.text === 'string' ? c.text : ''))
+      .join('')
+      .trim()
+    if (!text) continue
+    out.push({ id: tocId(text), text, level: block.style === 'h2' ? 2 : 3 })
+  }
+  return out
+}
 
 const SITE = 'https://www.nexthireconsulting.com'
 
@@ -34,12 +62,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const staticPost = getBlogPostBySlug(slug)
   if (!sanity && !staticPost) return {}
 
-  const baseTitle = sanity?.title ?? staticPost!.title
+  const baseTitle = sanity?.title ?? staticPost?.title ?? ''
   const metaTitle = sanity?.metaTitle ?? baseTitle
-  const description = sanity?.metaDescription ?? sanity?.excerpt ?? staticPost!.excerpt
-  const heroImage = sanity?.ogImage ?? sanity?.heroImage ?? staticPost!.heroImage
-  const author = sanity?.authorRef?.name ?? sanity?.author ?? staticPost!.author
-  const publishedTime = toIso(sanity?.publishedAt ?? staticPost!.date)
+  const description = sanity?.metaDescription ?? sanity?.excerpt ?? staticPost?.excerpt ?? ''
+  const heroImage = sanity?.ogImage ?? sanity?.heroImage ?? staticPost?.heroImage ?? ''
+  const author = sanity?.authorRef?.name ?? sanity?.author ?? staticPost?.author ?? 'NextHire Team'
+  const publishedTime = toIso(sanity?.publishedAt ?? staticPost?.date)
   const modifiedTime = toIso(sanity?.dateModified) ?? publishedTime
   const noindex = sanity?.noindex === true
 
@@ -89,7 +117,7 @@ export default async function BlogPostPage({ params }: Props) {
         title:     sanityPost.title,
         category:  sanityPost.category,
         date:      formatDate(sanityPost.publishedAt),
-        author:    sanityPost.author,
+        author:    sanityPost.authorRef?.name ?? sanityPost.author ?? 'NextHire Team',
         readTime:  sanityPost.readTime,
         heroImage: sanityPost.heroImage,
         excerpt:   sanityPost.excerpt,
@@ -107,6 +135,13 @@ export default async function BlogPostPage({ params }: Props) {
 
   const publishedIso = toIso(sanityPost?.publishedAt ?? staticPost?.date)
   const modifiedIso = toIso(sanityPost?.dateModified) ?? publishedIso
+  // Surface "Updated <date>" when dateModified exists and is materially later than publishedAt
+  const showUpdated =
+    !!sanityPost?.dateModified &&
+    !!sanityPost?.publishedAt &&
+    new Date(sanityPost.dateModified).getTime() >
+      new Date(sanityPost.publishedAt).getTime() + 86_400_000
+  const updatedLabel = showUpdated ? formatDate(sanityPost!.dateModified!) : null
   const heroImageAbs = post.heroImage.startsWith('http')
     ? post.heroImage
     : `${SITE}${post.heroImage}`
@@ -114,6 +149,8 @@ export default async function BlogPostPage({ params }: Props) {
   const authorBio = sanityPost?.authorRef?.bio
   const tldr = sanityPost?.tldr
   const faqItems = sanityPost?.faqItems ?? []
+  const keyTakeaways = sanityPost?.keyTakeaways ?? []
+  const tocEntries = extractToc(sanityPost?.body)
 
   const blogPostingSchema = {
     '@context': 'https://schema.org',
@@ -258,8 +295,8 @@ export default async function BlogPostPage({ params }: Props) {
             Back to blog
           </Link>
 
-          {/* Category + read time */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+          {/* Category + read time + updated badge */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
             <span style={{
               fontSize: 11, fontWeight: 700, letterSpacing: '1.2px',
               color: P.accent, background: P.mint,
@@ -270,6 +307,18 @@ export default async function BlogPostPage({ params }: Props) {
               {post.category}
             </span>
             <span style={{ fontSize: 13, color: P.muted }}>{post.readTime}</span>
+            {updatedLabel && (
+              <span style={{
+                fontSize: 12, fontWeight: 600, color: P.accent,
+                display: 'inline-flex', alignItems: 'center', gap: 5,
+              }}>
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 3.5v4l2.5 1.5" stroke="#2e7d4f" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="7" cy="7" r="5.4" stroke="#2e7d4f" strokeWidth="1.4"/>
+                </svg>
+                Updated {updatedLabel}
+              </span>
+            )}
           </div>
 
           {/* Title */}
@@ -354,12 +403,59 @@ export default async function BlogPostPage({ params }: Props) {
                 </aside>
               )}
 
+              {/* Top-of-article product CTA — primary conversion */}
+              <InlineProductCTA />
+
               <article className="nh-post-content">
                 {sanityPost?.body?.length
                   ? <PortableTextRenderer value={sanityPost.body} />
                   : <div dangerouslySetInnerHTML={{ __html: post.content }} />
                 }
               </article>
+
+              {/* Key takeaways — AI-search-friendly summary near the end */}
+              {keyTakeaways.length > 0 && (
+                <section style={{
+                  marginTop: 48,
+                  background: P.bg,
+                  border: `1.5px solid ${P.border}`,
+                  borderRadius: 14,
+                  padding: '24px 28px',
+                }}>
+                  <div style={{
+                    fontSize: 11, fontWeight: 700, letterSpacing: '1.4px',
+                    color: P.accent, textTransform: 'uppercase', marginBottom: 14,
+                  }}>
+                    Key takeaways
+                  </div>
+                  <ul style={{
+                    listStyle: 'none', padding: 0, margin: 0,
+                    display: 'flex', flexDirection: 'column', gap: 12,
+                  }}>
+                    {keyTakeaways.map((line, i) => (
+                      <li key={i} style={{
+                        display: 'flex', gap: 12,
+                        fontSize: 16, color: P.dark, lineHeight: 1.6,
+                      }}>
+                        <span aria-hidden="true" style={{
+                          color: P.accent, fontWeight: 700, flexShrink: 0,
+                        }}>
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {/* End-of-article product CTA — secondary conversion */}
+              <InlineProductCTA
+                label="READY TO START?"
+                title="Stop applying and praying"
+                description="Let NextHire run your job search end-to-end. Free to try, no credit card required."
+                buttonLabel="Start free"
+              />
 
               {/* FAQ section — visible counterpart of the FAQPage JSON-LD */}
               {faqItems.length > 0 && (
@@ -445,12 +541,14 @@ export default async function BlogPostPage({ params }: Props) {
             {/* ── Sidebar ──────────────────────────────────────── */}
             <aside
               className="nh-post-sidebar"
-              style={{ width: 320, flexShrink: 0, position: 'sticky', top: 100 }}
+              style={{ width: 320, flexShrink: 0, position: 'sticky', top: 100, paddingTop: 40 }}
             >
+              {tocEntries.length > 1 && <PostTOC entries={tocEntries} />}
+
               <p style={{
                 fontSize: 11, fontWeight: 700, letterSpacing: '1.4px',
                 color: P.muted, textTransform: 'uppercase',
-                margin: '40px 0 20px',
+                margin: tocEntries.length > 1 ? '0 0 20px' : '0 0 20px',
               }}>
                 More articles
               </p>

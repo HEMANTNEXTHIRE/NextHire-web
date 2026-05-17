@@ -1,7 +1,22 @@
 'use client'
 
+import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from './lib/image'
+import InlineProductCTA from '@/components/ui/InlineProductCTA'
+
+// Helper: turn heading text into a kebab-case anchor id
+function headingId(children: any): string {
+  const text = Array.isArray(children)
+    ? children.map((c: any) => (typeof c === 'string' ? c : c?.props?.children ?? '')).join('')
+    : String(children ?? '')
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .slice(0, 80)
+}
 
 // Reuse the same prose styles as the existing .nh-post-content CSS in blog/[slug]/page.tsx
 const components = {
@@ -10,10 +25,10 @@ const components = {
       <p style={{ fontSize: 17, color: '#424d53', lineHeight: 1.8, margin: '0 0 24px' }}>{children}</p>
     ),
     h2: ({ children }: any) => (
-      <h2 style={{ fontSize: 26, fontWeight: 500, color: '#132128', margin: '44px 0 14px', lineHeight: 1.3, letterSpacing: '-0.4px' }}>{children}</h2>
+      <h2 id={headingId(children)} style={{ fontSize: 26, fontWeight: 500, color: '#132128', margin: '44px 0 14px', lineHeight: 1.3, letterSpacing: '-0.4px', scrollMarginTop: 100 }}>{children}</h2>
     ),
     h3: ({ children }: any) => (
-      <h3 style={{ fontSize: 21, fontWeight: 600, color: '#132128', margin: '32px 0 10px', lineHeight: 1.35 }}>{children}</h3>
+      <h3 id={headingId(children)} style={{ fontSize: 21, fontWeight: 600, color: '#132128', margin: '32px 0 10px', lineHeight: 1.35, scrollMarginTop: 100 }}>{children}</h3>
     ),
     blockquote: ({ children }: any) => (
       <blockquote style={{ borderLeft: '3px solid #2e7d4f', paddingLeft: 20, margin: '32px 0', fontStyle: 'italic', color: '#4b5563', fontSize: 17, lineHeight: 1.75 }}>{children}</blockquote>
@@ -22,6 +37,12 @@ const components = {
   marks: {
     strong: ({ children }: any) => <strong style={{ fontWeight: 700, color: '#132128' }}>{children}</strong>,
     em: ({ children }: any) => <em>{children}</em>,
+    code: ({ children }: any) => (
+      <code style={{ background: '#edf5f1', border: '1px solid #c8dfd6', borderRadius: 4, padding: '1px 6px', fontSize: '0.92em', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}>{children}</code>
+    ),
+    highlight: ({ children }: any) => (
+      <mark style={{ background: 'linear-gradient(180deg, transparent 55%, #fff3a3 55%)', padding: '0 1px', color: '#132128' }}>{children}</mark>
+    ),
     link: ({ children, value }: any) => (
       <a href={value?.href} target="_blank" rel="noopener noreferrer" style={{ color: '#2e7d4f', textDecoration: 'underline' }}>{children}</a>
     ),
@@ -105,6 +126,57 @@ const components = {
         </div>
       )
     },
+    relatedPostInline: ({ value }: any) => {
+      const p = value?.post
+      if (!p?.slug) return null
+      const label = value?.label || 'Related article'
+      return (
+        <aside style={{
+          display: 'flex', gap: 18, alignItems: 'center',
+          background: '#edf5f1',
+          border: '1.5px solid #c8dfd6',
+          borderRadius: 14,
+          padding: 18,
+          margin: '36px 0',
+          textDecoration: 'none',
+        }}>
+          {p.heroImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={p.heroImage} alt="" loading="lazy" style={{
+              width: 96, height: 96, objectFit: 'cover',
+              borderRadius: 10, flexShrink: 0,
+            }} />
+          )}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: '1.4px',
+              color: '#2e7d4f', textTransform: 'uppercase', marginBottom: 6,
+            }}>
+              {label}
+            </div>
+            <Link href={`/blog/${p.slug}`} style={{
+              fontSize: 17, fontWeight: 600, color: '#132128',
+              textDecoration: 'none', lineHeight: 1.35, letterSpacing: '-0.2px',
+              display: 'block', marginBottom: 4,
+            }}>
+              {p.title}
+            </Link>
+            {p.readTime && (
+              <div style={{ fontSize: 13, color: '#9ca3af' }}>{p.readTime}</div>
+            )}
+          </div>
+        </aside>
+      )
+    },
+    productCta: ({ value }: any) => (
+      <InlineProductCTA
+        label={value?.label}
+        title={value?.title}
+        description={value?.description}
+        buttonLabel={value?.buttonLabel}
+        href={value?.href}
+      />
+    ),
   },
 }
 

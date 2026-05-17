@@ -67,6 +67,7 @@ const post = {
       type: 'reference',
       to: [{ type: 'author' }],
       group: 'content',
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'readTime',
@@ -74,6 +75,7 @@ const post = {
       type: 'string',
       group: 'content',
       placeholder: '5 min read',
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'heroImage',
@@ -84,6 +86,7 @@ const post = {
       fields: [
         { name: 'alt', title: 'Alt text', type: 'string' },
       ],
+      validation: (Rule: any) => Rule.required().assetRequired(),
     },
     {
       name: 'excerpt',
@@ -109,14 +112,78 @@ const post = {
       type: 'array',
       group: 'content',
       of: [
-        { type: 'block' },
+        {
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+              { title: 'Highlight', value: 'highlight' },
+              { title: 'Code', value: 'code' },
+            ],
+          },
+        },
         {
           type: 'image',
           options: { hotspot: true },
           fields: [{ name: 'alt', title: 'Alt text', type: 'string' }],
         },
         { type: 'table' },
+        {
+          type: 'object',
+          name: 'relatedPostInline',
+          title: 'Related article card',
+          fields: [
+            {
+              name: 'post',
+              title: 'Post',
+              type: 'reference',
+              to: [{ type: 'post' }],
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'label',
+              title: 'Label (optional)',
+              type: 'string',
+              description: 'Defaults to "Related article". Use to vary tone, e.g. "Read next" or "Deep dive".',
+            },
+          ],
+          preview: {
+            select: { title: 'post.title', subtitle: 'label' },
+            prepare({ title, subtitle }: any) {
+              return {
+                title: title || 'Untitled post',
+                subtitle: subtitle || 'Related article',
+              }
+            },
+          },
+        },
+        {
+          type: 'object',
+          name: 'productCta',
+          title: 'Product CTA card',
+          description: 'Mid-article CTA pointing readers to the NextHire app.',
+          fields: [
+            { name: 'label',       title: 'Label chip',  type: 'string', initialValue: 'GET STARTED' },
+            { name: 'title',       title: 'Headline',    type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'description', title: 'Description', type: 'text', rows: 2 },
+            { name: 'buttonLabel', title: 'Button label', type: 'string', initialValue: 'Try NextHire free' },
+            { name: 'href',        title: 'Button URL',   type: 'url' },
+          ],
+          preview: {
+            select: { title: 'title', subtitle: 'buttonLabel' },
+          },
+        },
       ],
+    },
+    {
+      name: 'keyTakeaways',
+      title: 'Key takeaways',
+      description: 'Short bullets surfaced near the end of the post. AI search engines (Perplexity, ChatGPT, Google AI Overviews) cite these almost verbatim. Aim for 3-5 punchy lines.',
+      type: 'array',
+      group: 'content',
+      of: [{ type: 'string' }],
+      validation: (Rule: any) => Rule.max(8),
     },
     {
       name: 'faqItems',

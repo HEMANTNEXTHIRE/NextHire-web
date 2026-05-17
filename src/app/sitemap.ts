@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { sanityClient } from '@/lib/sanity'
 import { blogPosts } from '@/lib/blogData'
+import { interviewRoles } from '@/lib/interviewRolesData'
 
 // Required for static export — sitemap is generated once at build time.
 export const dynamic = 'force-static'
@@ -39,7 +40,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/why-join-nexthire/`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/success-story/`,     changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/blog/`,              changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${BASE}/interview-questions/`, changeFrequency: 'monthly', priority: 0.8 },
   ]
+
+  const interviewUrls: MetadataRoute.Sitemap = interviewRoles.map(r => ({
+    url: `${BASE}/interview-questions/${r.slug}/`,
+    lastModified: r.dateModified,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
 
   const sanityUrls: MetadataRoute.Sitemap = sanityPosts.map(p => ({
     url: `${BASE}/blog/${p.slug}/`,
@@ -71,5 +80,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.3,
   }))
 
-  return [...core, ...sanityUrls, ...staticUrls, ...legal]
+  return [...core, ...interviewUrls, ...sanityUrls, ...staticUrls, ...legal]
 }
