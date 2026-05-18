@@ -1,4 +1,5 @@
-// CloudFront Function — 301 redirects for legacy URLs.
+// CloudFront Function — 301 redirects for legacy URLs +
+// directory-style URI rewrite for the static export origin.
 //
 // Runtime: cloudfront-js-2.0
 // Association: viewer-request on the CloudFront distribution serving
@@ -12,6 +13,16 @@
 //   from the legacy URL to the modern one to preserve link equity and
 //   recover crawl budget.
 //
+//   Separately, Next.js's static export writes every route as
+//   `<path>/index.html` in the S3 bucket. S3's REST endpoint does NOT
+//   auto-resolve `index.html` for sub-directories — only CloudFront's
+//   "default root object" handles the bare `/`. Without a URI rewrite,
+//   a fresh request to `/blog/<slug>/` 404s at the origin, gets caught
+//   by the CloudFront custom-error-response rule, and ends up rendering
+//   the homepage (`/index.html`) with status 200 — the symptom of
+//   "pasting a blog link shows the homepage but clicking it works"
+//   (clicking works because Next's client-side router handles it).
+//
 // What it does:
 //   1. Exact-match table of known legacy URLs → modern URL (renames and
 //      special cases handled here).
@@ -21,6 +32,11 @@
 //      lowercased, and normalised (spaces / `&` / `_` → `-`).
 //   3. Query strings are preserved across the redirect (utm tracking
 //      survives).
+//   4. Directory rewrite: for any URI that did not match a redirect
+//      above, append `index.html` to trailing-slash URIs and
+//      `/index.html` to extensionless URIs so the S3 origin can serve
+//      the static file. This is a request rewrite, not a redirect —
+//      the browser still sees the clean URL.
 //
 // Deployment (one-time, AWS console):
 //   1. CloudFront → Functions → Create function.
@@ -110,6 +126,26 @@ function handler(event) {
     }
 
     if (newPath) return redirect301(newPath + qs);
+  }
+
+  // Directory rewrite — make the S3 origin happy.
+  // `/blog/foo/`  → `/blog/foo/index.html`
+  // `/blog/foo`   → `/blog/foo/index.html`
+  // `/`           → left alone (CloudFront default root object handles it)
+  // `/file.xml`   → left alone (has an extension, treat as a real file)
+  // `/_next/...`  → left alone (real built asset path)
+  if (uri !== '/' && uri.indexOf('/_next/') !== 0) {
+    if (uri.slice(-1) === '/') {
+      req.uri = uri + 'index.html';
+    } else {
+      // Extensionless URIs (no dot in the final segment) are routes;
+      // anything with a dot is a real file (sitemap.xml, robots.txt,
+      // favicon.ico, *.js, *.css, *.png, …).
+      var lastSegment = uri.slice(uri.lastIndexOf('/') + 1);
+      if (lastSegment.indexOf('.') === -1) {
+        req.uri = uri + '/index.html';
+      }
+    }
   }
 
   return req;
