@@ -1,111 +1,257 @@
 'use client'
 
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { WEIGHT } from '@/constants/typography'
 import { MagicText } from '@/components/ui/MagicText'
 
+interface ChatMessage {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+}
 
-function DreamInput() {
-  const [value, setValue] = useState('')
-  const [focused, setFocused] = useState(false)
+function HeroChatbot() {
+  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [input, setInput] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const chatScrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const handleSubmit = useCallback(() => {
-    const query = value.trim()
-    if (query) {
-      const appUrl = new URL('https://app.nexthireconsulting.com/dashboard')
-      appUrl.searchParams.set('q', query)
-      window.location.href = appUrl.toString()
-    } else {
-      window.location.href = 'https://app.nexthireconsulting.com'
+  useEffect(() => {
+    const el = chatScrollRef.current
+    if (el) el.scrollTop = el.scrollHeight
+  }, [messages])
+
+  const sendMessage = useCallback(async () => {
+    const text = input.trim()
+    if (!text || isLoading) return
+
+    const userMsg: ChatMessage = { id: Date.now().toString(), role: 'user', content: text }
+    const updatedMessages = [...messages, userMsg]
+    setMessages(updatedMessages)
+    setInput('')
+    setIsLoading(true)
+
+    // Reset textarea height
+    if (textareaRef.current) textareaRef.current.style.height = 'auto'
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: updatedMessages.map(m => ({ role: m.role, content: m.content })),
+        }),
+      })
+
+      if (!res.ok) throw new Error('Chat request failed')
+
+      const reader = res.body?.getReader()
+      const decoder = new TextDecoder()
+      const assistantId = (Date.now() + 1).toString()
+
+      setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
+
+      if (reader) {
+        let buffer = ''
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          buffer += decoder.decode(value, { stream: true })
+
+          // Parse SSE data chunks from the AI SDK stream
+          const lines = buffer.split('\n')
+          buffer = lines.pop() || ''
+
+          for (const line of lines) {
+            // AI SDK v3 data stream format: lines starting with "0:" contain text
+            if (line.startsWith('0:')) {
+              try {
+                const text = JSON.parse(line.slice(2))
+                setMessages(prev =>
+                  prev.map(m => m.id === assistantId ? { ...m, content: m.content + text } : m)
+                )
+              } catch { /* skip non-text chunks */ }
+            }
+          }
+        }
+        // Process any remaining buffer
+        if (buffer.startsWith('0:')) {
+          try {
+            const text = JSON.parse(buffer.slice(2))
+            setMessages(prev =>
+              prev.map(m => m.id === assistantId ? { ...m, content: m.content + text } : m)
+            )
+          } catch { /* skip */ }
+        }
+      }
+    } catch {
+      setMessages(prev => [...prev, {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "Sorry, I'm having trouble connecting. Please try again or head over to [NextHire](https://app.nexthireconsulting.com) directly!",
+      }])
+    } finally {
+      setIsLoading(false)
     }
-  }, [value])
+  }, [input, isLoading, messages])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      handleSubmit()
+      sendMessage()
     }
   }
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value)
+  const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value)
     const el = textareaRef.current
     if (el) {
       el.style.height = 'auto'
-      el.style.height = `${Math.min(el.scrollHeight, 200)}px`
+      el.style.height = `${Math.min(el.scrollHeight, 120)}px`
     }
   }
 
+  const hasMessages = messages.length > 0
+
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        maxWidth: '620px',
-        background: '#ffffff',
-        borderRadius: '20px',
-        boxShadow: focused
-          ? '0 0 0 2px #338632, 0 8px 40px rgba(0,0,0,0.12)'
-          : '0 2px 8px rgba(0,0,0,0.08), 0 8px 40px rgba(0,0,0,0.06)',
-        padding: '20px 64px 20px 20px',
-        transition: 'box-shadow 0.2s ease',
-        border: '1px solid #e5e7eb',
-        cursor: 'text',
-        boxSizing: 'border-box',
-      }}
-      onClick={() => textareaRef.current?.focus()}
-    >
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={handleInput}
-        onKeyDown={handleKeyDown}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        placeholder={`Tell us your biggest job search struggle...`}
-        rows={3}
-        style={{
-          width: '100%',
-          border: 'none',
-          outline: 'none',
-          resize: 'none',
-          background: 'transparent',
-          fontFamily: 'inherit',
-          fontSize: '15px',
-          lineHeight: 1.6,
-          color: '#132128',
-          display: 'block',
-          overflowY: 'hidden',
-          minHeight: '72px',
-        }}
-      />
-      <button
-        onClick={(e) => { e.stopPropagation(); handleSubmit() }}
-        aria-label="Submit"
-        style={{
-          position: 'absolute',
-          bottom: '14px',
-          right: '14px',
-          width: '38px',
-          height: '38px',
-          borderRadius: '50%',
-          background: '#132128',
-          border: 'none',
-          cursor: 'pointer',
+    <div style={{
+      width: '100%',
+      maxWidth: '620px',
+      background: '#ffffff',
+      borderRadius: '20px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08), 0 8px 40px rgba(0,0,0,0.06)',
+      border: '1px solid #e5e7eb',
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+      transition: 'box-shadow 0.2s ease',
+    }}>
+      {/* Chat messages area */}
+      {hasMessages && (
+        <div ref={chatScrollRef} style={{
+          maxHeight: '280px',
+          overflowY: 'auto',
+          padding: '16px 20px 8px',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
-          transition: 'background 0.15s ease, transform 0.15s ease',
-        }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#338632' }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#132128' }}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M8 12V4M4 8l4-4 4 4" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
+          flexDirection: 'column',
+          gap: '12px',
+        }}>
+          {messages.map((msg) => (
+            <div key={msg.id} style={{
+              display: 'flex',
+              justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+            }}>
+              <div style={{
+                maxWidth: '85%',
+                padding: '10px 14px',
+                borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                background: msg.role === 'user' ? '#132128' : '#edf5f1',
+                color: msg.role === 'user' ? '#ffffff' : '#132128',
+                fontSize: '14px',
+                lineHeight: 1.5,
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+              }}>
+                {msg.content.split(/(\[.*?\]\(.*?\))/).map((part, i) => {
+                  const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/)
+                  if (linkMatch) {
+                    return (
+                      <a
+                        key={i}
+                        href={linkMatch[2]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: msg.role === 'user' ? '#86efac' : '#2e7d4f',
+                          fontWeight: 600,
+                          textDecoration: 'underline',
+                        }}
+                      >
+                        {linkMatch[1]}
+                      </a>
+                    )
+                  }
+                  return <span key={i}>{part}</span>
+                })}
+              </div>
+            </div>
+          ))}
+          {isLoading && messages[messages.length - 1]?.role === 'user' && (
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <div style={{
+                padding: '10px 14px',
+                borderRadius: '16px 16px 16px 4px',
+                background: '#edf5f1',
+                fontSize: '14px',
+                color: '#9ca3af',
+              }}>
+                Typing...
+              </div>
+            </div>
+          )}
+          <div />
+        </div>
+      )}
+
+      {/* Input area */}
+      <div style={{
+        position: 'relative',
+        padding: hasMessages ? '8px 20px 16px' : '20px 64px 20px 20px',
+        borderTop: hasMessages ? '1px solid #f0f0f0' : 'none',
+      }}>
+        <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={handleTextareaInput}
+          onKeyDown={handleKeyDown}
+          placeholder={hasMessages ? 'Type your reply...' : 'Tell us your biggest job search struggle...'}
+          rows={hasMessages ? 1 : 3}
+          disabled={isLoading}
+          style={{
+            width: '100%',
+            border: 'none',
+            outline: 'none',
+            resize: 'none',
+            background: 'transparent',
+            fontFamily: 'inherit',
+            fontSize: '15px',
+            lineHeight: 1.6,
+            color: '#132128',
+            display: 'block',
+            overflowY: 'hidden',
+            minHeight: hasMessages ? '24px' : '72px',
+            paddingRight: '48px',
+            opacity: isLoading ? 0.6 : 1,
+          }}
+        />
+        <button
+          onClick={sendMessage}
+          disabled={!input.trim() || isLoading}
+          aria-label="Send message"
+          style={{
+            position: 'absolute',
+            bottom: hasMessages ? '12px' : '14px',
+            right: hasMessages ? '20px' : '14px',
+            width: '38px',
+            height: '38px',
+            borderRadius: '50%',
+            background: input.trim() && !isLoading ? '#132128' : '#d1d5db',
+            border: 'none',
+            cursor: input.trim() && !isLoading ? 'pointer' : 'default',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            transition: 'background 0.15s ease',
+          }}
+          onMouseEnter={e => { if (input.trim() && !isLoading) (e.currentTarget as HTMLButtonElement).style.background = '#338632' }}
+          onMouseLeave={e => { if (input.trim() && !isLoading) (e.currentTarget as HTMLButtonElement).style.background = '#132128' }}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 12V4M4 8l4-4 4 4" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   )
 }
@@ -210,7 +356,7 @@ export default function HeroSection() {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           width: '100%', marginBottom: '60px',
         }}>
-          <DreamInput />
+          <HeroChatbot />
         </div>
 
 
