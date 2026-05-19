@@ -49,6 +49,9 @@ jobs:
           # Search engine site-verification tokens (meta-tag method).
           # Public values — they appear in every page's <head>.
           NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: sVimduq0jOM2Yb2SvaSMhgZlpqvJKB2KUbsVcjNxpQE
+          # PostHog analytics — project API key is a public ingest token.
+          NEXT_PUBLIC_POSTHOG_KEY:  phc_AXhKJGqsYxD5wwabVV5MJzuDe4LFGf2Hq5AkF6T2u4pw
+          NEXT_PUBLIC_POSTHOG_HOST: https://us.i.posthog.com
 
       - name: Debug OIDC token claims (sub / aud / repo)
         run: |
