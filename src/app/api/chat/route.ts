@@ -1,6 +1,7 @@
 import OpenAI from 'openai'
 
-const client = new OpenAI()
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 const SYSTEM_PROMPT = `You are NextHire's friendly career advisor chatbot on our homepage. Your goal is to understand the user's job search problem in 1-2 short exchanges and then recommend the right NextHire product. Keep every reply under 3 sentences — be warm, concise, and action-oriented.
 
@@ -29,6 +30,7 @@ CONVERSATION RULES:
 
 export async function POST(req: Request) {
   const { messages } = await req.json()
+  const client = new OpenAI()
 
   const stream = await client.chat.completions.create({
     model: 'gpt-4o-mini',
