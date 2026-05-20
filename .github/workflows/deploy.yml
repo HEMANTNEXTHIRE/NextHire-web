@@ -53,12 +53,6 @@ jobs:
           NEXT_PUBLIC_POSTHOG_KEY:  phc_AXhKJGqsYxD5wwabVV5MJzuDe4LFGf2Hq5AkF6T2u4pw
           NEXT_PUBLIC_POSTHOG_HOST: https://us.i.posthog.com
 
-      - name: Debug OIDC token claims (sub / aud / repo)
-        run: |
-          TOKEN=$(curl -sLS "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" \
-            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" | jq -r '.value')
-          echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq '{sub, aud, repository, ref, environment}'
-
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
