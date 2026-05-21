@@ -52,6 +52,10 @@ jobs:
           # PostHog analytics — project API key is a public ingest token.
           NEXT_PUBLIC_POSTHOG_KEY:  phc_AXhKJGqsYxD5wwabVV5MJzuDe4LFGf2Hq5AkF6T2u4pw
           NEXT_PUBLIC_POSTHOG_HOST: https://us.i.posthog.com
+          # Chatbot calls this URL. Defaults in code to the app subdomain
+          # so the marketing site has no API route of its own (static export
+          # can't host /api/*). Override here if the handler lives elsewhere.
+          NEXT_PUBLIC_CHAT_API_URL: https://app.nexthireconsulting.com/api/chat
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
