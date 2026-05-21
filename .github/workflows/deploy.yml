@@ -35,8 +35,8 @@ jobs:
       # which requires React 19's compiler-runtime; the rest of the site is
       # on React 18. Static export tries to build every route, so we drop
       # this dev-only route before building. Local `next dev` is unaffected.
-      - name: Strip dev-only Studio route from export build
-        run: rm -rf src/app/studio
+      - name: Strip dev-only routes from export build
+        run: rm -rf src/app/studio src/app/api
 
       - name: Build (static export)
         run: npm run build
