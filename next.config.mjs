@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export',  // disabled to enable API routes (chatbot)
+  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,

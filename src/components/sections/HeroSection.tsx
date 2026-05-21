@@ -36,7 +36,8 @@ function HeroChatbot() {
     if (textareaRef.current) textareaRef.current.style.height = 'auto'
 
     try {
-      const res = await fetch('/api/chat', {
+      const chatApiUrl = process.env.NEXT_PUBLIC_CHAT_API_URL || '/api/chat'
+      const res = await fetch(chatApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
