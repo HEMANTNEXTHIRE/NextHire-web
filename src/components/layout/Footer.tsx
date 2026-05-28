@@ -100,6 +100,7 @@ export default function Footer() {
             <ul className="nh-footer-list" role="list">
               <li><Link href="/success-story" className="nh-footer-link">Success Stories</Link></li>
               <li><a href="https://nexthire.breezy.hr/" target="_blank" rel="noopener noreferrer" className="nh-footer-link">Careers</a></li>
+              <li><Link href="/campus-ambassadors" className="nh-footer-link">Campus Ambassador Program</Link></li>
               <li><Link href="/contact-us" className="nh-footer-link">Contact Us</Link></li>
             </ul>
 

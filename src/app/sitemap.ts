@@ -36,6 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/contact-us/`,        changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/why-nexthire/`,      changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/success-story/`,     changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/campus-ambassadors/`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/blog/`,              changeFrequency: 'weekly',  priority: 0.8 },
     { url: `${BASE}/interview-questions/`, changeFrequency: 'monthly', priority: 0.8 },
   ]

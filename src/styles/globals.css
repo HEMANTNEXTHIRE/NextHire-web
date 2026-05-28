@@ -4729,12 +4729,13 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MATCHED TABS  — ported from Andela source, scoped to
-   #pricing-plan-tabs so it never bleeds into other sections
+   MATCHED TABS  — ported from Andela source, scoped via :is() to
+   #pricing-plan-tabs and #ca-compensation-tabs so it never bleeds
+   into other sections.
    ═══════════════════════════════════════════════════════════════ */
 
 /* Root: inherit exact base styles from the original #component block */
-#pricing-plan-tabs {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) {
   letter-spacing: -0.3px;
   font-size: 1rem;
   line-height: 1.5;
@@ -4744,7 +4745,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Left menu column */
-#pricing-plan-tabs .matched-tabs-menu {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tabs-menu {
   flex-flow: column;
   max-width: 35.625rem;
   margin-right: auto;
@@ -4753,7 +4754,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Right content column */
-#pricing-plan-tabs .matched-tabs-content {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tabs-content {
   width: 100%;
   max-width: 41.75rem;
   display: flex;
@@ -4761,7 +4762,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Each tab row */
-#pricing-plan-tabs .matched-tab-link {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-link {
   border-top: 1px solid #e7e9ea;
   flex-flow: column;
   justify-content: flex-start;
@@ -4773,12 +4774,12 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   color: inherit;
 }
 
-#pricing-plan-tabs .matched-tab-link.border-bottom {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-link.border-bottom {
   border-bottom: 1px solid #e7e9ea;
 }
 
 /* Tab header row: pill + title side by side */
-#pricing-plan-tabs .matched-tab-header {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-header {
   grid-column-gap: 0.75rem;
   grid-row-gap: 0.75rem;
   justify-content: flex-start;
@@ -4788,7 +4789,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Step/plan pill badge */
-#pricing-plan-tabs .matched-pill {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-pill {
   letter-spacing: 0;
   text-transform: uppercase;
   white-space: nowrap;
@@ -4802,20 +4803,20 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Tab title — 24px / weight 500 / line-height from root (1.5 = 36px) */
-#pricing-plan-tabs .matched-title-tab {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-title-tab {
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.5;
 }
 
 /* Collapsed content wrapper — height animated via inline style */
-#pricing-plan-tabs .matched-tab-content {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-content {
   overflow: hidden;
   width: 100%;
 }
 
 /* Inner content flex column */
-#pricing-plan-tabs .matched-tab-content-inner {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-content-inner {
   grid-column-gap: 1.25rem;
   grid-row-gap: 1.25rem;
   flex-flow: column;
@@ -4824,17 +4825,17 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Lead paragraph — 18px / line-height 27px / #424D53 */
-#pricing-plan-tabs .text-l {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .text-l {
   font-size: 1.125rem;
   line-height: 1.5;
 }
 
-#pricing-plan-tabs .text-dark-green-black {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .text-dark-green-black {
   color: #424d53;
 }
 
 /* Checklist wrapper */
-#pricing-plan-tabs .matched-list-wrapper {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-list-wrapper {
   grid-column-gap: 0.75rem;
   grid-row-gap: 0.75rem;
   flex-flow: column;
@@ -4842,7 +4843,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Checklist row — 16px / 24px / #132128 (inherited from root) */
-#pricing-plan-tabs .hero-check-text-wrap {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .hero-check-text-wrap {
   grid-column-gap: 0.25rem;
   grid-row-gap: 0.25rem;
   justify-content: flex-start;
@@ -4852,7 +4853,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   line-height: 1.5;
 }
 
-#pricing-plan-tabs .icon-embed {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .icon-embed {
   justify-content: center;
   align-items: center;
   display: flex;
@@ -4860,7 +4861,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 /* Right image/content panel */
-#pricing-plan-tabs .matched-image-wrapper {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-image-wrapper {
   background-color: #f5f5f5;
   border-radius: 21px;
   flex-flow: column;
@@ -4870,21 +4871,21 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   display: flex;
 }
 
-#pricing-plan-tabs .matched-tab-pane {
+:is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-pane {
   height: 100%;
 }
 
 /* Responsive — tablet: reverse + stack */
 @media screen and (width <= 991px) {
-  #pricing-plan-tabs {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) {
     grid-column-gap: 32px;
     grid-row-gap: 32px;
     flex-flow: column-reverse;
   }
-  #pricing-plan-tabs .matched-tabs-menu {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tabs-menu {
     max-width: none;
   }
-  #pricing-plan-tabs .matched-tabs-content {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tabs-content {
     max-width: none;
     margin-top: 2rem;
   }
@@ -4892,14 +4893,14 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 
 /* Responsive — mobile small */
 @media screen and (width <= 479px) {
-  #pricing-plan-tabs .matched-title-tab {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-title-tab {
     line-height: 1em;
   }
-  #pricing-plan-tabs .matched-tab-header {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tab-header {
     justify-content: flex-start;
     align-items: flex-start;
   }
-  #pricing-plan-tabs .matched-image-wrapper {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-image-wrapper {
     min-height: auto;
     padding-top: 12px;
   }
@@ -4907,7 +4908,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 
 /* Tablet mid: adjust menu padding */
 @media (width >= 992px) and (width <= 1100px) {
-  #pricing-plan-tabs .matched-tabs-menu {
+  :is(#pricing-plan-tabs, #ca-compensation-tabs) .matched-tabs-menu {
     padding-right: 16px;
   }
 }
