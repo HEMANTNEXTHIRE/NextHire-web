@@ -202,7 +202,7 @@ function HeroChatbot() {
 
       // Stuck path: after ~3 turns with no recommendation, drop an inline line that links to
       // NextHire so the user can continue in the app even when the advisor hasn't matched a tool.
-      if (!rec && !recommendation && assistantTurnsRef.current >= 3 && !stuckInjectedRef.current) {
+      if (!rec && assistantTurnsRef.current >= 3 && !stuckInjectedRef.current) {
         stuckInjectedRef.current = true
         setMessages(prev => [...prev, {
           id: `stuck-${Date.now()}`,
@@ -219,7 +219,7 @@ function HeroChatbot() {
     } finally {
       setIsLoading(false)
     }
-  }, [input, isLoading, messages, fetchRecommendation, recommendation])
+  }, [input, isLoading, messages, fetchRecommendation])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
