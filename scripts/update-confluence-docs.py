@@ -743,7 +743,7 @@ def update_root_page_table(root_id):
         return
 
     # Find the last row before table close and insert new row
-    website_row = '<tr><td><strong>NextHire Website</strong></td><td>:white_check_mark: Production</td><td>Marketing site, blog, pricing, interview prep (Next.js static)</td></tr>'
+    website_row = '<tr><td><strong>NextHire Website</strong></td><td>✅ Production</td><td>Marketing site, blog, pricing, interview prep (Next.js static)</td></tr>'
 
     # Insert before closing </table> of the products table
     # Look for the pattern after the products table header
