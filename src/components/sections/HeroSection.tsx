@@ -10,17 +10,122 @@ interface ChatMessage {
   content: string
 }
 
+interface Recommendation {
+  productKey: string
+  displayName: string
+  route: string
+  requiresLogin: boolean
+}
+
+// All endpoints derive from the single configured chat URL so prod/dev stay consistent.
+//   NEXT_PUBLIC_CHAT_API_URL = https://app.nexthireconsulting.com/api/chat (prod, set in deploy.yml)
+const CHAT_API_URL = process.env.NEXT_PUBLIC_CHAT_API_URL || '/api/chat'
+const API_BASE = CHAT_API_URL.replace(/\/chat\/?$/, '')          // -> https://app.nexthireconsulting.com/api  (or /api in dev)
+const APP_ORIGIN = (() => { try { return new URL(CHAT_API_URL).origin } catch { return '' } })()
+// In prod the app SPA and the API share an origin (app.nexthireconsulting.com), so the chat
+// URL's origin is also the app origin. Locally they're split (API :8081, app :3000), so allow
+// an explicit override via NEXT_PUBLIC_APP_URL.
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || APP_ORIGIN
+const RECOMMENDATION_URL = `${API_BASE}/chat/recommendation`
+const HANDOFF_URL = `${API_BASE}/chat/handoff`
+const START_URL = `${APP_URL}/start`
+
+function newTraceId(): string {
+  return `mkt-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
+}
+
 function HeroChatbot() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null)
   const chatScrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const traceIdRef = useRef<string>('')
+  if (!traceIdRef.current) traceIdRef.current = newTraceId()
+  const assistantTurnsRef = useRef(0)
+  const stuckInjectedRef = useRef(false)
 
   useEffect(() => {
     const el = chatScrollRef.current
     if (el) el.scrollTop = el.scrollHeight
-  }, [messages])
+  }, [messages, recommendation])
+
+  // Ask the backend whether the conversation now points to a specific product.
+  const fetchRecommendation = useCallback(async (msgs: ChatMessage[]) => {
+    try {
+      const res = await fetch(RECOMMENDATION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: msgs.map(m => ({ role: m.role, content: m.content })), traceId: traceIdRef.current }),
+      })
+      if (!res.ok) return null
+      const data = await res.json()
+      if (data?.productKey) {
+        const rec: Recommendation = { productKey: data.productKey, displayName: data.displayName, route: data.route, requiresLogin: !!data.requiresLogin }
+        setRecommendation(rec)
+        return rec
+      }
+      return null
+    } catch { /* recommendation is best-effort; never block the chat */ return null }
+  }, [])
+  
+
+  // Open the handoff in a NEW tab, leaving the current marketing tab untouched. The blank tab
+  // is opened synchronously inside the click gesture (so popup blockers don't eat it); we point
+  // it at the /start URL once the async handoff token returns.
+  const openInNewTab = useCallback(async () => {
+    const trace = traceIdRef.current
+    const tab = window.open('', '_blank')
+    const goto = (url: string) => { if (tab) tab.location.href = url; else window.open(url, '_blank') }
+    try {
+      const res = await fetch(HANDOFF_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: messages.map(m => ({ role: m.role, content: m.content })),
+          productKey: recommendation?.productKey || null,
+          traceId: trace,
+        }),
+      })
+      if (res.ok) {
+        const { token } = await res.json()
+        goto(`${START_URL}?h=${encodeURIComponent(token)}&trace=${encodeURIComponent(trace)}`)
+        return
+      }
+    } catch { /* fall through to a token-less handoff */ }
+    // Graceful fallback: still land the user in the app (fresh chat) even if the store failed.
+    goto(`${START_URL}?trace=${encodeURIComponent(trace)}`)
+  }, [messages, recommendation])
+
+  const linkEl = (label: string, key: string) => (
+    <a
+      key={key}
+      href={START_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => { e.preventDefault(); openInNewTab() }}
+      style={{ color: '#2563eb', textDecoration: 'underline', fontWeight: 600, cursor: 'pointer' }}
+    >
+      {label}
+    </a>
+  )
+
+  // Render assistant text as an inline blue/underlined link wherever it references NextHire —
+  // both a markdown "[NextHire](…)" link AND a bare "NextHire" mention (the model isn't
+  // consistent about which it emits). Clicking opens the recommended feature in a new tab.
+  const renderRich = (content: string) => {
+    const out: React.ReactNode[] = []
+    content.split(/(\[[^\]]+\]\([^)]*\))/).forEach((seg, i) => {
+      const md = seg.match(/^\[([^\]]+)\]\(([^)]*)\)$/)
+      if (md) { out.push(linkEl(md[1], `md-${i}`)); return }
+      seg.split(/(NextHire)/gi).forEach((p, j) => {
+        if (/^nexthire$/i.test(p)) out.push(linkEl(p, `t-${i}-${j}`))
+        else if (p) out.push(<span key={`s-${i}-${j}`}>{p}</span>)
+      })
+    })
+    return out
+  }
 
   const sendMessage = useCallback(async () => {
     const text = input.trim()
@@ -31,6 +136,7 @@ function HeroChatbot() {
     setMessages(updatedMessages)
     setInput('')
     setIsLoading(true)
+    setRecommendation(null) // re-evaluate after this turn
 
     // Reset textarea height
     if (textareaRef.current) textareaRef.current.style.height = 'auto'
@@ -50,6 +156,7 @@ function HeroChatbot() {
       const reader = res.body?.getReader()
       const decoder = new TextDecoder()
       const assistantId = (Date.now() + 1).toString()
+      let fullText = ''
 
       setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
 
@@ -69,6 +176,7 @@ function HeroChatbot() {
             if (line.startsWith('0:')) {
               try {
                 const text = JSON.parse(line.slice(2))
+                fullText += text
                 setMessages(prev =>
                   prev.map(m => m.id === assistantId ? { ...m, content: m.content + text } : m)
                 )
@@ -80,11 +188,27 @@ function HeroChatbot() {
         if (buffer.startsWith('0:')) {
           try {
             const text = JSON.parse(buffer.slice(2))
+            fullText += text
             setMessages(prev =>
               prev.map(m => m.id === assistantId ? { ...m, content: m.content + text } : m)
             )
           } catch { /* skip */ }
         }
+      }
+
+      // Turn complete — see if the conversation now points to a specific product.
+      const rec = await fetchRecommendation([...updatedMessages, { id: assistantId, role: 'assistant', content: fullText }])
+      assistantTurnsRef.current += 1
+
+      // Stuck path: after ~3 turns with no recommendation, drop an inline line that links to
+      // NextHire so the user can continue in the app even when the advisor hasn't matched a tool.
+      if (!rec && !recommendation && assistantTurnsRef.current >= 3 && !stuckInjectedRef.current) {
+        stuckInjectedRef.current = true
+        setMessages(prev => [...prev, {
+          id: `stuck-${Date.now()}`,
+          role: 'assistant',
+          content: "I might not have found the perfect match yet — let's continue this in NextHire and figure it out together.",
+        }])
       }
     } catch {
       setMessages(prev => [...prev, {
@@ -95,7 +219,7 @@ function HeroChatbot() {
     } finally {
       setIsLoading(false)
     }
-  }, [input, isLoading, messages])
+  }, [input, isLoading, messages, fetchRecommendation, recommendation])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -153,27 +277,7 @@ function HeroChatbot() {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
               }}>
-                {msg.content.split(/(\[.*?\]\(.*?\))/).map((part, i) => {
-                  const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/)
-                  if (linkMatch) {
-                    return (
-                      <a
-                        key={i}
-                        href={linkMatch[2]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: msg.role === 'user' ? '#86efac' : '#2e7d4f',
-                          fontWeight: 600,
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        {linkMatch[1]}
-                      </a>
-                    )
-                  }
-                  return <span key={i}>{part}</span>
-                })}
+                {msg.role === 'assistant' ? renderRich(msg.content) : msg.content}
               </div>
             </div>
           ))}
@@ -190,6 +294,7 @@ function HeroChatbot() {
               </div>
             </div>
           )}
+
           <div />
         </div>
       )}
