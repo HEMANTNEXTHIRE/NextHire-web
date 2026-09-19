@@ -70,8 +70,17 @@ jobs:
       - name: Sync to S3
         run: |
           # Pass 1: assets (CSS/JS/images/fonts) with long cache; --delete cleans up removed assets
+          # NEVER let --delete touch the private prefixes: this bucket also holds
+          # candidate résumés (user/*) and portal imports (portal-imports/*),
+          # written by the backend. Without these excludes every deploy deleted
+          # every résumé uploaded since the previous one (298 delete markers by
+          # 2026-09-19, 159 of them in one minute on 26 Aug). Excludes apply to
+          # the destination side of sync, so these keys are neither uploaded nor
+          # deleted. The real fix is a bucket of the site's own.
           aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }}/ \
             --delete \
+            --exclude "user/*" \
+            --exclude "portal-imports/*" \
             --cache-control "public,max-age=31536000,immutable" \
             --exclude "*.html" \
             --exclude "*.json" \
@@ -80,6 +89,8 @@ jobs:
           # Pass 2: HTML/JSON/sitemap/robots with short cache; --delete cleans up removed routes
           aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }}/ \
             --delete \
+            --exclude "user/*" \
+            --exclude "portal-imports/*" \
             --cache-control "public,max-age=0,must-revalidate" \
             --exclude "*" \
             --include "*.html" \
