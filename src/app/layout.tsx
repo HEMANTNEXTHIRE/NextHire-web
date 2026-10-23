@@ -20,6 +20,7 @@ const SOCIAL_PROFILES = [
 
 const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 const BING_SITE_VERIFICATION = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+const FACEBOOK_DOMAIN_VERIFICATION = '5rzx6tkty2m3aijysw3wsneahxy40t'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.nexthireconsulting.com'),
@@ -63,7 +64,10 @@ export const metadata: Metadata = {
   },
   verification: {
     ...(GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : {}),
-    ...(BING_SITE_VERIFICATION ? { other: { 'msvalidate.01': BING_SITE_VERIFICATION } } : {}),
+    other: {
+      ...(BING_SITE_VERIFICATION ? { 'msvalidate.01': BING_SITE_VERIFICATION } : {}),
+      'facebook-domain-verification': FACEBOOK_DOMAIN_VERIFICATION,
+    },
   },
 }
 
