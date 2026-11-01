@@ -7,12 +7,12 @@ export const PRICING_FAQS_CANDIDATES: FaqItem[] = [
   {
     question: 'Can I upgrade or downgrade anytime?',
     answer:
-      'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; downgrades apply at the next billing cycle.',
+      'Yes. Change your plan at any time from your dashboard. Upgrades take effect immediately; a downgrade starts when your current plan ends. Plans do not renew by themselves: we remind you by email 7, 3 and 1 days before the end, and you renew in one click.',
   },
   {
     question: 'What happens when I hit my InMail or Apply limit?',
     answer:
-      "On Free you'll be prompted to upgrade. On Lite and Pro, you can purchase additional credits as add-ons at any time.",
+      "On Free you'll be prompted to choose a plan. On a paid plan your limits refill each month on your plan date, or you can upgrade to a bigger plan straight away.",
   },
   {
     question: 'Is the quarterly discount applied automatically?',

@@ -49,39 +49,39 @@ Centralized dashboard tracking all outreach, applications, and interviews. Follo
 
 All plans include access to the web app at https://app.nexthireconsulting.com
 
-### Free Plan — $0/month
+### Free Plan (₹0 / $0)
 - Resume Builder
 - Job Tracker
-- 30 min Interview Coach per month
-- 5 AI Auto Apply per day
+- 20 minutes of Interview Coach in total
+- 2 AI Auto Apply applications in total
 - No Direct Recruiter InMail
 - No AI Outreach Agent credits
 
-### Lite Plan — $19.90/month (Most Popular)
+### Lite Plan (₹1,850 / $19.99 a month)
 - Resume Builder
 - Job Tracker
-- 30 min Interview Coach per month
-- Unlimited AI Auto Apply
-- 50 Direct Recruiter InMails per month
+- 2 hours Interview Coach per month
+- 400 AI Auto Apply applications per month
+- 20 Direct Recruiter InMails per month
 - No AI Outreach Agent credits
 
-### Pro Plan — $49/month (Best Value)
+### Pro Plan (₹4,500 / $49.99 a month)
 - Resume Builder
 - Job Tracker
-- 20 hours Interview Coach per month
-- Unlimited AI Auto Apply
-- 200 Direct Recruiter InMails per month
+- 30 hours Interview Coach per month
+- 1,000 AI Auto Apply applications per month
+- 100 Direct Recruiter InMails per month
 - No AI Outreach Agent credits
 
-### Max Plan — $135/month (Full Stack)
+### Max Plan (₹12,000 / $349.99 a month)
 - Resume Builder
 - Job Tracker
-- 20 hours Interview Coach per month
-- Unlimited AI Auto Apply
-- Unlimited Direct Recruiter InMails
+- 30 hours Interview Coach per month
+- 1,000 AI Auto Apply applications per month
+- 300 Direct Recruiter InMails per month
 - 3,000 AI Outreach Agent credits per month
 
-Quarterly billing available at a discount. Free trial available on all paid plans.
+Quarterly billing available at a 10% discount. Plans do not renew by themselves.
 
 ---
 

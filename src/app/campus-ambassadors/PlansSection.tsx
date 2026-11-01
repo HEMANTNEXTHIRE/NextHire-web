@@ -79,9 +79,9 @@ function priceFor(tier: CandidateTier, cycle: BillingCycle) {
 const FEATURE_OVERRIDES: Partial<Record<CandidateTier['id'], string[]>> = {
   /* override the source string that contains a hyphen ("Real-time...") */
   pro: [
-    'Live AI Interview Coach',
-    'Unlimited AI Auto Apply to all platforms',
-    'Direct recruiter InMails to get noticed',
+    'Live AI Interview Coach, 30 hours a month',
+    'AI Auto Apply, 1,000 applications a month',
+    'Direct recruiter InMails, 100 a month',
   ],
 }
 

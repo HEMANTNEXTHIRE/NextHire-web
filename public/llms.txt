@@ -56,10 +56,10 @@ NextHire uses region-aware pricing. India is billed in INR; the rest of the worl
 
 ### What each tier unlocks
 
-- **Free** — Resume + cover letter builders, Job Tracker, profile optimisation, sample AI tools.
-- **Lite** — Unlimited AI Auto Apply for career-page jobs, portal optimisation, 2 hours of AI Interview Coach.
-- **Pro** — Real-time AI Interview Coach, unlimited Auto Apply across all platforms, direct recruiter InMails.
-- **Max** — Autonomous AI Outreach Agent (up to 3,000 personalised emails/month), hidden job market access, unlimited Auto Apply + Interview Coach.
+- **Free** — Resume + cover letter builders, Job Tracker, profile optimisation, AI Auto Apply 2 applications in total, sample AI tools.
+- **Lite** — AI Auto Apply 400 applications a month, portal optimisation, 2 hours a month of AI Interview Coach, 20 InMails a month.
+- **Pro** — Real-time AI Interview Coach 30 hours a month, Auto Apply 1,000 applications a month, 100 direct recruiter InMails a month.
+- **Max** — Autonomous AI Outreach Agent (up to 3,000 personalised emails/month), hidden job market access, Auto Apply 1,000 applications a month, Interview Coach 30 hours a month, 300 InMails a month.
 
 ## Target Audience
 

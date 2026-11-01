@@ -689,9 +689,9 @@ export default function PricingPageClient() {
                 { label: 'Cover Letter',             vals: [{ v: false }, { v: true }, { v: true }, { v: true }] },
                 { label: 'Job Tracker',              vals: [{ v: true }, { v: true }, { v: true }, { v: true }] },
                 { label: 'Portal Optimization',      vals: [{ v: false }, { v: true }, { v: true }, { v: true }] },
-                { label: 'Interview Coach',          vals: [{ v: '30 min' }, { v: '30 min' }, { v: '20 hrs / mo', note: 'AI listens & answers in real time' }, { v: '20 hrs / mo' }] },
-                { label: 'AI Auto Apply',            vals: [{ v: '5 / day' }, { v: 'Unlimited' }, { v: 'Unlimited' }, { v: 'Unlimited' }] },
-                { label: 'Direct Recruiter InMail',  vals: [{ v: false }, { v: '50 / mo' }, { v: '200 / mo' }, { v: 'Unlimited' }] },
+                { label: 'Interview Coach',          vals: [{ v: '20 min in total' }, { v: '2 hrs / mo' }, { v: '30 hrs / mo', note: 'AI listens & answers in real time' }, { v: '30 hrs / mo' }] },
+                { label: 'AI Auto Apply',            vals: [{ v: '2 in total' }, { v: '400 / mo' }, { v: '1,000 / mo' }, { v: '1,000 / mo' }] },
+                { label: 'Direct Recruiter InMail',  vals: [{ v: false }, { v: '20 / mo' }, { v: '100 / mo' }, { v: '300 / mo' }] },
                 { label: 'AI Outreach Agent',        vals: [{ v: false }, { v: false }, { v: false }, { v: '3,000 / mo', note: "Don't wait to be found" }] },
               ] as Array<{ label: string; vals: Array<{ v: boolean | string; note?: string }> }>).map((row, rowIdx, arr) => (
                 <div key={row.label}>

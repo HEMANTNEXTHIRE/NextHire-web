@@ -32,7 +32,7 @@ export const CANDIDATE_TIERS: CandidateTier[] = [
     features: [
       'Resume and cover letter builders',
       'Job Tracker and profile optimization',
-      'Try AI tools and automate your job search',
+      'AI Auto Apply, 2 applications in total, and a trial of the AI tools',
     ],
     inr: { monthly: 0, quarterly: 0, quarterlyTotal: 0 },
     usd: { monthly: 0, quarterly: 0, quarterlyTotal: 0 },
@@ -43,7 +43,7 @@ export const CANDIDATE_TIERS: CandidateTier[] = [
     tagline: 'Let AI apply to jobs for you',
     description: 'Speed up your job search',
     features: [
-      'Unlimited AI Auto Apply for career page jobs',
+      'AI Auto Apply, 400 applications a month',
       'Optimize your portals for better visibility',
       '2 hours of AI Interview Coach',
     ],
@@ -56,9 +56,9 @@ export const CANDIDATE_TIERS: CandidateTier[] = [
     tagline: 'AI helps you clear your interviews',
     description: 'Master every job interview',
     features: [
-      'Real-time AI Interview Coach',
-      'Unlimited AI Auto Apply to all platforms',
-      'Direct recruiter Inmails to get noticed',
+      'Real-time AI Interview Coach, 30 hours a month',
+      'AI Auto Apply, 1,000 applications a month',
+      'Direct recruiter InMails, 100 a month',
     ],
     inr: { monthly: 4500, quarterly: 4050, quarterlyTotal: 12150 },
     usd: { monthly: 49.99, quarterly: 44.99, quarterlyTotal: 134.97 },
@@ -71,7 +71,7 @@ export const CANDIDATE_TIERS: CandidateTier[] = [
     features: [
       'Autonomous AI Outreach Agent',
       'Exclusive access to hidden job markets',
-      'Unlimited AI Auto Apply and Interview Coach',
+      'AI Auto Apply 1,000 a month, Interview Coach 30 hours a month',
     ],
     inr: { monthly: 12000, quarterly: 10800, quarterlyTotal: 32400 },
     usd: { monthly: 349.99, quarterly: 314.99, quarterlyTotal: 944.97 },
