@@ -814,7 +814,7 @@ export default function CampusAmbassadorsPage() {
 
       {/* TIME COMMITMENT */}
       <section style={{ background: '#f7faf9', padding: 'clamp(64px, 8vw, 88px) 0' }}>
-        <div className="nh-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40, alignItems: 'center' }}>
+        <div className="nh-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 40, alignItems: 'center' }}>
           <div>
             <h2 style={sectionTitle}>6 to 10 hours per month.</h2>
             <p style={{ ...sectionSub, marginBottom: 18 }}>
