@@ -8,6 +8,7 @@ import NotificationContainer from '@/components/ui/Notification'
 import PostHogProvider from '@/components/PostHogProvider'
 import PageViewTracker from '@/components/PageViewTracker'
 import CalInit from '@/components/CalInit'
+import FinSheet from '@/components/ui/FinSheet'
 import { CANDIDATE_TIERS, tierPrice } from '@/lib/pricing'
 import '@/styles/globals.css'
 
@@ -189,6 +190,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
 
         <CalInit />
+        <FinSheet />
         <PostHogProvider>
           <Suspense fallback={null}>
             <PageViewTracker />

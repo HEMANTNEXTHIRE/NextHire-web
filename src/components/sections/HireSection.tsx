@@ -631,24 +631,33 @@ export default function HireSection() {
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
     if (!cards.length) return
 
-    const isMobileView = window.matchMedia('(max-width: 860px)').matches
-    const topBase = isMobileView ? 68 : 100
-    const topGap  = isMobileView ? 44 : 0
+    // Phones: cards are plain stacked blocks (see globals.css), so no scroll choreography
+    if (window.matchMedia('(max-width: 991px)').matches) {
+      stateRef.current = { thresholds: [], topGap: 0, wrapperH: 0 }
+      cards.forEach(c => { c.style.removeProperty('height'); c.classList.remove('nh-card-moveup') })
+      wrapper.style.removeProperty('transform')
+      wrapper.style.removeProperty('height')
+      wrapper.classList.remove('nh-sticky-remove')
+      if (nextSiblingRef.current) {
+        nextSiblingRef.current.style.height = '0px'
+        nextSiblingRef.current.style.removeProperty('margin-top')
+      }
+      return
+    }
+    const topBase = 100
+    const topGap  = 0
 
     // Reset heights before measuring
     cards.forEach(c => c.style.removeProperty('height'))
 
     // Desktop: all cards same height, capped so each card has a ~50px bottom gap
-    let maxH = 0
-    if (!isMobileView) {
-      const naturalMax = Math.max(...cards.map(c => c.offsetHeight))
-      maxH = Math.min(naturalMax, Math.max(window.innerHeight - topBase - 50, 480))
-      cards.forEach(c => { c.style.height = `${maxH}px` })
-    }
+    const naturalMax = Math.max(...cards.map(c => c.offsetHeight))
+    const maxH = Math.min(naturalMax, Math.max(window.innerHeight - topBase - 50, 480))
+    cards.forEach(c => { c.style.height = `${maxH}px` })
 
     // Extend wrapper by maxH so the last card's containing block is tall enough to stick
     if (nextSiblingRef.current) {
-      nextSiblingRef.current.style.height = isMobileView ? '0px' : `${maxH}px`
+      nextSiblingRef.current.style.height = `${maxH}px`
     }
 
     const wrapperH = wrapper.offsetHeight
@@ -762,11 +771,11 @@ export default function HireSection() {
           <div style={{ marginBottom: 20, height: 32 }} aria-hidden="true" />
           <h2 style={{
             fontFamily: "'Droid Serif', Georgia, serif",
-            fontSize: '54px',
+            fontSize: FONT.sectionClamp,
             fontWeight: 400,
             fontStyle: 'normal',
             margin: '0 0 20px',
-            lineHeight: '64.8px',
+            lineHeight: 1.2,
             letterSpacing: '-1.2px',
             fontSynthesis: 'none',
           }}>

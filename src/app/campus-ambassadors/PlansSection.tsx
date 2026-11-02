@@ -146,6 +146,8 @@ export default function PlansSection() {
               <button
                 key={c}
                 type="button"
+                className="nh-billing-btn"
+                aria-pressed={cycle === c}
                 onClick={() => setCycle(c)}
                 style={{
                   position: 'relative',

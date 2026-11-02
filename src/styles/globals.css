@@ -4259,7 +4259,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 }
 
 .nh-accordion-title {
-  font-size: 54px !important;
+  font-size: clamp(30px, 8.5vw, 54px) !important;
   font-weight: 500 !important;
   letter-spacing: -1.2px !important;
   line-height: 1.2 !important;
@@ -4913,3 +4913,605 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
   }
 }
 
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   PHONE ERGONOMICS — iOS Safari/Chrome/Brave, Android Chrome/Samsung/
+   Brave/Firefox. Everything here is scoped to phones/tablets or touch
+   input: desktop pointer behaviour is untouched.
+   ══════════════════════════════════════════════════════════════════════ */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Phone-menu-only links: never on desktop */
+@media (min-width: 992px) {
+  .main-nav .nh-nav-mobile-only {
+    display: none !important;
+  }
+}
+
+/* ── Touch feedback: hover states stick after a tap, so swap them for :active ── */
+@media (hover: none) {
+  a,
+  button,
+  [role='button'] {
+    -webkit-tap-highlight-color: rgba(46, 125, 79, 0.12);
+    touch-action: manipulation;
+  }
+  a:active,
+  button:active {
+    opacity: 0.72;
+  }
+  .nh-rb-showcase__right a:hover {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  /* iOS zooms the whole page when a field under 16px gets focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Anchored sections must not land underneath the fixed header */
+  [id] {
+    scroll-margin-top: 76px;
+  }
+
+  /* ── Header + menu ───────────────────────────────────────────── */
+  /* .page-header is its own stacking layer at z-index 1000, so the backdrop must
+     sit below that or it dims the menu instead of the page behind it. */
+  body.mobile-menu-open::after {
+    z-index: 999;
+  }
+  body.mobile-menu-open .intercom-lightweight-app-launcher,
+  body.mobile-menu-open .intercom-launcher-frame {
+    display: none !important;
+  }
+  .main-nav .nh-cta-header-mobile .button-primary {
+    min-height: 44px !important;
+    padding: 0 18px !important;
+    justify-content: center !important;
+  }
+  .main-nav .brand.w-nav-brand {
+    min-height: 44px !important;
+    max-width: calc(100vw - 64px - 16px - 132px) !important;
+    overflow: hidden !important;
+  }
+  .main-nav .brand.w-nav-brand img {
+    max-width: 100% !important;
+  }
+  .main-nav .main-dropdown-toggle,
+  .main-nav .main-nav-dropdown-toggle {
+    min-height: 54px !important;
+    box-sizing: border-box !important;
+  }
+  /* Webflow gives this wrapper margin-left: -30px and position: sticky */
+  .main-nav .main-manu-btn.nh-cta-mobile {
+    position: static !important;
+    margin: 4px 0 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .main-nav .main-manu-btn.nh-cta-mobile .button-primary {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: 50px !important;
+    justify-content: center !important;
+  }
+
+  /* ── Stacked feature cards (home, companies): plain flow, no sticky overlap ── */
+  html body .nh-sticky-card:nth-child(n) {
+    position: static !important;
+    top: auto !important;
+    margin-bottom: 16px !important;
+    height: auto !important;
+    opacity: 1 !important;
+    padding: 24px 20px 20px !important;
+    border-radius: 20px !important;
+  }
+  html body .nh-hire-wrapper {
+    transform: none !important;
+    height: auto !important;
+  }
+  html body .nh-sticky-card > div:first-child {
+    flex: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  html body .nh-sticky-card > div:first-child > div:first-child {
+    font-size: 12px !important;
+    line-height: 16px !important;
+    letter-spacing: 0.3px !important;
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  html body .nh-sticky-card h3 {
+    font-size: 22px !important;
+    margin-bottom: 14px !important;
+    white-space: normal !important;
+  }
+  html body .nh-card-features {
+    display: flex !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+  }
+  html body .nh-card-features span {
+    font-size: 15px !important;
+    line-height: 22px !important;
+  }
+  html body .nh-sticky-card a {
+    padding: 10px 0 !important;
+    min-height: 44px !important;
+    box-sizing: border-box !important;
+  }
+  html body .nh-sticky-card > div:last-child {
+    height: 240px !important;
+    margin-top: 8px !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+  }
+  html body .nh-sticky-card > div:last-child > div {
+    padding: 12px !important;
+    border-radius: 14px !important;
+  }
+  html body .nh-sticky-card > div:last-child > div > div > div {
+    padding: 14px 16px !important;
+  }
+  /* Offsets the desktop sticky spacer; meaningless once the cards are in flow */
+  #home-faq {
+    margin-top: 0 !important;
+  }
+  #features > .nh-container > div:first-child,
+  #companies-platform > .nh-container > div:first-child {
+    margin-bottom: 28px !important;
+  }
+  #features > .nh-container > div:first-child > div[aria-hidden='true'] {
+    display: none !important;
+  }
+
+  /* ── Mac mockups: illustration only, so they must never swallow a touch ── */
+  .nh-rb-showcase__mac {
+    pointer-events: none;
+  }
+  .nh-rb-showcase__right {
+    order: -1;
+  }
+
+  /* ── Long sections carry less air ─────────────────────────────── */
+  .nh-tap-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 0;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 900px) {
+  .nh-mac-menubar,
+  .nh-mac-dock {
+    display: none !important;
+  }
+  .nh-mac-browser {
+    left: 10px !important;
+    top: 10px !important;
+    width: calc(100% - 20px) !important;
+    height: calc(100% - 20px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Hero: headline, promise and the chat box all inside the first screen */
+  #home-s1 > div {
+    padding: 84px 20px 16px !important;
+  }
+  #home-s1 .nh-hero-headline {
+    margin-bottom: 14px !important;
+  }
+  #home-s1 p {
+    font-size: 16px !important;
+    line-height: 24px !important;
+    margin-bottom: 0 !important;
+  }
+  #home-s1 > div > div:nth-of-type(2) {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    margin: 14px auto 18px !important;
+  }
+  #home-s1 > div > div:nth-of-type(2) > span {
+    font-size: 14px !important;
+    line-height: 20px !important;
+    text-align: left !important;
+  }
+  #home-s1 > div > div:nth-of-type(3) {
+    margin-bottom: 0 !important;
+  }
+  #home-s1 textarea {
+    padding-right: 0 !important;
+    min-height: 52px !important;
+    line-height: 1.4 !important;
+  }
+  #home-s1 button[aria-label='Send message'] {
+    width: 44px !important;
+    height: 44px !important;
+    bottom: 10px !important;
+    right: 10px !important;
+  }
+
+  /* Mission: copy wraps naturally rather than on the desktop line breaks */
+  #home-mission br {
+    display: none;
+  }
+  #home-mission {
+    padding-top: 28px !important;
+    padding-bottom: 44px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  #home-roles {
+    padding-top: 40px !important;
+  }
+  #home-roles > .nh-container > div:first-child {
+    margin-bottom: 32px !important;
+  }
+  #home-roles h2 {
+    font-size: 30px !important;
+  }
+
+  /* How it works: four equal chips in place of a wrapped, lopsided tab row */
+  #how-it-works {
+    padding: 48px 20px !important;
+  }
+  .hiw-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 0;
+  }
+  .hiw-tab {
+    min-height: 44px;
+    border: 1.5px solid #c8dfd6;
+    border-radius: 10px;
+    color: #4b5563;
+    padding: 8px 6px;
+    white-space: normal;
+  }
+  .hiw-tab--active {
+    color: #ffffff;
+    background: #1a3338;
+    border: 1.5px solid #1a3338;
+  }
+  /* Tall enough for the longest step, so auto-advance can't shift the page */
+  .hiw-tab-desc {
+    min-height: 120px;
+    margin-bottom: 16px;
+  }
+  .hiw-mac-wrap {
+    border-radius: 14px;
+  }
+  .hiw-mac-wrap .nh-rb-showcase__mac {
+    aspect-ratio: 4 / 3;
+    border-radius: 14px !important;
+  }
+
+  .nh-rb-showcase__inner {
+    padding: 0 20px;
+    gap: 20px;
+  }
+  .nh-rb-showcase__mac {
+    border-radius: 14px !important;
+  }
+  .nh-rb-showcase__right p {
+    margin-bottom: 18px !important;
+  }
+  .nh-rb-showcase__right a > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .nh-rb-showcase__right a > span:last-child {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  #features {
+    padding-top: 40px !important;
+    padding-bottom: 24px !important;
+  }
+  #companies-platform {
+    padding-top: 48px !important;
+    padding-bottom: 24px !important;
+  }
+  #home-faq {
+    padding-top: 40px !important;
+    padding-bottom: 48px !important;
+  }
+
+  /* FAQ title is 54px on desktop */
+  .nh-accordion-inner {
+    gap: 20px;
+  }
+
+  /* ── Pricing ──────────────────────────────────────────────────── */
+  .nh-billing-toggle {
+    display: flex !important;
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+  }
+  .nh-billing-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    gap: 6px !important;
+    min-height: 44px;
+    padding: 8px 6px !important;
+    font-size: 15px !important;
+  }
+  .nh-billing-badge {
+    font-size: 11px !important;
+    padding: 2px 6px !important;
+  }
+  /* Comparison table: feature name on its own line gives the plans the full width */
+  .ct-table .ct-row {
+    flex-wrap: wrap !important;
+    row-gap: 8px !important;
+  }
+  .ct-table .ct-row-label {
+    flex: 1 0 100% !important;
+  }
+  .ct-table .ct-row-values {
+    flex: 1 0 100% !important;
+  }
+  .ct-table .ct-plan-cta {
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ── Campus ───────────────────────────────────────────────────── */
+  html body .ca-pillar-row {
+    position: static !important;
+    border-radius: 20px !important;
+    margin-bottom: 16px !important;
+  }
+  html body .ca-pillar-text-cell {
+    padding: 24px 20px !important;
+  }
+  .ca-coupon {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+  }
+  .ca-coupon-code {
+    min-width: 0 !important;
+    padding: 14px 10px !important;
+    font-size: 20px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .contact-shell__row a,
+  .contact-shell__cta a,
+  #ca-steps a {
+    display: inline-flex !important;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* ── Footer: real tap targets, and clear of the chat launcher ──── */
+  .nh-footer-cols {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    padding-bottom: 20px !important;
+  }
+  .nh-footer-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 52px;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: none;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+  }
+  .nh-footer-chevron {
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border-right: 2px solid #9ca3af;
+    border-bottom: 2px solid #9ca3af;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+  .nh-footer-section--open .nh-footer-chevron {
+    transform: rotate(-135deg);
+  }
+  .nh-footer-section > .nh-footer-heading {
+    display: none !important;
+  }
+  .nh-footer-section > .nh-footer-list {
+    display: none;
+    padding: 4px 0 10px;
+  }
+  .nh-footer-section--open > .nh-footer-list {
+    display: block;
+  }
+  .nh-footer-link {
+    padding: 11px 0 !important;
+  }
+  .nh-footer-list li {
+    margin: 0 !important;
+  }
+  .footer-lower__bottom-link {
+    display: inline-block !important;
+    padding: 11px 4px !important;
+  }
+  .nh-footer-dot {
+    display: none !important;
+  }
+  .nh-footer-social-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .footer {
+    padding-bottom: 88px !important;
+  }
+
+  /* Hero headline: first line stays on one line on a typical phone */
+  #home-s1 .nh-hero-line {
+    font-size: clamp(27px, 7.8vw, 34px) !important;
+  }
+}
+/* Droid Serif is wider than its fallback, so the headline grows from two lines to three
+   when the font arrives. Reserving three lines stops the page jumping (CLS). */
+@media (max-width: 480px) {
+  #home-s1 .nh-hero-headline {
+    min-height: calc(3 * 1.2 * clamp(27px, 7.8vw, 34px));
+  }
+}
+@media (min-width: 768px) {
+  .nh-footer-toggle,
+  .nh-footer-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Launcher never sits on a field the visitor is typing in */
+@media (max-width: 767px) {
+  html.nh-field-focused .intercom-lightweight-app-launcher,
+  html.nh-field-focused .intercom-launcher-frame {
+    display: none !important;
+  }
+}
+
+/* Scroll-lit words: faint copy underneath, the lit word animates above it */
+.nh-magic-word {
+  position: relative;
+  display: inline-block;
+}
+.nh-magic-word::before {
+  content: attr(data-word);
+  position: absolute;
+  opacity: 0.15;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Integrations: logos float around the copy on desktop. A phone has no room for that,
+   so they become a calm grid under the heading and can't land on the text. */
+@media (max-width: 767px) {
+  .nh-int-section {
+    flex-wrap: wrap;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 16px 0;
+    min-height: 0 !important;
+    padding: 48px 20px !important;
+  }
+  .nh-int-copy {
+    order: -1;
+    flex: 1 0 100%;
+    gap: 12px !important;
+    margin-bottom: 12px;
+  }
+  .nh-int-copy h2 {
+    font-size: 30px !important;
+    letter-spacing: -0.02em !important;
+  }
+  .nh-int-copy p {
+    font-size: 16px !important;
+  }
+  .nh-int-item {
+    position: static !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 25%;
+    min-width: 0;
+    transform: none !important;
+  }
+  .nh-int-card {
+    width: 56px !important;
+    height: 56px !important;
+    padding: 12px !important;
+    transform: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .nh-int-item > div:last-child {
+    max-width: 100% !important;
+  }
+}
+
+/* ── Fin messenger: bottom sheet instead of Intercom's stock fullscreen ──
+   --nh-fin-h / --nh-fin-top are kept in step with the keyboard by FinSheet.tsx */
+.nh-fin-scrim {
+  display: none;
+}
+@media (max-width: 767px) {
+  html.intercom-mobile-messenger-active .intercom-messenger-frame {
+    top: var(--nh-fin-top, 18dvh) !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: var(--nh-fin-h, 82dvh) !important;
+    max-height: none !important;
+    border-radius: 20px 20px 0 0 !important;
+    overflow: hidden !important;
+    box-shadow: 0 -12px 48px rgba(26, 51, 56, 0.28) !important;
+  }
+  /* Intercom collapses <body> to height 0 while open. With a fullscreen messenger that
+     went unnoticed; behind a sheet it blanks the page and loses the visitor's scroll
+     position. Doubled class outranks Intercom's own !important rule. */
+  html.intercom-mobile-messenger-active.intercom-mobile-messenger-active > body {
+    height: auto !important;
+  }
+  html.intercom-mobile-messenger-active .nh-fin-scrim {
+    touch-action: none;
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 2147482990;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(26, 51, 56, 0.45);
+    animation: mobileBackdropIn 0.2s ease forwards;
+  }
+}
+
+/* Droid Serif's fallback, scaled to the same text width (measured: 1.078×). Text then wraps
+   identically before and after the web font arrives, so headings don't reflow and shove the
+   page (CLS). Only ever visible during font load; browsers without size-adjust ignore it. */
+@font-face {
+  font-family: 'Georgia';
+  src: local('Georgia');
+  font-weight: 400 700;
+  size-adjust: 107.8%;
+}

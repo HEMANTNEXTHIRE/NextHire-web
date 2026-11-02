@@ -11,6 +11,12 @@ import {
   closeMobileMenu,
 } from '@/store/slices/navSlice'
 
+/* Shown in the phone menu only: the desktop reaches these through the footer */
+const MOBILE_EXTRA_ITEMS = [
+  { label: 'Success stories', href: '/success-story' },
+  { label: 'Contact us', href: '/contact-us' },
+]
+
 const NAV_ITEMS = [
   { key: 'candidates',      label: 'Candidates',      dropdown: true,  href: '/' },
   { key: 'for-clients',     label: 'Companies',       dropdown: true,  href: '/companies' },
@@ -364,6 +370,16 @@ export default function Header() {
     }
   }, [activeDropdown, dispatch])
 
+  // Escape closes the mobile menu
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dispatch(closeMobileMenu())
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isOpen, dispatch])
+
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
@@ -393,14 +409,16 @@ export default function Header() {
           <div className="main-nav-container w-container">
             <div className="main-nav-container-wrapper">
               {/* Hamburger — FIRST in DOM so mobile layout [≡ | Logo | CTA] needs no CSS order tricks */}
-              <div
+              <button
+                type="button"
                 className={`main-nav-menu-btn w-nav-button${isOpen ? ' w--open' : ''}`}
-                role="button"
-                aria-label="Toggle mobile menu"
+                aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={isOpen}
+                aria-controls="nh-primary-nav"
                 onClick={() => dispatch(toggleMobileMenu())}
               >
-                <div className="main-nav-menu-toggle-animated icon-4 w-icon-nav-menu" />
-              </div>
+                <span className="main-nav-menu-toggle-animated icon-4 w-icon-nav-menu" />
+              </button>
 
               {/* Logo */}
               <Link href="/" className="brand w-nav-brand" onClick={() => dispatch(closeMobileMenu())}>
@@ -426,7 +444,7 @@ export default function Header() {
               </div>
 
               {/* Desktop nav — hidden on mobile via CSS */}
-              <nav className="nav-menu w-nav-menu" role="navigation">
+              <nav id="nh-primary-nav" className="nav-menu w-nav-menu" role="navigation">
                 <div className="main-nav-vertical-line" />
 
                 <div className="header-navigation-html-embed w-embed" />
@@ -488,6 +506,19 @@ export default function Header() {
                     </div>
                   )
                 )}
+
+                {MOBILE_EXTRA_ITEMS.map((item) => (
+                  <div key={item.href} className="main-nav-menu-dropdown w-dropdown nh-nav-mobile-only">
+                    <Link
+                      href={item.href}
+                      className="main-nav-dropdown-toggle w-dropdown-toggle"
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', textDecoration: 'none' }}
+                      onClick={() => dispatch(closeMobileMenu())}
+                    >
+                      <span className="main-nav-menu-dropdown-text">{item.label}</span>
+                    </Link>
+                  </div>
+                ))}
 
                 {/* CTA button — mobile menu only (hidden on desktop via CSS) */}
                 <div className="main-manu-btn nh-cta-mobile">

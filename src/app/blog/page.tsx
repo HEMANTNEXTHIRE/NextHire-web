@@ -265,6 +265,7 @@ export default async function BlogIndexPage() {
                     <span style={{ fontSize: '12px', color: P.muted }}>{post.date}</span>
                     <Link
                       href={`/blog/${post.slug}`}
+                      className="nh-tap-link"
                       style={{
                         display: 'inline-flex', alignItems: 'center', gap: 5,
                         fontSize: '13px', fontWeight: 600, color: P.accent,

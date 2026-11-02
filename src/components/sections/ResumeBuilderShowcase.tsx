@@ -1,27 +1,30 @@
 'use client'
 
 import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { Calculator, Calendar, Compass, Folder, Image as ImageIcon, Mail, MessageCircle, Music, StickyNote, Terminal } from 'lucide-react'
+import { FONT as TYPE } from '@/constants/typography'
 
 const FONT = "'Inter', system-ui, sans-serif"
 
+/* Decorative dock tiles, drawn locally so they can never fail to load */
 const DOCK_APPS = [
-  { name: 'Finder', icon: 'https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024' },
-  { name: 'Safari', icon: 'https://cdn.jim-nielsen.com/macos/1024/safari-2021-06-02.png?rf=1024' },
-  { name: 'Messages', icon: 'https://cdn.jim-nielsen.com/macos/1024/messages-2021-05-25.png?rf=1024' },
-  { name: 'Mail', icon: 'https://cdn.jim-nielsen.com/macos/1024/mail-2021-05-25.png?rf=1024' },
-  { name: 'Calendar', icon: 'https://cdn.jim-nielsen.com/macos/1024/calendar-2021-04-29.png?rf=1024' },
-  { name: 'Notes', icon: 'https://cdn.jim-nielsen.com/macos/1024/notes-2021-05-25.png?rf=1024' },
-  { name: 'Photos', icon: 'https://cdn.jim-nielsen.com/macos/1024/photos-2021-05-28.png?rf=1024' },
-  { name: 'Music', icon: 'https://cdn.jim-nielsen.com/macos/1024/music-2021-05-25.png?rf=1024' },
-  { name: 'Terminal', icon: 'https://cdn.jim-nielsen.com/macos/1024/terminal-2021-06-03.png?rf=1024' },
-  { name: 'Calculator', icon: 'https://cdn.jim-nielsen.com/macos/1024/calculator-2021-04-29.png?rf=1024' },
+  { name: 'Finder', Icon: Folder, bg: 'linear-gradient(180deg, #5ac8fa, #1e7fe0)' },
+  { name: 'Safari', Icon: Compass, bg: 'linear-gradient(180deg, #4fc3f7, #0a6fd8)' },
+  { name: 'Messages', Icon: MessageCircle, bg: 'linear-gradient(180deg, #6ee66e, #22b83a)' },
+  { name: 'Mail', Icon: Mail, bg: 'linear-gradient(180deg, #62c0ff, #1673e6)' },
+  { name: 'Calendar', Icon: Calendar, bg: 'linear-gradient(180deg, #ff6b5e, #e0352b)' },
+  { name: 'Notes', Icon: StickyNote, bg: 'linear-gradient(180deg, #ffe066, #f5b800)' },
+  { name: 'Photos', Icon: ImageIcon, bg: 'linear-gradient(180deg, #c58bff, #7a4de0)' },
+  { name: 'Music', Icon: Music, bg: 'linear-gradient(180deg, #ff7a93, #f0294f)' },
+  { name: 'Terminal', Icon: Terminal, bg: 'linear-gradient(180deg, #4b5563, #1f2937)' },
+  { name: 'Calculator', Icon: Calculator, bg: 'linear-gradient(180deg, #6b7280, #374151)' },
 ]
 
 /* ═══ Mac Shell ═══ */
 
 function MacMenuBar() {
   return (
-    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 22, zIndex: 60, background: 'rgba(0,0,0,0.25)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 10px', borderBottom: '0.5px solid rgba(255,255,255,0.12)', fontFamily: FONT }}>
+    <div className="nh-mac-menubar" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 22, zIndex: 60, background: 'rgba(0,0,0,0.25)', backdropFilter: 'saturate(180%) blur(20px)', WebkitBackdropFilter: 'saturate(180%) blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 10px', borderBottom: '0.5px solid rgba(255,255,255,0.12)', fontFamily: FONT }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <svg width="10" height="12" viewBox="0 0 17 20" fill="white" style={{ opacity: 0.9 }}><path d="M15.5 14.8c-.4.9-.6 1.2-1.1 2-.7 1-1.7 2.3-2.9 2.3-1.1 0-1.4-.7-2.9-.7-1.5 0-1.9.7-3 .7-1.2 0-2.1-1.1-2.9-2.2C1.1 14.6.5 11.5 1.5 9.4c.7-1.4 2-2.3 3.3-2.3 1.3 0 2.1.7 3.1.7 1 0 1.7-.7 3.1-.7 1.2 0 2.4.7 3.1 1.8-2.7 1.5-2.3 5.4.4 6.6zM11.3 5c.6-.7 1-1.7.9-2.7-1 .1-2.1.7-2.7 1.5-.6.7-1.1 1.7-.9 2.7 1 0 2.1-.6 2.7-1.5z" /></svg>
         <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.95)' }}>Finder</span>
@@ -39,11 +42,11 @@ function MacMenuBar() {
 
 function MacDock() {
   return (
-    <div style={{ position: 'absolute', bottom: 6, left: '50%', transform: 'translateX(-50%)', zIndex: 60, display: 'flex', alignItems: 'center', gap: 2, background: 'rgba(45,45,45,0.55)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12)', padding: '3px 6px' }}>
-      {DOCK_APPS.map(app => (
-        <img key={app.name} src={app.icon} alt={app.name} title={app.name} width={32} height={32}
-          style={{ objectFit: 'contain', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))', cursor: 'default' }}
-          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+    <div className="nh-mac-dock" aria-hidden="true" style={{ position: 'absolute', bottom: 6, left: '50%', transform: 'translateX(-50%)', zIndex: 60, display: 'flex', alignItems: 'center', gap: 2, background: 'rgba(45,45,45,0.55)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12)', padding: '3px 6px' }}>
+      {DOCK_APPS.map(({ name, Icon, bg }) => (
+        <span key={name} title={name} style={{ width: 30, height: 30, margin: 1, borderRadius: 7, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+          <Icon size={17} color="#ffffff" strokeWidth={2} />
+        </span>
       ))}
     </div>
   )
@@ -60,7 +63,7 @@ function BrowserBar({ url, onPointerDown }: { url: string, onPointerDown?: (e: R
       <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
         <div style={{ height: 18, background: 'rgba(0,0,0,0.06)', borderRadius: 4, display: 'flex', alignItems: 'center', padding: '0 8px', gap: 4, width: '55%', maxWidth: 380 }}>
           <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg>
-          <span style={{ fontSize: 10, color: '#666', letterSpacing: '0.01em' }}>{url}</span>
+          <span style={{ fontSize: 10, color: '#666', letterSpacing: '0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{url}</span>
         </div>
       </div>
       <div style={{ width: 36 }} />
@@ -71,18 +74,23 @@ function BrowserBar({ url, onPointerDown }: { url: string, onPointerDown?: (e: R
 /* ═══ Scaled Browser Content ═══ */
 
 const INTERNAL_W = 1440
+/* Phones render the mock at a narrower virtual width so its text stays legible */
+const INTERNAL_W_PHONE = 900
 
 function ScaledBrowserContent({ children }: { children: React.ReactNode }) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   const [innerH, setInnerH] = useState(900)
+  const [internalW, setInternalW] = useState(INTERNAL_W)
 
   useEffect(() => {
     const el = wrapperRef.current
     if (!el) return
     const ro = new ResizeObserver(entries => {
       const { width, height } = entries[0].contentRect
-      const s = width / INTERNAL_W
+      const w = width < 600 ? INTERNAL_W_PHONE : INTERNAL_W
+      const s = width / w
+      setInternalW(w)
       setScale(s)
       setInnerH(height / s)
     })
@@ -93,7 +101,7 @@ function ScaledBrowserContent({ children }: { children: React.ReactNode }) {
   return (
     <div ref={wrapperRef} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
       <div style={{
-        width: INTERNAL_W,
+        width: internalW,
         height: innerH,
         transform: `scale(${scale})`,
         transformOrigin: 'top left',
@@ -116,7 +124,7 @@ function MacDesktop({ browserUrl, children, draggable, borderRadius = 16 }: { br
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null)
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
-    if (!draggable) return
+    if (!draggable || e.pointerType !== 'mouse') return
     const el = e.currentTarget.parentElement!
     const rect = el.getBoundingClientRect()
     dragState.current = { startX: e.clientX, startY: e.clientY, origX: rect.left, origY: rect.top }
@@ -164,7 +172,7 @@ function MacDesktop({ browserUrl, children, draggable, borderRadius = 16 }: { br
   return (
     <div ref={macRef} className="nh-rb-showcase__mac" style={{ position: 'relative', isolation: 'isolate', borderRadius, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)', background: '#F2FAFB', cursor: 'default', userSelect: 'none' }}>
       <MacMenuBar />
-      <div style={browserStyle} onPointerMove={draggable ? onPointerMove : undefined} onPointerUp={draggable ? onPointerUp : undefined}>
+      <div className="nh-mac-browser" style={browserStyle} onPointerMove={draggable ? onPointerMove : undefined} onPointerUp={draggable ? onPointerUp : undefined}>
         <BrowserBar url={browserUrl} onPointerDown={draggable ? onPointerDown : undefined} />
         <ScaledBrowserContent>
           {children}
@@ -2345,7 +2353,7 @@ export default function ResumeBuilderShowcase() {
           </div>
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontSize: '54px', fontWeight: 400, color: '#132128', lineHeight: '64.8px', letterSpacing: '-1.2px', margin: '0 0 16px' }}>
+              <h3 style={{ fontSize: TYPE.sectionClamp, fontWeight: 400, color: '#132128', lineHeight: 1.2, letterSpacing: '-1.2px', margin: '0 0 16px' }}>
                 Builds your resume, optimizes it automatically
               </h3>
               <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 28px' }}>
@@ -2364,7 +2372,7 @@ export default function ResumeBuilderShowcase() {
         <div className="nh-rb-showcase__inner nh-rb-showcase__inner--reverse">
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontSize: '54px', fontWeight: 400, color: '#132128', lineHeight: '64.8px', letterSpacing: '-1.2px', margin: '0 0 16px' }}>
+              <h3 style={{ fontSize: TYPE.sectionClamp, fontWeight: 400, color: '#132128', lineHeight: 1.2, letterSpacing: '-1.2px', margin: '0 0 16px' }}>
                 Applies to hundreds of jobs while you sleep
               </h3>
               <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 28px' }}>
@@ -2393,7 +2401,7 @@ export default function ResumeBuilderShowcase() {
           </div>
           <div className="nh-rb-showcase__right">
             <div>
-              <h3 style={{ fontSize: '54px', fontWeight: 400, color: '#132128', lineHeight: '64.8px', letterSpacing: '-1.2px', margin: '0 0 16px' }}>
+              <h3 style={{ fontSize: TYPE.sectionClamp, fontWeight: 400, color: '#132128', lineHeight: 1.2, letterSpacing: '-1.2px', margin: '0 0 16px' }}>
                 Works autonomously, coaches in real-time
               </h3>
               <p style={{ fontFamily: FONT, fontSize: '16px', fontWeight: 400, color: '#424d53', lineHeight: '24px', letterSpacing: '0px', margin: '0 0 28px' }}>

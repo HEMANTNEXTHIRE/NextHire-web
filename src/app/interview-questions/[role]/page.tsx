@@ -94,7 +94,7 @@ export default async function InterviewRolePage({ params }: Props) {
           paddingTop: 'clamp(100px, 12vw, 136px)',
           paddingBottom: 40,
         }}>
-          <Link href="/interview-questions" style={{
+          <Link className="nh-tap-link" href="/interview-questions" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             fontSize: 13, fontWeight: 500, color: P.muted,
             textDecoration: 'none', marginBottom: 28,

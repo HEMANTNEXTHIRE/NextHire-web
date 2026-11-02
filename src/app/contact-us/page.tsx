@@ -82,7 +82,7 @@ const CONTACT_ROWS: {
 
 export default function ContactUsPage() {
   return (
-    <main className="contact-page">
+    <div className="contact-page">
       {/* Hero — matches candidates /candidates hero (How It Works block) */}
       <section
         id="contact-hero"
@@ -208,16 +208,6 @@ export default function ContactUsPage() {
             >
               Write to us
             </h2>
-            <p
-              style={{
-                fontSize: FONT.sm,
-                color: HOME.subtext,
-                margin: '0 0 20px',
-                lineHeight: 1.55,
-              }}
-            >
-              Fields marked * are required.
-            </p>
             <ContactForm />
           </div>
 
@@ -369,6 +359,6 @@ export default function ContactUsPage() {
         rightLabel="Book a demo"
         rightHref="/contact-us"
       />
-    </main>
+    </div>
   )
 }

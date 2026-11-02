@@ -316,17 +316,26 @@ export default function CompaniesPageClient() {
     if (!wrapper) return
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
     if (!cards.length) return
-    const isMobileView = window.matchMedia('(max-width: 860px)').matches
-    const topBase = isMobileView ? 68 : 100
-    const topGap  = isMobileView ? 44 : 0
-    cards.forEach(c => c.style.removeProperty('height'))
-    let maxH = 0
-    if (!isMobileView) {
-      const naturalMax = Math.max(...cards.map(c => c.offsetHeight))
-      maxH = Math.min(naturalMax, Math.max(window.innerHeight - topBase - 50, 480))
-      cards.forEach(c => { c.style.height = `${maxH}px` })
+    // Phones: cards are plain stacked blocks (see globals.css), so no scroll choreography
+    if (window.matchMedia('(max-width: 991px)').matches) {
+      stateRef.current = { thresholds: [], topGap: 0, wrapperH: 0 }
+      cards.forEach(c => { c.style.removeProperty('height'); c.classList.remove('nh-card-moveup') })
+      wrapper.style.removeProperty('transform')
+      wrapper.style.removeProperty('height')
+      wrapper.classList.remove('nh-sticky-remove')
+      if (nextSiblingRef.current) {
+        nextSiblingRef.current.style.height = '0px'
+        nextSiblingRef.current.style.removeProperty('margin-top')
+      }
+      return
     }
-    if (nextSiblingRef.current) nextSiblingRef.current.style.height = isMobileView ? '0px' : `${maxH}px`
+    const topBase = 100
+    const topGap  = 0
+    cards.forEach(c => c.style.removeProperty('height'))
+    const naturalMax = Math.max(...cards.map(c => c.offsetHeight))
+    const maxH = Math.min(naturalMax, Math.max(window.innerHeight - topBase - 50, 480))
+    cards.forEach(c => { c.style.height = `${maxH}px` })
+    if (nextSiblingRef.current) nextSiblingRef.current.style.height = `${maxH}px`
     const wrapperH = wrapper.offsetHeight
     const thresholds = cards.map((card, i) => {
       const topOffset  = topGap * i + topBase
@@ -457,7 +466,7 @@ export default function CompaniesPageClient() {
 
           {/* Section header */}
           <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 80px' }}>
-            <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: '54px', fontWeight: 400, margin: '0 0 20px', lineHeight: 1.2, letterSpacing: '-1.2px' }}>
+            <h2 style={{ fontFamily: "'Droid Serif', Georgia, serif", fontSize: FONT.sectionClamp, fontWeight: 400, margin: '0 0 20px', lineHeight: 1.2, letterSpacing: '-1.2px' }}>
               Five agents. One pipeline.
             </h2>
           </div>
@@ -577,7 +586,7 @@ export default function CompaniesPageClient() {
           <div style={{ maxWidth: 940, margin: '0 auto' }}>
             <Reveal>
               <div style={{ textAlign: 'center', marginBottom: 52 }}>
-                <h2 style={{ fontSize: 54, fontWeight: WEIGHT.normal, color: C.dark, margin: '0 0 12px', letterSpacing: '-1.2px', lineHeight: 1.2 }}>
+                <h2 style={{ fontSize: FONT.sectionClamp, fontWeight: WEIGHT.normal, color: C.dark, margin: '0 0 12px', letterSpacing: '-1.2px', lineHeight: 1.2 }}>
                   Traditional recruiting vs. NextHire
                 </h2>
                 <p style={{ fontSize: FONT.base, color: C.muted, margin: 0 }}>Same outcome. Completely different experience.</p>

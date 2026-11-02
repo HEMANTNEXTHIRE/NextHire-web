@@ -20,7 +20,7 @@ export default function Page() {
     <>
       <section style={{ background: 'linear-gradient(135deg,#b8d4ce 0%,#ffffff 100%)', padding: '140px 40px 60px', textAlign: 'center' }}>
         <div className="w-layout-blockcontainer container-large-e25 w-container" style={{ maxWidth: '800px' }}>
-          <h1 style={{ fontSize: '52px', fontWeight: 800, color: '#253e42', margin: '0 0 16px', lineHeight: 1.1 }}>{page.title}</h1>
+          <h1 style={{ fontSize: 'clamp(32px, 8.5vw, 52px)', fontWeight: 800, color: '#253e42', margin: '0 0 16px', lineHeight: 1.1 }}>{page.title}</h1>
           {page.subtitle && <p style={{ fontSize: '20px', color: '#3d5a56', margin: '0 0 24px', lineHeight: 1.6 }}>{page.subtitle}</p>}
           <p style={{ fontSize: '14px', color: '#a0a0a0' }}>Last updated: {page.lastUpdated}</p>
         </div>

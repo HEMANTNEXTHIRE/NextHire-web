@@ -87,12 +87,14 @@ function FloatingIcon({
   return (
     <motion.div
       ref={ref}
+      className="nh-int-item"
       style={{ ...posStyle, x: smx, y: smy, zIndex: 2 }}
       initial={{ opacity: 0, scale: 0.55 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: index * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
+        className="nh-int-card"
         style={{
           width:              68,
           height:             68,
@@ -159,6 +161,7 @@ export function FloatingIntegrations() {
   return (
     <section
       id="companies-integrations"
+      className="nh-int-section"
       onMouseMove={(e) => { mouseX.current = e.clientX; mouseY.current = e.clientY }}
       style={{
         position:       'relative',
@@ -181,7 +184,7 @@ export function FloatingIntegrations() {
       ))}
 
       {/* Center content */}
-      <div style={{
+      <div className="nh-int-copy" style={{
         position:       'relative',
         zIndex:         10,
         textAlign:      'center',

@@ -744,7 +744,7 @@ export default function CampusAmbassadorsPage() {
           </div>
 
           {/* COLLEGE1000 coupon callout (sits on the dark canvas as a final wide row) */}
-          <div style={{
+          <div className="ca-coupon" style={{
             marginTop: 14,
             background: '#19242b',
             border: `1px solid rgba(212,255,74,0.18)`,
@@ -754,7 +754,7 @@ export default function CampusAmbassadorsPage() {
             gridTemplateColumns: 'auto 1fr',
             gap: 24, alignItems: 'center',
           }}>
-            <div style={{
+            <div className="ca-coupon-code" style={{
               border: `2px dashed ${LIME}`, borderRadius: 12,
               padding: '18px 22px', textAlign: 'center',
               fontFamily: "'Inter', monospace",

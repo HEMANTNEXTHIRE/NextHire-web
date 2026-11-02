@@ -472,11 +472,11 @@ export default function VerticalAccordionSection() {
           </div>
           <h2 style={{
             fontFamily: "'Droid Serif', Georgia, serif",
-            fontSize: '54px',
+            fontSize: FONT.sectionClamp,
             fontWeight: 400,
             fontStyle: 'normal',
             margin: '0 0 20px',
-            lineHeight: '64.8px',
+            lineHeight: 1.2,
             letterSpacing: '-1.2px',
             maxWidth: 900,
             fontSynthesis: 'none',

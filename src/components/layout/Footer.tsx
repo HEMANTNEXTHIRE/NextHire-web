@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { FOOTER_CANDIDATE_TOOLS, FOOTER_COMPANY_TOOLS } from '@/constants/footerLinks'
 
@@ -42,7 +43,40 @@ const SOCIAL_LINKS = [
   },
 ]
 
+/* Phone-only accordion header. Desktop hides it and shows the plain column heading. */
+function SectionToggle({
+  id,
+  label,
+  openSection,
+  onToggle,
+}: {
+  id: string
+  label: string
+  openSection: string | null
+  onToggle: (id: string) => void
+}) {
+  return (
+    <button
+      type="button"
+      className="nh-footer-toggle"
+      aria-expanded={openSection === id}
+      aria-controls={`nh-footer-${id}`}
+      onClick={() => onToggle(id)}
+    >
+      {label}
+      <span className="nh-footer-chevron" aria-hidden="true" />
+    </button>
+  )
+}
+
 export default function Footer() {
+  const [openSection, setOpenSection] = useState<string | null>(null)
+  const toggle = (id: string) => setOpenSection((current) => (current === id ? null : id))
+  const sectionClass = (id: string, isColumn = true) =>
+    [isColumn ? 'nh-footer-col' : '', 'nh-footer-section', openSection === id ? 'nh-footer-section--open' : '']
+      .filter(Boolean)
+      .join(' ')
+
   return (
     <footer className="footer">
       <div className="w-layout-blockcontainer footer-container w-container">
@@ -51,9 +85,11 @@ export default function Footer() {
         <div className="nh-footer-cols">
 
           {/* Col 1: For Candidates */}
-          <div className="nh-footer-col">
+          <div className={sectionClass('candidates')}>
+            <SectionToggle id="candidates" label="For Candidates" openSection={openSection} onToggle={toggle} />
             <Link href="/" className="nh-footer-heading nh-footer-heading--link">For Candidates</Link>
-            <ul className="nh-footer-list" role="list">
+            <ul id="nh-footer-candidates" className="nh-footer-list" role="list">
+              <li className="nh-footer-mobile-only"><Link href="/" className="nh-footer-link">Overview</Link></li>
               {FOOTER_CANDIDATE_TOOLS.map(({ label, href }) => (
                 <li key={label}><Link href={href} className="nh-footer-link">{label}</Link></li>
               ))}
@@ -65,9 +101,11 @@ export default function Footer() {
           </div>
 
           {/* Col 2: For Companies */}
-          <div className="nh-footer-col">
+          <div className={sectionClass('companies')}>
+            <SectionToggle id="companies" label="For Companies" openSection={openSection} onToggle={toggle} />
             <Link href="/companies" className="nh-footer-heading nh-footer-heading--link">For Companies</Link>
-            <ul className="nh-footer-list" role="list">
+            <ul id="nh-footer-companies" className="nh-footer-list" role="list">
+              <li className="nh-footer-mobile-only"><Link href="/companies" className="nh-footer-link">Overview</Link></li>
               {FOOTER_COMPANY_TOOLS.map(({ label, href }) => (
                 <li key={label}><Link href={href} className="nh-footer-link">{label}</Link></li>
               ))}
@@ -75,12 +113,13 @@ export default function Footer() {
           </div>
 
           {/* Col 3: Hire Through Us */}
-          <div className="nh-footer-col">
+          <div className={sectionClass('hire')}>
+            <SectionToggle id="hire" label="Hire Through Us" openSection={openSection} onToggle={toggle} />
             <p className="nh-footer-heading">Hire Through Us</p>
-            <ul className="nh-footer-list" role="list">
-              <li><Link href="#" className="nh-footer-link">Permanent Hiring Solution</Link></li>
-              <li><Link href="#" className="nh-footer-link">Staffing Solution</Link></li>
-              <li><Link href="#" className="nh-footer-link">RPO Solution</Link></li>
+            <ul id="nh-footer-hire" className="nh-footer-list" role="list">
+              <li><Link href="/contact-us" className="nh-footer-link">Permanent Hiring Solution</Link></li>
+              <li><Link href="/contact-us" className="nh-footer-link">Staffing Solution</Link></li>
+              <li><Link href="/contact-us" className="nh-footer-link">RPO Solution</Link></li>
               <li className="nh-footer-gap">
                 <Link
                   href="#"
@@ -96,20 +135,27 @@ export default function Footer() {
 
           {/* Col 4: About + Pricing */}
           <div className="nh-footer-col">
-            <Link href="/blog" className="nh-footer-heading nh-footer-heading--link">Blog</Link>
-            <ul className="nh-footer-list" role="list">
+            <div className={sectionClass('company', false)}>
+              <SectionToggle id="company" label="Company" openSection={openSection} onToggle={toggle} />
+              <Link href="/blog" className="nh-footer-heading nh-footer-heading--link">Blog</Link>
+              <ul id="nh-footer-company" className="nh-footer-list" role="list">
+              <li className="nh-footer-mobile-only"><Link href="/blog" className="nh-footer-link">Blog</Link></li>
               <li><Link href="/success-story" className="nh-footer-link">Success Stories</Link></li>
               <li><a href="https://nexthire.breezy.hr/" target="_blank" rel="noopener noreferrer" className="nh-footer-link">Careers</a></li>
               <li><Link href="/campus-ambassadors" className="nh-footer-link">Campus Ambassador Program</Link></li>
               <li><Link href="/contact-us" className="nh-footer-link">Contact Us</Link></li>
-            </ul>
+              </ul>
+            </div>
 
-            <Link href="/pricing" className="nh-footer-heading nh-footer-heading--link" style={{ marginTop: 28 }}>Pricing</Link>
-            <ul className="nh-footer-list" role="list">
-              <li><Link href="/pricing#candidates" className="nh-footer-link">For Candidates</Link></li>
-              <li><Link href="/pricing#companies" className="nh-footer-link">For Companies</Link></li>
-              <li><Link href="/pricing" className="nh-footer-link">Compare plans</Link></li>
-            </ul>
+            <div className={sectionClass('pricing', false)}>
+              <SectionToggle id="pricing" label="Pricing" openSection={openSection} onToggle={toggle} />
+              <Link href="/pricing" className="nh-footer-heading nh-footer-heading--link" style={{ marginTop: 28 }}>Pricing</Link>
+              <ul id="nh-footer-pricing" className="nh-footer-list" role="list">
+                <li><Link href="/pricing" className="nh-footer-link">For Candidates</Link></li>
+                <li><Link href="/contact-us" className="nh-footer-link">For Companies</Link></li>
+                <li><Link href="/pricing" className="nh-footer-link">Compare plans</Link></li>
+              </ul>
+            </div>
           </div>
 
         </div>{/* end nh-footer-cols */}

@@ -12,7 +12,7 @@ type LegalPageShellProps = {
  */
 export default function LegalPageShell({ title, subtitle, lastUpdated, html }: LegalPageShellProps) {
   return (
-    <main className="nh-legal-page">
+    <div className="nh-legal-page">
       <section id="nh-legal-hero" className="nh-legal-page__hero" aria-labelledby="nh-legal-page-title">
         <div className="nh-legal-page__hero-bg" aria-hidden />
         <div className="nh-legal-page__hero-inner">
@@ -27,6 +27,6 @@ export default function LegalPageShell({ title, subtitle, lastUpdated, html }: L
       <article className="nh-legal-page__article">
         <div className="nh-legal-prose" dangerouslySetInnerHTML={{ __html: html }} />
       </article>
-    </main>
+    </div>
   )
 }

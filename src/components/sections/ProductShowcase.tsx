@@ -215,13 +215,13 @@ export default function ProductShowcase({ heading, headingLine2, cells }: Props)
         {(heading || headingLine2) && (
           <h2 style={{
             fontFamily: "'Droid Serif', Georgia, serif",
-            fontSize: '54px',
+            fontSize: FONT.sectionClamp,
             fontWeight: 400,
             fontStyle: 'normal',
             color: '#132128',
             margin: '0 0 56px',
             textAlign: 'center',
-            lineHeight: '64.8px',
+            lineHeight: 1.2,
             letterSpacing: '-1.2px',
             fontSynthesis: 'none',
           }}>

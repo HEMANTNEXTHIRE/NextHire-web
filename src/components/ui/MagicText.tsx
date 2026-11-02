@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import React, { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { FONT } from '@/constants/typography'
 
 interface WordProps {
   children: string
@@ -11,14 +12,12 @@ interface WordProps {
 
 function Word({ children, progress, range }: WordProps) {
   const opacity = useTransform(progress, range, [0, 1])
+  const reduceMotion = useReducedMotion()
+  // The faint "unlit" copy is a CSS ::before fed by data-word (see .nh-magic-word), so the
+  // DOM holds each word once and screen readers, crawlers and copy-paste get clean text.
   return (
-    <span style={{
-      position:    'relative',
-      marginRight: '0.28em',
-      display:     'inline-block',
-    }}>
-      <span style={{ position: 'absolute', opacity: 0.15, userSelect: 'none' }}>{children}</span>
-      <motion.span style={{ opacity }}>{children}</motion.span>
+    <span className="nh-magic-word" data-word={children}>
+      <motion.span style={{ opacity: reduceMotion ? 1 : opacity }}>{children}</motion.span>
     </span>
   )
 }
@@ -28,7 +27,7 @@ interface MagicTextProps {
   fontSize?: string
 }
 
-export function MagicText({ text, fontSize = '54px' }: MagicTextProps) {
+export function MagicText({ text, fontSize = FONT.sectionClamp }: MagicTextProps) {
   const container = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({
     target: container,
@@ -51,7 +50,7 @@ export function MagicText({ text, fontSize = '54px' }: MagicTextProps) {
       style={{
         display:       'block',
         textAlign:     'center',
-        lineHeight:    '64.8px',
+        lineHeight:    1.2,
         padding:       0,
         margin:        0,
         fontSize,
@@ -68,9 +67,11 @@ export function MagicText({ text, fontSize = '54px' }: MagicTextProps) {
         const start = idx / wordCount
         const end   = start + 1 / wordCount
         return (
-          <Word key={i} progress={scrollYProgress} range={[start, end]}>
-            {token.word}
-          </Word>
+          <React.Fragment key={i}>
+            <Word progress={scrollYProgress} range={[start, end]}>
+              {token.word}
+            </Word>{' '}
+          </React.Fragment>
         )
       })}
     </p>

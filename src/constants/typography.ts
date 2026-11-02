@@ -19,6 +19,8 @@ export const FONT = {
   xlClamp: 'clamp(38px, 5vw, 52px)',
   /** Section heading responsive: 30px → 42px */
   lgClamp: 'clamp(30px, 3.5vw, 42px)',
+  /** Display section heading: 30px on phones → 54px from ~635px up */
+  sectionClamp: 'clamp(30px, 8.5vw, 54px)',
 } as const
 
 /** Font weights — use only these */

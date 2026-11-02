@@ -245,7 +245,7 @@ export default function PricingPageClient() {
 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
 
           {/* Billing toggle: Monthly / Quarterly */}
-          <div style={{
+          <div className="nh-billing-toggle" style={{
               display: 'inline-flex',
               borderRadius: 9999,
               background: '#efefef',
@@ -256,6 +256,8 @@ export default function PricingPageClient() {
                 <button
                   key={c}
                   type="button"
+                  className="nh-billing-btn"
+                  aria-pressed={cycle === c}
                   onClick={() => setCycle(c)}
                   style={{
                     position: 'relative',
@@ -279,7 +281,7 @@ export default function PricingPageClient() {
                 >
                   {c === 'monthly' ? 'Monthly' : 'Quarterly'}
                   {c === 'quarterly' && (
-                    <span style={{
+                    <span className="nh-billing-badge" style={{
                       fontSize: 13,
                       fontWeight: WEIGHT.semi,
                       color: cycle === 'quarterly' ? '#166534' : '#9ca3af',
