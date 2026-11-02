@@ -235,7 +235,7 @@ function ProVisual() {
   return (
     <InfographicShell badges={[
       { icon: '🎯', title: 'Real-time coaching', sub: 'AI answers as you speak', style: { top: 10, left: 10 } },
-      { icon: '📬', title: '200 InMails/mo', sub: 'Direct to recruiters', style: { top: 10, right: 10 } },
+      { icon: '📬', title: '100 InMails/mo', sub: 'Direct to recruiters', style: { top: 10, right: 10 } },
       { icon: '📈', title: '42% open rate', sub: 'vs 5% industry avg', style: { bottom: 10, right: 10 } },
     ]}>
       <AppDots />

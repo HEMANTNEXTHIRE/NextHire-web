@@ -140,6 +140,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           })(window,document,'script','dataLayer','GTM-MW22WQ6Q');`}
         </Script>
 
+        {/* Intercom Messenger (Fin) */}
+        <Script id="intercom-messenger" strategy="lazyOnload">
+          {`window.intercomSettings={api_base:'https://api-iam.intercom.io',app_id:'r3424s28'};
+          (function(){var w=window,ic=w.Intercom;if(typeof ic==='function'){ic('reattach_activator');ic('update',w.intercomSettings);}else{
+          var d=document,i=function(){i.c(arguments);};i.q=[];i.c=function(a){i.q.push(a);};w.Intercom=i;
+          var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/r3424s28';
+          var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}})();`}
+        </Script>
+
         {/* Finsweet Cookie Consent */}
         <Script
           src="https://cdn.jsdelivr.net/npm/@finsweet/cookie-consent@1/fs-cc.js"

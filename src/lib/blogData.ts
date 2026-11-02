@@ -515,7 +515,7 @@ export const blogPosts: BlogPost[] = [
       <p>You can get your resume in shape, understand how ATS scoring works for your background, and get a feel for how the platform works before deciding whether to add velocity with a paid plan. Many candidates spend a week on Free and then upgrade once they are ready to move into active mode.</p>
 
       <h2>Lite for the Active Job Seeker</h2>
-      <p>If you are actively searching and want to move faster, Lite is where most candidates start. The main unlock is unlimited AI Auto Apply for career page jobs. Instead of manually applying one by one, the system submits tailored applications on your behalf at scale, so you are consistently in the early applicant wave without spending hours a day doing it yourself.</p>
+      <p>If you are actively searching and want to move faster, Lite is where most candidates start. The main unlock is AI Auto Apply, with 400 applications a month. Instead of manually applying one by one, the system submits tailored applications on your behalf at scale, so you are consistently in the early applicant wave without spending hours a day doing it yourself.</p>
       <p>You also get Job Portal Optimization to increase inbound recruiter interest, and initial Interview Coaching to sharpen your preparation for the conversations that result. Lite is ideal for candidates applying to a high volume of roles who want to stop being late to every posting.</p>
 
       <h2>Pro for the Candidates Who Need Every Advantage</h2>

@@ -102,7 +102,7 @@ const FEATURES: Feature[] = [
     title: 'AI Auto Apply',
     subtitle: 'Apply while you sleep',
     description: 'AI scans millions of jobs matching your profile and submits tailored applications 24/7, so you wake up to interview requests, not rejections.',
-    plan: 'Free (5/day) · Lite+ Unlimited',
+    plan: 'Free 2 · Lite 400/mo · Pro+ 1,000/mo',
     icon: <IZap />,
   },
   {
@@ -126,7 +126,7 @@ const FEATURES: Feature[] = [
     title: 'AI Interview Coach',
     subtitle: 'Ace every interview',
     description: 'Get real-time AI support during live interviews. It listens to questions as they are asked and helps you respond with relevant answers.',
-    plan: 'Free (30 min) · Pro (20 hrs/mo + live)',
+    plan: 'Free 20 min · Lite 2 hrs/mo · Pro+ 30 hrs/mo',
     icon: <IMic />,
   },
   {
@@ -134,7 +134,7 @@ const FEATURES: Feature[] = [
     title: 'Recruiter InMail',
     subtitle: 'Skip the queue',
     description: 'Message hiring managers directly with personalized outreach and improve your chances of getting noticed.',
-    plan: 'Lite 50/mo · Pro 200/mo · Max Unlimited',
+    plan: 'Lite 20/mo · Pro 100/mo · Max 300/mo',
     icon: <IMail />,
   },
   {
