@@ -20,6 +20,7 @@ const MOBILE_EXTRA_ITEMS = [
 const NAV_ITEMS = [
   { key: 'candidates',      label: 'Candidates',      dropdown: true,  href: '/' },
   { key: 'for-clients',     label: 'Companies',       dropdown: true,  href: '/companies' },
+  { key: 'jobs',            label: 'Jobs',            dropdown: false, href: '/jobs/' },
   { key: 'pricing',         label: 'Pricing',         dropdown: false, href: '/pricing' },
   { key: 'blog',             label: 'Blog',            dropdown: false, href: '/blog' },
 ]
@@ -489,6 +490,21 @@ export default function Header() {
                           </div>
                         </nav>
                       )}
+                    </div>
+                  ) : item.key === 'jobs' ? (
+                    // Plain <a>: /jobs/ is served from the job pages bucket, not a Next route,
+                    // so client-side navigation would fetch a Next payload that does not exist.
+                    <div
+                      key={item.key}
+                      className="main-nav-menu-dropdown w-dropdown"
+                    >
+                      <a
+                        href={item.href}
+                        className="main-nav-dropdown-toggle w-dropdown-toggle"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', textDecoration: 'none' }}
+                      >
+                        <span className="main-nav-menu-dropdown-text">{item.label}</span>
+                      </a>
                     </div>
                   ) : (
                     <div

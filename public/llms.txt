@@ -11,16 +11,12 @@ Contact: support@nexthireconsulting.com
 ## Core Pages
 
 - [Home](https://www.nexthireconsulting.com/) — Platform overview, AI job search agent, key features, social proof
-- [For Candidates](https://www.nexthireconsulting.com/candidates/) — AI tools for job seekers: auto-apply, resume builder, interview coaching, outreach agent
 - [For Companies](https://www.nexthireconsulting.com/companies/) — AI recruiting and sourcing platform for hiring teams
 - [Pricing](https://www.nexthireconsulting.com/pricing/) — Region-aware pricing; see "Pricing" section below
-- [About NextHire](https://www.nexthireconsulting.com/about-nexthire/) — Mission, values, milestones
 - [Why NextHire](https://www.nexthireconsulting.com/why-nexthire/) — Differentiators vs. job boards and traditional recruiters
-- [Why Join NextHire](https://www.nexthireconsulting.com/why-join-nexthire/) — For professionals considering the platform
 - [Success Stories](https://www.nexthireconsulting.com/success-story/) — Customer placement outcomes and testimonials
 - [Blog](https://www.nexthireconsulting.com/blog/) — Career strategy, AI in hiring, interview prep, salary negotiation, LinkedIn optimization, ATS guidance
-- [Jobs](https://www.nexthireconsulting.com/jobs/) — Curated job listings across IT, tech, product, design, and professional roles
-- [Talk to an Expert](https://www.nexthireconsulting.com/talk-to-an-expert/) — Book a 1:1 session with a NextHire career advisor
+- [Jobs](https://www.nexthireconsulting.com/jobs/) — Live job listings from employer career sites, updated hourly, each with its own page
 - [Contact](https://www.nexthireconsulting.com/contact-us/) — Support and general enquiries
 
 ## Key Features
