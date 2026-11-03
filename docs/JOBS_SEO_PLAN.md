@@ -74,6 +74,16 @@ Every claim below is tagged **[verified]** (checked in code, on the live site or
 
 ## 3. Decisions only you can make (blocking)
 
+**Decided 3 Nov 2026:**
+- LinkedIn, Naukri (including the Tsenta relay) and iimjobs get no public page.
+- A free user gets the employer link inside the app, and the job is added to Job Tracker.
+- **Every** live job may be indexed: no age rule. This overrides 3.4 below.
+- Infra changes are prepared as scripts that the owner runs.
+
+**As built:**
+- A blank country means no page at all, because no country allowlist can match it.
+- No `baseSalary` in the markup: the stored salary is regex-extracted and USD-only, not employer-structured.
+
 1. **LinkedIn- and Naukri-sourced jobs.** Options:
    - (a) No public page.
    - (b) A facts-only page (title, company, location, our own analysis, no copied description) with `noindex`.
