@@ -64,6 +64,9 @@ def find_page_by_title(title):
         if results:
             page = results[0]
             return page["id"], page["version"]["number"]
+    else:
+        # 401/403 usually means CONFLUENCE_API_TOKEN expired or lost access to the space
+        print(f"  Confluence lookup for '{title}' returned HTTP {resp.status_code}: {resp.text[:200]}")
     return None, None
 
 
