@@ -551,21 +551,21 @@ export default function CompaniesPageClient() {
                 </div>
 
                 {/* ── Right: mockup panel ── */}
-                <div style={{
+                <div className="nh-card-panel" style={{
                   flex: '0 0 50%', position: 'relative',
                   borderRadius: '0 28px 28px 0',
                   overflow: 'hidden',
                   background: '#f5f5f5',
                   boxShadow: '-12px 0 48px rgba(19,33,40,0.08)',
                 }}>
-                  <div style={{ position: 'absolute', inset: 0, padding: '44px 56px' }}>
-                    <div style={{
+                  <div className="nh-card-frame" style={{ position: 'absolute', inset: 0, padding: '44px 56px' }}>
+                    <div className="nh-card-box" style={{
                       position: 'relative', width: '100%', height: '100%',
                       overflow: 'hidden', borderRadius: 12,
                       boxShadow: '0 8px 32px rgba(0,0,0,0.13)',
                       background: '#ffffff',
                     }}>
-                      <div style={{ position: 'absolute', inset: 0, padding: '28px 32px', display: 'flex', flexDirection: 'column' }}>
+                      <div className="nh-card-body" style={{ position: 'absolute', inset: 0, padding: '28px 32px', display: 'flex', flexDirection: 'column' }}>
                         {feat.mockup}
                       </div>
                     </div>

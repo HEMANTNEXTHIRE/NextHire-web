@@ -1,6 +1,7 @@
 'use client'
 
-import { Gravity, MatterBody } from '@/components/ui/gravity'
+import { useRef } from 'react'
+import { Gravity, MatterBody, type GravityRef } from '@/components/ui/gravity'
 
 /* ── Chips — big, dark backgrounds, white text ───────────────── */
 const CHIPS: Array<{ text: string; x: string; y: string; angle?: number; bg: string }> = [
@@ -25,6 +26,7 @@ const WITH_ITEMS = [
 ]
 
 export default function WithWithoutSection() {
+  const gravityRef = useRef<GravityRef>(null)
   return (
     <section style={{ background: '#ffffff', padding: '80px 0 0' }}>
       <div className="nh-container">
@@ -97,13 +99,14 @@ export default function WithWithoutSection() {
             </div>
 
             {/* Physics world — desktop/tablet only. Inset so pills can't clip the panel edges */}
-            <div className="nh-ww-physics" style={{
+            {/* Tap anywhere in the panel to toss the chips (touch screens can't drag them) */}
+            <div className="nh-ww-physics" onClick={() => gravityRef.current?.shake()} style={{
               position: 'absolute',
               /* inset 20px on every side — physics walls live here, not at the raw edge */
               top: 20, left: 20, right: 20, bottom: 20,
               overflow: 'hidden',
             }}>
-              <Gravity gravity={{ x: 0, y: 0.8 }} grabCursor addTopWall={false} autoStart>
+              <Gravity ref={gravityRef} gravity={{ x: 0, y: 0.8 }} grabCursor addTopWall={false} autoStart>
                 {CHIPS.map((chip) => (
                   <MatterBody
                     key={chip.text}
@@ -166,8 +169,11 @@ export default function WithWithoutSection() {
               position: 'absolute', bottom: 22, left: 0, right: 0,
               textAlign: 'center', zIndex: 20, pointerEvents: 'none',
             }}>
-              <span style={{ fontSize: 11, color: '#9ca3af', letterSpacing: '0.3px' }}>
+              <span className="nh-ww-hint-mouse" style={{ fontSize: 11, color: '#9ca3af', letterSpacing: '0.3px' }}>
                 drag to interact
+              </span>
+              <span className="nh-ww-hint-touch" style={{ fontSize: 11, color: '#9ca3af', letterSpacing: '0.3px' }}>
+                tap to shake
               </span>
             </div>
           </div>

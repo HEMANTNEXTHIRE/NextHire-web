@@ -145,10 +145,33 @@ main {
     border-right: none !important;
   }
   .nh-with-without-card .nh-ww-left {
-    min-height: 320px;
+    min-height: 360px;
   }
-  /* Hide physics simulation + drag hint on mobile, show static chip arrangement */
-  .nh-ww-physics { display: none !important; }
+  /* Physics stays on phones, with chips sized for the narrower panel */
+  .nh-ww-physics {
+    top: 64px !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 40px !important;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nh-ww-chip {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* Hint text: drag with a mouse, tap to shake on touch screens */
+.nh-ww-hint-touch { display: none; }
+@media (hover: none), (pointer: coarse) {
+  .nh-ww-hint-mouse { display: none; }
+  .nh-ww-hint-touch { display: inline; }
+}
+
+/* Reduced motion: no falling chips, a still arrangement instead */
+@media (prefers-reduced-motion: reduce) {
+  .nh-ww-physics,
   .nh-ww-draghint { display: none !important; }
   .nh-ww-static {
     display: flex !important;
@@ -974,6 +997,17 @@ dialog::backdrop {
 /* ── Sticky stacked cards (HireSection) ── */
 .nh-sticky-card {
   will-change: transform;
+}
+/* "Live" status dot in the feature mockups */
+.nh-live-dot {
+  animation: nhLivePulse 1.8s ease-in-out infinite;
+}
+@keyframes nhLivePulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(51, 134, 50, 0.18); }
+  50% { box-shadow: 0 0 0 7px rgba(51, 134, 50, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nh-live-dot { animation: none; }
 }
 .nh-card-moveup {
   opacity: 0.6;
@@ -5051,18 +5085,138 @@ html {
     min-height: 44px !important;
     box-sizing: border-box !important;
   }
-  html body .nh-sticky-card > div:last-child {
-    height: 240px !important;
-    margin-top: 8px !important;
+  /* Mockup: natural height in normal flow, so nothing is clipped at phone width */
+  html body .nh-sticky-card > div.nh-card-panel:last-child {
+    height: auto !important;
+    margin-top: 12px !important;
     border-radius: 14px !important;
     box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
   }
-  html body .nh-sticky-card > div:last-child > div {
-    padding: 12px !important;
+  html body .nh-sticky-card .nh-card-frame,
+  html body .nh-sticky-card .nh-card-body {
+    position: static !important;
+    inset: auto !important;
+  }
+  html body .nh-sticky-card .nh-card-frame {
+    padding: 0 !important;
+  }
+  html body .nh-sticky-card .nh-card-box {
+    height: auto !important;
     border-radius: 14px !important;
+    border: 1px solid #c8dfd6 !important;
+    box-shadow: 0 4px 18px rgba(19, 33, 40, 0.07) !important;
   }
-  html body .nh-sticky-card > div:last-child > div > div > div {
-    padding: 14px 16px !important;
+  html body .nh-sticky-card .nh-card-body {
+    padding: 16px !important;
+    height: auto !important;
+  }
+  html body .nh-sticky-card .nh-card-body > div {
+    height: auto !important;
+  }
+  /* Mockup internals, reflowed for ~280px */
+  .nh-mock-head {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .nh-mock-label {
+    letter-spacing: 0.5px !important;
+  }
+  /* Inner panes were fixed-height scroll clips on desktop; on phones they grow */
+  html body .nh-card-body div[style*="overflow: hidden"] {
+    overflow: visible !important;
+    flex: none !important;
+  }
+  .nh-mock-toolbar span {
+    white-space: nowrap !important;
+  }
+  .nh-mock-split {
+    grid-template-columns: 1fr !important;
+  }
+  /* Its "Features" column repeats the checklist printed right above the mockup */
+  .nh-mock-split > div:first-child {
+    display: none !important;
+  }
+  .nh-mock-stats {
+    gap: 6px !important;
+  }
+  .nh-mock-stats > div {
+    min-width: 0 !important;
+    padding: 12px 4px !important;
+  }
+  .nh-mock-rows > div:nth-child(n + 5) {
+    display: none !important;
+  }
+  .nh-mock-rows > div {
+    padding: 9px 10px !important;
+    gap: 9px !important;
+  }
+  .nh-mock-rows > div > div:first-child {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 12px !important;
+  }
+  .nh-mock-rows > div > span:last-child {
+    padding: 3px 8px !important;
+    font-size: 12px !important;
+  }
+  .nh-mock-rows > div > div:nth-child(2) > div:first-child > span {
+    font-size: 14px !important;
+  }
+  .nh-mock-rows > div > div:nth-child(2) > div:first-child > img {
+    display: none !important;
+  }
+  .nh-mock-ringrow {
+    gap: 14px !important;
+  }
+  .nh-mock-ringrow svg {
+    width: 88px !important;
+    height: 88px !important;
+  }
+  .nh-mock-tabs > div {
+    padding: 9px 10px !important;
+  }
+  .nh-mock-tabs > div:nth-child(n + 3) {
+    display: none !important;
+  }
+  .nh-mock-trow {
+    grid-template-columns: 24px 1fr 76px !important;
+  }
+  .nh-mock-trow > :nth-child(4) {
+    display: none !important;
+  }
+}
+/* Smallest phones (~320px): the mockup has roughly 220px to work with */
+@media (max-width: 380px) {
+  html body .nh-sticky-card:nth-child(n) {
+    padding: 22px 16px 16px !important;
+  }
+  html body .nh-sticky-card .nh-card-body {
+    padding: 14px 12px !important;
+  }
+  .nh-mock-label {
+    white-space: normal !important;
+    font-size: 12px !important;
+  }
+  .nh-mock-ringrow {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .nh-mock-ringrow > div:first-child {
+    align-self: center !important;
+  }
+  .nh-mock-stats > div > div:first-child {
+    font-size: 22px !important;
+  }
+  .nh-mock-stats > div > div:last-child {
+    font-size: 11px !important;
+  }
+  .nh-mock-tabs > div:nth-child(n + 2) {
+    display: none !important;
+  }
+  .nh-mock-toolbar > div:last-child {
+    display: none !important;
   }
   /* Offsets the desktop sticky spacer; meaningless once the cards are in flow */
   #home-faq {

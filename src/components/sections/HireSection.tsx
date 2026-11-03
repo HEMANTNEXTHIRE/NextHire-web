@@ -109,10 +109,10 @@ const Divider = () => <div style={{ height: 1, background: P.border, margin: '4p
 
 /* Mockup panel header — replaces the old tiny Label */
 const PanelHeader = ({ dot, label, right }: { dot?: boolean; label: string; right?: React.ReactNode }) => (
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 14, borderBottom: `1px solid ${P.border}`, marginBottom: 6 }}>
+  <div className="nh-mock-head" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 14, borderBottom: `1px solid ${P.border}`, marginBottom: 6 }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      {dot && <div style={{ width: 9, height: 9, borderRadius: '50%', background: P.green, boxShadow: `0 0 0 3px rgba(51,134,50,0.18)`, flexShrink: 0 }} />}
-      <span style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, letterSpacing: 1.1, textTransform: 'uppercase' as const }}>{label}</span>
+      {dot && <div className="nh-live-dot" style={{ width: 9, height: 9, borderRadius: '50%', background: P.green, boxShadow: `0 0 0 3px rgba(51,134,50,0.18)`, flexShrink: 0 }} />}
+      <span className="nh-mock-label" style={{ fontSize: FONT.sm, fontWeight: WEIGHT.bold, color: P.green, letterSpacing: 1.1, textTransform: 'uppercase' as const }}>{label}</span>
     </div>
     {right}
   </div>
@@ -134,7 +134,7 @@ function AutoApplyMockup() {
         right={<Badge color={P.accentD} bg={P.mint}>847 scanned</Badge>}
       />
 
-      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, overflow: 'hidden', minHeight: 0 }}>
+      <div className="nh-mock-split" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, overflow: 'hidden', minHeight: 0 }}>
 
         {/* Left column: feature cards */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -244,7 +244,7 @@ function OutreachMockup() {
       />
 
       {/* Rows */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7, overflow: 'hidden' }}>
+      <div className="nh-mock-rows" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7, overflow: 'hidden' }}>
         {OUTREACH_ROWS.map((r) => (
           <div key={r.name} style={{
             display: 'flex', alignItems: 'center', gap: 12,
@@ -289,7 +289,7 @@ function OutreachMockup() {
       </div>
 
       {/* Stats bar */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 14, paddingTop: 14, borderTop: `1px solid ${P.border}` }}>
+      <div className="nh-mock-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 14, paddingTop: 14, borderTop: `1px solid ${P.border}` }}>
         {[
           { v: '50',  l: 'Contacted',  c: P.dark    },
           { v: '64%', l: 'Open rate',  c: '#1d6fb8' },
@@ -330,7 +330,7 @@ function ResumeMockup() {
       </div>
 
       {/* ATS ring + keyword bars */}
-      <div style={{ display: 'flex', gap: 22, alignItems: 'center', flex: 1 }}>
+      <div className="nh-mock-ringrow" style={{ display: 'flex', gap: 22, alignItems: 'center', flex: 1 }}>
 
         {/* ATS ring — larger, dominant focal point */}
         <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -396,7 +396,7 @@ function PortalOptMockup() {
       />
 
       {/* Score ring + platform bars */}
-      <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+      <div className="nh-mock-ringrow" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
 
         {/* Overall score ring */}
         <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -431,7 +431,7 @@ function PortalOptMockup() {
       <Divider />
 
       {/* Weekly impact stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+      <div className="nh-mock-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
         {[
           { v: '5×',  l: 'Profile views',       c: P.dark    },
           { v: '64%', l: 'More interviews',      c: '#1d6fb8' },
@@ -531,7 +531,7 @@ function JobTrackerMockup() {
       />
 
       {/* Tab bar */}
-      <div style={{ display: 'flex', borderBottom: `1px solid ${P.border}`, marginBottom: 0, flexShrink: 0, gap: 0 }}>
+      <div className="nh-mock-tabs" style={{ display: 'flex', borderBottom: `1px solid ${P.border}`, marginBottom: 0, flexShrink: 0, gap: 0 }}>
         {tabs.map(t => (
           <div key={t.label} style={{
             display: 'flex', alignItems: 'center', gap: 6,
@@ -546,7 +546,7 @@ function JobTrackerMockup() {
       </div>
 
       {/* Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 10px', borderBottom: `1px solid ${P.border}`, flexShrink: 0 }}>
+      <div className="nh-mock-toolbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 10px', borderBottom: `1px solid ${P.border}`, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 15, height: 15, borderRadius: 4, border: `1.5px solid ${P.muted}`, flexShrink: 0 }} />
           <span style={{ fontSize: FONT.sm, color: P.muted }}>Select all</span>
@@ -562,7 +562,7 @@ function JobTrackerMockup() {
       </div>
 
       {/* Table header */}
-      <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr 90px 76px', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${P.border}`, flexShrink: 0 }}>
+      <div className="nh-mock-trow" style={{ display: 'grid', gridTemplateColumns: '24px 1fr 90px 76px', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${P.border}`, flexShrink: 0 }}>
         <div style={{ width: 15, height: 15, borderRadius: 4, border: `1.5px solid ${P.muted}` }} />
         <span style={{ fontSize: FONT.xs, color: P.muted, fontWeight: WEIGHT.semi }}>Job Position</span>
         <span style={{ fontSize: FONT.xs, color: P.muted, fontWeight: WEIGHT.semi }}>Company</span>
@@ -572,7 +572,7 @@ function JobTrackerMockup() {
       {/* Table rows */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {rows.map((row, i) => (
-          <div key={i} style={{
+          <div key={i} className="nh-mock-trow" style={{
             display: 'grid', gridTemplateColumns: '24px 1fr 90px 76px', alignItems: 'center',
             padding: '12px 0', borderBottom: `1px solid ${P.border}`,
           }}>
@@ -881,21 +881,21 @@ export default function HireSection() {
               </div>
 
               {/* ── Right: panel — all cards share the same padded-frame treatment ── */}
-              <div style={{
+              <div className="nh-card-panel" style={{
                 flex: '0 0 50%', position: 'relative',
                 borderRadius: '0 28px 28px 0',
                 overflow: 'hidden',
                 background: '#f5f5f5',
                 boxShadow: '-12px 0 48px rgba(19,33,40,0.08)',
               }}>
-                <div style={{ position: 'absolute', inset: 0, padding: '44px 56px' }}>
-                  <div style={{
+                <div className="nh-card-frame" style={{ position: 'absolute', inset: 0, padding: '44px 56px' }}>
+                  <div className="nh-card-box" style={{
                     position: 'relative', width: '100%', height: '100%',
                     overflow: 'hidden', borderRadius: 12,
                     boxShadow: '0 8px 32px rgba(0,0,0,0.13)',
                     background: '#ffffff',
                   }}>
-                    <div style={{ position: 'absolute', inset: 0, padding: '28px 32px', display: 'flex', flexDirection: 'column' }}>
+                    <div className="nh-card-body" style={{ position: 'absolute', inset: 0, padding: '28px 32px', display: 'flex', flexDirection: 'column' }}>
                       {MOCKUPS[card.imgContent]}
                     </div>
                   </div>
