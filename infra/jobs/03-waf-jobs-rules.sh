@@ -13,7 +13,9 @@
 #      more than 100 gets a CAPTCHA, unless verified crawler.
 #   5. Hosting provider / anonymous IPs get a CAPTCHA on job pages, unless verified crawler.
 # "Verified crawler" = Bot Control verified label OR an IP in the AI search crawler IP
-# set (OpenAI OAI-SearchBot + ChatGPT-User, Perplexity), built from their published lists.
+# set (OpenAI GPTBot + OAI-SearchBot + ChatGPT-User, PerplexityBot + Perplexity-User,
+# Anthropic ClaudeBot + Claude-SearchBot + Claude-User), built from their published lists.
+# robots.txt lets these crawlers in; without their IPs here they would get a CAPTCHA.
 #
 # Cost: Bot Control and CAPTCHA are paid add-ons. Check current AWS WAF pricing before
 # applying; the scope-down keeps Bot Control to /jobs/ requests only.
@@ -30,8 +32,9 @@ APPLY=${1:-}
 echo "1/4 AI search crawler IP ranges from the operators' published lists"
 python3 - > "$DIR/ai-crawler-cidrs-$TS.txt" <<'PY'
 import json, urllib.request
-urls = ["https://openai.com/searchbot.json", "https://openai.com/chatgpt-user.json",
-        "https://www.perplexity.ai/perplexitybot.json"]
+urls = ["https://openai.com/gptbot.json", "https://openai.com/searchbot.json",
+        "https://openai.com/chatgpt-user.json", "https://www.perplexity.ai/perplexitybot.json",
+        "https://www.perplexity.ai/perplexity-user.json", "https://claude.com/crawling/bots.json"]
 cidrs = set()
 for u in urls:
     data = json.load(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "nexthire-waf-setup"}), timeout=20))
