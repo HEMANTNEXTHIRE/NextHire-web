@@ -128,6 +128,47 @@ const post = {
           options: { hotspot: true },
           fields: [{ name: 'alt', title: 'Alt text', type: 'string' }],
         },
+        {
+          type: 'object',
+          name: 'carousel',
+          title: 'Image carousel',
+          description: 'A swipeable set of images rendered as an in-article carousel.',
+          fields: [
+            {
+              name: 'images',
+              title: 'Slides',
+              type: 'array',
+              of: [
+                {
+                  type: 'image',
+                  options: { hotspot: true },
+                  fields: [
+                    { name: 'alt', title: 'Alt text', type: 'string' },
+                    { name: 'caption', title: 'Caption', type: 'string' },
+                  ],
+                },
+              ],
+              validation: (Rule: any) => Rule.min(2).required(),
+            },
+            {
+              name: 'caption',
+              title: 'Caption (optional)',
+              description: 'Shown beneath the carousel.',
+              type: 'string',
+            },
+          ],
+          preview: {
+            select: { images: 'images', caption: 'caption' },
+            prepare({ images, caption }: any) {
+              const count = Array.isArray(images) ? images.length : 0
+              return {
+                title: caption || 'Image carousel',
+                subtitle: `${count} slide${count === 1 ? '' : 's'}`,
+                media: Array.isArray(images) ? images[0] : undefined,
+              }
+            },
+          },
+        },
         { type: 'table' },
         {
           type: 'object',

@@ -212,6 +212,52 @@ main {
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 
+/* ---- In-article blog carousel (PostCarousel) ---- */
+.nh-post-carousel {
+  position: relative;
+}
+.nh-post-carousel .swiper {
+  padding-bottom: 44px; /* room for pagination bullets below slides */
+}
+.nh-post-carousel .swiper-button-next,
+.nh-post-carousel .swiper-button-prev {
+  color: #2e7d4f;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid #c8dfd6;
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(19, 33, 40, 0.1);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.nh-post-carousel .swiper-button-next:hover,
+.nh-post-carousel .swiper-button-prev:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(19, 33, 40, 0.16);
+}
+.nh-post-carousel .swiper-button-next::after,
+.nh-post-carousel .swiper-button-prev::after {
+  font-size: 16px;
+  font-weight: 700;
+}
+.nh-post-carousel .swiper-pagination {
+  bottom: 12px;
+}
+.nh-post-carousel .swiper-pagination-bullet {
+  background: #9ca3af;
+  opacity: 0.5;
+}
+.nh-post-carousel .swiper-pagination-bullet-active {
+  background: #2e7d4f;
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .nh-post-carousel .swiper-button-next,
+  .nh-post-carousel .swiper-button-prev {
+    display: none; /* rely on swipe + dots on small screens */
+  }
+}
+
 /* ---- HeroSection keyframes & responsive ---- */
 @keyframes hero-float1 {
   0%, 100% { transform: translate(0, 0); }

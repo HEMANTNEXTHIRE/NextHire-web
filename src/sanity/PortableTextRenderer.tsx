@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from './lib/image'
 import InlineProductCTA from '@/components/ui/InlineProductCTA'
+import PostCarousel from '@/components/ui/PostCarousel'
 
 // Helper: turn heading text into a kebab-case anchor id
 function headingId(children: any): string {
@@ -76,6 +77,10 @@ const components = {
           loading="lazy"
         />
       )
+    },
+    carousel: ({ value }: any) => {
+      if (!value?.images?.length) return null
+      return <PostCarousel images={value.images} caption={value.caption} />
     },
     table: ({ value }: any) => {
       if (!value?.rows?.length) return null

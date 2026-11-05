@@ -101,6 +101,17 @@ export const POST_BY_SLUG_QUERY = `
         _key,
         rows[]{ _key, cells }
       },
+      _type == "carousel" => {
+        _type,
+        _key,
+        caption,
+        images[]{
+          _key,
+          alt,
+          caption,
+          "url": asset->url
+        }
+      },
       _type == "relatedPostInline" => {
         _type,
         _key,
