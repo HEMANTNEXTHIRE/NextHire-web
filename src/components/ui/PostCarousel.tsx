@@ -24,9 +24,19 @@ interface Props {
 
 /**
  * In-article image carousel for blog posts.
- * Uses Swiper (CSS already imported globally in globals.css) and the brand
- * green accents defined under `.nh-post-carousel` in globals.css.
+ * Base Swiper CSS is imported at the top of this file; the brand-green nav
+ * and pagination accents live under `.nh-post-carousel` in globals.css.
  */
+
+// Request a right-sized, modern-format image from the Sanity CDN rather than
+// the raw full-res asset. 1400px covers 2x retina for the ~680px display cap;
+// auto=format serves WebP/AVIF where supported; fit=max avoids upscaling.
+function sized(url?: string): string | undefined {
+  if (!url) return url
+  if (!url.includes('cdn.sanity.io')) return url
+  return `${url}?w=1400&auto=format&fit=max&q=80`
+}
+
 export default function PostCarousel({ images, caption }: Props) {
   const slides = (images ?? []).filter((img) => !!img?.url)
   if (slides.length === 0) return null
@@ -61,7 +71,7 @@ export default function PostCarousel({ images, caption }: Props) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={img.url}
+                src={sized(img.url)}
                 alt={img.alt ?? img.caption ?? `Slide ${i + 1}`}
                 loading="lazy"
                 style={{
