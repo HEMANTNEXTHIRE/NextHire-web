@@ -3,6 +3,13 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Keyboard, A11y } from 'swiper/modules'
 
+// Base Swiper styles. Imported here (not via globals.css) because a bare
+// `@import` only works at the very top of a stylesheet — mid-file it is
+// invalid and silently dropped, which leaves slides stacked vertically.
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
 export interface CarouselSlide {
   _key?: string
   url?: string

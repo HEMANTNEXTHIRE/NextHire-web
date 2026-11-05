@@ -207,10 +207,8 @@ main {
   }
 }
 
-/* Swiper CSS — loaded globally so all slider pages have styles available */
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
+/* Swiper base CSS is imported in the PostCarousel component — a bare `@import`
+   mid-file is invalid per spec and gets dropped. Only overrides live here. */
 
 /* ---- In-article blog carousel (PostCarousel) ---- */
 .nh-post-carousel {
