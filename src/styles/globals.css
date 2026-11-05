@@ -208,26 +208,64 @@ main {
 }
 
 /* Swiper base CSS is imported in the PostCarousel component — a bare `@import`
-   mid-file is invalid per spec and gets dropped. Only overrides live here. */
+   mid-file is invalid per spec and gets dropped. Only overrides live here.
+
+   IMPORTANT: the Webflow base stylesheet (public/styles/e25-algotale.min.css)
+   ships its own conflicting `.swiper*` theme — `.swiper-wrapper{flex-flow:column}`,
+   `.swiper{overflow:visible;max-width:970px;margin-top:123px}`, dimmed slides
+   (`opacity:.2`), 70px round nav buttons, etc. Those are unscoped (specificity
+   0,1,0) and load after Swiper's own CSS, so they win and the carousel stacks
+   vertically. The rules below are scoped under `.nh-post-carousel` (0,2,0) to
+   outrank Webflow and restore real Swiper behaviour inside blog posts. */
 
 /* ---- In-article blog carousel (PostCarousel) ---- */
 .nh-post-carousel {
   position: relative;
 }
+/* Neutralise Webflow's conflicting .swiper* theme */
 .nh-post-carousel .swiper {
+  max-width: none;
+  margin: 0;
+  overflow: hidden;
   padding-bottom: 44px; /* room for pagination bullets below slides */
+}
+.nh-post-carousel .swiper-wrapper {
+  flex-flow: row nowrap; /* Webflow forces column — restore horizontal track */
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+}
+.nh-post-carousel .swiper-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  opacity: 1; /* Webflow dims inactive slides to .2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }
 .nh-post-carousel .swiper-button-next,
 .nh-post-carousel .swiper-button-prev {
   color: #2e7d4f;
   width: 40px;
   height: 40px;
+  top: 50%;            /* Webflow sets top:39.5% */
+  bottom: auto;
+  margin: 0;
   background: rgba(255, 255, 255, 0.92);
   border: 1.5px solid #c8dfd6;
   border-radius: 999px;
   box-shadow: 0 2px 10px rgba(19, 33, 40, 0.1);
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
+.nh-post-carousel .swiper-button-prev { left: 12px; right: auto; }
+.nh-post-carousel .swiper-button-next { right: 12px; left: auto; }
+.nh-post-carousel .swiper-button-disabled { opacity: 0.35; } /* Webflow hides to 0 */
 .nh-post-carousel .swiper-button-next:hover,
 .nh-post-carousel .swiper-button-prev:hover {
   background: #ffffff;
