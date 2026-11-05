@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { getCalApi } from '@calcom/embed-react'
+import posthog from 'posthog-js'
 
 /**
  * Initializes the Cal.com popup embed once for the whole site. Buttons with
@@ -19,6 +20,11 @@ export default function CalInit() {
         },
         hideEventTypeDetails: false,
         layout: 'month_view',
+      })
+      // A demo booked through the popup. Nothing about the booking itself is sent.
+      cal('on', {
+        action: 'bookingSuccessfulV2',
+        callback: () => posthog.capture('Demo Booked', { page: window.location.pathname }),
       })
     })().catch(() => {
       // Blocked by a content blocker: the click fallback below takes over

@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Suspense } from 'react'
 import ReduxProvider from '@/components/ReduxProvider'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import NotificationContainer from '@/components/ui/Notification'
 import PostHogProvider from '@/components/PostHogProvider'
-import PageViewTracker from '@/components/PageViewTracker'
 import CalInit from '@/components/CalInit'
 import FinSheet from '@/components/ui/FinSheet'
 import { CANDIDATE_TIERS, tierPrice } from '@/lib/pricing'
@@ -192,9 +190,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CalInit />
         <FinSheet />
         <PostHogProvider>
-          <Suspense fallback={null}>
-            <PageViewTracker />
-          </Suspense>
           <ReduxProvider>
             <Header />
             <main>{children}</main>

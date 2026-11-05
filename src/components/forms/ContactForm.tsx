@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import posthog from 'posthog-js'
 import { useAppDispatch } from '@/store/hooks'
 import { setFormSubmitting, setFormSuccess, setFormError } from '@/store/slices/formSlice'
 import { addNotification } from '@/store/slices/notificationSlice'
@@ -37,6 +38,11 @@ export default function ContactForm() {
         contact: phone,
         message: `Purpose: ${purpose}${message ? ` | Message: ${message}` : ''}`,
       })
+
+      // The lead becomes a person under their email, the id the app identifies an account
+      // by, so a later sign up joins this visit. Phone and message stay out of PostHog.
+      posthog.identify(email.trim().toLowerCase(), { email: email.trim(), name })
+      posthog.capture('Contact Form Submitted', { purpose })
 
       dispatch(setFormSuccess({ key: 'contactForm', message: 'Message sent successfully!' }))
       dispatch(addNotification({

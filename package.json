@@ -34,7 +34,7 @@
     "next": "^15.0.0",
     "openai": "^6.38.0",
     "poly-decomp": "^0.3.0",
-    "posthog-js": "^1.372.8",
+    "posthog-js": "1.438.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
