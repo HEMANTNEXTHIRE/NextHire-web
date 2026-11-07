@@ -167,6 +167,8 @@ export default function Footer() {
             <span className="nh-footer-dot" aria-hidden="true" />
             <Link href="/privacy-policy" className="footer-lower__bottom-link">Privacy Policy</Link>
             <span className="nh-footer-dot" aria-hidden="true" />
+            <Link href="/privacy" className="footer-lower__bottom-link">App Privacy</Link>
+            <span className="nh-footer-dot" aria-hidden="true" />
             <Link href="/terms-of-service" className="footer-lower__bottom-link">Terms</Link>
             <span className="nh-footer-dot" aria-hidden="true" />
             <Link href="/data-processing-agreement" className="footer-lower__bottom-link">Data Processing</Link>

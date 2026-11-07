@@ -64,6 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
   const legal: MetadataRoute.Sitemap = [
+    'privacy',
     'privacy-policy',
     'terms-of-service',
     'data-processing-agreement',

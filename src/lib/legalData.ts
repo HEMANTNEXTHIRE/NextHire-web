@@ -8,6 +8,54 @@ export interface LegalPage {
 
 export const legalPages: LegalPage[] = [
   {
+    slug: 'privacy',
+    title: 'Privacy Policy',
+    subtitle: 'How we collect, use, and protect your information, including our optional LinkedIn integration',
+    lastUpdated: 'November 7, 2026',
+    content: `
+      <p>This Privacy Policy explains how NextHire Consulting (Nexthire LLP) ("we", "us", "our") collects, uses, and protects your information when you use our recruitment CRM and related services (the "Service"), including our optional LinkedIn integration.</p>
+
+      <h2>Who we are</h2>
+      <p>NextHire Consulting is operated by Nexthire LLP, Ruchi Khand 1, Sharda Nagar, Lucknow, Uttar Pradesh, India. For any privacy question or request, contact us at <a href="mailto:privacy@nexthireconsulting.com">privacy@nexthireconsulting.com</a>.</p>
+
+      <h2>Information we collect</h2>
+      <ul>
+        <li>Account information you provide to use the Service (name, work email, company).</li>
+        <li>LinkedIn account information, only if you choose to connect your LinkedIn account: your LinkedIn member identifier, name, and profile picture, obtained through LinkedIn's official OAuth 2.0 authorization with your explicit consent.</li>
+        <li>Content you create, such as posts you choose to publish to LinkedIn through the Service.</li>
+        <li>Usage and device data (log data, IP address, browser type and settings, and similar technical information) that we use to operate and secure the Service.</li>
+      </ul>
+
+      <h2>How we use your information</h2>
+      <ul>
+        <li>To provide and operate the Service, including publishing content to LinkedIn on your behalf and only at your direction when you have connected your LinkedIn account.</li>
+        <li>To display your connection status and manage scheduled posts.</li>
+        <li>To secure, maintain, and improve the Service.</li>
+      </ul>
+
+      <h2>LinkedIn integration</h2>
+      <p>When you connect LinkedIn, we access and use LinkedIn data only with your consent, via LinkedIn's official APIs, and solely to provide the features you request (such as posting to your LinkedIn feed). Our use of information received from LinkedIn complies with the LinkedIn API Terms of Use and the LinkedIn Platform policies. We do not sell LinkedIn data, use it for advertising, or share it with third parties except as described below. You can disconnect your LinkedIn account at any time from within the Service, and you may also revoke our access directly in your LinkedIn account settings. When you disconnect, we stop accessing your LinkedIn data and delete the stored access tokens.</p>
+
+      <h2>How we share information</h2>
+      <p>We do not sell your personal information. We share it only with: (a) service providers who host or support the Service under confidentiality obligations; and (b) authorities when required by law.</p>
+
+      <h2>Data retention</h2>
+      <p>We retain your information for as long as your account is active or as needed to provide the Service, and delete or anonymize it when it is no longer required, subject to legal obligations. LinkedIn access tokens are deleted when you disconnect your LinkedIn account.</p>
+
+      <h2>Security</h2>
+      <p>We use administrative, technical, and organizational safeguards (including encryption of stored credentials) to protect your information. No method of transmission or storage is 100% secure.</p>
+
+      <h2>Your rights</h2>
+      <p>Depending on your location, you may have rights to access, correct, or delete your personal information. To exercise these, contact <a href="mailto:privacy@nexthireconsulting.com">privacy@nexthireconsulting.com</a>. You can disconnect LinkedIn and request deletion of your data at any time.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>We may update this policy from time to time. Material changes will be posted on this page with a new "Last updated" date.</p>
+
+      <h2>Contact</h2>
+      <p>NextHire Consulting (Nexthire LLP)<br />Ruchi Khand 1, Sharda Nagar, Lucknow, Uttar Pradesh, India<br /><a href="mailto:privacy@nexthireconsulting.com">privacy@nexthireconsulting.com</a></p>
+    `,
+  },
+  {
     slug: 'privacy-policy',
     title: 'Privacy Policy',
     subtitle: 'How we collect, use, and protect your personal information',
