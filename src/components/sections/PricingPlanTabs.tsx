@@ -255,7 +255,7 @@ function ProVisual() {
         lineHeight: 1.55,
         flexShrink: 0,
       }}>
-        "Describe a time you handled a difficult stakeholder."
+        &quot;Describe a time you handled a difficult stakeholder.&quot;
       </div>
 
       {/* AI answer */}

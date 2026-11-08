@@ -1086,7 +1086,7 @@ function AutoApplyContent() {
         </div>
         {/* Bottom */}
         <div style={{ padding: '10px 12px', borderTop: `1px solid ${NH_APP.border}` }}>
-          <div style={{ fontSize: 10, color: NH_APP.muted, marginBottom: 4 }}>Today's applications <strong style={{ color: NH_APP.text }}>0/100</strong></div>
+          <div style={{ fontSize: 10, color: NH_APP.muted, marginBottom: 4 }}>Today&apos;s applications <strong style={{ color: NH_APP.text }}>0/100</strong></div>
           <div style={{ height: 4, borderRadius: 99, background: '#e5e7eb', marginBottom: 8, overflow: 'hidden' }}>
             <div style={{ width: '0%', height: '100%', background: NH_APP.applyBtn, borderRadius: 99 }} />
           </div>
