@@ -1,106 +1,74 @@
 'use client'
 
 import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
+import posthog from 'posthog-js'
 import { WEIGHT } from '@/constants/typography'
 import { MagicText } from '@/components/ui/MagicText'
 
-interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
+const APP_URL = 'https://app.nexthireconsulting.com'
+
+/* Hero copy. One promise for every stage (no calls yet, or calls but wanting a better
+   offer), then the four steps so each visitor sees where NextHire helps them.
+   Three versions under review; HERO_VERSION picks the one on the page. */
+const HERO_COPY = {
+  A: {
+    eyebrow: 'For every stage of your job search',
+    line1: 'Get more interviews.',
+    line2: 'Land a better offer.',
+    sub: 'You choose the jobs. NextHire applies for you, messages HR on Gmail and LinkedIn, and helps you live in the interview.',
+  },
+  B: {
+    eyebrow: "Job hunting is hard. It doesn't have to be slow.",
+    line1: 'We do the applying.',
+    line2: 'You do the interviews.',
+    sub: 'NextHire applies to jobs for you, messages hiring managers on Gmail and LinkedIn, and helps you live in every interview.',
+  },
+  C: {
+    eyebrow: 'One app for your whole job search',
+    line1: 'Get noticed. Get called.',
+    line2: 'Get hired.',
+    sub: 'From your resume to your offer letter, NextHire handles the hard parts: applying, reaching HR on Gmail and LinkedIn, and helping you live in interviews.',
+  },
+} as const
+const HERO_VERSION: keyof typeof HERO_COPY = 'A'
+
+/* The four stages, each one a NextHire tool: resume and profiles, Auto Apply,
+   Outreach and LinkedIn InMail, Interview Coach */
+const HERO_STEPS = ['Fix your resume', 'Apply to more jobs', 'Message HR directly', 'Ace the interview']
+
+/* The hero box is the front door to Fin, the one assistant across the site and the app.
+   The question travels in the URL hash (never sent to a server, never in analytics); the
+   app's /home reads it, clears it and opens Fin with it typed in. */
+function askInApp(text: string) {
+  posthog.capture('Hero Question Sent')
+  window.location.href = `${APP_URL}/home#ask=${encodeURIComponent(text.slice(0, 1000))}`
 }
 
 function HeroChatbot() {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const chatScrollRef = useRef<HTMLDivElement>(null)
+  const [sending, setSending] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // Back from the app with the browser's back button: the page comes from the bfcache with
+  // the "sending" state still on, so turn it off again.
   useEffect(() => {
-    const el = chatScrollRef.current
-    if (el) el.scrollTop = el.scrollHeight
-  }, [messages])
+    const onShow = (e: PageTransitionEvent) => { if (e.persisted) setSending(false) }
+    window.addEventListener('pageshow', onShow)
+    return () => window.removeEventListener('pageshow', onShow)
+  }, [])
 
-  const sendMessage = useCallback(async () => {
+  const send = () => {
     const text = input.trim()
-    if (!text || isLoading) return
-
-    const userMsg: ChatMessage = { id: Date.now().toString(), role: 'user', content: text }
-    const updatedMessages = [...messages, userMsg]
-    setMessages(updatedMessages)
-    setInput('')
-    setIsLoading(true)
-
-    // Reset textarea height
-    if (textareaRef.current) textareaRef.current.style.height = 'auto'
-
-    try {
-      const chatApiUrl = process.env.NEXT_PUBLIC_CHAT_API_URL || '/api/chat'
-      const res = await fetch(chatApiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: updatedMessages.map(m => ({ role: m.role, content: m.content })),
-        }),
-      })
-
-      if (!res.ok) throw new Error('Chat request failed')
-
-      const reader = res.body?.getReader()
-      const decoder = new TextDecoder()
-      const assistantId = (Date.now() + 1).toString()
-
-      setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
-
-      if (reader) {
-        let buffer = ''
-        while (true) {
-          const { done, value } = await reader.read()
-          if (done) break
-          buffer += decoder.decode(value, { stream: true })
-
-          // Parse SSE data chunks from the AI SDK stream
-          const lines = buffer.split('\n')
-          buffer = lines.pop() || ''
-
-          for (const line of lines) {
-            // AI SDK v3 data stream format: lines starting with "0:" contain text
-            if (line.startsWith('0:')) {
-              try {
-                const text = JSON.parse(line.slice(2))
-                setMessages(prev =>
-                  prev.map(m => m.id === assistantId ? { ...m, content: m.content + text } : m)
-                )
-              } catch { /* skip non-text chunks */ }
-            }
-          }
-        }
-        // Process any remaining buffer
-        if (buffer.startsWith('0:')) {
-          try {
-            const text = JSON.parse(buffer.slice(2))
-            setMessages(prev =>
-              prev.map(m => m.id === assistantId ? { ...m, content: m.content + text } : m)
-            )
-          } catch { /* skip */ }
-        }
-      }
-    } catch {
-      setMessages(prev => [...prev, {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: "Sorry, I'm having trouble connecting. Please try again or head over to [NextHire](https://app.nexthireconsulting.com) directly!",
-      }])
-    } finally {
-      setIsLoading(false)
-    }
-  }, [input, isLoading, messages])
+    if (!text || sending) return
+    setSending(true)
+    askInApp(text)
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      sendMessage()
+      send()
     }
   }
 
@@ -113,151 +81,142 @@ function HeroChatbot() {
     }
   }
 
-  const hasMessages = messages.length > 0
+  const canSend = Boolean(input.trim()) && !sending
 
   return (
-    <div style={{
-      width: '100%',
-      maxWidth: '620px',
-      background: '#ffffff',
-      borderRadius: '20px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08), 0 8px 40px rgba(0,0,0,0.06)',
-      border: '1px solid #e5e7eb',
-      boxSizing: 'border-box',
-      overflow: 'hidden',
-      transition: 'box-shadow 0.2s ease',
-    }}>
-      {/* Chat messages area */}
-      {hasMessages && (
-        <div ref={chatScrollRef} style={{
-          maxHeight: '280px',
-          overflowY: 'auto',
-          padding: '16px 20px 8px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-        }}>
-          {messages.map((msg) => (
-            <div key={msg.id} style={{
-              display: 'flex',
-              justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
-            }}>
-              <div style={{
-                maxWidth: '85%',
-                padding: '10px 14px',
-                borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
-                background: msg.role === 'user' ? '#132128' : '#edf5f1',
-                color: msg.role === 'user' ? '#ffffff' : '#132128',
-                fontSize: '14px',
-                lineHeight: 1.5,
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-              }}>
-                {msg.content.split(/(\[.*?\]\(.*?\))/).map((part, i) => {
-                  const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/)
-                  if (linkMatch) {
-                    return (
-                      <a
-                        key={i}
-                        href={linkMatch[2]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: msg.role === 'user' ? '#86efac' : '#2e7d4f',
-                          fontWeight: 600,
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        {linkMatch[1]}
-                      </a>
-                    )
-                  }
-                  return <span key={i}>{part}</span>
-                })}
-              </div>
-            </div>
-          ))}
-          {isLoading && messages[messages.length - 1]?.role === 'user' && (
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <div style={{
-                padding: '10px 14px',
-                borderRadius: '16px 16px 16px 4px',
-                background: '#edf5f1',
-                fontSize: '14px',
-                color: '#9ca3af',
-              }}>
-                Typing...
-              </div>
-            </div>
-          )}
-          <div />
-        </div>
-      )}
+    <div style={{ width: '100%', maxWidth: '620px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    {/* One row, like a button: grows only if the question runs long */}
+    <div className="nh-ask">
+      <textarea
+        ref={textareaRef}
+        value={input}
+        onChange={handleTextareaInput}
+        onKeyDown={handleKeyDown}
+        placeholder="Ask about your job search"
+        aria-label="Ask the NextHire Assistant"
+        enterKeyHint="send"
+        rows={1}
+        disabled={sending}
+        className="nh-ask__input"
+      />
+      <button
+        type="button"
+        onClick={() => send()}
+        disabled={!canSend}
+        aria-label="Send message"
+        className="nh-ask__send"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 12V4M4 8l4-4 4 4" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+    </div>
 
-      {/* Input area */}
-      <div style={{
-        position: 'relative',
-        padding: hasMessages ? '8px 20px 16px' : '20px 64px 20px 20px',
-        borderTop: hasMessages ? '1px solid #f0f0f0' : 'none',
-      }}>
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={handleTextareaInput}
-          onKeyDown={handleKeyDown}
-          placeholder={hasMessages ? 'Type your reply...' : 'Tell us your biggest job search struggle...'}
-          rows={hasMessages ? 1 : 3}
-          disabled={isLoading}
-          style={{
-            width: '100%',
-            border: 'none',
-            outline: 'none',
-            resize: 'none',
-            background: 'transparent',
-            fontFamily: 'inherit',
-            fontSize: '15px',
-            lineHeight: 1.6,
-            color: '#132128',
-            display: 'block',
-            overflowY: 'hidden',
-            minHeight: hasMessages ? '24px' : '72px',
-            paddingRight: '48px',
-            opacity: isLoading ? 0.6 : 1,
-          }}
-        />
-        <button
-          onClick={sendMessage}
-          disabled={!input.trim() || isLoading}
-          aria-label="Send message"
-          style={{
-            position: 'absolute',
-            bottom: hasMessages ? '12px' : '14px',
-            right: hasMessages ? '20px' : '14px',
-            width: '38px',
-            height: '38px',
-            borderRadius: '50%',
-            background: input.trim() && !isLoading ? '#132128' : '#d1d5db',
-            border: 'none',
-            cursor: input.trim() && !isLoading ? 'pointer' : 'default',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-            transition: 'background 0.15s ease',
-          }}
-          onMouseEnter={e => { if (input.trim() && !isLoading) (e.currentTarget as HTMLButtonElement).style.background = '#338632' }}
-          onMouseLeave={e => { if (input.trim() && !isLoading) (e.currentTarget as HTMLButtonElement).style.background = '#132128' }}
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M8 12V4M4 8l4-4 4 4" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
     </div>
   )
 }
 
+/* Phone hero: one "Get started" button; the choice between a new account and logging in
+   comes up in a bottom sheet, within thumb reach, instead of two buttons side by side. */
+function GetStarted() {
+  const [state, setState] = useState<'closed' | 'open' | 'closing'>('closed')
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const firstRef = useRef<HTMLAnchorElement>(null)
+
+  const close = useCallback(() => {
+    setState((s) => (s === 'open' ? 'closing' : s))
+  }, [])
+
+  // Let the slide-down play, then unmount and hand focus back to the trigger
+  useEffect(() => {
+    if (state !== 'closing') return
+    const t = window.setTimeout(() => {
+      setState('closed')
+      triggerRef.current?.focus()
+    }, 220)
+    return () => window.clearTimeout(t)
+  }, [state])
+
+  // While open: focus the first option, Escape closes, the page behind does not scroll
+  useEffect(() => {
+    if (state !== 'open') return
+    firstRef.current?.focus()
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+    document.addEventListener('keydown', onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.documentElement.classList.add('nh-sheet-open')
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+      document.documentElement.classList.remove('nh-sheet-open')
+    }
+  }, [state, close])
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        className="nh-hero-btn nh-hero-btn--primary"
+        aria-haspopup="dialog"
+        aria-expanded={state === 'open'}
+        onClick={() => setState('open')}
+      >
+        Get started
+      </button>
+
+      {state !== 'closed' && createPortal(
+        <div className={`nh-sheet${state === 'closing' ? ' is-closing' : ''}`}>
+          <div className="nh-sheet__backdrop" onClick={close} />
+          <div className="nh-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="nh-sheet-title">
+            <span className="nh-sheet__handle" aria-hidden="true" />
+            <p id="nh-sheet-title" className="nh-sheet__title">Get started with NextHire</p>
+            <a
+              ref={firstRef}
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nh-sheet__btn nh-sheet__btn--primary"
+              onClick={close}
+            >
+              Start for free
+            </a>
+            <a
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nh-sheet__btn nh-sheet__btn--secondary"
+              onClick={close}
+            >
+              Continue with Login
+            </a>
+          </div>
+        </div>,
+        document.body,
+      )}
+    </>
+  )
+}
+
 export default function HeroSection() {
+  const copy = HERO_COPY[HERO_VERSION]
+  const chatRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = chatRef.current
+    const root = document.documentElement
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([entry]) => {
+      root.classList.toggle('nh-hero-chat-visible', entry.isIntersecting)
+    })
+    io.observe(el)
+    return () => {
+      io.disconnect()
+      root.classList.remove('nh-hero-chat-visible')
+    }
+  }, [])
+
   return (
     <>
     <section
@@ -272,6 +231,9 @@ export default function HeroSection() {
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         textAlign: 'center',
       }}>
+
+        {/* Who it's for, above the promise */}
+        <div className="nh-hero-eyebrow">{copy.eyebrow}</div>
 
         {/* ── Headline ── */}
         <div className="nh-hero-headline" style={{
@@ -296,7 +258,7 @@ export default function HeroSection() {
             lineHeight: 1.2,
             fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
           }}>
-            The Unfair Advantage
+            {copy.line1}
           </span>
           {/* Second line */}
           <span className="nh-hero-line" style={{
@@ -308,7 +270,7 @@ export default function HeroSection() {
             lineHeight: 1.2,
             fontFamily: "'Droid Serif', Georgia, 'Times New Roman', serif",
           }}>
-            Every Job Seeker Deserves
+            {copy.line2}
           </span>
         </h1>
         </div>
@@ -324,20 +286,16 @@ export default function HeroSection() {
           fontWeight: WEIGHT.normal,
           fontFamily: 'inherit',
         }}>
-          Our AI talks to hiring managers on your behalf, uncovers roles never posted online, and coaches you live through every interview
+          {copy.sub}
         </p>
 
         {/* Feature checkmarks — matches reference row */}
-        <div style={{
+        <div className="nh-hero-points" style={{
           display: 'flex', alignItems: 'center', gap: '28px',
           flexWrap: 'wrap', justifyContent: 'center',
           marginBottom: '48px', marginTop: '20px',
         }}>
-          {[
-            'Reach hiring managers directly',
-            'Apply to hidden roles automatically',
-            'Live coaching during real interviews',
-          ].map((item) => (
+          {HERO_STEPS.map((item) => (
             <span key={item} style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               fontSize: '16px', lineHeight: '24px', letterSpacing: '-0.3px',
@@ -352,8 +310,18 @@ export default function HeroSection() {
           ))}
         </div>
 
+        {/* Phones and tablets: sign-up sits right under the promise, where the eye already
+            is, instead of in the bar. Desktop keeps both in the header. data-hero-cta tells
+            the header to bring its own Start free back once these scroll away. */}
+        <div className="nh-hero-actions" data-hero-cta>
+          <GetStarted />
+          <div className="nh-hero-or" aria-hidden="true">
+            <span>or ask NextHire</span>
+          </div>
+        </div>
+
         {/* CTA — Dream Machine input */}
-        <div style={{
+        <div ref={chatRef} className="nh-hero-chat" style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           width: '100%', marginBottom: '60px',
         }}>

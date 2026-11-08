@@ -34,7 +34,7 @@ export default function DualActionCTA({
   leftTitle = 'GET STARTED',
   leftSubtitle = 'Kickstart Your Career Journey',
   leftDesc = 'AI that searches, applies, and coaches while you focus on landing the offer.',
-  leftLabel = 'Try for free',
+  leftLabel = 'Start free',
   leftHref = APP_URL,
   rightTitle = 'TALK TO AN EXPERT',
   rightSubtitle = 'Build a team that wins',

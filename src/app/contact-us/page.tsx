@@ -329,7 +329,7 @@ export default function ContactUsPage() {
                   marginBottom: 12,
                 }}
               >
-                Try for free →
+                Start free →
               </a>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', fontSize: 12, fontWeight: WEIGHT.semi }}>
                 <Link href="/pricing" style={{ color: '#338632', textDecoration: 'none' }}>

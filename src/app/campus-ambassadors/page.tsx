@@ -118,7 +118,7 @@ const pillStyle: React.CSSProperties = {
   color: '#3d7a72', fontSize: FONT.sm, fontWeight: WEIGHT.semi, letterSpacing: '0.5px',
 }
 
-/* matches the "Book a discovery call" pill on /companies */
+/* matches the "Book a demo" pill on /companies */
 const ctaPrimary: React.CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',

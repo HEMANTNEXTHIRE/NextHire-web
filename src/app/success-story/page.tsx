@@ -278,7 +278,7 @@ export default function SuccessStoryPage() {
             </p>
             <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="https://app.nexthireconsulting.com" className="button-primary w-button">
-                Try for free →
+                Start free →
               </Link>
               <Link href="/" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 7,
@@ -296,7 +296,7 @@ export default function SuccessStoryPage() {
       <DualActionCTA
         leftTitle="YOUR STORY STARTS HERE"
         leftSubtitle="Kickstart Your Career Journey"
-        leftLabel="Try for free"
+        leftLabel="Start free"
         leftHref="https://app.nexthireconsulting.com"
         rightTitle="TALK TO AN EXPERT"
         rightSubtitle="Build a team that wins"

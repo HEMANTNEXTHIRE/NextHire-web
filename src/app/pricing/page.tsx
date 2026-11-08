@@ -93,7 +93,7 @@ export default function PricingPage() {
       <DualActionCTA
         leftTitle="GET STARTED"
         leftSubtitle="Kickstart Your Career Journey"
-        leftLabel="Try for free"
+        leftLabel="Start free"
         leftHref="https://app.nexthireconsulting.com"
         rightTitle="TALK TO AN EXPERT"
         rightSubtitle="Build a team that wins"

@@ -107,7 +107,7 @@ main {
 /* ── Standard content container ────────────────────────────────────────────
    Every section's inner content wrapper must use this class (or the exact
    same inline values) so that content left-edge aligns with the nav logo
-   and right-edge aligns with the "Try for free" button.
+   and right-edge aligns with the header CTA button.
    Nav reference: max-width 1320px, padding-left/right 30px (at ≥992px).
    ──────────────────────────────────────────────────────────────────────── */
 .nh-container {
@@ -1999,6 +1999,10 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   background: rgba(255, 255, 255, 0.3) !important;
   opacity: 1 !important;
 }
+body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .nh-nav-login {
+  color: #ffffff;
+  opacity: 0.9;
+}
 body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .main-nav-cta-try {
   background: #132128 !important;
   background-image: none !important;
@@ -2013,7 +2017,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
   color: #ffffff !important;
 }
 
-/* Try for free button: keep on the right, smaller size */
+/* Header CTA: keep on the right, smaller size */
 @media (min-width: 992px) {
   /* ── Centered header layout: logo | centred nav links | CTA ── */
   .main-nav .main-nav-container {
@@ -2033,13 +2037,27 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
     flex: 1 !important;
     justify-content: center !important;
   }
-  /* Desktop CTA: visible as a sibling of <nav> */
+  /* Desktop actions: Log in + CTA, siblings of <nav> */
   .main-nav .nh-cta-desktop {
     display: flex;
+    align-items: center;
+    gap: 20px;
     flex-shrink: 0;
   }
-  /* Mobile-only CTA (inside <nav>): hidden on desktop */
-  .main-nav .nh-cta-mobile {
+  .main-nav .nh-nav-login {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: #1a3338;
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.2s ease;
+  }
+  .main-nav .nh-nav-login:hover {
+    opacity: 1;
+  }
+  /* The phone menu's second level never shows on desktop */
+  .main-nav .nh-mnav-sub {
     display: none !important;
   }
   /* Header-bar mobile CTA: hidden on desktop */
@@ -2050,7 +2068,7 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
 
 /* ══════════════════════════════════════════════════════════════════════
    MOBILE HEADER — absolute positioning, immune to flex/float wars
-   [≡ Hamburger — abs left] [Logo — abs center] [Try for free — abs right]
+   [Logo — abs left] ……… [Start free] [≡ Hamburger — abs right]
    ══════════════════════════════════════════════════════════════════════ */
 @media (max-width: 991px) {
 
@@ -2073,10 +2091,13 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
     width: 100% !important;
   }
 
-  /* 3. Hamburger: pinned to left center */
+  /* 3. Hamburger: pinned to the right edge — thumb reach on a phone held one-handed.
+        The 22px icon sits centred in a 44px tap box, so right: 9px puts the bars' edge
+        20px in, on the same line as .nh-container content. */
   .main-nav .main-nav-menu-btn.w-nav-button {
     position: absolute !important;
-    left: 16px !important;
+    left: auto !important;
+    right: 9px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     display: flex !important;
@@ -2095,10 +2116,17 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
     z-index: 2 !important;
   }
 
-  /* 4. Logo: positioned immediately right of the hamburger */
+  /* Webflow nudges the icon (top: 8px; margin-top: -4px), which sat the bars 6px below
+     the logo and CTA. Centre them in the tap box instead. */
+  .main-nav .main-nav-menu-btn .main-nav-menu-toggle-animated.w-icon-nav-menu {
+    top: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 4. Logo: left edge, aligned with page content (20px gutter) */
   .main-nav .brand.w-nav-brand {
     position: absolute !important;
-    left: 64px !important;
+    left: 20px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     float: none !important;
@@ -2107,10 +2135,11 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
     z-index: 2 !important;
   }
 
-  /* 5. Mobile CTA: pinned to right center */
+  /* 5. Phone CTA: just left of the hamburger. Sized to match the logo's weight, not
+        outshout it: 36px pill, the 44px touch target is kept by an invisible ::before. */
   .main-nav .nh-cta-header-mobile {
     position: absolute !important;
-    right: 16px !important;
+    right: 57px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     display: flex !important;
@@ -2119,14 +2148,43 @@ body:has(#candidates-hero) .main-nav:not(.fixed-menu):not(.mobile-menu-open) .ma
     z-index: 2 !important;
   }
   .main-nav .nh-cta-header-mobile .button-primary {
-    padding: 11px 22px !important;
+    position: relative !important;
+    height: 36px !important;
+    padding: 0 14px !important;
     font-size: 14px !important;
     font-weight: 600 !important;
+    letter-spacing: -0.2px !important;
     border-radius: 9999px !important;
     white-space: nowrap !important;
-    line-height: 1.2 !important;
+    line-height: 1 !important;
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  .main-nav .nh-cta-header-mobile .button-primary::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -4px -2px !important;
+  }
+  /* Hidden until the page's hero buttons scroll away (.is-on, set in Header.tsx), so the
+     bar reads [Logo … ☰] on arrival and the action lives in the hero */
+  .main-nav .nh-cta-header-mobile {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    margin-top: 6px !important;
+    transition: opacity 0.22s ease, margin-top 0.22s ease, visibility 0s linear 0.22s !important;
+  }
+  .main-nav .nh-cta-header-mobile.is-on {
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-top: 0 !important;
+    transition: opacity 0.22s ease, margin-top 0.22s ease, visibility 0s !important;
+  }
+  /* Menu open: the same action sits at the bottom of the menu, so don't show it twice */
+  .main-nav.mobile-menu-open .nh-cta-header-mobile {
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   /* 6. Hide desktop nav + CTA */
@@ -2962,8 +3020,9 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
     position: relative;
     z-index: 9999;
   }
-  .main-nav .main-nav-menu-btn.w-nav-button {
-    position: relative !important;
+  /* Hamburger + logo stay above the open panel (position comes from the header block) */
+  .main-nav .main-nav-menu-btn.w-nav-button,
+  .main-nav .brand.w-nav-brand {
     z-index: 9999 !important;
   }
 
@@ -2975,19 +3034,27 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    height: 100dvh !important;
+    /* A sheet sized to its content, so the dimmed page stays visible below;
+       capped so the longer feature list scrolls inside it */
+    height: auto !important;
+    max-height: 85dvh !important;
     overflow-y: auto !important;
     overscroll-behavior: contain !important;
     background: #ffffff !important;
     z-index: 9998 !important;
-    /* above the header height (~68px), room for content below */
-    padding: 74px 0 48px !important;
+    /* below the 64px bar; the bottom is padded by .nh-mnav-actions (safe area) */
+    padding: 72px 0 0 !important;
     transform: translateY(-100%) !important;
     transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) !important;
     pointer-events: none !important;
     box-shadow: none !important;
-    border-radius: 0 !important;
+    border-radius: 0 0 20px 20px !important;
     flex-direction: column !important;
+  }
+  body .main-nav .nav-menu.w-nav-menu {
+    display: flex !important;
+    align-items: stretch !important;
+    text-align: left !important;
   }
 
   /* ── 3. Open state: slide panel down ────────────────────────── */
@@ -3004,7 +3071,9 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
     inset: 0;
     background: rgba(26, 51, 56, 0.35);
     z-index: 9996;
-    pointer-events: none;
+    /* Catches the tap on the dimmed page: closes the menu (outside-click handler)
+       without also following a link underneath */
+    pointer-events: auto;
     animation: mobileBackdropIn 0.3s ease forwards;
   }
   @keyframes mobileBackdropIn {
@@ -3021,7 +3090,7 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
 
   .main-nav .main-nav-dropdown-toggle {
     width: 100% !important;
-    padding: 16px 24px !important;
+    padding: 16px 20px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -3222,22 +3291,158 @@ body.andl-body h3, body.andl-body h3 span, body.andl-body h3 em {
     color: #5fa89e !important;
   }
 
-  /* ── 9. CTA button: auto-width pill at bottom of panel ─────── */
-  .main-nav .main-manu-btn.nh-cta-mobile {
-    display: flex !important;
-    padding: 20px 24px 8px !important;
-    margin-top: 4px !important;
-    justify-content: center !important;
+  /* ── 9. Chevron only where a second level exists (Candidates, Companies) ── */
+  .main-nav .nh-mnav-link .main-nav-dropdown-toggle::after,
+  .main-nav .nh-mnav-link .main-nav-dropdown-toggle:after {
+    display: none !important;
   }
-  .main-nav .main-manu-btn.nh-cta-mobile .button-primary {
-    width: auto !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    text-align: center !important;
-    padding: 14px 32px !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    border-radius: 9999px !important;
+
+  /* Current page: green text and a dot, so "where am I" needs no thought */
+  .main-nav .main-nav-dropdown-toggle[aria-current='page'] .main-nav-menu-dropdown-text {
+    color: #2e7d4f !important;
+  }
+  .main-nav .main-nav-dropdown-toggle[aria-current='page']::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2e7d4f;
+    margin-right: 10px;
+    flex-shrink: 0;
+    order: -1;
+  }
+  .main-nav .main-nav-dropdown-toggle[aria-current='page'] {
+    justify-content: flex-start !important;
+  }
+
+  /* Secondary links: smaller and grey, below the main list */
+  .main-nav .nh-mnav-secondary {
+    display: flex !important;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    padding: 12px 20px 0;
+  }
+  .main-nav .nh-mnav-secondary a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4b5563;
+    text-decoration: none;
+  }
+  .main-nav .nh-mnav-secondary a[aria-current='page'] {
+    color: #2e7d4f;
+  }
+
+  /* ── 10. Second level: replaces the list in place ───────────── */
+  .main-nav .nav-menu.nh-mnav--sub-open > .main-nav-menu-dropdown,
+  .main-nav .nav-menu.nh-mnav--sub-open > .nh-mnav-secondary {
+    display: none !important;
+  }
+  .main-nav .nh-mnav-sub {
+    padding: 0 20px 8px;
+    animation: nhMnavSubIn 0.22s ease-out;
+  }
+  @keyframes nhMnavSubIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .main-nav .nh-mnav-sub__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0;
+    margin: 0 0 4px;
+    background: none;
+    border: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2e7d4f;
+    cursor: pointer;
+  }
+  .main-nav .nh-mnav-sub__title {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #1a3338;
+  }
+  .main-nav .nh-mnav-sub__desc {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #4b5563;
+  }
+  .main-nav .nh-mnav-sub__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .main-nav .nh-mnav-sub__item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(26, 51, 56, 0.07);
+    text-decoration: none;
+  }
+  .main-nav .nh-mnav-sub__item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a3338;
+  }
+  .main-nav .nh-mnav-sub__item-desc {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #4b5563;
+  }
+  .main-nav .nh-mnav-sub__overview {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2e7d4f;
+    text-decoration: none;
+  }
+
+  /* ── 11. Actions pinned to the bottom (thumb zone) ──────────── */
+  .main-nav .nh-mnav-actions {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    position: sticky;
+    bottom: 0;
+    padding: 16px 20px 20px;
+    background: #ffffff;
+    border-top: 1px solid rgba(26, 51, 56, 0.07);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .main-nav .nh-mnav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  .main-nav .nh-mnav-btn--primary {
+    background: #132128;
+    color: #ffffff;
+  }
+  .main-nav .nh-mnav-btn--secondary {
+    background: #ffffff;
+    color: #1a3338;
+    border: 1.5px solid #c8dfd6;
   }
 
   /* ── Misc cleanup ────────────────────────────────────────────── */
@@ -5089,36 +5294,25 @@ html {
   body.mobile-menu-open .intercom-launcher-frame {
     display: none !important;
   }
-  .main-nav .nh-cta-header-mobile .button-primary {
-    min-height: 44px !important;
-    padding: 0 18px !important;
-    justify-content: center !important;
-  }
+  /* Logo: 144 × 24px, so the brand outweighs the CTA beside it (Webflow ships it at
+     80 × 20 with the SVG letterboxed inside, which rendered the wordmark ~13px tall).
+     max-width leaves room for the CTA + hamburger on 320px phones. */
   .main-nav .brand.w-nav-brand {
     min-height: 44px !important;
-    max-width: calc(100vw - 64px - 16px - 132px) !important;
+    width: auto !important;
+    max-width: calc(100vw - 189px) !important;
     overflow: hidden !important;
   }
-  .main-nav .brand.w-nav-brand img {
+  .main-nav .brand.w-nav-brand .brand-logo,
+  .main-nav .brand.w-nav-brand .brand-logo-active {
+    width: 144px !important;
+    height: auto !important;
     max-width: 100% !important;
   }
   .main-nav .main-dropdown-toggle,
   .main-nav .main-nav-dropdown-toggle {
     min-height: 54px !important;
     box-sizing: border-box !important;
-  }
-  /* Webflow gives this wrapper margin-left: -30px and position: sticky */
-  .main-nav .main-manu-btn.nh-cta-mobile {
-    position: static !important;
-    margin: 4px 0 0 !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  .main-nav .main-manu-btn.nh-cta-mobile .button-primary {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    min-height: 50px !important;
-    justify-content: center !important;
   }
 
   /* ── Stacked feature cards (home, companies): plain flow, no sticky overlap ── */
@@ -5356,30 +5550,19 @@ html {
     line-height: 24px !important;
     margin-bottom: 0 !important;
   }
-  #home-s1 > div > div:nth-of-type(2) {
+  #home-s1 .nh-hero-points {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 6px !important;
     margin: 14px auto 18px !important;
   }
-  #home-s1 > div > div:nth-of-type(2) > span {
+  #home-s1 .nh-hero-points > span {
     font-size: 14px !important;
     line-height: 20px !important;
     text-align: left !important;
   }
-  #home-s1 > div > div:nth-of-type(3) {
+  #home-s1 .nh-hero-chat {
     margin-bottom: 0 !important;
-  }
-  #home-s1 textarea {
-    padding-right: 0 !important;
-    min-height: 52px !important;
-    line-height: 1.4 !important;
-  }
-  #home-s1 button[aria-label='Send message'] {
-    width: 44px !important;
-    height: 44px !important;
-    bottom: 10px !important;
-    right: 10px !important;
   }
 
   /* Mission: copy wraps naturally rather than on the desktop line breaks */
@@ -5626,7 +5809,7 @@ html {
    when the font arrives. Reserving three lines stops the page jumping (CLS). */
 @media (max-width: 480px) {
   #home-s1 .nh-hero-headline {
-    min-height: calc(3 * 1.2 * clamp(27px, 7.8vw, 34px));
+    min-height: calc(2 * 1.2 * clamp(27px, 7.8vw, 34px));
   }
 }
 @media (min-width: 768px) {
@@ -5652,7 +5835,8 @@ html {
 .nh-magic-word::before {
   content: attr(data-word);
   position: absolute;
-  opacity: 0.15;
+  /* 0.15 was near-invisible on white (well under 3:1); 0.28 still reads as "not yet lit" */
+  opacity: 0.28;
   user-select: none;
   pointer-events: none;
 }
@@ -5750,4 +5934,364 @@ html {
   src: local('Georgia');
   font-weight: 400 700;
   size-adjust: 107.8%;
+}
+
+/* ── Hero chat: a one-row pill, like Emergent's "Continue with…" buttons ── */
+.nh-ask {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  width: 100%;
+  min-height: 56px;
+  padding: 6px 6px 6px 22px;
+  box-sizing: border-box;
+  border-radius: 28px;
+  background: #edf5f1;
+  transition: box-shadow 0.15s ease, background 0.15s ease;
+}
+.nh-ask:focus-within {
+  background: #ffffff;
+  box-shadow: 0 0 0 1.5px #5fa89e;
+}
+#home-s1 .nh-ask__input {
+  flex: 1;
+  min-width: 0;
+  align-self: center;
+  max-height: 120px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: 16px;
+  line-height: 24px;
+  color: #132128;
+  overflow-y: auto;
+}
+#home-s1 .nh-ask__input::placeholder {
+  color: #4b5563;
+}
+.nh-ask__send {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #132128;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+.nh-ask__send:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.nh-ask__send:not(:disabled):hover {
+  background: #2e7d4f;
+}
+/* Phones: the hero is mint, so the pill is white */
+@media (max-width: 767px) {
+  .nh-ask {
+    background: #ffffff;
+  }
+}
+
+/* Hero chat on screen: hide the Intercom launcher on phones. Two chat buttons at once
+   make people wonder which one to use, and the launcher covered page copy. */
+@media (max-width: 767px) {
+  html.nh-hero-chat-visible .intercom-lightweight-app-launcher,
+  html.nh-hero-chat-visible .intercom-launcher-frame {
+    display: none !important;
+  }
+}
+
+/* Narrow phones (iPhone SE, 320px): logo, CTA and hamburger need a little breathing room */
+@media (max-width: 360px) {
+  .main-nav .brand.w-nav-brand .brand-logo,
+  .main-nav .brand.w-nav-brand .brand-logo-active {
+    width: 118px !important;
+  }
+  .main-nav .nh-cta-header-mobile .button-primary {
+    padding: 0 12px !important;
+    font-size: 13px !important;
+  }
+}
+
+
+/* ── Hero sign-up buttons (phones + tablets) ─────────────────────
+   Desktop has Log in + Start free in the header, so these only show ≤991px, where the
+   bar is just [Logo … ☰]. The chips make way for them: one clear action, then the chat. */
+.nh-hero-actions {
+  display: none;
+}
+@media (max-width: 991px) {
+  #home-s1 .nh-hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 440px;
+    margin: 4px auto 0;
+  }
+  #home-s1 .nh-hero-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 54px;
+    border: 0;
+    border-radius: 9999px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    text-decoration: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.12s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  #home-s1 .nh-hero-btn:active {
+    transform: scale(0.98);
+  }
+  #home-s1 .nh-hero-btn--primary {
+    background: #132128;
+    color: #ffffff;
+    box-shadow: 0 10px 24px -10px rgba(19, 33, 40, 0.55);
+  }
+  #home-s1 .nh-hero-or {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0 4px;
+    font-size: 13px;
+    color: #4b5563;
+    white-space: nowrap;
+  }
+  #home-s1 .nh-hero-or::before,
+  #home-s1 .nh-hero-or::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed rgba(26, 51, 56, 0.22);
+  }
+  #home-s1 .nh-hero-chat {
+    margin-top: 10px;
+  }
+}
+
+/* ── Get started bottom sheet (phone hero) ───────────────────────
+   Rendered into <body>, above the header (1000) and the Intercom launcher. */
+.nh-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483001;
+}
+.nh-sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 51, 56, 0.45);
+  animation: nhSheetFade 0.22s ease-out both;
+}
+.nh-sheet__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 20px calc(20px + env(safe-area-inset-bottom));
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -12px 40px rgba(26, 51, 56, 0.18);
+  animation: nhSheetUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.nh-sheet.is-closing .nh-sheet__backdrop {
+  animation: nhSheetFade 0.2s ease-in reverse both;
+}
+.nh-sheet.is-closing .nh-sheet__panel {
+  animation: nhSheetDown 0.2s ease-in both;
+}
+.nh-sheet__handle {
+  align-self: center;
+  width: 40px;
+  height: 4px;
+  margin-bottom: 8px;
+  border-radius: 9999px;
+  background: #c8dfd6;
+}
+.nh-sheet__title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #1a3338;
+}
+.nh-sheet__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  border-radius: 9999px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.12s ease;
+}
+.nh-sheet__btn:active {
+  transform: scale(0.98);
+}
+.nh-sheet__btn--primary {
+  background: #132128;
+  color: #ffffff;
+}
+.nh-sheet__btn--secondary {
+  background: #ffffff;
+  color: #1a3338;
+  border: 1.5px solid #c8dfd6;
+}
+html.nh-sheet-open .intercom-lightweight-app-launcher,
+html.nh-sheet-open .intercom-launcher-frame {
+  display: none !important;
+}
+@keyframes nhSheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: none; }
+}
+@keyframes nhSheetDown {
+  from { transform: none; }
+  to   { transform: translateY(100%); }
+}
+@keyframes nhSheetFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nh-sheet__backdrop,
+  .nh-sheet__panel {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ── Home hero fills the first screen on every device ───────────
+   svh = the screen with the phone's address bar showing, so the hero ends exactly at
+   the bottom edge on first load (vh is the fallback for older browsers). min-height, so
+   on short screens (iPhone SE, landscape phones) it just grows with its content.
+   The content sits in the middle of the space below the fixed header. */
+#home-s1 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+#home-s1 > div {
+  flex: 1 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+/* Desktop and tablet: the spacing above and below follows the screen's height, so short
+   laptop screens (1280×720, 1366×768) still show the whole hero, chips included */
+@media (min-width: 768px) {
+  #home-s1 > div {
+    padding-top: clamp(84px, 13vh, 140px) !important;
+    padding-bottom: clamp(32px, 7vh, 100px) !important;
+  }
+  #home-s1 .nh-hero-chat {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* ── Home hero: the content grows with the screen's height ──────
+   Without this, a tall screen leaves the same small block floating in empty space.
+   On phones the gaps grow only with the height ABOVE 640px (E = 100svh - 640px), so short
+   phones keep the compact spacing and taller ones fill out. Each value is capped. */
+@media (max-width: 767px) {
+  /* The headline size is set by the width (first line stays on one line), so the extra
+     height goes to the gaps and the body copy */
+  #home-s1 .nh-hero-headline {
+    margin-bottom: clamp(14px, calc(14px + (100svh - 640px) * 0.1), 52px) !important;
+  }
+  #home-s1 > div > p {
+    font-size: clamp(16px, calc(16px + (100svh - 640px) * 0.01), 18px) !important;
+    line-height: 1.5 !important;
+  }
+  #home-s1 .nh-hero-points {
+    gap: clamp(6px, calc(6px + (100svh - 640px) * 0.025), 13px) !important;
+    margin: clamp(14px, calc(14px + (100svh - 640px) * 0.08), 36px) auto
+            clamp(18px, calc(18px + (100svh - 640px) * 0.14), 64px) !important;
+  }
+  #home-s1 .nh-hero-points > span {
+    font-size: clamp(14px, calc(14px + (100svh - 640px) * 0.008), 16px) !important;
+  }
+  #home-s1 .nh-hero-btn {
+    min-height: clamp(52px, calc(52px + (100svh - 640px) * 0.03), 60px);
+  }
+  #home-s1 .nh-hero-or {
+    margin: clamp(14px, calc(14px + (100svh - 640px) * 0.11), 52px) 0
+            clamp(4px, calc(4px + (100svh - 640px) * 0.04), 16px);
+  }
+  #home-s1 .nh-ask {
+    min-height: clamp(56px, calc(56px + (100svh - 640px) * 0.02), 60px);
+  }
+}
+@media (min-width: 768px) {
+  #home-s1 > div {
+    max-width: 1440px !important;
+  }
+  /* The headline grows with the height, but never wider than the screen: its longer line
+     is ~12.3 em wide and stays on one line, so the width caps it at (100vw - 64px) / 12.6 */
+  #home-s1 .nh-hero-line {
+    font-size: clamp(36px, min(calc((100vw - 64px) / 12.6), 9vh), 112px) !important;
+  }
+  #home-s1 .nh-hero-headline {
+    margin-bottom: clamp(20px, 4.5vh, 60px) !important;
+  }
+  #home-s1 > div > p {
+    font-size: clamp(17px, 2vh, 22px) !important;
+    line-height: 1.5 !important;
+    max-width: clamp(560px, 64vh, 780px) !important;
+  }
+  #home-s1 .nh-hero-points {
+    margin-top: clamp(16px, 3vh, 40px) !important;
+    margin-bottom: clamp(28px, 6.5vh, 88px) !important;
+  }
+  #home-s1 .nh-hero-points > span {
+    font-size: clamp(15px, 1.7vh, 19px) !important;
+  }
+  #home-s1 .nh-hero-chat > div {
+    max-width: clamp(620px, 70vh, 880px) !important;
+  }
+  #home-s1 .nh-ask {
+    min-height: clamp(56px, 6.2vh, 70px);
+    padding-left: clamp(22px, 2.2vh, 30px);
+  }
+  #home-s1 .nh-ask__input {
+    font-size: clamp(16px, 1.8vh, 19px);
+  }
+  #home-s1 .nh-ask__send {
+    width: clamp(44px, 5vh, 58px);
+    height: clamp(44px, 5vh, 58px);
+  }
+}
+
+/* Hero eyebrow: who it is for, as plain text above the headline */
+#home-s1 .nh-hero-eyebrow {
+  max-width: 100%;
+  margin-bottom: clamp(10px, 2vh, 20px);
+  color: #2e7d4f;
+  font-size: clamp(14px, 1.7vh, 17px);
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  line-height: 1.4;
+}
+@media (max-width: 767px) {
+  #home-s1 .nh-hero-eyebrow {
+    margin-bottom: clamp(8px, calc(8px + (100svh - 640px) * 0.04), 18px);
+  }
 }

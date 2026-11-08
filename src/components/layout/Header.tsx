@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   toggleMobileMenu,
@@ -10,6 +10,18 @@ import {
   setScrolled,
   closeMobileMenu,
 } from '@/store/slices/navSlice'
+
+const APP_URL = 'https://app.nexthireconsulting.com'
+/* The app has no login route of its own: its home page carries the Log in button and
+   sends anyone already signed in straight to their dashboard. */
+const LOGIN_URL = APP_URL
+
+/* Cal.com popup, wired site-wide by CalInit */
+const CAL_ATTRS = {
+  'data-cal-namespace': '30min',
+  'data-cal-link': 'hemant-nexthire/30min',
+  'data-cal-config': '{"layout":"month_view"}',
+} as const
 
 /* Shown in the phone menu only: the desktop reaches these through the footer */
 const MOBILE_EXTRA_ITEMS = [
@@ -162,7 +174,7 @@ const MEGA_MENU_CONFIG: Record<MegaMenuVariant, MegaMenuConfig> = {
     promoSub: 'One workspace for outreach, applications, and interview prep — fully tracked.',
     promoActions: [
       {
-        label: 'Try for free',
+        label: 'Start free',
         href: 'https://app.nexthireconsulting.com',
         external: true,
         variant: 'primary',
@@ -314,8 +326,41 @@ export default function Header() {
   const dispatch = useAppDispatch()
   const { isOpen, activeDropdown, isScrolled } = useAppSelector((s) => s.nav)
   const headerRef = useRef<HTMLDivElement>(null)
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname() ?? '/'
+  // Phone menu drill-down: Candidates / Companies open their feature list in place
+  const [mobileSub, setMobileSub] = useState<'candidates' | 'companies' | null>(null)
+  // Recruiters on the companies pages get the demo, not the candidate free plan
+  const forCompanies = pathname.startsWith('/companies')
+
+  const isCurrent = (href: string) => {
+    const path = href.replace(/\/$/, '')
+    return path === '' ? pathname === '/' : pathname === path || pathname.startsWith(`${path}/`)
+  }
+
+  // Phone bar CTA: hidden while the page's own hero buttons are on screen, so the bar
+  // stays [Logo … ☰]. It slides in once those buttons scroll away (or, on pages with no
+  // marked hero CTA, after the first scroll), so the main action is never out of reach.
+  const [barCta, setBarCta] = useState(false)
+  useEffect(() => {
+    setBarCta(false)
+    const heroCta = document.querySelector('[data-hero-cta]')
+    if (heroCta && typeof IntersectionObserver !== 'undefined') {
+      const io = new IntersectionObserver(([entry]) => {
+        setBarCta(!entry.isIntersecting && entry.boundingClientRect.bottom < 0)
+      })
+      io.observe(heroCta)
+      return () => io.disconnect()
+    }
+    const onScroll = () => setBarCta(window.scrollY > 320)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [pathname])
+
+  // Every reopen starts at the top level
+  useEffect(() => {
+    if (!isOpen) setMobileSub(null)
+  }, [isOpen])
 
   // Close mobile menu and dropdown whenever route changes
   useEffect(() => {
@@ -409,17 +454,7 @@ export default function Header() {
         >
           <div className="main-nav-container w-container">
             <div className="main-nav-container-wrapper">
-              {/* Hamburger — FIRST in DOM so mobile layout [≡ | Logo | CTA] needs no CSS order tricks */}
-              <button
-                type="button"
-                className={`main-nav-menu-btn w-nav-button${isOpen ? ' w--open' : ''}`}
-                aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={isOpen}
-                aria-controls="nh-primary-nav"
-                onClick={() => dispatch(toggleMobileMenu())}
-              >
-                <span className="main-nav-menu-toggle-animated icon-4 w-icon-nav-menu" />
-              </button>
+              {/* Phone bar: [Logo ……… Start free ☰]. Desktop: [Logo | nav | Log in, Start free] */}
 
               {/* Logo */}
               <Link href="/" className="brand w-nav-brand" onClick={() => dispatch(closeMobileMenu())}>
@@ -437,15 +472,30 @@ export default function Header() {
                 />
               </Link>
 
-              {/* Mobile CTA — THIRD in DOM so it appears right of logo on mobile */}
-              <div className="nh-cta-header-mobile">
-                <Link href="https://app.nexthireconsulting.com" target="_blank" rel="noopener noreferrer" className="button-primary w-button main-nav-cta-try">
-                  Try for free
-                </Link>
+              {/* Phone bar CTA — appears once the hero buttons scroll away; hidden while the
+                  menu is open, where the same action sits at the bottom */}
+              <div className={`nh-cta-header-mobile${barCta ? ' is-on' : ''}`}>
+                <PrimaryCta forCompanies={forCompanies} className="button-primary w-button main-nav-cta-try" />
               </div>
 
-              {/* Desktop nav — hidden on mobile via CSS */}
-              <nav id="nh-primary-nav" className="nav-menu w-nav-menu" role="navigation">
+              {/* Hamburger — right edge on phones, within thumb reach */}
+              <button
+                type="button"
+                className={`main-nav-menu-btn w-nav-button${isOpen ? ' w--open' : ''}`}
+                aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={isOpen}
+                aria-controls="nh-primary-nav"
+                onClick={() => dispatch(toggleMobileMenu())}
+              >
+                <span className="main-nav-menu-toggle-animated icon-4 w-icon-nav-menu" />
+              </button>
+
+              {/* Desktop nav; on phones the same element is the full-screen menu */}
+              <nav
+                id="nh-primary-nav"
+                className={`nav-menu w-nav-menu${mobileSub ? ' nh-mnav--sub-open' : ''}`}
+                role="navigation"
+              >
                 <div className="main-nav-vertical-line" />
 
                 <div className="header-navigation-html-embed w-embed" />
@@ -464,10 +514,9 @@ export default function Header() {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          // On mobile: navigate directly to the section page
-                          if (typeof window !== 'undefined' && window.innerWidth <= 991 && item.href) {
-                            dispatch(closeMobileMenu())
-                            router.push(item.href)
+                          // Phone: open this section's features inside the menu
+                          if (typeof window !== 'undefined' && window.innerWidth <= 991) {
+                            setMobileSub(item.key === 'for-clients' ? 'companies' : 'candidates')
                             return
                           }
                           dispatch(
@@ -496,11 +545,12 @@ export default function Header() {
                     // so client-side navigation would fetch a Next payload that does not exist.
                     <div
                       key={item.key}
-                      className="main-nav-menu-dropdown w-dropdown"
+                      className="main-nav-menu-dropdown w-dropdown nh-mnav-link"
                     >
                       <a
                         href={item.href}
                         className="main-nav-dropdown-toggle w-dropdown-toggle"
+                        aria-current={isCurrent(item.href) ? 'page' : undefined}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', textDecoration: 'none' }}
                       >
                         <span className="main-nav-menu-dropdown-text">{item.label}</span>
@@ -509,11 +559,12 @@ export default function Header() {
                   ) : (
                     <div
                       key={item.key}
-                      className="main-nav-menu-dropdown w-dropdown"
+                      className="main-nav-menu-dropdown w-dropdown nh-mnav-link"
                     >
                       <Link
                         href={item.href}
                         className="main-nav-dropdown-toggle w-dropdown-toggle"
+                        aria-current={isCurrent(item.href) ? 'page' : undefined}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', textDecoration: 'none' }}
                         onClick={() => dispatch(closeMobileMenu())}
                       >
@@ -523,32 +574,63 @@ export default function Header() {
                   )
                 )}
 
-                {MOBILE_EXTRA_ITEMS.map((item) => (
-                  <div key={item.href} className="main-nav-menu-dropdown w-dropdown nh-nav-mobile-only">
+                {/* Secondary links — phone menu only, quieter than the main list */}
+                <div className="nh-nav-mobile-only nh-mnav-secondary">
+                  {MOBILE_EXTRA_ITEMS.map((item) => (
                     <Link
+                      key={item.href}
                       href={item.href}
-                      className="main-nav-dropdown-toggle w-dropdown-toggle"
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', textDecoration: 'none' }}
+                      aria-current={isCurrent(item.href) ? 'page' : undefined}
                       onClick={() => dispatch(closeMobileMenu())}
                     >
-                      <span className="main-nav-menu-dropdown-text">{item.label}</span>
+                      {item.label}
                     </Link>
-                  </div>
-                ))}
+                  ))}
+                </div>
 
-                {/* CTA button — mobile menu only (hidden on desktop via CSS) */}
-                <div className="main-manu-btn nh-cta-mobile">
-                  <Link href="https://app.nexthireconsulting.com" target="_blank" rel="noopener noreferrer" className="button-primary w-button main-nav-cta-try" onClick={() => dispatch(closeMobileMenu())}>
-                    Try for free
-                  </Link>
+                {/* Drill-down: Candidates / Companies features */}
+                {mobileSub && (
+                  <MobileSubMenu
+                    variant={mobileSub}
+                    onBack={() => setMobileSub(null)}
+                    onNavigate={() => dispatch(closeMobileMenu())}
+                  />
+                )}
+
+                {/* Phone menu actions — pinned to the bottom, where the thumb rests */}
+                <div className="nh-nav-mobile-only nh-mnav-actions">
+                  <PrimaryCta
+                    forCompanies={forCompanies}
+                    className="nh-mnav-btn nh-mnav-btn--primary"
+                    onClick={() => dispatch(closeMobileMenu())}
+                  />
+                  <a
+                    href={LOGIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="nh-mnav-btn nh-mnav-btn--secondary"
+                    onClick={() => dispatch(closeMobileMenu())}
+                  >
+                    Log in
+                  </a>
                 </div>
               </nav>
 
-              {/* CTA button — desktop only, lives outside <nav> so nav links can be centred */}
+              {/* Desktop actions — live outside <nav> so nav links can be centred */}
               <div className="nh-cta-desktop">
-                <Link href="https://app.nexthireconsulting.com" target="_blank" rel="noopener noreferrer" className="button-primary w-button main-nav-cta-try" onClick={() => dispatch(closeMobileMenu())}>
-                  Try for free
-                </Link>
+                <a
+                  href={LOGIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nh-nav-login"
+                >
+                  Log in
+                </a>
+                <PrimaryCta
+                  forCompanies={forCompanies}
+                  className="button-primary w-button main-nav-cta-try"
+                  onClick={() => dispatch(closeMobileMenu())}
+                />
               </div>
 
             </div>
@@ -556,6 +638,81 @@ export default function Header() {
         </div>
       </div>
     </>
+  )
+}
+
+/* The one main action: the free plan for candidates, a demo for recruiters */
+function PrimaryCta({
+  forCompanies,
+  className,
+  onClick,
+}: {
+  forCompanies: boolean
+  className: string
+  onClick?: () => void
+}) {
+  if (forCompanies) {
+    return (
+      <a
+        href="#"
+        className={className}
+        {...CAL_ATTRS}
+        onClick={(e) => {
+          e.preventDefault()
+          onClick?.()
+        }}
+      >
+        Book a demo
+      </a>
+    )
+  }
+  return (
+    <a href={APP_URL} target="_blank" rel="noopener noreferrer" className={className} onClick={onClick}>
+      Start free
+    </a>
+  )
+}
+
+/* Phone menu, second level: one section's features, with a way back */
+function MobileSubMenu({
+  variant,
+  onBack,
+  onNavigate,
+}: {
+  variant: 'candidates' | 'companies'
+  onBack: () => void
+  onNavigate: () => void
+}) {
+  const cfg = MEGA_MENU_CONFIG[variant]
+  const backRef = useRef<HTMLButtonElement>(null)
+
+  // Keyboard and screen-reader users land on the new level, not on a link that vanished
+  useEffect(() => {
+    backRef.current?.focus()
+  }, [])
+
+  return (
+    <div className="nh-mnav-sub" role="group" aria-label={cfg.introTitle}>
+      <button ref={backRef} type="button" className="nh-mnav-sub__back" onClick={onBack}>
+        <span aria-hidden>←</span> Back
+      </button>
+      <p className="nh-mnav-sub__title">{cfg.introTitle}</p>
+      <p className="nh-mnav-sub__desc">{cfg.introDesc}</p>
+      <ul className="nh-mnav-sub__list">
+        {cfg.features.map((f) => (
+          <li key={f.title}>
+            <Link href={f.href} className="nh-mnav-sub__item" onClick={onNavigate}>
+              <span className="nh-mnav-sub__item-title">{f.title}</span>
+              <span className="nh-mnav-sub__item-desc">{f.desc}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <Link href={cfg.overviewHref} className="nh-mnav-sub__overview" onClick={onNavigate}>
+        {variant === 'companies' ? 'See NextHire for Companies' : 'See all candidate tools'}{' '}
+        <span aria-hidden>→</span>
+      </Link>
+    </div>
   )
 }
 

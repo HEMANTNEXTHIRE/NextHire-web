@@ -445,7 +445,7 @@ export default function CompaniesPageClient() {
                     letterSpacing: '-0.2px',
                   }}
                 >
-                  Book a discovery call
+                  Book a demo
                 </a>
               </div>
             </Reveal>
