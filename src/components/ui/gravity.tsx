@@ -162,7 +162,6 @@ export const Gravity = forwardRef<GravityRef, GravityProps>(
 
         let body: Matter.Body
         const renderOpts = { fillStyle: debug ? '#888' : '#0000', strokeStyle: debug ? '#333' : '#0000', lineWidth: debug ? 2 : 0 }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const opts: any = { ...(bprops.matterBodyOptions ?? {}), angle: angleRad, render: renderOpts }
         if (bprops.bodyType === 'circle') {
           body = Bodies.circle(x, y, Math.max(w, h) / 2, opts)
@@ -232,7 +231,6 @@ export const Gravity = forwardRef<GravityRef, GravityProps>(
       if (canDrag) {
         const mouse = Mouse.create(render.current.canvas)
         // Remove wheel listeners added by matter-js so page scroll is not blocked
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mw = (mouse as any).mousewheel
         if (mw && render.current.canvas) {
           render.current.canvas.removeEventListener('wheel', mw)

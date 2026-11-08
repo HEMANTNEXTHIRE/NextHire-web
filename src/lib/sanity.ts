@@ -10,7 +10,6 @@ export const sanityClient = createClient({
 /* ── Types ───────────────────────────────────────────────────────── */
 
 // Minimal PortableText block type for the body field
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PortableTextBlock = Record<string, any>
 
 export interface SanityFaqItem {
