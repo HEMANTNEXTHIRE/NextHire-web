@@ -128,6 +128,14 @@ function handler(event) {
     if (newPath) return redirect301(newPath + qs);
   }
 
+  // Job pages (/jobs and /jobs/*, the job pages bucket) are canonical with a trailing slash.
+  // Without one the rewrite below served the same page at a second URL with a 200; send a
+  // 301 to the slash version instead. Files (sitemaps, the stylesheet) have a dot and pass.
+  if (uri === '/jobs' || (uri.indexOf('/jobs/') === 0 && uri.slice(-1) !== '/' &&
+      uri.slice(uri.lastIndexOf('/') + 1).indexOf('.') === -1)) {
+    return redirect301(uri + '/' + qs);
+  }
+
   // Directory rewrite — make the S3 origin happy.
   // `/blog/foo/`  → `/blog/foo/index.html`
   // `/blog/foo`   → `/blog/foo/index.html`
