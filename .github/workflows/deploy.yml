@@ -65,34 +65,35 @@ jobs:
 
       - name: Sync to S3
         run: |
+          # This bucket is shared with the app: candidate résumés (user/), portal imports (portal-imports/),
+          # Auto Apply résumés and cover letters (auto-apply/), the PAN vault (pan-vault/), desktop builds (apps/)
+          # and fixer traces (fixer-traces/). A deny list kept missing new app folders: on 19 Nov 2026 one deploy
+          # deleted 3,647 auto-apply/ files and a pan-vault/ entry (restored from versions). So --delete may only
+          # touch the top-level folders and files this build produces; anything else in the bucket is never
+          # uploaded or deleted. Filters are applied in order and the last match wins, so the app folders are
+          # excluded again at the very end. The real fix is a bucket of the site's own.
+          ASSETS=( --exclude "*" )
+          PAGES=( --exclude "*" )
+          for e in out/*; do
+            n=$(basename "$e")
+            if [ -d "$e" ]; then
+              ASSETS+=( --include "$n/*" )
+              for x in html json xml txt; do PAGES+=( --include "$n/*.$x" ); done
+            else
+              ASSETS+=( --include "$n" )
+              case "$n" in *.html|*.json|*.xml|*.txt) PAGES+=( --include "$n" ) ;; esac
+            fi
+          done
+          APP=( --exclude "user/*" --exclude "portal-imports/*" --exclude "auto-apply/*" --exclude "pan-vault/*"
+                --exclude "apps/*" --exclude "fixer-traces/*" )
           # Pass 1: assets (CSS/JS/images/fonts) with long cache; --delete cleans up removed assets
-          # NEVER let --delete touch the private prefixes: this bucket also holds
-          # candidate résumés (user/*) and portal imports (portal-imports/*),
-          # written by the backend. Without these excludes every deploy deleted
-          # every résumé uploaded since the previous one (298 delete markers by
-          # 2026-09-19, 159 of them in one minute on 26 Aug). Excludes apply to
-          # the destination side of sync, so these keys are neither uploaded nor
-          # deleted. The real fix is a bucket of the site's own.
-          aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }}/ \
-            --delete \
-            --exclude "user/*" \
-            --exclude "portal-imports/*" \
+          aws s3 sync out/ "s3://${{ secrets.AWS_S3_BUCKET }}/" --delete \
             --cache-control "public,max-age=31536000,immutable" \
-            --exclude "*.html" \
-            --exclude "*.json" \
-            --exclude "*.xml" \
-            --exclude "*.txt"
+            "${ASSETS[@]}" --exclude "*.html" --exclude "*.json" --exclude "*.xml" --exclude "*.txt" "${APP[@]}"
           # Pass 2: HTML/JSON/sitemap/robots with short cache; --delete cleans up removed routes
-          aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }}/ \
-            --delete \
-            --exclude "user/*" \
-            --exclude "portal-imports/*" \
+          aws s3 sync out/ "s3://${{ secrets.AWS_S3_BUCKET }}/" --delete \
             --cache-control "public,max-age=0,must-revalidate" \
-            --exclude "*" \
-            --include "*.html" \
-            --include "*.json" \
-            --include "*.xml" \
-            --include "*.txt"
+            "${PAGES[@]}" "${APP[@]}"
 
       - name: Invalidate CloudFront
         run: |
