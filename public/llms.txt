@@ -1,6 +1,6 @@
 # NextHire
 
-NextHire is an AI-powered career growth and job placement platform headquartered in Faridabad, Haryana, India. It helps job seekers get hired faster through automated AI job applications, ATS-optimized resume building, direct recruiter outreach from the candidate's own Gmail, real-time AI interview coaching, and expert career advisory. For companies and recruiters, NextHire offers an AI sourcing and recruiting platform with candidate pipeline management, AI phone screening, and SMS/email outreach automation.
+NextHire is an AI-powered career growth and job placement platform headquartered in Wilmington, Delaware, US. It helps job seekers get hired faster through automated AI job applications, ATS-optimized resume building, direct recruiter outreach from the candidate's own Gmail, real-time AI interview coaching, and expert career advisory. For companies and recruiters, NextHire offers an AI sourcing and recruiting platform with candidate pipeline management, AI phone screening, and SMS/email outreach automation.
 
 > TL;DR: NextHire is an autonomous AI career agent for job seekers. The agent finds matching roles, applies on the candidate's behalf in minutes (not days), runs personalised hiring-manager outreach from the candidate's Gmail, and coaches them through interviews in real time. Used by 200K+ candidates globally.
 

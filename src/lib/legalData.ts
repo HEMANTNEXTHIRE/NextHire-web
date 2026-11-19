@@ -116,7 +116,7 @@ export const legalPages: LegalPage[] = [
 
       <h2>7. Contact Us</h2>
       <p>If you have questions about this Privacy Policy, please contact us at:</p>
-      <p>NextHire Consulting<br />Email: privacy@nexthireconsulting.com<br />Address: Bengaluru, Karnataka, India</p>
+      <p>NextHire Consulting<br />Email: privacy@nexthireconsulting.com<br />Address: 2810 N Church St, STE 89560, Wilmington, DE 19802, US</p>
     `,
   },
   {
@@ -340,7 +340,7 @@ export const legalPages: LegalPage[] = [
       <h2>11. Contact Us</h2>
       <p>If you have questions about this Privacy Policy or your data, contact us at:<br />
       <a href="mailto:support@nexthireconsulting.com">support@nexthireconsulting.com</a></p>
-      <p>NextHire Consulting<br />Bengaluru, Karnataka, India</p>
+      <p>NextHire Consulting<br />2810 N Church St, STE 89560, Wilmington, DE 19802, US</p>
     `,
   },
   {

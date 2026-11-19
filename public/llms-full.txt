@@ -9,7 +9,7 @@ Source: https://www.nexthireconsulting.com
 
 NextHire is an AI-powered career growth and job placement platform. It combines artificial intelligence with human expert guidance to help job seekers get hired faster and help companies hire smarter.
 
-Founded in 2021, NextHire has helped over 200,000 professionals across 50+ countries and 1,000+ companies advance their careers. The platform is headquartered in Faridabad, Haryana, India.
+Founded in 2021, NextHire has helped over 200,000 professionals across 50+ countries and 1,000+ companies advance their careers. The platform is headquartered in Wilmington, Delaware, US.
 
 Core belief: Everyone deserves access to the tools, connections, and expert guidance needed to land the job they truly want.
 
@@ -116,7 +116,7 @@ Traditional job search problems NextHire solves:
 Website: https://www.nexthireconsulting.com
 Platform: https://app.nexthireconsulting.com
 Email: support@nexthireconsulting.com
-Address: Faridabad, Haryana, India
+Address: 2810 N Church St, STE 89560, Wilmington, DE 19802, US
 Founded: 2021
 
 ### Company Milestones

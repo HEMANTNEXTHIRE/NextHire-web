@@ -103,9 +103,11 @@ const organizationSchema = {
     'AI-powered career growth and job placement platform helping candidates get hired faster through automated applications, ATS-optimized resumes, direct recruiter outreach, and real-time interview coaching.',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Faridabad',
-    addressRegion: 'Haryana',
-    addressCountry: 'IN',
+    streetAddress: '2810 N Church St, STE 89560',
+    addressLocality: 'Wilmington',
+    addressRegion: 'DE',
+    postalCode: '19802',
+    addressCountry: 'US',
   },
   sameAs: SOCIAL_PROFILES,
 }

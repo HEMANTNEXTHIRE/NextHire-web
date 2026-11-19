@@ -64,7 +64,7 @@ const CONTACT_ROWS: {
   external?: boolean
   icon: ReactNode
 }[] = [
-  { title: 'Visit us', detail: 'Bengaluru, Karnataka, India', icon: <IconMap /> },
+  { title: 'Visit us', detail: '2810 N Church St, STE 89560, Wilmington, DE 19802, US', icon: <IconMap /> },
   {
     title: 'Email',
     detail: 'info@nexthireconsulting.com',
