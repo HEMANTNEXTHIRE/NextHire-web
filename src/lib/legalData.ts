@@ -259,30 +259,32 @@ export const legalPages: LegalPage[] = [
   {
     slug: 'extension-privacy-policy',
     title: 'Extension Privacy Policy',
-    subtitle: 'How the NextHire Profile Optimizer Chrome extension collects and uses your data',
-    lastUpdated: 'October 19, 2026',
+    subtitle: 'How the NextHire: Auto Apply and Profile Optimizer Chrome extension collects and uses your data',
+    lastUpdated: 'November 22, 2026',
     content: `
       <div class="nh-legal-summary">
-        <strong>Summary:</strong> The NextHire Profile Optimizer extension scrapes your public profile data from Naukri.com and LinkedIn only when you are on those pages. This data is sent solely to your NextHire account for AI-powered optimization. When you choose 'Finish in your browser' for a job application, it also fills that job's application form with your NextHire profile, in a tab of your own Chrome, on the job sites listed below only. We do not sell, share, or use your data for any other purpose.
+        <strong>Summary:</strong> The NextHire: Auto Apply and Profile Optimizer extension scrapes your public profile data from Naukri.com and LinkedIn only when you are on those pages. This data is sent solely to your NextHire account for AI-powered optimization. When you choose "Finish in your browser" for a job application, it also fills that job's application form with your NextHire profile, in a tab of your own Chrome, on the job sites listed below only. When you start applying on a job board from NextHire, it opens the jobs you chose on that board, in a tab of your own Chrome, and applies to them there. When you press Apply on a LinkedIn Easy Apply or Naukri job in NextHire, it opens that job in a background tab of your own Chrome, fills the application from your NextHire profile and, if you chose to let it, submits it for you. We do not sell, share, or use your data for any other purpose.
       </div>
 
       <h2>1. Who We Are</h2>
-      <p>NextHire Profile Optimizer ("the Extension") is developed and operated by NextHire Consulting. Our web application is available at <a href="https://app.nexthireconsulting.com">https://app.nexthireconsulting.com</a>.</p>
+      <p>NextHire: Auto Apply and Profile Optimizer ("the Extension") is developed and operated by NextHire Consulting. Our web application is available at <a href="https://app.nexthireconsulting.com">app.nexthireconsulting.com</a>.</p>
 
       <h2>2. What Data We Collect</h2>
       <p>The Extension collects the following data from your browser, only when you are actively on the specified pages:</p>
       <ul>
-        <li><strong>Naukri.com profile data:</strong> Name, headline, current designation, company, location, work experience, education, skills, certifications, and projects, scraped from your Naukri profile page (naukri.com/mnjuser/profile).</li>
-        <li><strong>LinkedIn profile data:</strong> Name, headline, location, about section, experience, education, skills, certifications, recommendations, and languages, scraped from your LinkedIn public profile page (linkedin.com/in/).</li>
+        <li><strong>Naukri.com profile data:</strong> Name, headline, current designation, company, location, work experience, education, skills, certifications, and projects — scraped from your Naukri profile page (<code>naukri.com/mnjuser/profile</code>).</li>
+        <li><strong>LinkedIn profile data:</strong> Name, headline, location, about section, experience, education, skills, certifications, recommendations, and languages — scraped from your LinkedIn public profile page (<code>linkedin.com/in/</code>).</li>
         <li><strong>Authentication token:</strong> A temporary session token from your NextHire account to securely sync data.</li>
-        <li><strong>Job application forms you finish in your browser:</strong> only after you press 'Finish in your browser' on a NextHire application, and only on the job sites listed in section 7. The Extension reads the questions on that application form and, to report what it filled, the answers it typed into it.</li>
+        <li><strong>Job application forms you finish in your browser:</strong> only after you press "Finish in your browser" on a NextHire application, and only on the job sites listed in section 7. The Extension reads the questions on that application form and, to report what it filled, the answers it typed into it.</li>
+        <li><strong>Job board pages of the jobs you chose:</strong> only after you start applying on a job board in NextHire, and only on a job board you allowed (section 7). On each job's page the Extension reads whether you are signed in to the site, whether the job can still be applied to or you have already applied, whether the site asks you to finish your profile or shows a check, the employer's own link when the site shows one, and the site's screening questions and messages after it presses Apply. Section 4 says what of this it sends.</li>
+        <li><strong>LinkedIn Easy Apply and Naukri application pages:</strong> only after you press Apply on that job in NextHire. On that job's page the Extension reads the application's questions, whether the job is still open or you have already applied, whether you are signed in or the site shows a check, the employer's own link when the job applies on the employer's site, and the site's confirmation or error message. Section 4 says what of this it sends.</li>
       </ul>
-      <p><strong>We do not collect:</strong></p>
+      <p>We do <strong>not</strong> collect:</p>
       <ul>
         <li>Browsing history or activity on other websites</li>
         <li>Personally identifiable information beyond what is on your profile pages</li>
         <li>Cookies, passwords, or financial information</li>
-        <li>Data from any website other than Naukri.com, LinkedIn, app.nexthireconsulting.com, and the job sites in section 7 (there, only the application form you asked it to fill)</li>
+        <li>Data from any website other than Naukri.com, LinkedIn, app.nexthireconsulting.com, and the job sites in section 7 (there, only the application form you asked it to fill, and on a job board you allowed, the pages of the jobs you chose to apply to)</li>
       </ul>
 
       <h2>3. How We Use Your Data</h2>
@@ -290,20 +292,24 @@ export const legalPages: LegalPage[] = [
       <ul>
         <li>Sync your profile information to your NextHire account</li>
         <li>Provide AI-powered suggestions to optimize your profile for better job opportunities</li>
-        <li>Fill a job application form you opened from NextHire with 'Finish in your browser'</li>
+        <li>Fill a job application form you opened from NextHire with "Finish in your browser"</li>
+        <li>Apply, in your own browser, to the jobs you chose on a job board you allowed, after you start it in NextHire</li>
+        <li>Apply, in your own browser, to a LinkedIn Easy Apply or Naukri job you pressed Apply on in NextHire</li>
       </ul>
       <p>We do not use your data for advertising, analytics, marketing, or any purpose other than providing the NextHire service to you.</p>
 
       <h2>4. Data Storage and Transmission</h2>
       <ul>
-        <li><strong>Local storage:</strong> Scraped profile data and your authentication token are temporarily stored in Chrome's local extension storage (chrome.storage.local) on your device.</li>
-        <li><strong>Data transmission:</strong> Profile data is transmitted over HTTPS to the NextHire API at app.nexthireconsulting.com only when you explicitly click "Sync to NextHire".</li>
-        <li><strong>Filling an application in your browser:</strong> the Extension gets your NextHire profile, saved answers and résumé from the NextHire API, and puts them into that job's application form only. It sends the form's questions to NextHire to choose answers, and reports to NextHire what it filled and whether you said you submitted. Your profile data goes to two places only: the job's application page, and NextHire. The Extension never presses Submit and never completes a security check for you: you check the form and submit it yourself. While a fill is running, a small record of it (the application and the page) is kept in Chrome's session storage (chrome.storage.session), which Chrome clears when the browser closes.</li>
-        <li><strong>Server storage:</strong> Once synced, your profile data is stored securely in your NextHire account. Refer to the <a href="/terms-of-service">NextHire Terms of Service</a> for server-side data handling.</li>
+        <li><strong>Local storage:</strong> Scraped profile data and your authentication token are temporarily stored in Chrome's local extension storage (<code>chrome.storage.local</code>) on your device.</li>
+        <li><strong>Data transmission:</strong> Profile data is transmitted over HTTPS to the NextHire API at <code>app.nexthireconsulting.com</code> only when you explicitly click "Sync to NextHire".</li>
+        <li><strong>Filling an application in your browser:</strong> the Extension gets your NextHire profile, saved answers and résumé from the NextHire API, and puts them into that job's application form only. It sends the form's questions to NextHire to choose answers, and reports to NextHire what it filled and whether you said you submitted. Your profile data goes to two places only: the job's application page, and NextHire. On these employer sites the Extension never presses Submit and never completes a security check for you: you check the form and submit it yourself. (LinkedIn Easy Apply and Naukri work differently; see the next item.) While a fill is running, a small record of it (the application and the page) is kept in Chrome's session storage (<code>chrome.storage.session</code>), which Chrome clears when the browser closes.</li>
+        <li><strong>Applying on a job board from your browser:</strong> only after you choose jobs and start applying in NextHire, and only on a job board you allowed (section 7). The Extension opens each job you chose in one tab, about a minute apart, and presses that site's own Apply button for you. When the site asks screening questions, it sends the questions to NextHire to choose answers from your profile and puts the answers in, then presses the site's own Submit Application button. From the site it sends NextHire only these: the screening questions and the answers it gave (for an answer the site filled in from your profile there, only the question, never the answer), whether each application was sent, the employer's own link when the site sends an application on to the employer's site, the site's error message, with email addresses and numbers of four or more digits hidden, and, when it stops for you, why: you are signed out of the site, the site asks you to finish your profile there, it shows a check, its page changed, or NextHire lost its permission to open it. It never signs in for you, never reads, stores or sends your password or the site's cookies, and stops and tells you when the site shows a sign-in, a check or anything it does not expect.</li>
+        <li><strong>Applying on LinkedIn Easy Apply and Naukri from your browser:</strong> only after you press Apply on that job in NextHire. The Extension opens the job in a background tab of your own Chrome, gets your NextHire profile, saved answers and résumé from the NextHire API, and fills each page of the application. It sends the application's questions to NextHire to choose answers from your profile. NextHire asks you once whether the Extension may submit for you. If you said yes, it presses the site's own Submit or Apply button, at most 15 applications a day on LinkedIn and 30 a day on Naukri, with pauses between steps and between applications. If you said no, or the day's limit is reached, it fills the application and leaves the final press to you. On Naukri it blocks the site's apply request unless it means to send, so a stray click never sends an application with empty answers. It sends NextHire only these: the questions and the answers it gave, whether the application was sent and the site's confirmation, the employer's own link when the job applies on the employer's site, and, when it stops, why: you are signed out, the site shows a check, the job is closed or already applied to, or the site's daily limit is reached. It never signs in for you, never reads, stores or sends your password or the site's cookies, never opens your feed, messages, network or anyone's profile, and closes the tab when it is done. The site's own terms apply to your account there, and automated use can lead a site to limit an account.</li>
+        <li><strong>Server storage:</strong> Once synced, your profile data is stored securely in your NextHire account. Refer to the <a href="https://app.nexthireconsulting.com/terms">NextHire Terms of Service</a> for server-side data handling.</li>
       </ul>
 
       <h2>5. Data Sharing</h2>
-      <p>We do not sell, rent, or share your personal data with any third parties. Your data is only transmitted to the NextHire servers under your authenticated account, and, when you choose 'Finish in your browser', into the application form of the employer you are applying to, which is what applying means.</p>
+      <p>We do <strong>not</strong> sell, rent, or share your personal data with any third parties. Your data is only transmitted to the NextHire servers under your authenticated account, and, when you choose "Finish in your browser", into the application form of the employer you are applying to, and, when you apply on a job board from your browser, into that job board's own application for each job you chose, which is what applying means, and, when you apply to a LinkedIn Easy Apply or Naukri job, into that site's own application for that job.</p>
 
       <h2>6. Permissions Explained</h2>
       <p>The Extension requests the following Chrome permissions:</p>
@@ -312,15 +318,21 @@ export const legalPages: LegalPage[] = [
         <li><strong>storage:</strong> To temporarily cache your scraped profile data and authentication token locally on your device.</li>
         <li><strong>tabs:</strong> To detect if you have a NextHire tab open and retrieve your authentication session.</li>
         <li><strong>scripting:</strong> To inject the profile scraping scripts into Naukri.com and LinkedIn pages, to read authentication state from the NextHire app, and to show the NextHire card on a job application page you are finishing in your browser.</li>
-        <li><strong>debugger:</strong> Used only while the Extension fills a job application form you opened from NextHire with 'Finish in your browser', and only in that tab, on the job sites in section 7. It lets the Extension type into the form the way you would. It is attached when the fill starts and released as soon as it ends, and it lets go at once if the tab leaves those sites. Chrome shows a banner while it is attached. It is never used on any other tab or site.</li>
+        <li><strong>alarms:</strong> To space applications on a job board about a minute apart, and to carry on a batch you started if Chrome pauses the Extension in between.</li>
+        <li><strong>debugger:</strong> Used only while the Extension fills a job application you started from NextHire ("Finish in your browser", or Apply on a LinkedIn Easy Apply or Naukri job), and only in that tab, on the job sites in section 7. On Naukri it also holds back the site's apply request until the Extension means to send. It lets the Extension type into the form the way you would. It is attached when the fill starts and released as soon as it ends, and it lets go at once if the tab leaves those sites. Chrome shows a banner while it is attached. It is never used on any other tab or site.</li>
       </ul>
 
       <h2>7. Host Permissions</h2>
       <ul>
-        <li><strong>naukri.com:</strong> Required to scrape your profile data from your Naukri profile page.</li>
-        <li><strong>linkedin.com:</strong> Required to scrape your profile data from your LinkedIn profile page.</li>
+        <li><strong>naukri.com:</strong> Required to scrape your profile data from your Naukri profile page, and to apply to a Naukri job you pressed Apply on in NextHire (job pages only).</li>
+        <li><strong>linkedin.com:</strong> Required to scrape your profile data from your LinkedIn profile page, and to apply to a LinkedIn Easy Apply job you pressed Apply on in NextHire (job pages only).</li>
         <li><strong>app.nexthireconsulting.com:</strong> Required to authenticate with and sync data to the NextHire service.</li>
-        <li><strong>Job sites for 'Finish in your browser':</strong> jobs.lever.co (Lever), smartrecruiters.com (SmartRecruiters), recruitee.com (Recruitee), icims.com and jibeapply.com (iCIMS), app.dover.com (Dover), workforcenow.adp.com (ADP), paycomonline.net (Paycom), darwinbox.in and darwinbox.com (Darwinbox), account.amazon.jobs and passport.amazon.jobs (Amazon Jobs), jobs.dayforcehcm.com and dfid.dayforcehcm.com (Dayforce). Required to fill an application form you opened from NextHire on one of these sites and to show the NextHire card there. Nothing is read or filled on them unless you started that application from NextHire.</li>
+        <li><strong>Job sites for "Finish in your browser":</strong> jobs.lever.co (Lever), smartrecruiters.com (SmartRecruiters), recruitee.com (Recruitee), icims.com and jibeapply.com (iCIMS), app.dover.com (Dover), workforcenow.adp.com (ADP), paycomonline.net (Paycom), darwinbox.in and darwinbox.com (Darwinbox), account.amazon.jobs and passport.amazon.jobs (Amazon Jobs), jobs.dayforcehcm.com and dfid.dayforcehcm.com (Dayforce), microsoft.eightfold.ai (Microsoft careers, after you agree on your NextHire card), www.linkedin.com (LinkedIn Easy Apply, and <strong>only</strong> on job pages: never your feed, your messages, your network, anyone's profile or any sign-in page), www.naukri.com (Naukri, <strong>only</strong> on job pages and the page Naukri shows after you apply: never your profile, your messages or any sign-in page). Required to fill an application form you opened from NextHire on one of these sites and to show the NextHire card there. Nothing is read or filled on them unless you started that application from NextHire.</li>
+      </ul>
+
+      <h2>7a. Job boards you allow</h2>
+      <ul>
+        <li><strong>www.iimjobs.com (optional):</strong> asked only when you start applying there from NextHire, on a page of the Extension, and you can refuse. Without it the Extension never opens or reads that site. You can remove it at any time in Chrome's extension settings.</li>
       </ul>
 
       <h2>8. Your Rights</h2>
@@ -338,8 +350,8 @@ export const legalPages: LegalPage[] = [
       <p>We may update this Privacy Policy from time to time. Material changes will be communicated through the Extension update notes on the Chrome Web Store.</p>
 
       <h2>11. Contact Us</h2>
-      <p>If you have questions about this Privacy Policy or your data, contact us at:<br />
-      <a href="mailto:support@nexthireconsulting.com">support@nexthireconsulting.com</a></p>
+      <p>If you have questions about this Privacy Policy or your data, contact us at:</p>
+      <p><a href="mailto:support@nexthireconsulting.com">support@nexthireconsulting.com</a></p>
       <p>NextHire Consulting<br />2810 N Church St, STE 89560, Wilmington, DE 19802, US</p>
     `,
   },
