@@ -2,8 +2,13 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '404 – Page Not Found | NextHire',
+  // `absolute` stops the root layout's `%s | NextHire` template from appending a
+  // second " | NextHire" (the title already carries it). This 404 is also served
+  // as /404.html for the /jobs/* bucket via the CloudFront error response.
+  title: { absolute: '404 – Page Not Found | NextHire' },
   description: "The page you're looking for doesn't exist. Find your next opportunity with NextHire.",
+  // Error pages must never be indexed; keep `follow` so crawlers still use the recovery links.
+  robots: { index: false, follow: true },
 }
 
 export default function NotFound() {
