@@ -29,4 +29,6 @@ User-agent: CCBot
 Disallow: /
 
 Sitemap: https://www.nexthireconsulting.com/sitemap.xml
-Sitemap: https://www.nexthireconsulting.com/jobs/sitemaps/index.xml
+# The jobs sitemap index (/jobs/sitemaps/index.xml) is intentionally NOT listed here.
+# A public sitemap hands scrapers the full job-URL list; submit it directly in Google
+# Search Console and Bing Webmaster Tools instead. See mainservice JobPageSitemaps.
