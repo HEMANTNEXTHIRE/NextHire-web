@@ -80,6 +80,9 @@ export const CANDIDATE_TIERS: CandidateTier[] = [
 
 export const CHECKOUT_URL = 'https://app.nexthireconsulting.com'
 
+/** Public, no sign-in: the visitor's country from IPinfo, the lookup checkout uses. */
+export const COUNTRY_URL = `${CHECKOUT_URL}/api/discount/available`
+
 /** Rupees per dollar for the lower-income list. Same as PricingRegion.INR_PER_USD in the app. */
 export const INR_PER_USD = 94
 

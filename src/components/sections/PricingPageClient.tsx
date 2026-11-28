@@ -6,7 +6,7 @@ import { FONT, WEIGHT } from '@/constants/typography'
 import AccordionFaq from '@/components/ui/AccordionFaq'
 import PricingPlanTabs from '@/components/sections/PricingPlanTabs'
 import WithWithoutSection from '@/components/sections/WithWithoutSection'
-import { CANDIDATE_TIERS, CHECKOUT_URL, regionFor, tierPrice, type Region } from '@/lib/pricing'
+import { CANDIDATE_TIERS, CHECKOUT_URL, COUNTRY_URL, regionFor, tierPrice, type Region } from '@/lib/pricing'
 import { PRICING_FAQS_CANDIDATES } from '@/constants/pricingFaqs'
 
 
@@ -211,9 +211,10 @@ export default function PricingPageClient() {
   const [region, setRegion] = useState<Region>('US')
 
   useEffect(() => {
-    fetch('https://ipapi.co/json/')
+    // The app's backend looks the visitor up on IPinfo, the same as checkout does.
+    fetch(COUNTRY_URL)
       .then(r => r.json())
-      .then((d: { country_code?: string }) => setRegion(regionFor(d.country_code)))
+      .then((d: { country?: string }) => setRegion(regionFor(d.country)))
       .catch(() => {/* default USD */})
   }, [])
 
