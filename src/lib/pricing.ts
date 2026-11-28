@@ -4,7 +4,7 @@
  * with the in-product billing system; everything else derives from this file.
  */
 
-export type Region = 'IN' | 'US'
+export type Region = 'IN' | 'LOWER_INCOME' | 'US'
 export type BillingCycle = 'monthly' | 'quarterly'
 
 export interface TierPrice {
@@ -80,8 +80,41 @@ export const CANDIDATE_TIERS: CandidateTier[] = [
 
 export const CHECKOUT_URL = 'https://app.nexthireconsulting.com'
 
-export function tierPrice(tier: CandidateTier, region: Region): TierPrice {
-  return region === 'IN' ? tier.inr : tier.usd
+/** Rupees per dollar for the lower-income list. Same as PricingRegion.INR_PER_USD in the app. */
+export const INR_PER_USD = 94
+
+/**
+ * World Bank FY27 low and lower-middle income countries. They pay India's list
+ * converted to dollars. Must match PricingRegion.LOWER_INCOME_COUNTRIES in the app.
+ */
+export const LOWER_INCOME_COUNTRIES = new Set([
+  // Low income
+  'AF', 'BF', 'BI', 'CD', 'CF', 'ER', 'ET', 'GM', 'GW', 'KP', 'LR', 'MG', 'ML', 'MW', 'MZ', 'NE',
+  'RW', 'SD', 'SL', 'SO', 'SS', 'SY', 'TD', 'UG', 'YE',
+  // Lower-middle income
+  'AO', 'BD', 'BJ', 'BO', 'BT', 'CG', 'CI', 'CM', 'DJ', 'EG', 'GH', 'GN', 'HN', 'HT', 'IN', 'KE',
+  'KG', 'KH', 'KI', 'KM', 'LA', 'LB', 'LS', 'MA', 'MM', 'MN', 'MR', 'NA', 'NG', 'NI', 'NP', 'PG',
+  'PK', 'PS', 'SB', 'SN', 'ST', 'SZ', 'TG', 'TJ', 'TL', 'TN', 'TZ', 'UZ', 'VU', 'ZM', 'ZW',
+])
+
+export function regionFor(countryCode: string | null | undefined): Region {
+  const cc = (countryCode ?? '').toUpperCase()
+  if (cc === 'IN') return 'IN'
+  return LOWER_INCOME_COUNTRIES.has(cc) ? 'LOWER_INCOME' : 'US'
+}
+
+const inrToUsd = (inr: number) => Math.round((inr * 100) / INR_PER_USD) / 100
+
+export function tierPrice(tier: Pick<CandidateTier, 'inr' | 'usd'>, region: Region): TierPrice {
+  if (region === 'IN') return tier.inr
+  if (region === 'LOWER_INCOME') {
+    return {
+      monthly: inrToUsd(tier.inr.monthly),
+      quarterly: inrToUsd(tier.inr.quarterly),
+      quarterlyTotal: inrToUsd(tier.inr.quarterlyTotal),
+    }
+  }
+  return tier.usd
 }
 
 export function currencyFor(region: Region): { code: 'INR' | 'USD'; symbol: '₹' | '$' } {

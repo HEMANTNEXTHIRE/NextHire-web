@@ -6,7 +6,7 @@ import { FONT, WEIGHT } from '@/constants/typography'
 import AccordionFaq from '@/components/ui/AccordionFaq'
 import PricingPlanTabs from '@/components/sections/PricingPlanTabs'
 import WithWithoutSection from '@/components/sections/WithWithoutSection'
-import { CANDIDATE_TIERS, CHECKOUT_URL } from '@/lib/pricing'
+import { CANDIDATE_TIERS, CHECKOUT_URL, regionFor, tierPrice, type Region } from '@/lib/pricing'
 import { PRICING_FAQS_CANDIDATES } from '@/constants/pricingFaqs'
 
 
@@ -57,8 +57,9 @@ const COMPANY_PLANS: {
 /* ── Helpers ───────────────────────────────────────────────────── */
 type PlanBase = typeof CANDIDATE_PLANS_BASE[number]
 
-function priceFmt(plan: PlanBase, cycle: BillingCycle, isIndia: boolean) {
-  const tier = isIndia ? plan.inr : plan.usd
+function priceFmt(plan: PlanBase, cycle: BillingCycle, region: Region) {
+  const isIndia = region === 'IN'
+  const tier = tierPrice(plan, region)
   const sym  = isIndia ? '₹' : '$'
   if (tier.monthly === 0) return { display: `${sym}0`, sub: 'Free forever', note: ' ' }
   if (cycle === 'quarterly') {
@@ -207,12 +208,12 @@ const CARD_THEMES: Record<string, {
 export default function PricingPageClient() {
   const tab: PricingTab = 'candidates'
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
-  const [isIndia, setIsIndia] = useState(false)
+  const [region, setRegion] = useState<Region>('US')
 
   useEffect(() => {
     fetch('https://ipapi.co/json/')
       .then(r => r.json())
-      .then((d: { country_code?: string }) => { if (d.country_code === 'IN') setIsIndia(true) })
+      .then((d: { country_code?: string }) => setRegion(regionFor(d.country_code)))
       .catch(() => {/* default USD */})
   }, [])
 
@@ -311,7 +312,7 @@ export default function PricingPageClient() {
               <h3 className="nh-plans-section-label"></h3>
               <div className="nh-plans-grid-4">
                 {CANDIDATE_PLANS_BASE.map(plan => {
-                  const p = priceFmt(plan, cycle, isIndia)
+                  const p = priceFmt(plan, cycle, region)
                   const t = CARD_THEMES[plan.id] ?? CARD_THEMES.free
                   return (
                     <div
